@@ -70,7 +70,7 @@ function readFileSafe(p) {
 
 async function authorize() {
   const SCOPES = [
-    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.modify',
     'https://www.googleapis.com/auth/calendar.readonly'
   ];
   const TOKEN_PATH = path.join(BASE_DIR, 'token.json');
@@ -144,6 +144,7 @@ async function fetchRecentEmails(auth) {
     const detail = await gmail.users.messages.get({ userId: 'me', id: msg.id, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
     const headers = detail.data.payload.headers;
     emails.push({
+      id: msg.id,
       from: headers.find(h => h.name === 'From')?.value || '?',
       subject: headers.find(h => h.name === 'Subject')?.value || '?'
     });
@@ -171,10 +172,88 @@ async function fetchCalendarEvents(auth) {
   }));
 }
 
-function buildContext(dayType, dateStr, emails, events, estadoVivo, registroEstudio, alertasSena) {
-  const emailBlock = emails.length === 0
-    ? 'Sin correos nuevos en las últimas 24h.'
-    : emails.map(e => `- ${e.from}: ${e.subject}`).join('\n');
+function extractBodyText(msg) {
+  const parts = [msg.payload];
+  let text = '';
+  while (parts.length > 0) {
+    const part = parts.shift();
+    if (part.parts) parts.push(...part.parts);
+    if (part.mimeType === 'text/plain' && part.body?.data) {
+      text += Buffer.from(part.body.data, 'base64').toString('utf8') + '\n';
+    }
+  }
+  return text.trim();
+}
+
+const TRASH_PATTERNS = [
+  /descuento/i, /oferta/i, /unsubscribe/i, /newsletter/i,
+  /promoción/i, /publicidad/i, /BIG School/i,
+  /no\s+responda/i, /notificación\s+de\s+envío/i,
+  /código\s+de\s+descuento/i, /black\s+friday/i, /cyber\s+day/i,
+];
+
+const IMPORTANT_KEYWORDS = [
+  'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
+  'multa', 'comparendo', 'tarea', 'urgente',
+  'notificación judicial', 'embargo', 'mandamiento',
+  'citación', 'requerimiento',
+];
+
+async function processInbox(auth, emails) {
+  const gmail = google.gmail({ version: 'v1', auth });
+  const importantEmails = [];
+  let trashCount = 0;
+
+  for (const msg of emails) {
+    const textToCheck = `${msg.from} ${msg.subject}`;
+
+    if (TRASH_PATTERNS.some(p => p.test(textToCheck))) {
+      try {
+        await gmail.users.messages.trash({ userId: 'me', id: msg.id });
+        trashCount++;
+        log(`🗑️ Papelera: ${msg.subject}`);
+      } catch (err) {
+        log(`⚠️ Error al enviar a papelera: ${err.message}`);
+      }
+      continue;
+    }
+
+    if (IMPORTANT_KEYWORDS.some(kw => textToCheck.toLowerCase().includes(kw))) {
+      try {
+        await gmail.users.messages.modify({
+          userId: 'me', id: msg.id,
+          resource: { removeLabelIds: ['UNREAD'] }
+        });
+        const detail = await gmail.users.messages.get({
+          userId: 'me', id: msg.id, format: 'full'
+        });
+        const body = extractBodyText(detail.data);
+        importantEmails.push({
+          from: msg.from,
+          subject: msg.subject,
+          snippet: body.substring(0, 800),
+        });
+        log(`📌 Importante: ${msg.subject}`);
+      } catch (err) {
+        log(`⚠️ Error procesando importante: ${err.message}`);
+        importantEmails.push({
+          from: msg.from, subject: msg.subject,
+          snippet: '(error al extraer contenido)'
+        });
+      }
+    }
+  }
+
+  return { importantEmails, trashCount };
+}
+
+function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena) {
+  const trashLine = trashCount > 0 ? `🗑️ ${trashCount} correos basura eliminados automáticamente.` : 'Sin basura detectada.';
+  const emailBlock = importantEmails.length === 0
+    ? 'Sin correos importantes en las últimas 24h.'
+    : importantEmails.map(e =>
+        `📩 ${e.from}\n   Asunto: ${e.subject}\n   Extracto: ${e.snippet.substring(0, 200)}`
+      ).join('\n\n');
 
   const eventsBlock = events.length === 0
     ? 'Sin eventos programados para hoy.'
@@ -190,6 +269,7 @@ function buildContext(dayType, dateStr, emails, events, estadoVivo, registroEstu
   return `
 FECHA_HOY: ${dateStr}
 TIPO_DIA: ${dayType}
+${trashLine}
 CORREOS_URENTES:
 ${emailBlock}
 EVENTOS_CALENDARIO:
@@ -204,10 +284,10 @@ ${senaBlock}
 }
 
 const LLM_PROVIDERS = [
-  { name: 'Proveedor 1', baseUrl: process.env.PROVIDER_1_BASE_URL, apiKey: process.env.PROVIDER_1_API_KEY, model: process.env.PROVIDER_1_MODEL },
-  { name: 'Proveedor 2', baseUrl: process.env.PROVIDER_2_BASE_URL, apiKey: process.env.PROVIDER_2_API_KEY, model: process.env.PROVIDER_2_MODEL },
-  { name: 'Proveedor 3', baseUrl: process.env.PROVIDER_3_BASE_URL, apiKey: process.env.PROVIDER_3_API_KEY, model: process.env.PROVIDER_3_MODEL },
-  { name: 'Ollama Local', baseUrl: 'http://localhost:11434/v1', apiKey: '', model: 'qwen2.5-coder:latest' },
+  { name: 'Proveedor 1 (Cerebras)', baseUrl: process.env.PROVIDER_1_BASE_URL, apiKey: process.env.PROVIDER_1_API_KEY, model: process.env.PROVIDER_1_MODEL },
+  { name: 'Proveedor 2 (Gemini)', baseUrl: process.env.PROVIDER_2_BASE_URL, apiKey: process.env.PROVIDER_2_API_KEY, model: process.env.PROVIDER_2_MODEL },
+  { name: 'Proveedor 3 (OpenRouter Free)', baseUrl: process.env.PROVIDER_3_BASE_URL, apiKey: process.env.PROVIDER_3_API_KEY, model: process.env.PROVIDER_3_MODEL },
+  { name: 'Proveedor 4 (Ollama)', baseUrl: process.env.PROVIDER_4_BASE_URL || 'http://localhost:11434/v1', apiKey: process.env.PROVIDER_4_API_KEY || '', model: process.env.PROVIDER_4_MODEL || 'qwen2.5-coder:latest' },
 ].filter(p => p.baseUrl && p.model);
 
 async function callLLM(systemPrompt, userContext) {
@@ -274,7 +354,7 @@ async function run() {
   try {
     const auth = await authorize();
 
-    const [emails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
+    const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
       fetchRecentEmails(auth),
       fetchCalendarEvents(auth),
       Promise.resolve(readFileSafe(SKILL_PATH)),
@@ -283,10 +363,12 @@ async function run() {
       Promise.resolve(readFileSafe(ALERTAS_SENA_PATH))
     ]);
 
-    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.');
-    const userContext = buildContext(dayType, dateStr, emails, events, estadoVivo, registroEstudio, alertasSena);
+    const { importantEmails, trashCount } = await processInbox(auth, rawEmails);
 
-    log(`📋 Contexto preparado: ${dayType}, ${emails.length} correos, ${events.length} eventos`);
+    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.');
+    const userContext = buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena);
+
+    log(`📋 Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);
 
     const briefing = await callLLM(systemPrompt, userContext);
     log('✅ Briefing recibido del LLM.');
