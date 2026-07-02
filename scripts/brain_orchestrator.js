@@ -1,6 +1,7 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
+const { execSync } = require('node:child_process');
 const { google } = require('googleapis');
 const { sendTelegramMessage } = require('../lib/telegram');
 
@@ -22,6 +23,19 @@ const COL_HOLIDAYS_2026 = [
 
 function ensureLogDir() {
   if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
+}
+
+function detectTailscaleIP() {
+  try {
+    const ip = execSync('tailscale ip -4', { encoding: 'utf8', timeout: 5000 }).trim();
+    if (ip && /^\d/.test(ip)) return ip;
+  } catch {}
+  try {
+    const host = execSync('hostname', { encoding: 'utf8', timeout: 3000 }).trim();
+    return host || 'localhost';
+  } catch {
+    return 'localhost';
+  }
 }
 
 function log(msg) {
@@ -368,6 +382,10 @@ async function run() {
 
   try {
     const auth = await authorize();
+
+    const sshIP = detectTailscaleIP();
+    const sshMsg = `🔑 *ACCESO REMOTO SSH ACTIVO*\n\n• Servidor: \`${sshIP}\`\n• Usuario: \`dev\`\n• Puerto: \`22\`\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
+    await sendTelegramMessage(sshMsg).catch(e => log(`⚠️ Error enviando notificación SSH: ${e.message}`));
 
     const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
       fetchRecentEmails(auth),
