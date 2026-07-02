@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { sendTelegramMessage } = require('./lib/telegram');
+const { sendTelegramMessage } = require('../lib/telegram');
 
 // Rutas de archivos
 const estadoVivoPath = path.join(__dirname, 'Contexto_Maestro', 'ESTADO_VIVO.md');

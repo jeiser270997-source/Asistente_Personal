@@ -4,6 +4,8 @@ const path = require('node:path');
 const { execSync } = require('node:child_process');
 const { google } = require('googleapis');
 const { sendTelegramMessage } = require('../lib/telegram');
+const { escapeHTML, truncate } = require('../lib/sanitize');
+const pending = require('../lib/pending');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
@@ -296,6 +298,7 @@ function buildContext(dayType, dateStr, importantEmails, trashCount, events, est
   const senaBlock = alertasSena
     ? alertasSena
     : 'No disponible';
+  const pendingBlock = pending.formatForBriefing();
 
   return `
 FECHA_HOY: ${dateStr}
@@ -305,6 +308,8 @@ CORREOS_URENTES:
 ${emailBlock}
 EVENTOS_CALENDARIO:
 ${eventsBlock}
+PENDIENTES:
+${pendingBlock}
 ESTADO_VIVO (contexto legal/financiero):
 ${estadoVivo || 'No disponible'}
 REGISTRO_ESTUDIO (horas acumuladas + progreso bootcamp):
@@ -315,11 +320,10 @@ ${senaBlock}
 }
 
 const LLM_PROVIDERS = [
-  { name: 'NVIDIA Nemotron 550B', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'nvidia/nemotron-3-ultra-550b-a55b', retry: 2 },
-  { name: 'Cerebras', baseUrl: process.env.CEREBRAS_BASE_URL || 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: process.env.CEREBRAS_MODEL || 'z.ai-glm-4.7' },
-  { name: 'OpenRouter Free (Hermes 405B)', baseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: 'nousresearch/hermes-3-llama-3.1-405b:free' },
-  { name: 'OpenRouter Free (Llama 3.3 70B)', baseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: 'meta-llama/llama-3.3-70b-instruct:free' },
-  { name: 'Ollama Local', baseUrl: 'http://localhost:11434/v1', apiKey: '', model: 'qwen2.5-coder:latest' },
+  { name: 'NVIDIA Nemotron 550B', baseUrl: process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: process.env.NVIDIA_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b', retry: 2 },
+  { name: 'Cerebras', baseUrl: process.env.CEREBRAS_BASE_URL || 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: process.env.CEREBRAS_MODEL || 'cerebras-llama-3.3-70b' },
+  { name: 'OpenRouter Free (Hermes 405B)', baseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: process.env.OPENROUTER_MODEL || 'nousresearch/hermes-3-llama-3.1-405b:free' },
+  { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://localhost:11434/v1', apiKey: '', model: 'qwen2.5-coder:latest' },
 ].filter(p => p.baseUrl && p.model);
 
 async function callLLM(systemPrompt, userContext) {
@@ -401,12 +405,15 @@ async function run() {
     const auth = await authorize();
 
     const sshIP = detectTailscaleIP();
-    const sshMsg = `🔑 <b>ACCESO REMOTO SSH ACTIVO</b>\n\n• Servidor: <code>${sshIP}</code>\n• Usuario: <code>dev</code>\n• Puerto: <code>22</code>\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
+    const sshMsg = `🔑 <b>ACCESO REMOTO SSH ACTIVO</b>\n\n• Servidor: <code>${escapeHTML(sshIP)}</code>\n• Usuario: <code>dev</code>\n• Puerto: <code>22</code>\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
     await sendTelegramMessage(sshMsg).catch(e => log(`⚠️ Error enviando notificación SSH: ${e.message}`));
 
     const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
       fetchRecentEmails(auth),
-      fetchCalendarEvents(auth),
+      fetchCalendarEvents(auth).catch(e => {
+        log(`⚠️ [Calendar] ${e.message}`);
+        return [];
+      }),
       Promise.resolve(readFileSafe(SKILL_PATH)),
       Promise.resolve(readFileSafe(ESTADO_VIVO_PATH)),
       Promise.resolve(readFileSafe(REGISTRO_ESTUDIO_PATH)),
@@ -423,17 +430,13 @@ async function run() {
     const briefing = await callLLM(systemPrompt, userContext);
     log('✅ Briefing recibido del LLM.');
 
-    const MAX_TELEGRAM_LEN = 3500;
-    const trimmedBriefing = briefing.length > MAX_TELEGRAM_LEN
-      ? briefing.slice(0, MAX_TELEGRAM_LEN) + '\n\n✂️ Mensaje truncado (supera límite de Telegram)'
-      : briefing;
-    await sendTelegramMessage(trimmedBriefing);
+    await sendTelegramMessage(truncate(briefing, 3500));
     log('✅ Briefing enviado por Telegram.');
 
   } catch (err) {
     log(`❌ Error: ${err.message}`);
     try {
-      const fallback = `📅 <b>BRIEFING MATUTINO: ${dateStr}</b>\n\n⚠️ <b>Error generando briefing automático:</b>\n<code>${err.message}</code>\n\n🔧 Revisa logs en <code>logs/brain_orchestrator.log</code>`;
+      const fallback = `📅 <b>BRIEFING MATUTINO: ${dateStr}</b>\n\n⚠️ <b>Error generando briefing automático:</b>\n<code>${escapeHTML(err.message)}</code>\n\n🔧 Revisa logs en <code>logs/brain_orchestrator.log</code>`;
       await sendTelegramMessage(fallback);
     } catch {}
     process.exit(1);
