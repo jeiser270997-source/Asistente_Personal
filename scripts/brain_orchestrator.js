@@ -190,43 +190,66 @@ ${estadoVivo || 'No disponible'}
 `.trim();
 }
 
+const LLM_PROVIDERS = [
+  { name: 'Proveedor 1', baseUrl: process.env.PROVIDER_1_BASE_URL, apiKey: process.env.PROVIDER_1_API_KEY, model: process.env.PROVIDER_1_MODEL },
+  { name: 'Proveedor 2', baseUrl: process.env.PROVIDER_2_BASE_URL, apiKey: process.env.PROVIDER_2_API_KEY, model: process.env.PROVIDER_2_MODEL },
+  { name: 'Proveedor 3', baseUrl: process.env.PROVIDER_3_BASE_URL, apiKey: process.env.PROVIDER_3_API_KEY, model: process.env.PROVIDER_3_MODEL },
+  { name: 'Ollama Local', baseUrl: 'http://localhost:11434/v1', apiKey: '', model: 'qwen2.5-coder:latest' },
+].filter(p => p.baseUrl && p.model);
+
 async function callLLM(systemPrompt, userContext) {
-  const baseUrl = process.env.LLM_BASE_URL || 'https://api.deepseek.com/v1';
-  const apiKey = process.env.LLM_API_KEY || process.env.DEEPSEEK_API_KEY;
+  const lastError = {};
 
-  if (!apiKey) {
-    throw new Error('LLM_API_KEY no configurada en .env');
+  for (const provider of LLM_PROVIDERS) {
+    try {
+      const url = `${provider.baseUrl.replace(/\/+$/, '')}/chat/completions`;
+      const body = {
+        model: provider.model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userContext }
+        ],
+        temperature: 0.7,
+        max_tokens: 800
+      };
+
+      log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
+
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      if (provider.apiKey) {
+        headers['Authorization'] = `Bearer ${provider.apiKey}`;
+      }
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        lastError[provider.name] = `${res.status}: ${errText}`;
+        log(`⚠️ [${provider.name}] Falló (${res.status}), probando siguiente...`);
+        continue;
+      }
+
+      const data = await res.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (content) {
+        log(`✅ [${provider.name}] Respuesta exitosa.`);
+        return content;
+      }
+      lastError[provider.name] = 'Respuesta vacía';
+    } catch (err) {
+      lastError[provider.name] = err.message;
+      log(`⚠️ [${provider.name}] Error: ${err.message}, probando siguiente...`);
+    }
   }
 
-  const url = `${baseUrl.replace(/\/+$/, '')}/chat/completions`;
-  const body = {
-    model: process.env.LLM_MODEL || 'deepseek-chat',
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: userContext }
-    ],
-    temperature: 0.7,
-    max_tokens: 800
-  };
-
-  log(`📡 Llamando a LLM: ${url} (modelo: ${body.model})`);
-
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`LLM error ${res.status}: ${errText}`);
-  }
-
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || '⚠️ El LLM no devolvió contenido.';
+  const details = Object.entries(lastError).map(([k, v]) => `  ${k}: ${v}`).join('\n');
+  throw new Error(`Todos los LLM fallaron:\n${details}`);
 }
 
 async function run() {
