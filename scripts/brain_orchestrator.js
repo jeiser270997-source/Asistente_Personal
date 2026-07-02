@@ -423,7 +423,7 @@ async function run() {
     const briefing = await callLLM(systemPrompt, userContext);
     log('✅ Briefing recibido del LLM.');
 
-    const MAX_TELEGRAM_LEN = 4000;
+    const MAX_TELEGRAM_LEN = 3500;
     const trimmedBriefing = briefing.length > MAX_TELEGRAM_LEN
       ? briefing.slice(0, MAX_TELEGRAM_LEN) + '\n\n✂️ Mensaje truncado (supera límite de Telegram)'
       : briefing;
