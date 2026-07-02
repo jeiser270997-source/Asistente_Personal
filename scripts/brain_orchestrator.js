@@ -149,21 +149,38 @@ async function fetchRecentEmails(auth) {
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const query = `in:inbox is:unread after:${Math.floor(oneDayAgo.getTime() / 1000)}`;
 
-  const res = await gmail.users.messages.list({ userId: 'me', q: query, maxResults: 15 });
-  const messages = res.data.messages || [];
-  if (messages.length === 0) return [];
+  log(`[DEBUG GMAIL] Consultando correos no leídos con query: '${query}'`);
 
-  const emails = [];
-  for (const msg of messages) {
-    const detail = await gmail.users.messages.get({ userId: 'me', id: msg.id, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
-    const headers = detail.data.payload.headers;
-    emails.push({
-      id: msg.id,
-      from: headers.find(h => h.name === 'From')?.value || '?',
-      subject: headers.find(h => h.name === 'Subject')?.value || '?'
-    });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+
+  try {
+    const res = await gmail.users.messages.list({ userId: 'me', q: query, maxResults: 15 }, { signal: controller.signal });
+    const messages = res.data.messages || [];
+    log(`[DEBUG GMAIL] Respuesta recibida. Mensajes encontrados: ${messages.length}`);
+
+    if (messages.length === 0) return [];
+
+    const emails = [];
+    for (const msg of messages) {
+      const detail = await gmail.users.messages.get({ userId: 'me', id: msg.id, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
+      const headers = detail.data.payload.headers;
+      const from = headers.find(h => h.name === 'From')?.value || '?';
+      const subject = headers.find(h => h.name === 'Subject')?.value || '?';
+      log(`[DEBUG GMAIL] Procesando correo de: ${from} | Asunto: ${subject}`);
+      emails.push({ id: msg.id, from, subject });
+    }
+    return emails;
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      log('⚠️ [GMAIL] Timeout de 15s alcanzado en la consulta de Gmail.');
+      return [];
+    }
+    log(`⚠️ [GMAIL] Error en API: ${err.message}`);
+    return [];
+  } finally {
+    clearTimeout(timeout);
   }
-  return emails;
 }
 
 async function fetchCalendarEvents(auth) {
@@ -262,9 +279,9 @@ async function processInbox(auth, emails) {
 }
 
 function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena) {
-  const trashLine = trashCount > 0 ? `🗑️ ${trashCount} correos basura eliminados automáticamente.` : 'Sin basura detectada.';
+  const trashLine = trashCount > 0 ? `🗑️ [Gmail] ${trashCount} correos basura eliminados automáticamente.` : '[Gmail] Sin basura detectada.';
   const emailBlock = importantEmails.length === 0
-    ? 'Sin correos importantes en las últimas 24h.'
+    ? '[Gmail] Sin correos importantes en las últimas 24h.'
     : importantEmails.map(e =>
         `📩 ${e.from}\n   Asunto: ${e.subject}\n   Extracto: ${e.snippet.substring(0, 200)}`
       ).join('\n\n');
