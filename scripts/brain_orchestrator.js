@@ -9,6 +9,8 @@ const LOG_DIR = path.join(BASE_DIR, 'logs');
 const ESTUDIO_DIR = path.resolve(__dirname, '..', '..', 'Mis_Proyectos', 'Estudio');
 const SKILL_PATH = path.join(ESTUDIO_DIR, 'Carrera_Profesional', 'SKILLS', 'SKILL_ASISTENTE_MATUTINO.md');
 const ESTADO_VIVO_PATH = path.join(ESTUDIO_DIR, 'Contexto_Maestro', 'ESTADO_VIVO.md');
+const REGISTRO_ESTUDIO_PATH = path.join(ESTUDIO_DIR, 'Tecnicatura_Comprimida', 'REGISTRO_DE_ESTUDIO.md');
+const ALERTAS_SENA_PATH = path.join(ESTUDIO_DIR, 'Tecnicatura_Comprimida', 'ALERTAS_SENA.md');
 
 const COL_HOLIDAYS_2026 = [
   '2026-01-01','2026-01-12','2026-03-23','2026-03-24','2026-03-25',
@@ -169,7 +171,7 @@ async function fetchCalendarEvents(auth) {
   }));
 }
 
-function buildContext(dayType, dateStr, emails, events, estadoVivo) {
+function buildContext(dayType, dateStr, emails, events, estadoVivo, registroEstudio, alertasSena) {
   const emailBlock = emails.length === 0
     ? 'Sin correos nuevos en las últimas 24h.'
     : emails.map(e => `- ${e.from}: ${e.subject}`).join('\n');
@@ -178,6 +180,13 @@ function buildContext(dayType, dateStr, emails, events, estadoVivo) {
     ? 'Sin eventos programados para hoy.'
     : events.map(e => `- ${e.summary} (${e.start} → ${e.end})`).join('\n');
 
+  const estudioBlock = registroEstudio
+    ? registroEstudio
+    : 'No disponible';
+  const senaBlock = alertasSena
+    ? alertasSena
+    : 'No disponible';
+
   return `
 FECHA_HOY: ${dateStr}
 TIPO_DIA: ${dayType}
@@ -185,8 +194,12 @@ CORREOS_URENTES:
 ${emailBlock}
 EVENTOS_CALENDARIO:
 ${eventsBlock}
-ESTADO_ESTUDIO:
+ESTADO_VIVO (contexto legal/financiero):
 ${estadoVivo || 'No disponible'}
+REGISTRO_ESTUDIO (horas acumuladas + progreso bootcamp):
+${estudioBlock}
+ALERTAS_SENA (tareas y vencimientos):
+${senaBlock}
 `.trim();
 }
 
@@ -210,7 +223,7 @@ async function callLLM(systemPrompt, userContext) {
           { role: 'user', content: userContext }
         ],
         temperature: 0.7,
-        max_tokens: 800
+        max_tokens: 1500
       };
 
       log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
@@ -261,15 +274,17 @@ async function run() {
   try {
     const auth = await authorize();
 
-    const [emails, events, skillRaw, estadoVivo] = await Promise.all([
+    const [emails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
       fetchRecentEmails(auth),
       fetchCalendarEvents(auth),
       Promise.resolve(readFileSafe(SKILL_PATH)),
-      Promise.resolve(readFileSafe(ESTADO_VIVO_PATH))
+      Promise.resolve(readFileSafe(ESTADO_VIVO_PATH)),
+      Promise.resolve(readFileSafe(REGISTRO_ESTUDIO_PATH)),
+      Promise.resolve(readFileSafe(ALERTAS_SENA_PATH))
     ]);
 
     const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.');
-    const userContext = buildContext(dayType, dateStr, emails, events, estadoVivo);
+    const userContext = buildContext(dayType, dateStr, emails, events, estadoVivo, registroEstudio, alertasSena);
 
     log(`📋 Contexto preparado: ${dayType}, ${emails.length} correos, ${events.length} eventos`);
 
