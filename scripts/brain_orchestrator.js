@@ -284,60 +284,75 @@ ${senaBlock}
 }
 
 const LLM_PROVIDERS = [
-  { name: 'Proveedor 1 (Cerebras)', baseUrl: process.env.PROVIDER_1_BASE_URL, apiKey: process.env.PROVIDER_1_API_KEY, model: process.env.PROVIDER_1_MODEL },
-  { name: 'Proveedor 2 (Gemini)', baseUrl: process.env.PROVIDER_2_BASE_URL, apiKey: process.env.PROVIDER_2_API_KEY, model: process.env.PROVIDER_2_MODEL },
-  { name: 'Proveedor 3 (OpenRouter Free)', baseUrl: process.env.PROVIDER_3_BASE_URL, apiKey: process.env.PROVIDER_3_API_KEY, model: process.env.PROVIDER_3_MODEL },
-  { name: 'Proveedor 4 (Ollama)', baseUrl: process.env.PROVIDER_4_BASE_URL || 'http://localhost:11434/v1', apiKey: process.env.PROVIDER_4_API_KEY || '', model: process.env.PROVIDER_4_MODEL || 'qwen2.5-coder:latest' },
+  { name: 'NVIDIA Nemotron 550B', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'nvidia/nemotron-3-ultra-550b-a55b', retry: 2 },
+  { name: 'Cerebras', baseUrl: process.env.CEREBRAS_BASE_URL || 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: process.env.CEREBRAS_MODEL || 'z.ai-glm-4.7' },
+  { name: 'OpenRouter Free (Hermes 405B)', baseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: 'nousresearch/hermes-3-llama-3.1-405b:free' },
+  { name: 'OpenRouter Free (Llama 3.3 70B)', baseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: 'meta-llama/llama-3.3-70b-instruct:free' },
+  { name: 'Ollama Local', baseUrl: 'http://localhost:11434/v1', apiKey: '', model: 'qwen2.5-coder:latest' },
 ].filter(p => p.baseUrl && p.model);
 
 async function callLLM(systemPrompt, userContext) {
   const lastError = {};
 
   for (const provider of LLM_PROVIDERS) {
-    try {
-      const url = `${provider.baseUrl.replace(/\/+$/, '')}/chat/completions`;
-      const body = {
-        model: provider.model,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userContext }
-        ],
-        temperature: 0.7,
-        max_tokens: 1500
-      };
+    const maxAttempts = (provider.retry ?? 0) + 1;
 
-      log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      try {
+        const url = `${provider.baseUrl.replace(/\/+$/, '')}/chat/completions`;
+        const body = {
+          model: provider.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userContext }
+          ],
+          temperature: 0.7,
+          max_tokens: 1500
+        };
 
-      const headers = {
-        'Content-Type': 'application/json',
-      };
-      if (provider.apiKey) {
-        headers['Authorization'] = `Bearer ${provider.apiKey}`;
+        log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
+
+        const headers = { 'Content-Type': 'application/json' };
+        if (provider.apiKey) {
+          headers['Authorization'] = `Bearer ${provider.apiKey}`;
+        }
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+          const errText = await res.text();
+          if (attempt < maxAttempts - 1 && (res.status === 429 || res.status >= 500)) {
+            log(`⚠️ [${provider.name}] Saturación detectada, reintentando en 3s... (${attempt + 1}/${maxAttempts - 1})`);
+            await new Promise(r => setTimeout(r, 3000));
+            continue;
+          }
+          lastError[provider.name] = `${res.status}: ${errText}`;
+          log(`⚠️ [${provider.name}] Falló (${res.status}), probando siguiente...`);
+          break;
+        }
+
+        const data = await res.json();
+        const content = data.choices?.[0]?.message?.content;
+        if (content) {
+          log(`✅ [${provider.name}] Respuesta exitosa.`);
+          return content;
+        }
+        lastError[provider.name] = 'Respuesta vacía';
+        break;
+      } catch (err) {
+        if (attempt < maxAttempts - 1) {
+          log(`⚠️ [${provider.name}] Saturación detectada, reintentando en 3s... (${attempt + 1}/${maxAttempts - 1})`);
+          await new Promise(r => setTimeout(r, 3000));
+          continue;
+        }
+        lastError[provider.name] = err.message;
+        log(`⚠️ [${provider.name}] Error: ${err.message}, probando siguiente...`);
+        break;
       }
-
-      const res = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(body)
-      });
-
-      if (!res.ok) {
-        const errText = await res.text();
-        lastError[provider.name] = `${res.status}: ${errText}`;
-        log(`⚠️ [${provider.name}] Falló (${res.status}), probando siguiente...`);
-        continue;
-      }
-
-      const data = await res.json();
-      const content = data.choices?.[0]?.message?.content;
-      if (content) {
-        log(`✅ [${provider.name}] Respuesta exitosa.`);
-        return content;
-      }
-      lastError[provider.name] = 'Respuesta vacía';
-    } catch (err) {
-      lastError[provider.name] = err.message;
-      log(`⚠️ [${provider.name}] Error: ${err.message}, probando siguiente...`);
     }
   }
 
