@@ -401,7 +401,7 @@ async function run() {
     const auth = await authorize();
 
     const sshIP = detectTailscaleIP();
-    const sshMsg = `🔑 *ACCESO REMOTO SSH ACTIVO*\n\n• Servidor: \`${sshIP}\`\n• Usuario: \`dev\`\n• Puerto: \`22\`\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
+    const sshMsg = `🔑 <b>ACCESO REMOTO SSH ACTIVO</b>\n\n• Servidor: <code>${sshIP}</code>\n• Usuario: <code>dev</code>\n• Puerto: <code>22</code>\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
     await sendTelegramMessage(sshMsg).catch(e => log(`⚠️ Error enviando notificación SSH: ${e.message}`));
 
     const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
@@ -423,13 +423,17 @@ async function run() {
     const briefing = await callLLM(systemPrompt, userContext);
     log('✅ Briefing recibido del LLM.');
 
-    await sendTelegramMessage(briefing);
+    const MAX_TELEGRAM_LEN = 4000;
+    const trimmedBriefing = briefing.length > MAX_TELEGRAM_LEN
+      ? briefing.slice(0, MAX_TELEGRAM_LEN) + '\n\n✂️ Mensaje truncado (supera límite de Telegram)'
+      : briefing;
+    await sendTelegramMessage(trimmedBriefing);
     log('✅ Briefing enviado por Telegram.');
 
   } catch (err) {
     log(`❌ Error: ${err.message}`);
     try {
-      const fallback = `📅 *BRIEFING MATUTINO: ${dateStr}*\n\n⚠️ *Error generando briefing automático:*\n\`${err.message}\`\n\n🔧 Revisa logs en \`logs/brain_orchestrator.log\``;
+      const fallback = `📅 <b>BRIEFING MATUTINO: ${dateStr}</b>\n\n⚠️ <b>Error generando briefing automático:</b>\n<code>${err.message}</code>\n\n🔧 Revisa logs en <code>logs/brain_orchestrator.log</code>`;
       await sendTelegramMessage(fallback);
     } catch {}
     process.exit(1);
