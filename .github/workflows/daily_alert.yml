@@ -1,0 +1,25 @@
+name: Daily Telegram Alert
+
+on:
+  schedule:
+    # 12:00 UTC es 7:00 AM COT (Hora de Colombia)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Permitir ejecución manual
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run notification script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node notify.js

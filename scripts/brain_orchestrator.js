@@ -1,0 +1,269 @@
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+const fs = require('node:fs');
+const path = require('node:path');
+const { google } = require('googleapis');
+const { sendTelegramMessage } = require('../lib/telegram');
+
+const BASE_DIR = path.resolve(__dirname, '..');
+const LOG_DIR = path.join(BASE_DIR, 'logs');
+const ESTUDIO_DIR = path.resolve(__dirname, '..', '..', 'Mis_Proyectos', 'Estudio');
+const SKILL_PATH = path.join(ESTUDIO_DIR, 'Carrera_Profesional', 'SKILLS', 'SKILL_ASISTENTE_MATUTINO.md');
+const ESTADO_VIVO_PATH = path.join(ESTUDIO_DIR, 'Contexto_Maestro', 'ESTADO_VIVO.md');
+
+const COL_HOLIDAYS_2026 = [
+  '2026-01-01','2026-01-12','2026-03-23','2026-03-24','2026-03-25',
+  '2026-03-26','2026-03-27','2026-03-28','2026-03-29','2026-05-01',
+  '2026-05-18','2026-06-01','2026-06-15','2026-07-20','2026-08-07',
+  '2026-08-17','2026-10-12','2026-11-02','2026-11-16','2026-12-08',
+  '2026-12-25'
+];
+
+function ensureLogDir() {
+  if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
+}
+
+function log(msg) {
+  const ts = new Date().toISOString();
+  const line = `[${ts}] ${msg}`;
+  console.log(line);
+  ensureLogDir();
+  fs.appendFileSync(path.join(LOG_DIR, 'brain_orchestrator.log'), line + '\n');
+}
+
+function getColombiaDate() {
+  const now = new Date();
+  const col = new Date(now.toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  return col;
+}
+
+function determineDayType(date) {
+  const dow = date.getDay();
+  const dateStr = date.toISOString().split('T')[0];
+
+  if (COL_HOLIDAYS_2026.includes(dateStr)) return 'DomingoFestivo';
+  if (dow === 0) return 'DomingoFestivo';
+  if (dow === 6) return 'Sábado';
+  if (dow === 3) return 'Miércoles-PicoPlaca';
+  return 'Normal';
+}
+
+function formatDateColombia(date) {
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  return `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function stripFrontmatter(content) {
+  return content.replace(/^---[\s\S]*?---\n*/, '');
+}
+
+function readFileSafe(p) {
+  try {
+    return fs.readFileSync(p, 'utf8');
+  } catch {
+    log(`⚠️ No se pudo leer: ${p}`);
+    return '';
+  }
+}
+
+async function authorize() {
+  const SCOPES = [
+    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/calendar.readonly'
+  ];
+  const TOKEN_PATH = path.join(BASE_DIR, 'token.json');
+  const CREDENTIALS_PATH = path.join(BASE_DIR, 'credentials.json');
+
+  try {
+    const tokenRaw = fs.readFileSync(TOKEN_PATH, 'utf8');
+    const creds = JSON.parse(tokenRaw);
+    const client = google.auth.fromJSON(creds);
+    if (client.refreshToken) {
+      client.refreshAccessToken();
+    }
+    client.scopes = SCOPES;
+    return client;
+  } catch {
+    log('🔑 No hay token válido. Inicia autenticación manual...');
+    const content = fs.readFileSync(CREDENTIALS_PATH, 'utf8');
+    const keys = JSON.parse(content);
+    const key = keys.installed || keys.web;
+    const oauth2Client = new google.auth.OAuth2(key.client_id, key.client_secret, 'http://localhost');
+    const authUrl = oauth2Client.generateAuthUrl({ access_type: 'offline', scope: SCOPES });
+    console.log('\n=====================================================');
+    console.log('🔗 AUTENTICACIÓN GOOGLE (Gmail + Calendar):');
+    console.log(authUrl);
+    console.log('=====================================================');
+    console.log('1. Abre el enlace en tu navegador.');
+    console.log('2. Autoriza con tu cuenta de Google.');
+    console.log('3. Serás redirigido a localhost — copia la URL completa.');
+    console.log('4. Pégala aquí:\n');
+    const readline = require('readline');
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    const code = await new Promise((resolve) => {
+      rl.question('URL: ', async (urlStr) => {
+        rl.close();
+        try {
+          const urlObj = new URL(urlStr);
+          resolve(urlObj.searchParams.get('code'));
+        } catch (err) {
+          log(`Error parsing URL: ${err.message}`);
+          resolve(null);
+        }
+      });
+    });
+    if (!code) throw new Error('No se obtuvo código de autorización.');
+    const { tokens } = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(tokens);
+    const payload = JSON.stringify({
+      type: 'authorized_user',
+      client_id: key.client_id,
+      client_secret: key.client_secret,
+      refresh_token: tokens.refresh_token,
+    });
+    fs.writeFileSync(TOKEN_PATH, payload);
+    log('✅ Token guardado con nuevos scopes (Gmail + Calendar).');
+    return oauth2Client;
+  }
+}
+
+async function fetchRecentEmails(auth) {
+  const gmail = google.gmail({ version: 'v1', auth });
+  const now = new Date();
+  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const query = `in:inbox is:unread after:${Math.floor(oneDayAgo.getTime() / 1000)}`;
+
+  const res = await gmail.users.messages.list({ userId: 'me', q: query, maxResults: 15 });
+  const messages = res.data.messages || [];
+  if (messages.length === 0) return [];
+
+  const emails = [];
+  for (const msg of messages) {
+    const detail = await gmail.users.messages.get({ userId: 'me', id: msg.id, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
+    const headers = detail.data.payload.headers;
+    emails.push({
+      from: headers.find(h => h.name === 'From')?.value || '?',
+      subject: headers.find(h => h.name === 'Subject')?.value || '?'
+    });
+  }
+  return emails;
+}
+
+async function fetchCalendarEvents(auth) {
+  const calendar = google.calendar({ version: 'v3', auth });
+  const now = new Date();
+  const end = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+  const res = await calendar.events.list({
+    calendarId: 'primary',
+    timeMin: now.toISOString(),
+    timeMax: end.toISOString(),
+    singleEvents: true,
+    orderBy: 'startTime',
+    maxResults: 20
+  });
+  return (res.data.items || []).map(e => ({
+    summary: e.summary || 'Sin título',
+    start: e.start?.dateTime || e.start?.date || '?',
+    end: e.end?.dateTime || e.end?.date || '?'
+  }));
+}
+
+function buildContext(dayType, dateStr, emails, events, estadoVivo) {
+  const emailBlock = emails.length === 0
+    ? 'Sin correos nuevos en las últimas 24h.'
+    : emails.map(e => `- ${e.from}: ${e.subject}`).join('\n');
+
+  const eventsBlock = events.length === 0
+    ? 'Sin eventos programados para hoy.'
+    : events.map(e => `- ${e.summary} (${e.start} → ${e.end})`).join('\n');
+
+  return `
+FECHA_HOY: ${dateStr}
+TIPO_DIA: ${dayType}
+CORREOS_URENTES:
+${emailBlock}
+EVENTOS_CALENDARIO:
+${eventsBlock}
+ESTADO_ESTUDIO:
+${estadoVivo || 'No disponible'}
+`.trim();
+}
+
+async function callLLM(systemPrompt, userContext) {
+  const baseUrl = process.env.LLM_BASE_URL || 'https://api.deepseek.com/v1';
+  const apiKey = process.env.LLM_API_KEY || process.env.DEEPSEEK_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('LLM_API_KEY no configurada en .env');
+  }
+
+  const url = `${baseUrl.replace(/\/+$/, '')}/chat/completions`;
+  const body = {
+    model: process.env.LLM_MODEL || 'deepseek-chat',
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userContext }
+    ],
+    temperature: 0.7,
+    max_tokens: 800
+  };
+
+  log(`📡 Llamando a LLM: ${url} (modelo: ${body.model})`);
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`LLM error ${res.status}: ${errText}`);
+  }
+
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || '⚠️ El LLM no devolvió contenido.';
+}
+
+async function run() {
+  log('🚀 Iniciando Brain Orchestrator...');
+  const now = getColombiaDate();
+  const dateStr = formatDateColombia(now);
+  const dayType = determineDayType(now);
+
+  try {
+    const auth = await authorize();
+
+    const [emails, events, skillRaw, estadoVivo] = await Promise.all([
+      fetchRecentEmails(auth),
+      fetchCalendarEvents(auth),
+      Promise.resolve(readFileSafe(SKILL_PATH)),
+      Promise.resolve(readFileSafe(ESTADO_VIVO_PATH))
+    ]);
+
+    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.');
+    const userContext = buildContext(dayType, dateStr, emails, events, estadoVivo);
+
+    log(`📋 Contexto preparado: ${dayType}, ${emails.length} correos, ${events.length} eventos`);
+
+    const briefing = await callLLM(systemPrompt, userContext);
+    log('✅ Briefing recibido del LLM.');
+
+    await sendTelegramMessage(briefing);
+    log('✅ Briefing enviado por Telegram.');
+
+  } catch (err) {
+    log(`❌ Error: ${err.message}`);
+    try {
+      const fallback = `📅 *BRIEFING MATUTINO: ${dateStr}*\n\n⚠️ *Error generando briefing automático:*\n\`${err.message}\`\n\n🔧 Revisa logs en \`logs/brain_orchestrator.log\``;
+      await sendTelegramMessage(fallback);
+    } catch {}
+    process.exit(1);
+  }
+}
+
+run();
