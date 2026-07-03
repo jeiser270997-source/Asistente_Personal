@@ -1,10 +1,19 @@
 {
   "casos_legales": [
     {
-      "id": "multa_itagui",
-      "radicado": "0000430265",
-      "estado": "Pendiente de impugnación",
-      "entidad": "Secretaría de Movilidad Itagüí"
+      "id": "multa_itagui_coactivo",
+      "radicado_comparendo": "0000430265",
+      "placa": "KEW496",
+      "estado": "Nulidad favorable por Itagüí, pero persiste cobro coactivo en SIMIT nacional por $566.587",
+      "entidad": "Secretaría de Movilidad Itagüí / SIMIT (Federación Colombiana de Municipios)",
+      "accion_pendiente": "Monitorear respuesta de SIMIT a Solicitud de Descargue Inmediato."
+    },
+    {
+      "id": "derecho_peticion_simit",
+      "radicado_comparendo": "C29 Itagüí 0000838097",
+      "estado": "Pendiente de respuesta",
+      "entidad": "SIMIT / Movilidad Itagüí",
+      "accion_pendiente": "Monitorear respuesta a Derecho de Petición del 02/07."
     }
   ]
 }
