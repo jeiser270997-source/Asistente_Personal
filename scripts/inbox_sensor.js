@@ -4,7 +4,7 @@ const { google } = require('googleapis');
 const { authorize } = require('../Herramientas/Gmail_Cleaner/auth');
 const { sendTelegramMessage } = require('../lib/telegram');
 
-const LOG_FILE = path.join(__dirname, '..', 'logs', 'processed_emails.json');
+const LOG_FILE = path.join(__dirname, '..', 'data', 'processed_emails.json');
 const KEYWORDS = ['DIAN', 'UGPP', 'SIMIT', 'Tránsito', 'Solvo', 'Concentrix', 'CESDE', 'SENA'];
 
 function loadProcessed() {
@@ -17,6 +17,7 @@ function loadProcessed() {
 }
 
 function saveProcessed(ids) {
+  fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
   fs.writeFileSync(LOG_FILE, JSON.stringify([...ids], null, 2));
 }
 

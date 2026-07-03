@@ -22,15 +22,25 @@ jobs:
 
       - run: npm install
 
+      - name: Restore Google OAuth files
+        env:
+          GOOGLE_CREDENTIALS_B64: ${{ secrets.GOOGLE_CREDENTIALS_B64 }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+        run: |
+          echo "$GOOGLE_CREDENTIALS_B64" | base64 -d > credentials.json
+          echo "$GOOGLE_TOKEN_JSON" > token.json
+
       - name: Run inbox sensor
         run: node scripts/inbox_sensor.js
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
       - name: Commit processed state
+        continue-on-error: true
         run: |
           git config user.name "agent-heartbeat"
           git config user.email "agent-heartbeat@users.noreply.github.com"
-          git add logs/processed_emails.json
+          git add data/processed_emails.json
           git diff --cached --quiet || git commit -m "chore(heartbeat): persist inbox sensor state"
           git push
