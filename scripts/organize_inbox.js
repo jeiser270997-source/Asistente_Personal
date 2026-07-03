@@ -2,9 +2,9 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.en
 const fs = require('node:fs');
 const path = require('node:path');
 
-const INBOX_DIR = path.join('C:\\Users', 'dev', 'Desktop', 'INBOX_JEISER');
-const RESPALDO_BASE = path.join('E:\\', 'PROYECTOS', 'Respaldos', 'INBOX');
-const LOG_FILE = path.join(__dirname, '..', 'logs', 'organize_inbox.log');
+const INBOX_DIR = process.env.INBOX_DIR || path.join('C:\\Users', 'dev', 'Desktop', 'INBOX_JEISER');
+const RESPALDO_BASE = process.env.RESPALDO_BASE || path.join('E:\\', 'PROYECTOS', 'Respaldos', 'INBOX');
+const LOG_FILE = process.env.ORGANIZE_LOG_FILE || path.join(__dirname, '..', 'logs', 'organize_inbox.log');
 
 function log(msg) {
   const ts = new Date().toISOString();

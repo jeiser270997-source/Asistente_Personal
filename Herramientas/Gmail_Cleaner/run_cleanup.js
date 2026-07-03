@@ -5,57 +5,24 @@ const path = require('path');
 
 const OUTPUT_FILE = path.join(process.cwd(), '..', '..', 'correos.md');
 
-const JUNK_IDS = [
-  '19ed6662199a2c50',
-  '19ebc94f068529a3',
-  '19eb2b589954a97a',
-  '19eaf9b4e0424629',
-  '19ea1f4aae345c4d',
-  '19e8acdf9d038408',
-  '19e842a380590037',
-  '19e84285bd5e8037',
-  '19e7a36830d5a72d',
-  '19e6b8a2b92c54a9',
-  '19e66dec61685cc2',
-  '19e66db36cb75a69',
-  '19e66c6c9d2a5271',
-  '19e66c50a5271b0d',
-  '19e66c3db115f011',
-  '19e66c0d06e1b1d0',
-  '19e52a204294d676',
-  '19e528b8b8aff3e6',
-  '19e528a09d01e8c1',
-  '19e60fb3ace41b10',
-  '19e5143a2849e51a',
-  '19e4646df857f038',
-  '19e42239bea3627b',
-  '19e41dfea1670fcb',
-  '19e41134f540f173',
-  '19e3b3f942a7a7e2'
-];
-
-// Query for ALL employment emails to delete them completely
-const EMPLOYMENT_QUERY = '(subject:(empleo OR vacante OR postulación OR selección OR candidato OR cv OR resume OR interview OR entrevista) OR from:(concentrix.com OR solvoglobal.com OR computrabajo.com OR pandape.com OR serviciodeempleo.gov.co OR talent.com OR elempleo.com OR magneto365.com OR foundevercol.talkpush.com OR emtelco.com.co OR linkedin.com))';
+const EMPLOYMENT_QUERY = [
+  'from:(computrabajo.com.co OR elempleo.com OR linkedin.com OR indeed.com)',
+  'OR subject:(vacante OR empleo OR oferta OR "te estamos buscando" OR "proceso de selección" OR candidat)',
+  'OR (' +
+    '(CV OR hoja OR vida OR perfil OR postulación)',
+  '  AND (empleo OR trabajo OR vacante)',
+  ')',
+  'AND in:anywhere',
+].join(' ');
 
 async function cleanup(auth) {
   const gmail = google.gmail({ version: 'v1', auth });
+  console.log('🧹 Iniciando limpieza de Gmail basada en queries dinámicas...');
 
-  console.log('🗑️ 1. Borrando los IDs de basura específicos del archivo correos.md...');
-  let junkDeleted = 0;
-  for (const id of JUNK_IDS) {
-    try {
-      await gmail.users.messages.trash({ userId: 'me', id });
-      junkDeleted++;
-    } catch (e) {
-      console.log(`[Junk ID] Error borrando ${id}: ${e.message}`);
-    }
-  }
-  console.log(`✅ Basura específica: ${junkDeleted} correos borrados.`);
-
-  console.log('🗑️ 2. Buscando y borrando correos de empleo en todo Gmail...');
+  console.log('🗑️ 1. Buscando y borrando correos de empleo en todo Gmail...');
   let employmentDeleted = 0;
   try {
-    let pageToken = undefined;
+    let pageToken;
     do {
       const res = await gmail.users.messages.list({
         userId: 'me',
@@ -64,8 +31,8 @@ async function cleanup(auth) {
         pageToken
       });
 
-      const messages = res.data.messages;
-      if (messages && messages.length > 0) {
+      const messages = res.data.messages || [];
+      if (messages.length > 0) {
         console.log(`   Encontrados ${messages.length} correos de empleo. Borrando...`);
         for (const msg of messages) {
           try {
@@ -83,7 +50,7 @@ async function cleanup(auth) {
   }
   console.log(`✅ Empleo: ${employmentDeleted} correos borrados.`);
 
-  console.log('🔄 3. Regenerando correos.md con lo que queda en la bandeja de entrada...');
+  console.log('🔄 2. Regenerando correos.md con lo que queda en la bandeja de entrada...');
   try {
     const res = await gmail.users.messages.list({
       userId: 'me',

@@ -6,6 +6,7 @@ const { google } = require('googleapis');
 const { sendTelegramMessage } = require('../lib/telegram');
 const { escapeHTML, truncate } = require('../lib/sanitize');
 const pending = require('../lib/pending');
+const { authorize: googleAuthorize } = require('../lib/google_auth');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
@@ -85,64 +86,8 @@ function readFileSafe(p) {
 }
 
 async function authorize() {
-  const SCOPES = [
-    'https://www.googleapis.com/auth/gmail.modify',
-    'https://www.googleapis.com/auth/calendar.readonly'
-  ];
-  const TOKEN_PATH = path.join(BASE_DIR, 'token.json');
-  const CREDENTIALS_PATH = path.join(BASE_DIR, 'credentials.json');
-
-  try {
-    const tokenRaw = fs.readFileSync(TOKEN_PATH, 'utf8');
-    const creds = JSON.parse(tokenRaw);
-    const client = google.auth.fromJSON(creds);
-    if (client.refreshToken) {
-      client.refreshAccessToken();
-    }
-    client.scopes = SCOPES;
-    return client;
-  } catch {
-    log('🔑 No hay token válido. Inicia autenticación manual...');
-    const content = fs.readFileSync(CREDENTIALS_PATH, 'utf8');
-    const keys = JSON.parse(content);
-    const key = keys.installed || keys.web;
-    const oauth2Client = new google.auth.OAuth2(key.client_id, key.client_secret, 'http://localhost');
-    const authUrl = oauth2Client.generateAuthUrl({ access_type: 'offline', scope: SCOPES });
-    console.log('\n=====================================================');
-    console.log('🔗 AUTENTICACIÓN GOOGLE (Gmail + Calendar):');
-    console.log(authUrl);
-    console.log('=====================================================');
-    console.log('1. Abre el enlace en tu navegador.');
-    console.log('2. Autoriza con tu cuenta de Google.');
-    console.log('3. Serás redirigido a localhost — copia la URL completa.');
-    console.log('4. Pégala aquí:\n');
-    const readline = require('readline');
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    const code = await new Promise((resolve) => {
-      rl.question('URL: ', async (urlStr) => {
-        rl.close();
-        try {
-          const urlObj = new URL(urlStr);
-          resolve(urlObj.searchParams.get('code'));
-        } catch (err) {
-          log(`Error parsing URL: ${err.message}`);
-          resolve(null);
-        }
-      });
-    });
-    if (!code) throw new Error('No se obtuvo código de autorización.');
-    const { tokens } = await oauth2Client.getToken(code);
-    oauth2Client.setCredentials(tokens);
-    const payload = JSON.stringify({
-      type: 'authorized_user',
-      client_id: key.client_id,
-      client_secret: key.client_secret,
-      refresh_token: tokens.refresh_token,
-    });
-    fs.writeFileSync(TOKEN_PATH, payload);
-    log('✅ Token guardado con nuevos scopes (Gmail + Calendar).');
-    return oauth2Client;
-  }
+  const SCOPES = ['https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/calendar.readonly'];
+  return googleAuthorize(SCOPES);
 }
 
 async function fetchRecentEmails(auth) {
@@ -157,14 +102,25 @@ async function fetchRecentEmails(auth) {
   const timeout = setTimeout(() => controller.abort(), 15000);
 
   try {
-    const res = await gmail.users.messages.list({ userId: 'me', q: query, maxResults: 15 }, { signal: controller.signal });
-    const messages = res.data.messages || [];
-    log(`[DEBUG GMAIL] Respuesta recibida. Mensajes encontrados: ${messages.length}`);
-
-    if (messages.length === 0) return [];
-
     const emails = [];
-    for (const msg of messages) {
+    let pageToken;
+    const allMessages = [];
+
+    do {
+      const res = await gmail.users.messages.list(
+        { userId: 'me', q: query, maxResults: 50, pageToken },
+        { signal: controller.signal }
+      );
+      const batch = res.data.messages || [];
+      allMessages.push(...batch);
+      pageToken = res.data.nextPageToken;
+    } while (pageToken && allMessages.length < 100);
+
+    log(`[DEBUG GMAIL] Respuesta recibida. Mensajes encontrados: ${allMessages.length}`);
+
+    if (allMessages.length === 0) return [];
+
+    for (const msg of allMessages) {
       const detail = await gmail.users.messages.get({ userId: 'me', id: msg.id, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
       const headers = detail.data.payload.headers;
       const from = headers.find(h => h.name === 'From')?.value || '?';
@@ -287,7 +243,7 @@ async function processInbox(auth, emails) {
   return { importantEmails, trashCount };
 }
 
-function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena) {
+async function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena) {
   const trashLine = trashCount > 0 ? `🗑️ [Gmail] ${trashCount} correos basura eliminados automáticamente.` : '[Gmail] Sin basura detectada.';
   const emailBlock = importantEmails.length === 0
     ? '[Gmail] Sin correos importantes en las últimas 24h.'
@@ -305,7 +261,7 @@ function buildContext(dayType, dateStr, importantEmails, trashCount, events, est
   const senaBlock = alertasSena
     ? alertasSena
     : 'No disponible';
-  const pendingBlock = pending.formatForBriefing();
+  const pendingBlock = await pending.formatForBriefing();
 
   return `
 FECHA_HOY: ${dateStr}
@@ -348,8 +304,9 @@ async function callLLM(systemPrompt, userContext) {
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userContext }
           ],
-          temperature: 0.7,
-          max_tokens: 1500
+          temperature: 0.3,
+          max_tokens: 1500,
+          response_format: { type: "json_object" }
         };
 
         log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
@@ -432,7 +389,7 @@ async function run() {
     const { importantEmails, trashCount } = await processInbox(auth, rawEmails);
 
     const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.') + '\n\nIMPORTANTE: Debes responder SIEMPRE con un objeto JSON válido en español con esta estructura exacta (sin markdown, solo JSON plano):\n{\n  "mensaje_telegram": "El reporte detallado para enviar a Telegram...",\n  "nuevas_tareas": ["Descripción tarea 1", "Descripción tarea 2"]\n}';
-    const userContext = buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena);
+    const userContext = await buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena);
 
     log(`📋 Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);
 
@@ -441,8 +398,7 @@ async function run() {
 
     let telegramText, nuevasTareas;
     try {
-      const cleaned = briefing.trim().replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```$/, '');
-      const parsed = JSON.parse(cleaned);
+      const parsed = JSON.parse(briefing.trim());
       telegramText = parsed.mensaje_telegram || briefing;
       nuevasTareas = Array.isArray(parsed.nuevas_tareas) ? parsed.nuevas_tareas : [];
     } catch (parseErr) {
@@ -455,7 +411,7 @@ async function run() {
     log('✅ Briefing enviado por Telegram.');
 
     for (const tarea of nuevasTareas) {
-      pending.add(tarea, 'auto');
+      await pending.add(tarea, 'auto');
       log(`📌 Tarea añadida: ${tarea}`);
     }
     if (nuevasTareas.length > 0) log(`✅ ${nuevasTareas.length} tarea(s) persistida(s) en pending.json`);

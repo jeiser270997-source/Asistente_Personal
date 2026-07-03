@@ -8,9 +8,16 @@ const oauth2Client = new google.auth.OAuth2(
   'http://localhost:62000'
 );
 
+const authCode = process.env.GOOGLE_AUTH_CODE;
+if (!authCode) {
+  console.error('❌ Define GOOGLE_AUTH_CODE en tu .env o ejecútalo con:');
+  console.error('   $env:GOOGLE_AUTH_CODE="4/0..."; node exchange.js');
+  process.exit(1);
+}
+
 async function exchange() {
   try {
-    const { tokens } = await oauth2Client.getToken('4/0AdkVLPxN8T14ItctQUFPtzCo_iZ8rta70mrhCAqz1I_KLAOAGT4H6fcYtBEheZ3xwNDYlw');
+    const { tokens } = await oauth2Client.getToken(authCode);
     fs.writeFileSync('../../token.json', JSON.stringify({
       type: 'authorized_user',
       client_id: key.client_id,
@@ -18,9 +25,9 @@ async function exchange() {
       refresh_token: tokens.refresh_token,
       access_token: tokens.access_token
     }));
-    console.log('EXITO');
-  } catch(e) {
-    console.error(e);
+    console.log('✅ Token guardado exitosamente');
+  } catch (e) {
+    console.error('❌ Error intercambiando código:', e.message);
   }
 }
 exchange();
