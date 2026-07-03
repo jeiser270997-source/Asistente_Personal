@@ -1,3 +1,3 @@
 @echo off
-cd /d "E:\PROYECTOS\Asistente_Personal"
+cd /d "%~dp0"
 node scripts/brain_orchestrator.js

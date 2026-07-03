@@ -1,28 +1,36 @@
-name: Agent Heartbeat - Inbox Sensor
+name: Agent Heartbeat
 
 on:
   schedule:
-    # Cada 4 horas
     - cron: '0 */4 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  sensor:
+  heartbeat:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
         with:
-          node-version: '20'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install root dependencies
-        run: npm install
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
 
       - name: Run inbox sensor
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/inbox_sensor.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Commit processed state
+        run: |
+          git config user.name "agent-heartbeat"
+          git config user.email "agent-heartbeat@users.noreply.github.com"
+          git add logs/processed_emails.json
+          git diff --cached --quiet || git commit -m "chore(heartbeat): persist inbox sensor state"
+          git push

@@ -4,7 +4,7 @@
 # Requires GEMINI_API_KEY environment variable
 param(
     [switch]$Verbose,
-    [string]$LogPath = "C:\Users\dev\Desktop\gemini_api_tracker.log",
+    [string]$LogPath = (Join-Path $PSScriptRoot "logs" "gemini_api_tracker.log"),
     [int]$CacheHours = 1
 )
 
@@ -345,6 +345,10 @@ if (-not ([system.management.automation] efficiently? "Microsoft.PowerShell.Comm
 
 # Execute main function
 function Main {
+    $logDir = Split-Path -Parent $LogPath
+    if (-not (Test-Path $logDir)) {
+        New-Item -ItemType Directory -Path $logDir -Force | Out-Null
+    }
     Start-GeminiFreeTierTracker
 }
 
