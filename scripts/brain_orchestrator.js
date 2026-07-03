@@ -14,6 +14,7 @@ const ESTUDIO_DIR = path.resolve(__dirname, '..', '..', 'Mis_Proyectos', 'Estudi
 const SKILL_PATH = path.join(ESTUDIO_DIR, 'Carrera_Profesional', 'SKILLS', 'SKILL_ASISTENTE_MATUTINO.md');
 const ESTADO_VIVO_PATH = path.join(ESTUDIO_DIR, 'Contexto_Maestro', 'ESTADO_VIVO.md');
 const REGISTRO_ESTUDIO_PATH = path.join(ESTUDIO_DIR, 'Tecnicatura_Comprimida', 'REGISTRO_DE_ESTUDIO.md');
+const NOTAS_FILE = path.join(BASE_DIR, 'data', 'notas.md');
 const ALERTAS_SENA_PATH = path.join(ESTUDIO_DIR, 'Tecnicatura_Comprimida', 'ALERTAS_SENA.md');
 
 const COL_HOLIDAYS_2026 = [
@@ -243,7 +244,7 @@ async function processInbox(auth, emails) {
   return { importantEmails, trashCount };
 }
 
-async function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena) {
+async function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria) {
   const trashLine = trashCount > 0 ? `🗑️ [Gmail] ${trashCount} correos basura eliminados automáticamente.` : '[Gmail] Sin basura detectada.';
   const emailBlock = importantEmails.length === 0
     ? '[Gmail] Sin correos importantes en las últimas 24h.'
@@ -273,6 +274,8 @@ EVENTOS_CALENDARIO:
 ${eventsBlock}
 PENDIENTES:
 ${pendingBlock}
+MEMORIA_LARGO_PLAZO (Notas y recordatorios):
+${notasMemoria || 'Sin notas'}
 ESTADO_VIVO (contexto legal/financiero):
 ${estadoVivo || 'No disponible'}
 REGISTRO_ESTUDIO (horas acumuladas + progreso bootcamp):
@@ -371,7 +374,7 @@ async function run() {
     const sshMsg = `🔑 <b>ACCESO REMOTO SSH ACTIVO</b>\n\n• Servidor: <code>${escapeHTML(sshIP)}</code>\n• Usuario: <code>dev</code>\n• Puerto: <code>22</code>\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
     await sendTelegramMessage(sshMsg).catch(e => log(`⚠️ Error enviando notificación SSH: ${e.message}`));
 
-    const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena] = await Promise.all([
+    const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena, notasMemoria] = await Promise.all([
       fetchRecentEmails(auth),
       fetchCalendarEvents(auth).catch(e => {
         log(`⚠️ [Calendar] ${e.message}`);
@@ -380,13 +383,14 @@ async function run() {
       Promise.resolve(readFileSafe(SKILL_PATH)),
       Promise.resolve(readFileSafe(ESTADO_VIVO_PATH)),
       Promise.resolve(readFileSafe(REGISTRO_ESTUDIO_PATH)),
-      Promise.resolve(readFileSafe(ALERTAS_SENA_PATH))
+      Promise.resolve(readFileSafe(ALERTAS_SENA_PATH)),
+      Promise.resolve(readFileSafe(NOTAS_FILE))
     ]);
 
     const { importantEmails, trashCount } = await processInbox(auth, rawEmails);
 
     const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.') + '\n\nIMPORTANTE: Debes responder SIEMPRE con un objeto JSON válido en español con esta estructura exacta (sin markdown, solo JSON plano):\n{\n  "mensaje_telegram": "El reporte detallado para enviar a Telegram...",\n  "nuevas_tareas": ["Descripción tarea 1", "Descripción tarea 2"]\n}';
-    const userContext = await buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena);
+    const userContext = await buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria);
 
     log(`📋 Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);
 
