@@ -1,15 +1,15 @@
 {
-  "name": "estudio-lifeos",
-  "version": "1.0.0",
-  "private": true,
-  "type": "commonjs",
-  "dependencies": {
-    "@google-cloud/local-auth": "^3.0.1",
-    "dotenv": "^17.4.2",
-    "google-auth-library": "^10.9.0",
-    "googleapis": "^173.0.0",
-    "lowdb": "^1.0.0",
-    "nodemailer": "^9.0.3",
-    "telegraf": "^4.16.3"
-  }
+    "name":  "estudio-lifeos",
+    "version":  "1.0.0",
+    "private":  true,
+    "type":  "commonjs",
+    "dependencies":  {
+                         "@google-cloud/local-auth":  "^3.0.1",
+                         "dotenv":  "^17.4.2",
+                         "google-auth-library":  "^10.9.0",
+                         "googleapis":  "^173.0.0",
+                         "lowdb":  "^1.0.0",
+                         "nodemailer":  "^9.0.3",
+                         "telegraf":  "^4.16.3"
+                     }
 }

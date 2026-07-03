@@ -1,4 +1,4 @@
-const { sendTelegramMessage } = require('./lib/telegram.js');
+const { sendTelegramMessage } = require('../lib/telegram.js');
 
 const msg = `📱 *SSH desde Termux (Android) - Guía Rápida*
 
