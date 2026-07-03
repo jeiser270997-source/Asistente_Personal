@@ -242,21 +242,26 @@ async function processInbox(auth, emails) {
 
     if (TRASH_PATTERNS.some(p => p.test(textToCheck))) {
       try {
-        await gmail.users.messages.trash({ userId: 'me', id: msg.id });
+        await gmail.users.messages.delete({ userId: 'me', id: msg.id });
         trashCount++;
-        log(`🗑️ Papelera: ${msg.subject}`);
+        log(`🗑️ Eliminado permanentemente: ${msg.subject}`);
       } catch (err) {
-        log(`⚠️ Error al enviar a papelera: ${err.message}`);
+        log(`⚠️ Error al eliminar basura: ${err.message}`);
       }
       continue;
     }
 
+    try {
+      await gmail.users.messages.modify({
+        userId: 'me', id: msg.id,
+        resource: { removeLabelIds: ['UNREAD'] }
+      });
+    } catch (err) {
+      log(`⚠️ Error al marcar como leído: ${err.message}`);
+    }
+
     if (IMPORTANT_KEYWORDS.some(kw => textToCheck.toLowerCase().includes(kw))) {
       try {
-        await gmail.users.messages.modify({
-          userId: 'me', id: msg.id,
-          resource: { removeLabelIds: ['UNREAD'] }
-        });
         const detail = await gmail.users.messages.get({
           userId: 'me', id: msg.id, format: 'full'
         });
@@ -268,12 +273,14 @@ async function processInbox(auth, emails) {
         });
         log(`📌 Importante: ${msg.subject}`);
       } catch (err) {
-        log(`⚠️ Error procesando importante: ${err.message}`);
+        log(`⚠️ Error extrayendo importante: ${err.message}`);
         importantEmails.push({
           from: msg.from, subject: msg.subject,
           snippet: '(error al extraer contenido)'
         });
       }
+    } else {
+      log(`📖 Marcado como leído: ${msg.subject}`);
     }
   }
 
