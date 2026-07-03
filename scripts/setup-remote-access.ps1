@@ -54,7 +54,7 @@ Log "[3/4] Configurando Firewall..."
 try {
     $existing = Get-NetFirewallRule -DisplayName "OpenSSH SSH Server (sshd)" -ErrorAction SilentlyContinue
     if (-not $existing) {
-        New-NetFirewallRule -DisplayName "OpenSSH SSH Server (sshd)" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
+        New-NetFirewallRule -DisplayName "OpenSSH SSH Server (sshd)" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow -RemoteAddress "100.64.0.0/10", "LocalSubnet"
         Log "  Regla de Firewall creada: TCP/22 IN允许."
     } else {
         Log "  Regla de Firewall ya existe: TCP/22 IN允许."

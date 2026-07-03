@@ -1,0 +1,95 @@
+[
+  {
+    "name": "employment-domains",
+    "fromPatterns": [
+      "concentrix.com", "solvoglobal.com", "computrabajo.com", "pandape.com",
+      "serviciodeempleo.gov.co", "talent.com", "elempleo.com", "magneto365.com",
+      "foundevercol.talkpush.com", "emtelco.com.co", "linkedin.com", "peaku.co",
+      "smartrecruiters.com"
+    ],
+    "reason": "Employment domain"
+  },
+  {
+    "name": "employment-keywords",
+    "subjectPatterns": [
+      "empleo", "vacante", "postulación", "selección", "candidato", "cv",
+      "resume", "interview", "entrevista", "apply", "applying", "job", "career",
+      "recruit", "hired", "candidatura"
+    ],
+    "reason": "Employment keyword in subject"
+  },
+  {
+    "name": "sena-informativo",
+    "fromPatterns": ["sena.edu.co", "senavirtual.edu.co"],
+    "subjectPatterns": [
+      "conferencia", "fin de semana", "puente", "cierre", "aprobados",
+      "honor", "aa3", "aa4", "aa2", "aa1", "bienvenida", "bienvenido",
+      "preliminar"
+    ],
+    "reason": "SENA informational/invite"
+  },
+  {
+    "name": "claro-cobranzas",
+    "fromPatterns": ["coguasimales.co"],
+    "reason": "Claro collection agent"
+  },
+  {
+    "name": "claro-recordatorios",
+    "fromPatterns": ["claro.com.co"],
+    "subjectPatterns": ["paga", "hogar claro", "recordatorio", "aviso", "notificación claro"],
+    "reason": "Claro payment promo/reminder"
+  },
+  {
+    "name": "dian-agendamiento",
+    "fromPatterns": ["agendamiento@dian.gov.co"],
+    "reason": "DIAN appointment/survey"
+  },
+  {
+    "name": "security-alerts",
+    "subjectPatterns": ["contraseña", "password", "restablecer", "recuperación", "actualizada"],
+    "reason": "Security alert / password reset"
+  },
+  {
+    "name": "canva",
+    "fromPatterns": ["canva.com"],
+    "reason": "Canva notification"
+  },
+  {
+    "name": "firebase-welcome",
+    "fromPatterns": ["firebase-no-reply@google.com"],
+    "subjectPatterns": ["welcome"],
+    "reason": "Firebase welcome email"
+  },
+  {
+    "name": "google-photos",
+    "fromPatterns": ["photos@google.com", "google photos"],
+    "reason": "Google Photos system email"
+  },
+  {
+    "name": "password-reset-subject",
+    "subjectPatterns": ["restablece tu contraseña", "recuperar contraseña"],
+    "reason": "Password reset"
+  },
+  {
+    "name": "ccb-webinar",
+    "fromPatterns": ["ccb.org.co"],
+    "subjectPatterns": ["webinar"],
+    "reason": "CCB Webinar invite"
+  },
+  {
+    "name": "despegar",
+    "fromPatterns": ["despegar.com"],
+    "reason": "Despegar travel promo"
+  },
+  {
+    "name": "banesco",
+    "fromPatterns": ["banesco.com"],
+    "reason": "Banesco bank notification"
+  },
+  {
+    "name": "hacienda-bogota",
+    "fromPatterns": ["shd.gov.co"],
+    "subjectPatterns": ["plazo", "vence", "descuento", "impuesto"],
+    "reason": "Hacienda Bogota old tax reminder"
+  }
+]

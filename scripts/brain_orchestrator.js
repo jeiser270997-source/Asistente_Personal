@@ -368,8 +368,9 @@ async function callLLM(systemPrompt, userContext) {
         if (!res.ok) {
           const errText = await res.text();
           if (attempt < maxAttempts - 1 && (res.status === 429 || res.status >= 500)) {
-            log(`⚠️ [${provider.name}] Saturación detectada, reintentando en 3s... (${attempt + 1}/${maxAttempts - 1})`);
-            await new Promise(r => setTimeout(r, 3000));
+            const delay = Math.pow(2, attempt + 1) * 1000;
+            log(`⚠️ [${provider.name}] Saturación (${res.status}), reintentando en ${delay/1000}s... (${attempt + 1}/${maxAttempts - 1})`);
+            await new Promise(r => setTimeout(r, delay));
             continue;
           }
           lastError[provider.name] = `${res.status}: ${errText}`;
@@ -387,8 +388,9 @@ async function callLLM(systemPrompt, userContext) {
         break;
       } catch (err) {
         if (attempt < maxAttempts - 1) {
-          log(`⚠️ [${provider.name}] Saturación detectada, reintentando en 3s... (${attempt + 1}/${maxAttempts - 1})`);
-          await new Promise(r => setTimeout(r, 3000));
+          const delay = Math.pow(2, attempt + 1) * 1000;
+          log(`⚠️ [${provider.name}] Error de red, reintentando en ${delay/1000}s... (${attempt + 1}/${maxAttempts - 1})`);
+          await new Promise(r => setTimeout(r, delay));
           continue;
         }
         lastError[provider.name] = err.message;
