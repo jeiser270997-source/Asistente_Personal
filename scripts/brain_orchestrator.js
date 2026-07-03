@@ -431,7 +431,7 @@ async function run() {
 
     const { importantEmails, trashCount } = await processInbox(auth, rawEmails);
 
-    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.');
+    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.') + '\n\nIMPORTANTE: Debes responder SIEMPRE con un objeto JSON válido en español con esta estructura exacta (sin markdown, solo JSON plano):\n{\n  "mensaje_telegram": "El reporte detallado para enviar a Telegram...",\n  "nuevas_tareas": ["Descripción tarea 1", "Descripción tarea 2"]\n}';
     const userContext = buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena);
 
     log(`📋 Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);
@@ -439,8 +439,26 @@ async function run() {
     const briefing = await callLLM(systemPrompt, userContext);
     log('✅ Briefing recibido del LLM.');
 
-    await sendTelegramMessage(truncate(briefing, 3500));
+    let telegramText, nuevasTareas;
+    try {
+      const cleaned = briefing.trim().replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```$/, '');
+      const parsed = JSON.parse(cleaned);
+      telegramText = parsed.mensaje_telegram || briefing;
+      nuevasTareas = Array.isArray(parsed.nuevas_tareas) ? parsed.nuevas_tareas : [];
+    } catch (parseErr) {
+      log(`⚠️ No se pudo parsear JSON, usando respuesta cruda: ${parseErr.message}`);
+      telegramText = briefing;
+      nuevasTareas = [];
+    }
+
+    await sendTelegramMessage(truncate(telegramText, 3500));
     log('✅ Briefing enviado por Telegram.');
+
+    for (const tarea of nuevasTareas) {
+      pending.add(tarea, 'auto');
+      log(`📌 Tarea añadida: ${tarea}`);
+    }
+    if (nuevasTareas.length > 0) log(`✅ ${nuevasTareas.length} tarea(s) persistida(s) en pending.json`);
 
   } catch (err) {
     log(`❌ Error: ${err.message}`);
