@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
@@ -283,11 +283,8 @@ ${senaBlock}
 }
 
 const LLM_PROVIDERS = [
-  { name: 'NVIDIA Nemotron 550B', baseUrl: process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: process.env.NVIDIA_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b', retry: 2 },
-  { name: 'Cerebras', baseUrl: process.env.CEREBRAS_BASE_URL || 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: process.env.CEREBRAS_MODEL || 'cerebras-llama-3.3-70b' },
-  { name: 'OpenRouter Free (Hermes 405B)', baseUrl: process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: process.env.OPENROUTER_MODEL || 'nousresearch/hermes-3-llama-3.1-405b:free' },
-  { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://localhost:11434/v1', apiKey: '', model: 'qwen2.5-coder:latest' },
-].filter(p => p.baseUrl && p.model);
+  { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://127.0.0.1:11434/v1', apiKey: 'ollama', model: process.env.OLLAMA_MODEL || 'llama3.1:latest', retry: 2 }
+];
 
 async function callLLM(systemPrompt, userContext) {
   const lastError = {};
