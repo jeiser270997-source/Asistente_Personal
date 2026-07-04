@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - run: npm install
+      - run: npm install --legacy-peer-deps
 
       - name: Inyectar credenciales Google
         run: |
