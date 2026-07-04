@@ -1,0 +1,24 @@
+name: Recordatorio CESDE
+
+on:
+  schedule:
+    # 22:00 UTC = 5:00 PM Colombia (1h antes de clase 6-8pm)
+    # Corre Lun, Mie, Vie — el script valida fechas exactas
+    - cron: '0 22 * * 1,3,5'
+  workflow_dispatch:
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install
+      - name: Recordatorio
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/recordatorios_cesde.js
