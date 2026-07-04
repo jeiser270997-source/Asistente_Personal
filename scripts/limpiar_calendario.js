@@ -3,7 +3,7 @@ const { authorize } = require('../lib/google_auth');
 
 async function main() {
   const CAL_SCOPE = 'https://www.googleapis.com/auth/calendar';
-  const auth = await authorize([CAL_SCOPE]);
+  const auth = await authorize([CAL_SCOPE], true);
   const cal = google.calendar({ version: 'v3', auth });
 
   const res = await cal.events.list({

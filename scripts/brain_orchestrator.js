@@ -1,4 +1,4 @@
-﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
@@ -10,12 +10,12 @@ const { authorize: googleAuthorize } = require('../lib/google_auth');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
-const ESTUDIO_DIR = path.resolve(__dirname, '..', '..', 'Mis_Proyectos', 'Estudio');
-const SKILL_PATH = path.join(ESTUDIO_DIR, 'Carrera_Profesional', 'SKILLS', 'SKILL_ASISTENTE_MATUTINO.md');
-const ESTADO_VIVO_PATH = path.join(ESTUDIO_DIR, 'Contexto_Maestro', 'ESTADO_VIVO.md');
-const REGISTRO_ESTUDIO_PATH = path.join(ESTUDIO_DIR, 'Tecnicatura_Comprimida', 'REGISTRO_DE_ESTUDIO.md');
+const CONTEXTO_DIR = path.join(BASE_DIR, 'data', 'contexto_maestro');
+const SKILL_PATH = path.join(BASE_DIR, 'skills', 'cerebro.md');
+const ESTADO_VIVO_PATH = path.join(CONTEXTO_DIR, 'ESTADO_VIVO.md');
+const REGISTRO_ESTUDIO_PATH = path.join(CONTEXTO_DIR, 'REGISTRO_DE_ESTUDIO.md');
 const NOTAS_FILE = path.join(BASE_DIR, 'data', 'notas.md');
-const ALERTAS_SENA_PATH = path.join(ESTUDIO_DIR, 'Tecnicatura_Comprimida', 'ALERTAS_SENA.md');
+const ALERTAS_SENA_PATH = path.join(CONTEXTO_DIR, 'ALERTAS_SENA.md');
 
 const COL_HOLIDAYS_2026 = [
   '2026-01-01','2026-01-12','2026-03-23','2026-03-24','2026-03-25',

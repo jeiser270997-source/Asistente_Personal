@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "version": 1,
+    "updated": "2026-07-04T14:31:50.608Z",
+    "note": "Contexto vital persistente. Edita con scripts/agregar_contexto.js"
+  },
+  "perfil": {
+    "nombre": "Jeiser",
+    "pais": "Colombia",
+    "ciudad": "Medellin",
+    "zona_horaria": "America/Bogota (UTC-5)",
+    "direccion": "Ueb Villa Eloisa Bloque 25 Apto 102",
+    "ocupacion": "Conductor Didi + Estudiante SENA + busqueda laboral activa",
+    "idiomas": [
+      "espanol nativo"
+    ]
+  },
+  "metas": {
+    "corto_plazo": [
+      "Conseguir empleo como desarrollador"
+    ],
+    "mediano_plazo": [],
+    "largo_plazo": []
+  },
+  "estudio": {
+    "sena": {
+      "programa": "",
+      "ficha": "",
+      "inicio": "",
+      "fin_estimado": ""
+    },
+    "cesde": {
+      "cursos": []
+    },
+    "habilidades": []
+  },
+  "trabajo": {
+    "buscando": true,
+    "tipo": "Conductor Didi",
+    "ultimo_empleo": "",
+    "horario_habitual": "variable, en la manana principalmente",
+    "industrias_interes": [
+      "tecnologia",
+      "desarrollo de software"
+    ],
+    "entrevistas_pendientes": [],
+    "postulaciones_activas": []
+  },
+  "legal_financiero": {
+    "dian": {
+      "estado": "",
+      "ultima_gestion": ""
+    },
+    "simit": {
+      "estado": "",
+      "ultima_gestion": ""
+    },
+    "bancos": [],
+    "deudas": [],
+    "obligaciones_mensuales": []
+  },
+  "salud": {
+    "eps": "",
+    "condiciones": [],
+    "medicamentos": [],
+    "citas_pendientes": []
+  },
+  "notas_vida": [
+    "[2026-07-04] Optimizado proyecto asistente: email processor + contexto vital + GH Actions",
+    "[2026-07-04] Registrada direccion: Ueb Villa Eloisa Bloque 25 Apto 102. Actualizada ocupacion: Conductor Didi + SENA."
+  ],
+  "recordatorios_recurrentes": [],
+  "preferencias_asistente": {
+    "tono": "directo y util",
+    "idioma": "espanol",
+    "formato_telegram": "HTML con bold y code",
+    "max_tokens_respuesta": 1500
+  },
+  "contactos_importantes": []
+}

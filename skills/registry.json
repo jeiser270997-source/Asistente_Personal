@@ -1,0 +1,40 @@
+{
+  "skills": [
+    {
+      "id": "tributaria",
+      "nombre": "Tributaria Colombia",
+      "keywords": ["dian", "rut", "impuestos", "declaracion de renta", "retefuente", "iva", "facturacion", "sanciones", "requerimiento", "embargo", "cobro coactivo", "exogena", "contador", "pre-litigio", "nulidad", "firmeza", "compensacion"],
+      "prioridad": 10
+    },
+    {
+      "id": "laboral",
+      "nombre": "Busqueda Laboral",
+      "keywords": ["trabajo", "empleo", "vacante", "postulacion", "curriculum", "entrevista", "computrabajo", "linkedin", "contrato", "salario", "solvo", "concentrix"],
+      "prioridad": 8
+    },
+    {
+      "id": "legal",
+      "nombre": "Legal Colombia",
+      "keywords": ["simit", "comparendo", "multa de transito", "fiscalia", "denuncia", "nuc", "citacion", "juzgado", "abogado", "tutela", "contrato", "policia"],
+      "prioridad": 9
+    },
+    {
+      "id": "finanzas",
+      "nombre": "Finanzas Personales",
+      "keywords": ["epm", "banco", "bancolombia", "nequi", "daviplata", "tarjeta", "prestamo", "credito", "deuda", "ahorro", "presupuesto", "nomina", "pago", "recibo"],
+      "prioridad": 7
+    },
+    {
+      "id": "estudio",
+      "nombre": "Estudio SENA/CESDE",
+      "keywords": ["sena", "cesde", "clase", "taller", "tarea", "curso", "programa", "formacion", "certificado", "ficha", "instructor", "horario"],
+      "prioridad": 8
+    },
+    {
+      "id": "salud",
+      "nombre": "Salud y Bienestar",
+      "keywords": ["eps", "cita medica", "medicamento", "salud", "doctor", "hospital", "clinica", "examen", "formula", "sintomas"],
+      "prioridad": 6
+    }
+  ]
+}

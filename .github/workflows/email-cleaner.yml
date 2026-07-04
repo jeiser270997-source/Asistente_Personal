@@ -1,0 +1,39 @@
+name: Email Cleaner
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: 'Horas hacia atras para escanear (default: 6)'
+        required: false
+        default: '6'
+        type: string
+
+jobs:
+  process-emails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm install
+
+      - name: Inyectar credenciales Google
+        run: |
+          echo "${{ secrets.GOOGLE_CREDENTIALS_JSON }}" > credentials.json
+          echo "${{ secrets.GOOGLE_TOKEN_JSON }}" > token.json
+
+      - name: Ejecutar Email Processor
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          EMAIL_SCAN_HOURS: ${{ inputs.hours || '6' }}
+        run: node scripts/email_processor.js

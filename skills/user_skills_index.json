@@ -1,0 +1,76 @@
+{
+  "skills": [
+    {
+      "id": "tributaria_md",
+      "nombre": "Defensa Tributaria DIAN",
+      "ruta": "C:\\Users\\dev\\Documents\\SKILLS\\SKILL_TRIBUTARIA.md",
+      "version": "5.4",
+      "keywords": ["dian", "rut", "impuestos", "declaracion de renta", "retefuente", "iva", "requerimiento", "embargo", "cobro coactivo", "exogena", "sanciones", "contador", "art 26 et", "pre-litigio", "nulidad", "firma digital", "fee", "reforma tributaria", "sancion", "firmeza", "compensacion"],
+      "prioridad": 10
+    },
+    {
+      "id": "extractor_md",
+      "nombre": "Extractor de Contexto v9",
+      "ruta": "C:\\Users\\dev\\Documents\\SKILLS\\SKILL_EXTRACTOR_v9.md",
+      "version": "9.0",
+      "keywords": ["extractor", "contexto", "extraer", "analisis", "confianza", "verificacion"],
+      "prioridad": 9
+    },
+    {
+      "id": "softball_md",
+      "nombre": "Manager Softball Índer Envigado 2026",
+      "ruta": "C:\\Users\\dev\\Documents\\SKILLS\\SKILL_MANAGER_SOFTBALL_v3.md",
+      "version": "3.0",
+      "keywords": ["softball", "inder", "envigado", "beisbol", "manager", "equipo", "entrenamiento", "torneo", "jugador", "lineup", "pitcheo"],
+      "prioridad": 7
+    },
+    {
+      "id": "caveman_md",
+      "nombre": "Caveman Ultra-Compressed Mode",
+      "ruta": "C:\\Users\\dev\\Documents\\SKILLS\\CAVEMAN.md",
+      "version": "1.0",
+      "keywords": ["caveman", "cavernicola", "ultra compressed", "minimo", "compacto", "tokens"],
+      "prioridad": 5
+    },
+    {
+      "id": "ingeniero_md",
+      "nombre": "Ingeniero / CTO / Arquitecto",
+      "ruta": "C:\\Users\\dev\\Documents\\SKILLS\\INGENIERO.md",
+      "version": "1.0",
+      "keywords": ["arquitecto", "cto", "ingeniero senior", "full stack", "arquitectura", "codigo", "desarrollo", "software", "programacion", "sistema"],
+      "prioridad": 8
+    },
+    {
+      "id": "job_filter_md",
+      "nombre": "Filtro de Ofertas Laborales Jeiser",
+      "ruta": "C:\\Users\\dev\\Documents\\SKILLS\\job-filter-jeiser-prompt.md",
+      "version": "1.0",
+      "keywords": ["filtro", "oferta", "trabajo", "jeiser", "aplicar", "empleo"],
+      "prioridad": 9
+    },
+    {
+      "id": "cerebro_md",
+      "nombre": "Segundo Cerebro (Life OS)",
+      "ruta": "e:\\PROYECTOS\\Asistente_Personal\\skills\\cerebro.md",
+      "version": "1.0",
+      "keywords": ["cerebro", "recordar", "vida", "gestionar", "resumen", "pensamiento", "idea", "organizar"],
+      "prioridad": 10
+    },
+    {
+      "id": "psicologo_md",
+      "nombre": "Consejero Psicológico (Satori/Mindfulness)",
+      "ruta": "e:\\PROYECTOS\\Asistente_Personal\\skills\\psicologo.md",
+      "version": "1.0",
+      "keywords": ["estres", "ansiedad", "psicologo", "consejo", "estoico", "calma", "saturado", "triste", "cansado"],
+      "prioridad": 10
+    },
+    {
+      "id": "tutor_md",
+      "nombre": "Tutor Académico (Feynman/Aprendizaje Activo)",
+      "ruta": "e:\\PROYECTOS\\Asistente_Personal\\skills\\tutor.md",
+      "version": "1.0",
+      "keywords": ["estudiar", "tutor", "profesor", "aprender", "explicar", "feynman", "pomodoro", "cesde", "sena"],
+      "prioridad": 10
+    }
+  ]
+}

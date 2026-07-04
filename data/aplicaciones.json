@@ -1,0 +1,49 @@
+[
+  {
+    "id": "app_1783174251568",
+    "empresa": "Solvo",
+    "cargo": "Desarrollador Junior",
+    "plataforma": "Computrabajo",
+    "fecha_aplicacion": "2026-07-04",
+    "estado": "entrevista",
+    "evaluacion": {
+      "score": 70,
+      "compatible": true,
+      "razones": [
+        "rol de desarrollo",
+        "rol para entrada/sin experiencia"
+      ]
+    },
+    "historial": [
+      {
+        "fecha": "2026-07-04T14:10:51.568Z",
+        "evento": "aplicacion_enviada"
+      },
+      {
+        "fecha": "2026-07-04T14:10:51.572Z",
+        "evento": "llamaron para entrevista"
+      }
+    ]
+  },
+  {
+    "id": "app_1783174251572",
+    "empresa": "Google",
+    "cargo": "Senior Software Engineer",
+    "plataforma": "LinkedIn",
+    "fecha_aplicacion": "2026-07-04",
+    "estado": "aplicada",
+    "evaluacion": {
+      "score": 40,
+      "compatible": false,
+      "razones": [
+        "rol senior, posiblemente no apto"
+      ]
+    },
+    "historial": [
+      {
+        "fecha": "2026-07-04T14:10:51.572Z",
+        "evento": "aplicacion_enviada"
+      }
+    ]
+  }
+]
