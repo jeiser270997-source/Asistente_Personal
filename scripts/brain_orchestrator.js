@@ -286,8 +286,19 @@ ${senaBlock}
 }
 
 const LLM_PROVIDERS = [
-  { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://127.0.0.1:11434/v1', apiKey: 'ollama', model: process.env.OLLAMA_MODEL || 'llama3.1:latest', retry: 2 }
-];
+  // ── Nivel 1: NVIDIA (build.nvidia.com) — mejor calidad de razonamiento ──
+  { name: 'NVIDIA DeepSeek V4 Flash', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'deepseek-ai/deepseek-v4-flash', retry: 1 },
+  { name: 'NVIDIA Nemotron Super 49B', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'nvidia/llama-3.3-nemotron-super-49b-v1', retry: 1 },
+  // ── Nivel 2: Cerebras (api.cerebras.ai) — velocidad extrema ──
+  { name: 'Cerebras GLM-4.7', baseUrl: 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: 'zai-glm-4.7', retry: 1 },
+  { name: 'Cerebras Gemma 4 31B', baseUrl: 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: 'gemma-4-31b', retry: 1 },
+  // ── Nivel 3: OpenRouter — modelos gratuitos rotativos ──
+  { name: 'OpenRouter Free', baseUrl: 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: 'openrouter/free', retry: 1 },
+  // ── Nivel 4: Gemini 2.5 Flash — tasas generosas gratuitas ──
+  { name: 'Gemini 2.5 Flash', baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai', apiKey: process.env.GEMINI_API_KEY, model: 'gemini-2.5-flash', retry: 2 },
+  // ── Nivel 5: Ollama Local — último recurso ──
+  { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://127.0.0.1:11434/v1', apiKey: 'ollama', model: process.env.OLLAMA_MODEL || 'llama3.1:latest', retry: 1 }
+].filter(p => p.apiKey && p.apiKey !== 'undefined');
 
 async function callLLM(systemPrompt, userContext) {
   const lastError = {};
@@ -306,7 +317,7 @@ async function callLLM(systemPrompt, userContext) {
           ],
           temperature: 0.3,
           max_tokens: 1500,
-          response_format: { type: "json_object" }
+          format: "json"
         };
 
         log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
@@ -371,8 +382,7 @@ async function run() {
     const auth = await authorize();
 
     const sshIP = detectTailscaleIP();
-    const sshMsg = `🔑 <b>ACCESO REMOTO SSH ACTIVO</b>\n\n• Servidor: <code>${escapeHTML(sshIP)}</code>\n• Usuario: <code>dev</code>\n• Puerto: <code>22</code>\n• Instrucción: Usa este host desde tu S23 Ultra vía SSH para tomar notas en ESTADO_VIVO.md.`;
-    await sendTelegramMessage(sshMsg).catch(e => log(`⚠️ Error enviando notificación SSH: ${e.message}`));
+    // [JARVIS] Mensaje SSH silenciado para evitar spam en Telegram.
 
     const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena, notasMemoria] = await Promise.all([
       fetchRecentEmails(auth),
@@ -428,3 +438,6 @@ async function run() {
 }
 
 run();
+
+
+

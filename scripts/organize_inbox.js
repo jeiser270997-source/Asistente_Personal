@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -12,7 +12,7 @@ function log(msg) {
   console.log(line);
   try {
     fs.appendFileSync(LOG_FILE, line + '\n');
-  } catch {}
+  } catch (e) { log('Error silenciado: ' + e.message); }
 }
 
 function getExtensionCategory(ext) {

@@ -1,0 +1,37 @@
+﻿name: Jarvis Cloud Orchestrator
+
+on:
+  schedule:
+    # Se ejecuta a las 12:00 UTC, que son las 07:00 AM en Colombia (UTC-5)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente con un botón en GitHub
+
+jobs:
+  run-brain:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Instalar dependencias
+      run: npm install
+
+    - name: Inyectar Credenciales de Google (Desde Secrets)
+      run: |
+        echo "${{ secrets.GOOGLE_CREDENTIALS_JSON }}" > credentials.json
+        echo "${{ secrets.GOOGLE_TOKEN_JSON }}" > token.json
+
+    - name: Ejecutar Brain Orchestrator
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      run: node scripts/brain_orchestrator.js
