@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-07-05T18:52:36.017Z",
+  "fuente": "JuniorJobs WhatsApp (51K seguidores)",
+  "total": 3,
+  "recomendadas": 2,
+  "no_recomendadas": 1,
+  "jobs": [
+    {
+      "empresa": "",
+      "puesto": "QA Automation Junior",
+      "stack": "Playwright, Cypress, JavaScript",
+      "ubicacion": "desde Colombia",
+      "salario": "$3.500.000 COP",
+      "link": "https://technova.co/careers/qa-junior",
+      "score": 100,
+      "veredicto": "APLICAR",
+      "razon": "ALTAMENTE RECOMENDADO - Perfil coincide fuerte"
+    },
+    {
+      "empresa": "",
+      "puesto": "Frontend Developer Junior",
+      "stack": "TypeScript, React, CSS",
+      "ubicacion": "LATAM",
+      "salario": "$2.800.000 COP",
+      "link": "https://startclic.com/careers/frontend-jr",
+      "score": 98,
+      "veredicto": "APLICAR",
+      "razon": "ALTAMENTE RECOMENDADO - Perfil coincide fuerte"
+    },
+    {
+      "empresa": "",
+      "puesto": "Desarrollador Fullstack Senior",
+      "stack": "Java, Spring Boot, React, AWS",
+      "ubicacion": "Bogota",
+      "salario": "$12.000.000 COP",
+      "link": "https://datasoft.com/jobs/sr-fullstack",
+      "score": 38,
+      "veredicto": "NO APLICAR",
+      "razon": "NO RECOMENDADO - Perfil no coincide"
+    }
+  ]
+}

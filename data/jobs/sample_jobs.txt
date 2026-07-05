@@ -1,0 +1,20 @@
+Empresa: TechNova Colombia
+Puesto: QA Automation Junior
+Salario: $3.500.000 COP
+Remoto desde Colombia
+Stack: Playwright, Cypress, JavaScript
+https://technova.co/careers/qa-junior
+
+Empresa: DataSoft LATAM
+Puesto: Desarrollador Fullstack Senior
+Salario: $12.000.000 COP
+Presencial Bogota
+Stack: Java, Spring Boot, React, AWS
+https://datasoft.com/jobs/sr-fullstack
+
+Empresa: StartClic
+Puesto: Frontend Developer Junior
+Salario: $2.800.000 COP
+Remoto LATAM
+Stack: TypeScript, React, CSS
+https://startclic.com/careers/frontend-jr
