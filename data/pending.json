@@ -6,6 +6,48 @@
       "category": "email",
       "done": false,
       "created": "2026-07-04T15:29:39.631Z"
+    },
+    {
+      "id": "mr7txpguhn4p",
+      "text": "Revisar y responder correo de Fiscalía (Ampliación Denuncia NUC 110016102838202604358)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T13:31:17.934Z"
+    },
+    {
+      "id": "mr7txpgui70l",
+      "text": "Revisar y responder correo de SENA (Certificado para Leila Farfan)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T13:31:17.934Z"
+    },
+    {
+      "id": "mr7txpgv4avi",
+      "text": "Revisar y responder correo de DIAN (Asignación Petición Particular No. 2026DP000161298)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T13:31:17.935Z"
+    },
+    {
+      "id": "mr7txpgvsnmz",
+      "text": "Revisar y responder correo de MinEducación (Convalidaciones Básica Confirmación)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T13:31:17.935Z"
+    },
+    {
+      "id": "mr7txpgwwn01",
+      "text": "Revisar y responder correo de Hacienda Bogotá (Notificaciones)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T13:31:17.936Z"
+    },
+    {
+      "id": "mr7txpgwhqtp",
+      "text": "Revisar documentos de Angelina Rojas en LifeOS/Angelina_Rojas",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T13:31:17.936Z"
     }
   ]
 }

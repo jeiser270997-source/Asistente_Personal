@@ -21,7 +21,7 @@ jobs:
         cache: 'npm'
 
     - name: Instalar dependencias
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: Inyectar Credenciales de Google (Desde Secrets)
       run: |
