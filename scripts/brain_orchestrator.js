@@ -286,77 +286,12 @@ ${senaBlock}
 `.trim();
 }
 
-const DEEPSEEK_URL = 'https://api.deepseek.com/v1/chat/completions';
-const DEEPSEEK_MODEL = 'deepseek-v4-flash';
+const { askLLM } = require('../lib/llm_service');
 
+// ─── LLM CALL ────────────────────────────────────────────────
 async function callLLM(systemPrompt, userContext) {
-  if (!process.env.DEEPSEEK_API_KEY) throw new Error('DEEPSEEK_API_KEY no configurada');
-
-  const valley = isDeepSeekValley();
-  if (!valley) {
-    const hora = getColombiaDate().getHours();
-    throw new Error(`DeepSeek en horario PICO (${hora}h Colombia). Briefing se generara en el siguiente ciclo valle.`);
-  }
-
-  log(`🧠 DeepSeek ${DEEPSEEK_MODEL} | ${getScheduleLabel()}`);
-
-  const compressedUser = userContext.length > 12000
-    ? userContext.substring(0, 12000) + '\n... (contexto comprimido)'
-    : userContext;
-
-  let attempt = 0;
-  const maxAttempts = 2;
-
-  while (attempt < maxAttempts) {
-    attempt++;
-    try {
-      const res = await fetch(DEEPSEEK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`
-        },
-        body: JSON.stringify({
-          model: DEEPSEEK_MODEL,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: compressedUser }
-          ],
-          temperature: 0.3,
-          max_tokens: 1500
-        }),
-        signal: AbortSignal.timeout(60000)
-      });
-
-      if (res.status === 429) {
-        const delay = Math.pow(2, attempt) * 2000;
-        log(`⚠ Rate limit, reintentando en ${delay/1000}s...`);
-        await new Promise(r => setTimeout(r, delay));
-        continue;
-      }
-
-      if (!res.ok) {
-        const err = await res.text().catch(() => '');
-        throw new Error(`HTTP ${res.status}: ${err.substring(0, 100)}`);
-      }
-
-      const data = await res.json();
-      const content = data.choices?.[0]?.message?.content;
-      if (content) {
-        const tokens = data.usage;
-        const tokStr = tokens ? `${tokens.total_tokens} tokens` : 'OK';
-        log(`✅ DeepSeek | ${tokStr}`);
-        return content;
-      }
-      throw new Error('Respuesta vacia');
-    } catch (err) {
-      if (attempt >= maxAttempts) throw err;
-      log(`⚠ Intento ${attempt} fallido: ${err.message.substring(0, 80)}`);
-      await new Promise(r => setTimeout(r, 3000));
-    }
-  }
-
-  throw new Error('DeepSeek agotado tras reintentos');
+  const response = await askLLM(systemPrompt, [{ role: 'user', content: userContext }], [], 0.3);
+  return response.content;
 }
 
 async function run() {
