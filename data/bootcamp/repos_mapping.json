@@ -1,5 +1,5 @@
 {
-  "generado": "2026-07-05T17:31:36.007Z",
+  "generado": "2026-07-05T17:58:52.762Z",
   "categorias": {
     "other": [
       "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
@@ -47,14 +47,8 @@
       "01_Estudio_y_Desafios - learning-typescript-projects",
       "01_Estudio_y_Desafios - type-challenges"
     ],
-    "javascript": [
-      "01_Estudio_y_Desafios - nodebestpractices"
-    ],
-    "system_design": [
-      "01_Estudio_y_Desafios - system-design-primer",
-      "05_Recursos_y_Listas - awesome-scalability"
-    ],
     "ai_agents": [
+      "01_Estudio_y_Desafios - mattpocock-skills",
       "02_IA_y_Herramientas_de_Agentes - agent-skills-vercel",
       "02_IA_y_Herramientas_de_Agentes - anthropics-skills",
       "02_IA_y_Herramientas_de_Agentes - autoskills",
@@ -67,6 +61,7 @@
       "02_IA_y_Herramientas_de_Agentes - nanochat",
       "02_IA_y_Herramientas_de_Agentes - ollama",
       "02_IA_y_Herramientas_de_Agentes - opencode",
+      "02_IA_y_Herramientas_de_Agentes - OpenViking",
       "02_IA_y_Herramientas_de_Agentes - pocket-tts",
       "02_IA_y_Herramientas_de_Agentes - ponytail",
       "02_IA_y_Herramientas_de_Agentes - repomix",
@@ -76,6 +71,13 @@
       "02_IA_y_Herramientas_de_Agentes - zeroclaw",
       "05_Recursos_y_Listas - awesome-agent-skills",
       "05_Recursos_y_Listas - awesome-claude-skills"
+    ],
+    "javascript": [
+      "01_Estudio_y_Desafios - nodebestpractices"
+    ],
+    "system_design": [
+      "01_Estudio_y_Desafios - system-design-primer",
+      "05_Recursos_y_Listas - awesome-scalability"
     ],
     "infra": [
       "03_Aplicaciones_y_Utilidades - dokploy",
@@ -103,9 +105,9 @@
     "projects": 2,
     "fundamentals": 5,
     "typescript": 2,
+    "ai_agents": 23,
     "javascript": 1,
     "system_design": 2,
-    "ai_agents": 21,
     "infra": 4,
     "react": 3,
     "libraries": 6

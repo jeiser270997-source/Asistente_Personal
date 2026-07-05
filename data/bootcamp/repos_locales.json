@@ -1,7 +1,7 @@
 {
-  "escaneado": "2026-07-05T17:31:36.006Z",
+  "escaneado": "2026-07-05T17:58:52.761Z",
   "directorio": "E:\\PROYECTOS\\Proyectos_GitHub",
-  "total": 73,
+  "total": 75,
   "repos": [
     {
       "folder": "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
@@ -346,6 +346,42 @@
         {
           "name": "python-aprende-sergio-delgado-quintero.pdf",
           "sizeKB": 12296
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - mattpocock-skills",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - mattpocock-skills",
+      "github": "mattpocock/skills",
+      "remote": "https://github.com/mattpocock/skills.git",
+      "branch": "main",
+      "lastCommit": "2026-07-05 18:37:09 +0100",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 97,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "Shell"
+      ],
+      "totalSizeKB": 389,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 49
+        },
+        {
+          "name": "GLOSSARY.md",
+          "sizeKB": 17
+        },
+        {
+          "name": "README.md",
+          "sizeKB": 12
+        },
+        {
+          "name": "SKILL.md",
+          "sizeKB": 10
         }
       ]
     },
@@ -1256,6 +1292,53 @@
         {
           "name": "config.go",
           "sizeKB": 29
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - OpenViking",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - OpenViking",
+      "github": "volcengine/OpenViking",
+      "remote": "https://github.com/volcengine/OpenViking.git",
+      "branch": "main",
+      "lastCommit": "2026-07-03 20:00:35 +0800",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 2153,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Python",
+        "Shell",
+        "JSON",
+        "TypeScript",
+        "HTML",
+        "Rust",
+        "JavaScript",
+        "Go",
+        "CSS"
+      ],
+      "totalSizeKB": 41751,
+      "topFiles": [
+        {
+          "name": "grafana-demo-dashboard.png",
+          "sizeKB": 5442
+        },
+        {
+          "name": "Cubic_11_1.010_R.ttf",
+          "sizeKB": 2696
+        },
+        {
+          "name": "activate_vlm_model.gif",
+          "sizeKB": 2157
+        },
+        {
+          "name": "activate_emb_model.gif",
+          "sizeKB": 1861
+        },
+        {
+          "name": "uv.lock",
+          "sizeKB": 1315
         }
       ]
     },
