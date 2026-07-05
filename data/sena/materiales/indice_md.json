@@ -1,0 +1,66 @@
+{
+  "extraido": "2026-07-05T17:04:25.369Z",
+  "total": 12,
+  "archivos": [
+    {
+      "seccion": "INFORMACIÓN GENERAL",
+      "file": "Diseo_curricular_Página.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "CRONOGRAMA",
+      "file": "Cronograma_Página.md",
+      "size_kb": 3
+    },
+    {
+      "seccion": "ACTIVIDADES INICIALES",
+      "file": "Actualización_de_datos_personales_Página.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 1",
+      "file": "Guía_de_aprendizaje_1_Página.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 1",
+      "file": "Material_de_formación_Generalidades_y_conceptos_bá.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 2",
+      "file": "Guía_de_aprendizaje_2_Página.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 2",
+      "file": "Material_de_formación_Conceptos_de_bases_de_datos_.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 3",
+      "file": "Guía_de_aprendizaje_3_Página.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 3",
+      "file": "Material_de_formación_Reglas_para_la_normalización.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 4",
+      "file": "Guía_de_aprendizaje_4_Página.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "ACTIVIDAD 4",
+      "file": "Material_de_formación_Aplicación_y_diseo_de_bases_.md",
+      "size_kb": 0
+    },
+    {
+      "seccion": "BIBLIOTECA SENA",
+      "file": "Bilblioteca_SENA_Página.md",
+      "size_kb": 0
+    }
+  ]
+}
