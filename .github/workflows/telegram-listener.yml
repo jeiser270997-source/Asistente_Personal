@@ -1,0 +1,44 @@
+name: Telegram Listener Bot
+
+on:
+  schedule:
+    - cron: '*/3 * * * *'  # Cada 3 minutos
+  workflow_dispatch:
+
+jobs:
+  telegram-bot:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm install --legacy-peer-deps
+
+      - name: Restaurar estado Telegram
+        uses: actions/download-artifact@v4
+        with:
+          name: telegram-state
+          path: data/
+        continue-on-error: true
+
+      - name: Ejecutar Telegram Listener
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: node scripts/telegram_listener.js
+
+      - name: Guardar estado Telegram
+        uses: actions/upload-artifact@v4
+        with:
+          name: telegram-state
+          path: data/telegram_state.json
+          retention-days: 1
