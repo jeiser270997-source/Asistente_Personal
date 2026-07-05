@@ -79,11 +79,13 @@ if (require.main === module) {
     console.log('\n' + '═'.repeat(60));
     console.log(result.recommendations);
     console.log('\n═'.repeat(60));
-    console.log('🔗 Top URLs:');
-    for (const r of result.topRepos) {
-      console.log(`  ${r.url}  (${r.stars.toLocaleString()}⭐)`);
-    }
+    console.log(`\n📦 DB: ${require(DB_FILE).length.toLocaleString()} repos | ⚡ DeepSeek V4 Flash\n`);
   }).catch(e => { console.error(e); process.exit(1); });
 }
+
+// Uso desde cualquier proyecto:
+//   const { queryRepos, loadDB } = require('./scripts/query_repos');
+//   const result = await queryRepos("bases de datos vectoriales");
+//   console.log(result.recommendations);
 
 module.exports = { queryRepos, loadDB };
