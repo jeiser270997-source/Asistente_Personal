@@ -181,6 +181,34 @@
         "enviado"
       ],
       "timestamp": "2026-07-05T18:20:01.660Z"
+    },
+    {
+      "id": "h_1783275928144_6is8",
+      "categoria": "legal",
+      "hecho": "⚠ URGENTE: Moto BXU28C (United Motors) SOAT vencido 07/07/2025 + RTM vencido 13/07/2025. NO CIRCULAR. Multa C02 ~ + inmovilizacion.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "bxu28c",
+        "soat",
+        "vencido",
+        "moto",
+        "urgente"
+      ],
+      "timestamp": "2026-07-05T18:25:28.144Z"
+    },
+    {
+      "id": "h_1783275928146_f6n6",
+      "categoria": "legal",
+      "hecho": "Skill transito v1.0 creada. Cubre: defensa fotomultas, derechos en retenes, Didi, impugnacion, prescripcion, amnistias.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "transito",
+        "skill",
+        "defensa"
+      ],
+      "timestamp": "2026-07-05T18:25:28.146Z"
     }
   ]
 }

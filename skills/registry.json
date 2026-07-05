@@ -41,6 +41,12 @@
       "nombre": "Bootcamp QA Automation",
       "keywords": ["bootcamp", "estudiar", "aprender", "playwright", "cypress", "vitest", "testing", "qa", "automation", "ejercicio", "practica", "tarea", "entregable", "semana", "fase", "progreso", "portfolio", "entrevista", "cv", "linkedin", "trabajo", "empleo", "carrera", "typescript", "javascript", "fundamentos", "mentoria"],
       "prioridad": 10
+    },
+    {
+      "id": "transito",
+      "nombre": "Transito Colombia - Defensa Legal",
+      "keywords": ["transito", "comparendo", "multa", "fotomulta", "simit", "didi", "uber", "conductor", "plataforma", "reten", "agente", "policia", "velocidad", "c29", "c14", "soat", "tecnomecanica", "ley 1843", "fotodeteccion", "dei", "senalizacion", "notificacion fisica", "impugnar", "recurso reposicion", "prescripcion"],
+      "prioridad": 10
     }
   ]
 }

@@ -66,10 +66,18 @@
     },
     {
       "id": "tutor_md",
-      "nombre": "Tutor Académico (Feynman/Aprendizaje Activo)",
+      "nombre": "Tutor Academico (Feynman/Aprendizaje Activo)",
       "ruta": "e:\\PROYECTOS\\Asistente_Personal\\skills\\tutor.md",
       "version": "1.0",
       "keywords": ["estudiar", "tutor", "profesor", "aprender", "explicar", "feynman", "pomodoro", "cesde", "sena"],
+      "prioridad": 10
+    },
+    {
+      "id": "transito_md",
+      "nombre": "Transito Colombia - Defensa Legal (Didi)",
+      "ruta": "e:\\PROYECTOS\\Asistente_Personal\\.agents\\skills\\transito\\SKILL.md",
+      "version": "1.0",
+      "keywords": ["transito", "comparendo", "multa", "fotomulta", "simit", "didi", "uber", "conductor", "reten", "agente", "policia", "velocidad", "c29", "soat", "fotodeteccion", "impugnar", "recurso reposicion"],
       "prioridad": 10
     }
   ]

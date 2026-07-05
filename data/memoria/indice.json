@@ -1,6 +1,6 @@
 {
   "categorias": {
-    "legal": 5,
+    "legal": 7,
     "estudio": 3,
     "finanzas": 1,
     "personal": 3,
@@ -29,7 +29,7 @@
     "trabajo": 1,
     "vehiculo": 1,
     "kew496": 1,
-    "soat": 1,
+    "soat": 2,
     "empleo": 1,
     "qa": 1,
     "linkedin": 1,
@@ -39,6 +39,13 @@
     "impugnacion": 1,
     "recurso": 1,
     "impugnado": 1,
-    "enviado": 1
+    "enviado": 1,
+    "bxu28c": 1,
+    "vencido": 1,
+    "moto": 1,
+    "urgente": 1,
+    "transito": 1,
+    "skill": 1,
+    "defensa": 1
   }
 }
