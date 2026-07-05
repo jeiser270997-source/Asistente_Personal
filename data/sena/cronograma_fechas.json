@@ -1,0 +1,51 @@
+{
+  "inicio": "22/06/2026",
+  "limite_evidencias": "27/07/2026",
+  "cierre": "28/07/2026",
+  "actividades": [
+    {
+      "numero": 1,
+      "nombre": "Actividad 1",
+      "evidencias": [
+        {
+          "nombre": "Foro Temático. Reconocer las características de la evolución de las bases de datos en cada una de sus etapas",
+          "inicio": "22/06/2026",
+          "fin": "30/06/2026"
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "nombre": "Actividad 2",
+      "evidencias": [
+        {
+          "nombre": "Cuadro comparativo. Comprender los conceptos de bases de datos conceptuales",
+          "inicio": "01/07/2026",
+          "fin": "07/07/2026"
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "nombre": "Actividad 3",
+      "evidencias": [
+        {
+          "nombre": "Actividad interactiva. Identificar los conceptos de normalización en las bases de datos",
+          "inicio": "08/07/2026",
+          "fin": "20/07/2026"
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "nombre": "Actividad 4",
+      "evidencias": [
+        {
+          "nombre": "Actividad interactiva. Reconocer los conceptos generales de una base de datos relacional",
+          "inicio": "21/07/2026",
+          "fin": "27/07/2026"
+        }
+      ]
+    }
+  ]
+}

@@ -202,12 +202,106 @@ async function extractGrades(page) {
   return grades;
 }
 
+// ─── EXTRAER CRONOGRAMA Y FECHAS ──────────────────────────────
+async function extractCronograma(page) {
+  log('📅 Extrayendo cronograma...');
+
+  // Buscar pagina del cronograma en el curso
+  await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.waitForTimeout(2000);
+
+  const cronogramaUrl = await page.evaluate(() => {
+    const links = document.querySelectorAll('.activity a');
+    for (const a of links) {
+      if (a.textContent.toLowerCase().includes('cronograma')) return a.href;
+    }
+    return null;
+  });
+
+  if (!cronogramaUrl) {
+    log('   No se encontro pagina de cronograma');
+    return null;
+  }
+
+  await page.goto(cronogramaUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
+  await page.waitForTimeout(2000);
+
+  const fullText = await page.evaluate(() => document.body.innerText);
+
+  const inicioMatch = fullText.match(/FECHA DE INICIO:\s*(\d{2}\/\d{2}\/\d{4})/);
+  const limiteMatch = fullText.match(/FECHA LÍMITE ENVÍO DE EVIDENCIAS:\s*(\d{2}\/\d{2}\/\d{4})/);
+  const cierreMatch = fullText.match(/FECHA DE CIERRE:\s*(\d{2}\/\d{2}\/\d{4})/);
+
+  const cronograma = {
+    inicio: inicioMatch ? inicioMatch[1] : null,
+    limite_evidencias: limiteMatch ? limiteMatch[1] : null,
+    cierre: cierreMatch ? cierreMatch[1] : null,
+    actividades: []
+  };
+
+  // Parsear tabla de actividades con regex
+  const actRegex = /Actividad de aprendizaje (\d+)[:\s]*([\s\S]*?)(?=Actividad de aprendizaje \d|Actividades iniciales|$)/g;
+  let m;
+  while ((m = actRegex.exec(fullText)) !== null) {
+    const num = m[1];
+    const bloque = m[2];
+
+    const evidencias = [];
+    const evRegex = /Evidencia:\s*(.+?)(?:\s*\.\s*)(\d{2}\/\d{2}\/\d{4})\s+(\d{2}\/\d{2}\/\d{4})/g;
+    let em;
+    while ((em = evRegex.exec(bloque)) !== null) {
+      evidencias.push({
+        nombre: em[1].trim(),
+        inicio: em[2],
+        fin: em[3]
+      });
+    }
+
+    cronograma.actividades.push({
+      numero: parseInt(num),
+      nombre: `Actividad ${num}`,
+      evidencias
+    });
+  }
+
+  log(`   Fechas: inicio=${cronograma.inicio}, limite=${cronograma.limite_evidencias}, cierre=${cronograma.cierre}`);
+  log(`   Actividades con fechas: ${cronograma.actividades.length}`);
+  return cronograma;
+}
+
 // ─── GENERAR ALERTAS_SENA.md ──────────────────────────────────
-function generateAlertasMD(course, deadlines, inlineDates) {
+function generateAlertasMD(course, deadlines, inlineDates, cronograma) {
   const lines = [];
   lines.push(`# Alertas SENA - ${course.nombre || 'Curso ' + COURSE_ID}`);
   lines.push(`> Extraido: ${new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })}`);
+  if (cronograma?.limite_evidencias) {
+    lines.push(`> **FECHA LIMITE GLOBAL: ${cronograma.limite_evidencias}**`);
+  }
   lines.push('');
+
+  // Cronograma con fechas reales
+  if (cronograma?.actividades?.length > 0) {
+    lines.push('## Cronograma con Fechas');
+    lines.push('');
+    const hoy = new Date();
+
+    for (const act of cronograma.actividades) {
+      lines.push(`### ${act.nombre}`);
+      for (const ev of act.evidencias) {
+        try {
+          const [d, m, a] = ev.fin.split('/').map(Number);
+          const fechaFin = new Date(a, m - 1, d);
+          const diasRestantes = Math.ceil((fechaFin - hoy) / (1000 * 60 * 60 * 24));
+          const urgente = diasRestantes <= 3;
+          const icono = urgente ? '🔴' : diasRestantes <= 7 ? '🟡' : '🟢';
+          lines.push(`- ${icono} **${ev.nombre}** → ${ev.inicio} al ${ev.fin} (${diasRestantes} dias)`);
+        } catch {
+          lines.push(`- **${ev.nombre}** → ${ev.inicio} al ${ev.fin}`);
+        }
+      }
+      lines.push('');
+    }
+  }
 
   // Listar evidencias (tareas + cuestionarios)
   lines.push('## Evidencias del curso');
@@ -271,16 +365,18 @@ async function main() {
     if (!ok) throw new Error('Login fallido');
 
     const course = await extractCourse(page);
+    const cronograma = await extractCronograma(page);
     const { deadlines, inlineDates } = await extractDeadlines(page);
     const grades = await extractGrades(page);
 
     // Guardar datos
     saveJSON('curso.json', course);
+    if (cronograma) saveJSON('cronograma_fechas.json', cronograma);
     saveJSON('deadlines.json', { deadlines, inlineDates, extraido: new Date().toISOString() });
     saveJSON('calificaciones.json', { grades, extraido: new Date().toISOString() });
 
-    // Generar ALERTAS_SENA.md para el brain_orchestrator
-    generateAlertasMD(course, deadlines, inlineDates);
+    // Generar ALERTAS_SENA.md con fechas reales
+    generateAlertasMD(course, deadlines, inlineDates, cronograma);
 
     // Guardar historico de ejecuciones
     const historialPath = path.join(DATA_DIR, 'historial_ejecuciones.json');
