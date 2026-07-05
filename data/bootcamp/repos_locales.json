@@ -1,7 +1,7 @@
 {
-  "escaneado": "2026-07-05T17:19:38.880Z",
+  "escaneado": "2026-07-05T17:31:36.006Z",
   "directorio": "E:\\PROYECTOS\\Proyectos_GitHub",
-  "total": 69,
+  "total": 73,
   "repos": [
     {
       "folder": "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
@@ -797,6 +797,47 @@
       ]
     },
     {
+      "folder": "02_IA_y_Herramientas_de_Agentes - anthropics-skills",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - anthropics-skills",
+      "github": "anthropics/skills",
+      "remote": "https://github.com/anthropics/skills.git",
+      "branch": "main",
+      "lastCommit": "2026-07-01 14:11:23 -0400",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 218,
+      "languages": [
+        "Markdown",
+        "JavaScript",
+        "HTML",
+        "Python",
+        "Shell"
+      ],
+      "totalSizeKB": 6908,
+      "topFiles": [
+        {
+          "name": "WorkSans-Bold.ttf",
+          "sizeKB": 187
+        },
+        {
+          "name": "WorkSans-Regular.ttf",
+          "sizeKB": 184
+        },
+        {
+          "name": "WorkSans-BoldItalic.ttf",
+          "sizeKB": 172
+        },
+        {
+          "name": "WorkSans-Italic.ttf",
+          "sizeKB": 170
+        },
+        {
+          "name": "IBMPlexSerif-Italic.ttf",
+          "sizeKB": 166
+        }
+      ]
+    },
+    {
       "folder": "02_IA_y_Herramientas_de_Agentes - autoskills",
       "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - autoskills",
       "github": "midudev/autoskills",
@@ -1460,6 +1501,53 @@
         {
           "name": "timeline_view.py",
           "sizeKB": 14
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - zeroclaw",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - zeroclaw",
+      "github": "zeroclaw-labs/zeroclaw",
+      "remote": "https://github.com/zeroclaw-labs/zeroclaw.git",
+      "branch": "master",
+      "lastCommit": "2026-07-06 00:44:34 +0800",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 1028,
+      "languages": [
+        "YAML",
+        "JSON",
+        "Markdown",
+        "Rust",
+        "HTML",
+        "Shell",
+        "Python",
+        "JavaScript",
+        "CSS",
+        "Batch",
+        "TypeScript"
+      ],
+      "totalSizeKB": 35091,
+      "topFiles": [
+        {
+          "name": "icon.icns",
+          "sizeKB": 3125
+        },
+        {
+          "name": "mermaid.min.js",
+          "sizeKB": 2605
+        },
+        {
+          "name": "zeroclaw-banner-bg.png",
+          "sizeKB": 2205
+        },
+        {
+          "name": "zeroclaw-image.png",
+          "sizeKB": 2205
+        },
+        {
+          "name": "zeroclaw-comparison.jpeg",
+          "sizeKB": 1475
         }
       ]
     },
@@ -2679,6 +2767,68 @@
         {
           "name": "mentioned-badge.sketch",
           "sizeKB": 21
+        }
+      ]
+    },
+    {
+      "folder": "05_Recursos_y_Listas - awesome-agent-skills",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\05_Recursos_y_Listas - awesome-agent-skills",
+      "github": "VoltAgent/awesome-agent-skills",
+      "remote": "https://github.com/VoltAgent/awesome-agent-skills.git",
+      "branch": "main",
+      "lastCommit": "2026-06-30 13:58:35 +0300",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 3,
+      "languages": [
+        "Markdown"
+      ],
+      "totalSizeKB": 237,
+      "topFiles": [
+        {
+          "name": "README.md",
+          "sizeKB": 234
+        }
+      ]
+    },
+    {
+      "folder": "05_Recursos_y_Listas - awesome-claude-skills",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\05_Recursos_y_Listas - awesome-claude-skills",
+      "github": "ComposioHQ/awesome-claude-skills",
+      "remote": "https://github.com/ComposioHQ/awesome-claude-skills.git",
+      "branch": "master",
+      "lastCommit": "2026-05-22 08:47:49 +0530",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 1041,
+      "languages": [
+        "YAML",
+        "Shell",
+        "Markdown",
+        "Python",
+        "JavaScript"
+      ],
+      "totalSizeKB": 9373,
+      "topFiles": [
+        {
+          "name": "WorkSans-Bold.ttf",
+          "sizeKB": 187
+        },
+        {
+          "name": "WorkSans-Regular.ttf",
+          "sizeKB": 184
+        },
+        {
+          "name": "WorkSans-BoldItalic.ttf",
+          "sizeKB": 172
+        },
+        {
+          "name": "WorkSans-Italic.ttf",
+          "sizeKB": 170
+        },
+        {
+          "name": "IBMPlexSerif-Italic.ttf",
+          "sizeKB": 166
         }
       ]
     },
