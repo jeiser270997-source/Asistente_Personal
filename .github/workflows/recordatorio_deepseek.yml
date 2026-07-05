@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: node scripts/recordatorio_deepseek.js
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
