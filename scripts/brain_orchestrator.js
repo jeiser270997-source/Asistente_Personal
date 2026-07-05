@@ -7,6 +7,7 @@ const { sendTelegramMessage } = require('../lib/telegram');
 const { escapeHTML, truncate } = require('../lib/sanitize');
 const pending = require('../lib/pending');
 const { authorize: googleAuthorize } = require('../lib/google_auth');
+const { isDeepSeekValley, getScheduleLabel } = require('../lib/time_scheduler');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
@@ -285,9 +286,9 @@ ${senaBlock}
 `.trim();
 }
 
-const LLM_PROVIDERS = [
+const LLM_PROVIDERS_STATIC = [
   // ── Nivel 0: DeepSeek V4 Flash (directo, $0.14/M input) ──
-  { name: 'DeepSeek V4 Flash', baseUrl: 'https://api.deepseek.com/v1', apiKey: process.env.DEEPSEEK_API_KEY, model: 'deepseek-v4-flash', retry: 2 },
+  { name: 'DeepSeek V4 Flash', baseUrl: 'https://api.deepseek.com/v1', apiKey: process.env.DEEPSEEK_API_KEY, model: 'deepseek-v4-flash', retry: 2, paid: true },
   // ── Nivel 1: NVIDIA (build.nvidia.com) — mejor calidad de razonamiento ──
   { name: 'NVIDIA DeepSeek V4 Flash', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'deepseek-ai/deepseek-v4-flash', retry: 1 },
   { name: 'NVIDIA Nemotron Super 49B', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'nvidia/llama-3.3-nemotron-super-49b-v1', retry: 1 },
@@ -300,12 +301,22 @@ const LLM_PROVIDERS = [
   { name: 'Gemini 2.5 Flash', baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai', apiKey: process.env.GEMINI_API_KEY, model: 'gemini-2.5-flash', retry: 2 },
   // ── Nivel 5: Ollama Local — último recurso ──
   { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://127.0.0.1:11434/v1', apiKey: 'ollama', model: process.env.OLLAMA_MODEL || 'llama3.1:latest', retry: 1 }
-].filter(p => p.apiKey && p.apiKey !== 'undefined');
+];
+
+function getActiveProviders() {
+  const valley = isDeepSeekValley();
+  return LLM_PROVIDERS_STATIC.filter(p => {
+    if (!p.apiKey || p.apiKey === 'undefined') return false;
+    if (p.paid && !valley) return false;
+    return true;
+  });
+}
 
 async function callLLM(systemPrompt, userContext) {
-  const lastError = {};
+  const providers = getActiveProviders();
+  log(`⏰ ${getScheduleLabel()} — ${providers.length} proveedores activos`);
 
-  for (const provider of LLM_PROVIDERS) {
+  for (const provider of providers) {
     const maxAttempts = (provider.retry ?? 0) + 1;
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
