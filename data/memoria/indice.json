@@ -3,7 +3,7 @@
     "legal": 8,
     "estudio": 3,
     "finanzas": 6,
-    "personal": 3,
+    "personal": 6,
     "trabajo": 1,
     "salud": 1
   },
@@ -58,6 +58,14 @@
     "ag2025": 1,
     "ugpp": 1,
     "coherencia": 1,
-    "peticion": 1
+    "peticion": 1,
+    "dashboard": 1,
+    "github": 1,
+    "web": 1,
+    "auto": 1,
+    "hechos": 1,
+    "ia": 1,
+    "healthcheck": 1,
+    "monitoreo": 1
   }
 }

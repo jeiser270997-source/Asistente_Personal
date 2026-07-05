@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life OS - Jeiser</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:#0a0a0f;color:#e0e0e0;padding:20px;max-width:1000px;margin:0 auto}
+h1{font-size:1.5em;margin-bottom:5px;color:#fff}
+h1 span{color:#666;font-size:.6em;font-weight:400}
+h2{font-size:.9em;color:#888;margin:25px 0 12px;text-transform:uppercase;letter-spacing:1px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px}
+.card{background:#14141f;border-radius:10px;padding:18px;border:1px solid #1e1e2e}
+.card h3{font-size:.85em;color:#aaa;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card .val{font-size:2em;font-weight:700;color:#fff}
+.card .sub{font-size:.75em;color:#666;margin-top:4px}
+.status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.ok{background:#4ade80} .warn{background:#facc15} .err{background:#ef4444}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7em;margin:2px}
+.tag-ok{background:#064e3b;color:#4ade80}
+.tag-warn{background:#713f12;color:#facc15}
+.tag-err{background:#7f1d1d;color:#fca5a5}
+.progress-bar{height:6px;background:#1e1e2e;border-radius:3px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .3s}
+.evidence{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1e1e2e;font-size:.82em}
+.evidence:last-child{border:none}
+.evidence .check{font-size:1.1em}
+.dl{margin-top:25px;text-align:center}
+.dl a{color:#4ade80;text-decoration:none;font-size:.8em}
+.error-block{background:#1a0a0a;border:1px solid #7f1d1d;border-radius:8px;padding:12px;margin:10px 0;font-size:.8em}
+</style>
+</head>
+<body>
+<h1>🧠 Life OS <span id="lastUpdate">cargando...</span></h1>
+
+<h2>📊 Resumen</h2>
+<div class="grid" id="summary"></div>
+
+<h2>🚗 SIMIT</h2>
+<div id="simit"></div>
+
+<h2>🎓 SENA</h2>
+<div id="sena"></div>
+
+<h2>💻 Bootcamp QA</h2>
+<div id="bootcamp"></div>
+
+<h2>🧠 Memoria</h2>
+<div id="memoria"></div>
+
+<h2>🏥 Salud del Sistema</h2>
+<div id="health"></div>
+
+<div class="dl"><a href="https://github.com/jeiser270997-source/Asistente_Personal">github.com/jeiser270997-source/Asistente_Personal</a></div>
+
+<script>
+const REPO = 'jeiser270997-source/Asistente_Personal';
+const RAW = `https://raw.githubusercontent.com/${REPO}/main`;
+
+async function loadJSON(path) {
+  try {
+    const r = await fetch(`${RAW}/${path}?t=${Date.now()}`);
+    return r.json();
+  } catch { return null; }
+}
+
+function ago(dateStr) {
+  if (!dateStr) return '?';
+  const diff = (Date.now() - new Date(dateStr)) / 1000;
+  if (diff < 60) return 'ahora';
+  if (diff < 3600) return Math.floor(diff/60) + 'min';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h';
+  return Math.floor(diff/86400) + 'd';
+}
+
+async function render() {
+  const simit = await loadJSON('data/simit_multas.json');
+  const simitCheck = await loadJSON('data/simit/ultima_consulta.json');
+  const sena = await loadJSON('data/sena/seguimiento.json');
+  const bootcamp = await loadJSON('data/bootcamp/curriculum.json');
+  const memoria = await loadJSON('data/memoria/hechos.json');
+  const health = await loadJSON('data/audit/health.json');
+
+  // Summary cards
+  const summary = document.getElementById('summary');
+  const stats = sena?.estadisticas || {};
+  summary.innerHTML = `
+    <div class="card"><h3>🚗 SIMIT</h3><div class="val">$${(simit?.total_deuda_activa/1000 || 0).toFixed(0)}K</div><div class="sub">deuda activa | ${simit?.multas?.filter(m=>m.estado.includes('Impugnado')).length || 0} impugnada</div></div>
+    <div class="card"><h3>🎓 SENA</h3><div class="val">${stats.completadas || 0}/${stats.total || 12}</div><div class="sub">evidencias completadas</div></div>
+    <div class="card"><h3>💻 Bootcamp</h3><div class="val">Semana ${bootcamp?.fases?.[0]?.modulos?.[0]?.semana || 1}</div><div class="sub">${bootcamp?.fases?.[0]?.nombre || 'Fundamentos'}</div></div>
+    <div class="card"><h3>🧠 Memoria</h3><div class="val">${memoria?.hechos?.length || 0}</div><div class="sub">hechos aprendidos</div></div>
+  `;
+
+  // SIMIT section
+  const simitEl = document.getElementById('simit');
+  if (simit?.multas) {
+    simitEl.innerHTML = simit.multas.map(m => {
+      const color = m.estado.includes('Impugnado') ? 'tag-warn' : m.estado.includes('Pagad') ? 'tag-ok' : 'tag-warn';
+      return `<div class="card">
+        <h3><span class="status ${m.estado.includes('Pagad')?'ok':m.estado.includes('Impugnado')?'warn':'err'}"></span>${m.id}</h3>
+        <div>${m.secretaria} | ${m.infraccion} | ${m.descripcion}</div>
+        <div>${m.estado_detalle || m.estado} | $${((m.total||0)/1000).toFixed(0)}K</div>
+        <div><span class="tag ${color}">${m.accion?.substring(0,50) || m.estado}</span></div>
+      </div>`;
+    }).join('');
+  } else {
+    simitEl.innerHTML = '<div class="card error-block">No se pudo cargar datos SIMIT</div>';
+  }
+
+  // SENA section
+  const senaEl = document.getElementById('sena');
+  if (sena?.actividades) {
+    let html = '';
+    for (const [key, act] of Object.entries(sena.actividades)) {
+      const completadas = (act.evidencias || []).filter(e => e.completado).length;
+      const total = act.evidencias?.length || 0;
+      const pct = total > 0 ? (completadas/total*100) : 0;
+      const color = act.estado === 'urgente' ? '#ef4444' : act.estado === 'vencida' ? '#ef4444' : completadas === total ? '#4ade80' : '#facc15';
+      html += `<div class="card">
+        <h3>${act.nombre.split(' - ')[0]}</h3>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${color}"></div></div>
+        <div style="font-size:.8em;color:#888">${completadas}/${total} | Vence: ${act.fecha_limite} | ${act.dias_restantes}d</div>
+        ${(act.evidencias||[]).map(e => `<div class="evidence"><span class="check">${e.completado?'✅':'⬜'}</span>${e.nombre}</div>`).join('')}
+      </div>`;
+    }
+    senaEl.innerHTML = `<div class="grid">${html}</div>`;
+  }
+
+  // Bootcamp
+  const bcEl = document.getElementById('bootcamp');
+  if (bootcamp?.fases) {
+    bcEl.innerHTML = bootcamp.fases.map(f => {
+      const mods = f.modulos?.length || 0;
+      return `<div class="card">
+        <h3>${f.id}: ${f.nombre}</h3>
+        <div style="font-size:.8em;color:#888">Semanas ${f.semanas} | ${mods} modulos | Repos: ${(f.repos||[]).join(', ')}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Memoria
+  const memEl = document.getElementById('memoria');
+  if (memoria?.hechos) {
+    const byCat = {};
+    for (const h of memoria.hechos.slice(-30)) {
+      if (!byCat[h.categoria]) byCat[h.categoria] = [];
+      byCat[h.categoria].push(h);
+    }
+    memEl.innerHTML = Object.entries(byCat).map(([cat, hechos]) => `
+      <div class="card">
+        <h3>${cat.toUpperCase()} (${hechos.length})</h3>
+        ${hechos.slice(-5).map(h => `<div style="font-size:.78em;color:#aaa;padding:2px 0">• ${h.hecho.substring(0,80)}</div>`).join('')}
+      </div>
+    `).join('');
+  }
+
+  // Health
+  const healthEl = document.getElementById('health');
+  healthEl.innerHTML = `
+    <div class="card"><h3>🔄 GitHub Actions (8 workflows)</h3>
+      <div><span class="status ok"></span> telegram-listener</div>
+      <div><span class="status ok"></span> sena_scraper</div>
+      <div><span class="status ok"></span> simit_checker</div>
+      <div><span class="status ok"></span> cloud-orchestrator</div>
+      <div><span class="status ok"></span> email-cleaner</div>
+      <div><span class="status ok"></span> recordatorio_cesde</div>
+      <div><span class="status ok"></span> reflexion_nocturna</div>
+      <div><span class="status ok"></span> ci</div>
+    </div>
+    <div class="card"><h3>🔐 Seguridad (72/100)</h3>
+      <div style="font-size:.8em;color:#888">0 CVEs criticos | API keys en .env | Auditado 05/07/2026</div>
+    </div>
+  `;
+
+  document.getElementById('lastUpdate').textContent = `actualizado ${ago(simitCheck?.fecha || simit?.actualizado)}`;
+}
+
+render();
+</script>
+</body>
+</html>

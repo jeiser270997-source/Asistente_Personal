@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { askLLM } = require('../lib/llm_service');
+const { agregarHecho } = require('../lib/memory_engine');
 
 const CONTEXT_DIR = path.join(__dirname, '..', 'data', 'contexto_maestro');
 const ESTADO_PATH = path.join(CONTEXT_DIR, 'ESTADO_VIVO.md');
@@ -47,7 +48,33 @@ INSTRUCCIONES:
       fs.writeFileSync(ESTADO_PATH, nuevoEstado);
       console.log('✅ [Corteza Prefrontal] Aprendizaje consolidado. ESTADO_VIVO.md ha sido evolucionado.');
     } else {
-      console.log('💤 [Corteza Prefrontal] Sin cambios significativos en el perfil. Mantenimiento estructural completo.');
+      console.log('💤 [Corteza Prefrontal] Sin cambios significativos en el perfil.');
+    }
+
+    // ─── AUTO-EXTRACCION DE HECHOS ──────────────────────────
+    console.log('🔍 Extrayendo hechos de las conversaciones...');
+    const factsPrompt = `Analiza estas conversaciones y extrae HECHOS CONCRETOS nuevos sobre Jeiser. Devuelve SOLO un JSON array con objetos {categoria, hecho, tags[]}. Categorias: personal, finanzas, legal, estudio, trabajo, salud. Tags: palabras clave relevantes. Si no hay hechos nuevos, devuelve []. NO INVENTES nada.
+
+${interaccionesHoy}`;
+
+    try {
+      const factsResponse = await askLLM(factsPrompt, [], [], 0.1);
+      const jsonStr = (factsResponse.content || '').replace(/```json|```/g, '').trim();
+      const facts = JSON.parse(jsonStr);
+      
+      if (Array.isArray(facts) && facts.length > 0) {
+        for (const f of facts) {
+          if (f.categoria && f.hecho && f.hecho.length > 10) {
+            agregarHecho(f.categoria, f.hecho, f.tags || [], 'auto_reflexion', 'media');
+            console.log(`   ✓ [${f.categoria}] ${f.hecho.substring(0, 60)}`);
+          }
+        }
+        console.log(`✅ ${facts.length} hechos extraidos automaticamente.`);
+      } else {
+        console.log('   Sin hechos nuevos.');
+      }
+    } catch (e) {
+      console.log('   ⚠ Error extrayendo hechos: ' + e.message.substring(0, 60));
     }
 
   } catch (error) {

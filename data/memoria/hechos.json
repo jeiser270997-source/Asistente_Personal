@@ -288,6 +288,44 @@
         "peticion"
       ],
       "timestamp": "2026-07-05T18:33:11.055Z"
+    },
+    {
+      "id": "h_1783279547500_vsxs",
+      "categoria": "personal",
+      "hecho": "Dashboard web via GitHub Pages creado (docs/index.html). Auto-actualiza desde datos JSON del repo.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "dashboard",
+        "github",
+        "web"
+      ],
+      "timestamp": "2026-07-05T19:25:47.500Z"
+    },
+    {
+      "id": "h_1783279547502_6egk",
+      "categoria": "personal",
+      "hecho": "Reflexion nocturna ahora extrae hechos automaticamente con DeepSeek desde las conversaciones del dia.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "auto",
+        "hechos",
+        "ia"
+      ],
+      "timestamp": "2026-07-05T19:25:47.502Z"
+    },
+    {
+      "id": "h_1783279547502_2xa7",
+      "categoria": "personal",
+      "hecho": "Healthcheck diario monitorea 6 componentes del sistema. Score actual: 6/6 OK.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "healthcheck",
+        "monitoreo"
+      ],
+      "timestamp": "2026-07-05T19:25:47.502Z"
     }
   ]
 }

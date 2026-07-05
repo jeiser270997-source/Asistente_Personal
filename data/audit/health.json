@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-07-05T19:25:36.994Z",
+  "checks": {
+    "simit_scraper": {
+      "status": "ok",
+      "age": "0.8h"
+    },
+    "sena_scraper": {
+      "status": "ok",
+      "age": "2.1h"
+    },
+    "memoria": {
+      "status": "ok",
+      "age": "0.9h"
+    },
+    "bootcamp": {
+      "status": "ok",
+      "age": "2.1h"
+    },
+    "seguimiento_sena": {
+      "status": "ok",
+      "age": "2.1h"
+    },
+    "contexto_vital": {
+      "status": "ok",
+      "age": "0.9h"
+    }
+  },
+  "resumen": {
+    "total": 6,
+    "ok": 6,
+    "warn": 0,
+    "err": 0
+  },
+  "score": 100
+}
