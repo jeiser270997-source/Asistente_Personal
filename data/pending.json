@@ -48,6 +48,62 @@
       "category": "auto",
       "done": false,
       "created": "2026-07-05T13:31:17.936Z"
+    },
+    {
+      "id": "mr81ee9mg81o",
+      "text": "SENA: Completar Actividad 2 (Cuadro comparativo y Taller aplicado) antes del 7/7",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.882Z"
+    },
+    {
+      "id": "mr81ee9nx1cr",
+      "text": "Revisar fallo del workflow SENA Moodle Scraper en GitHub",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.883Z"
+    },
+    {
+      "id": "mr81ee9owz9e",
+      "text": "Responder correo Fiscalía (Ampliación Denuncia NUC 110016102838202604358)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.884Z"
+    },
+    {
+      "id": "mr81ee9ol7s8",
+      "text": "Responder correo SENA (Certificado Leila Farfan urgente)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.884Z"
+    },
+    {
+      "id": "mr81ee9olpxv",
+      "text": "Responder correo DIAN (Asignación Petición 2026DP000161298)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.884Z"
+    },
+    {
+      "id": "mr81ee9pc1j2",
+      "text": "Responder correo MinEducación (Convalidaciones Básica Confirmación)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.885Z"
+    },
+    {
+      "id": "mr81ee9qaima",
+      "text": "Responder correo Hacienda Bogotá (Notificaciones)",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.886Z"
+    },
+    {
+      "id": "mr81ee9qtpzp",
+      "text": "Revisar documentos de Angelina Rojas en LifeOS/Angelina_Rojas",
+      "category": "auto",
+      "done": false,
+      "created": "2026-07-05T17:00:13.886Z"
     }
   ]
 }
