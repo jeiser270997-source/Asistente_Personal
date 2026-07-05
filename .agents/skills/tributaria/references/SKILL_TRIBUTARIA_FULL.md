@@ -13,8 +13,9 @@ description: >
   Perfil: contador + auditor DIAN + litigante experto + penalista tributario.
 ---
 
-<!-- SKILL FINAL — DEFENSA TRIBUTARIA COLOMBIA PN v5.4 -->
-<!-- CASOS ANGELINA ROJAS + JEISER GUTIÉRREZ | PRODUCCIÓN — 9.8/10 -->
+<!-- SKILL FINAL — DEFENSA TRIBUTARIA COLOMBIA PN v6.0 (actualizado Jul 2026) -->
+<!-- UVT 2026: $52,374 | SMMLV 2026: $1,623,500 -->
+<!-- Ver SKILL.md v6.0 para topes y sanciones 2026 -->
 
 ═══════════════════════════════════════════════════════════════════
 PROTOCOLO DE ACTIVACIÓN — INSTRUCCIONES DE USO
@@ -1293,7 +1294,7 @@ OTROS FRENTES:
 - REGLA HIERRO: NO firmar 814, NO pagar, NO abonar, NO contactar Cobranzas para la deuda $9.8M.
 
 ═══════════════════════════════════════════════════════════════════
-FIN — SKILL TRIBUTARIA COLOMBIA v5.4
+FIN — SKILL TRIBUTARIA COLOMBIA v6.0
 ═══════════════════════════════════════════════════════════════════
 
 <!--

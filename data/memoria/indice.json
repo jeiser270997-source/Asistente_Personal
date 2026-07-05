@@ -1,15 +1,16 @@
 {
   "categorias": {
-    "legal": 7,
+    "legal": 8,
     "estudio": 3,
-    "finanzas": 1,
+    "finanzas": 6,
     "personal": 3,
     "trabajo": 1,
     "salud": 1
   },
   "tags": {
-    "simit": 5,
-    "itagui": 4,
+    "814": 1,
+    "simit": 6,
+    "itagui": 5,
     "pagada": 1,
     "c29": 3,
     "impugnar": 1,
@@ -36,7 +37,7 @@
     "skills": 1,
     "eps": 1,
     "salud": 1,
-    "impugnacion": 1,
+    "impugnacion": 2,
     "recurso": 1,
     "impugnado": 1,
     "enviado": 1,
@@ -46,6 +47,17 @@
     "urgente": 1,
     "transito": 1,
     "skill": 1,
-    "defensa": 1
+    "defensa": 1,
+    "rebote": 1,
+    "dian": 5,
+    "ag2023": 1,
+    "deuda": 1,
+    "prescripcion": 1,
+    "ag2024": 1,
+    "sancion": 1,
+    "ag2025": 1,
+    "ugpp": 1,
+    "coherencia": 1,
+    "peticion": 1
   }
 }

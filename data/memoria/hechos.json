@@ -156,16 +156,16 @@
     {
       "id": "h_1783275582893_r3va",
       "categoria": "legal",
-      "hecho": "Recurso de reposicion contra comparendo 0000838097 (C29 Itagui, 22 de junio de 2026) enviado por correo el 5/7/2026.",
-      "fuente": "email_automatico",
-      "confianza": "alta",
+      "hecho": "Recurso de reposicion 0000838097 ENVIADO 05/07/2026. 3 de 5 correos entregados (SIMIT+Itagui). 2 rebotes (direcciones inexistentes).",
+      "fuente": "correccion_usuario",
+      "confianza": "corregido",
       "tags": [
         "simit",
         "itagui",
         "impugnacion",
         "recurso"
       ],
-      "timestamp": "2026-07-05T18:19:42.893Z"
+      "timestamp": "2026-07-05T18:31:17.388Z"
     },
     {
       "id": "h_1783275601660_m9ns",
@@ -209,6 +209,85 @@
         "defensa"
       ],
       "timestamp": "2026-07-05T18:25:28.146Z"
+    },
+    {
+      "id": "h_1783276277386_6z0k",
+      "categoria": "legal",
+      "hecho": "Correos impugnacion 0000838097: 3 entregados (SIMIT+contacto+movilidad Itagui), 2 rebotaron (secretariamovilidad+pqrs Itagui no existen). El recurso se considera legalmente presentado.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "simit",
+        "itagui",
+        "impugnacion",
+        "rebote"
+      ],
+      "timestamp": "2026-07-05T18:31:17.386Z"
+    },
+    {
+      "id": "h_1783276391053_7sby",
+      "categoria": "finanzas",
+      "hecho": "DIAN AG2023: deuda .8M. Prescripcion corre ~09/2029. REGLA HIERRO: NO firmar 814, NO pagar, NO abonar, NO contactar Cobranzas.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "dian",
+        "ag2023",
+        "deuda",
+        "prescripcion",
+        "814"
+      ],
+      "timestamp": "2026-07-05T18:33:11.053Z"
+    },
+    {
+      "id": "h_1783276391054_nhxe",
+      "categoria": "finanzas",
+      "hecho": "DIAN AG2024: radicada con sancion  en mora. Recibo 91900450122623.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "dian",
+        "ag2024",
+        "sancion"
+      ],
+      "timestamp": "2026-07-05T18:33:11.054Z"
+    },
+    {
+      "id": "h_1783276391054_yu54",
+      "categoria": "finanzas",
+      "hecho": "DIAN AG2025: NO OBLIGADO. Flujo bancario bajo topes. NO declarar.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "dian",
+        "ag2025"
+      ],
+      "timestamp": "2026-07-05T18:33:11.054Z"
+    },
+    {
+      "id": "h_1783276391055_ftn4",
+      "categoria": "finanzas",
+      "hecho": "UGPP 2023 cerrado FAVORABLE 12/06/2026. Pero bajo vigilancia de coherencia DIAN/UGPP.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "ugpp",
+        "dian",
+        "coherencia"
+      ],
+      "timestamp": "2026-07-05T18:33:11.055Z"
+    },
+    {
+      "id": "h_1783276391055_pju6",
+      "categoria": "finanzas",
+      "hecho": "DIAN Peticion Particular 2026DP000161298 asignada 09/06/2026. En espera de respuesta.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "dian",
+        "peticion"
+      ],
+      "timestamp": "2026-07-05T18:33:11.055Z"
     }
   ]
 }

@@ -16,10 +16,12 @@
       "valor_principal": 633105,
       "intereses": 2755,
       "total": 635860,
-      "accion": "IMPUGNADO 05/07/2026 - Recurso de reposicion enviado a SIMIT + Itagui (5 correos). Pendiente respuesta.",
+      "accion": "IMPUGNADO 05/07/2026 - Recurso de reposicion enviado a SIMIT + Itagui (5 correos, 2 rebotaron). Pendiente respuesta.",
       "estado": "Impugnado",
       "fecha_impugnacion": "2026-07-05",
-      "emails_enviados": ["contactosimit@fcm.org.co", "contacto@itagui.gov.co", "movilidad@itagui.gov.co", "secretariamovilidad@itagui.gov.co", "pqrs@itagui.gov.co"]
+      "emails_enviados": ["contactosimit@fcm.org.co", "contacto@itagui.gov.co", "movilidad@itagui.gov.co", "secretariamovilidad@itagui.gov.co", "pqrs@itagui.gov.co"],
+      "emails_rebotaron": ["secretariamovilidad@itagui.gov.co", "pqrs@itagui.gov.co"],
+      "emails_entregados": ["contactosimit@fcm.org.co", "contacto@itagui.gov.co", "movilidad@itagui.gov.co"]
     },
     {
       "id": "0000430265",
