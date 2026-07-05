@@ -286,6 +286,8 @@ ${senaBlock}
 }
 
 const LLM_PROVIDERS = [
+  // ── Nivel 0: DeepSeek V4 Flash (directo, $0.14/M input) ──
+  { name: 'DeepSeek V4 Flash', baseUrl: 'https://api.deepseek.com/v1', apiKey: process.env.DEEPSEEK_API_KEY, model: 'deepseek-v4-flash', retry: 2 },
   // ── Nivel 1: NVIDIA (build.nvidia.com) — mejor calidad de razonamiento ──
   { name: 'NVIDIA DeepSeek V4 Flash', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'deepseek-ai/deepseek-v4-flash', retry: 1 },
   { name: 'NVIDIA Nemotron Super 49B', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'nvidia/llama-3.3-nemotron-super-49b-v1', retry: 1 },

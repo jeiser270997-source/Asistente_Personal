@@ -25,7 +25,7 @@ jobs:
         cache: 'npm'
 
     - name: Instalar dependencias principales
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: Instalar dependencias de Gmail Cleaner
       run: cd Herramientas/Gmail_Cleaner && npm install
