@@ -1,0 +1,40 @@
+{
+  "categorias": {
+    "legal": 3,
+    "estudio": 3,
+    "finanzas": 1,
+    "personal": 3,
+    "trabajo": 1,
+    "salud": 1
+  },
+  "tags": {
+    "simit": 3,
+    "itagui": 2,
+    "pagada": 1,
+    "c29": 2,
+    "impugnar": 1,
+    "medellin": 2,
+    "bootcamp": 1,
+    "javascript": 1,
+    "semana1": 1,
+    "sena": 1,
+    "actividad2": 1,
+    "deadline": 1,
+    "cesde": 1,
+    "horario": 1,
+    "deepseek": 1,
+    "api": 1,
+    "costo": 1,
+    "direccion": 1,
+    "trabajo": 1,
+    "vehiculo": 1,
+    "kew496": 1,
+    "soat": 1,
+    "empleo": 1,
+    "qa": 1,
+    "linkedin": 1,
+    "skills": 1,
+    "eps": 1,
+    "salud": 1
+  }
+}

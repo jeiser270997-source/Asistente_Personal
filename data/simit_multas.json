@@ -1,7 +1,7 @@
 {
   "placa": "KEW496",
   "actualizado": "2026-07-05T17:30:00.000Z",
-  "total_deuda": 1858915,
+  "total_deuda": 1291904,
   "multas": [
     {
       "id": "0000838097",
@@ -26,11 +26,13 @@
       "infraccion": "C14",
       "descripcion": "Fotodeteccion",
       "deteccion": "Fotodeteccion",
-      "estado": "Cobro coactivo",
+      "estado": "Pagada",
+      "estado_detalle": "Ya fue pagada. SIMIT no esta actualizado.",
       "valor_principal": 455020,
       "intereses": 111991,
-      "total": 567011,
-      "accion": "URGENTE - Verificar notificacion original. Riesgo de embargo. Negociar pago."
+      "total": 0,
+      "total_original": 567011,
+      "accion": "Verificar en SIMIT si ya se refleja el pago. Solicitar paz y salvo a Itagui."
     },
     {
       "id": "0000679154",

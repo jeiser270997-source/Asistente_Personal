@@ -1,0 +1,157 @@
+{
+  "hechos": [
+    {
+      "id": "h_1783274819754_j0v3",
+      "categoria": "legal",
+      "hecho": "Multa SIMIT 0000430265 (C14 Itagui) ya fue pagada. SIMIT no esta actualizado. Verificar paz y salvo.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "simit",
+        "itagui",
+        "pagada"
+      ],
+      "timestamp": "2026-07-05T18:06:59.754Z"
+    },
+    {
+      "id": "h_1783274819755_jevq",
+      "categoria": "legal",
+      "hecho": "Multa SIMIT 0000838097 (C29 Itagui, 22 Jun 2026) pendiente de pago . Impugnable por falta de notificacion.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "simit",
+        "itagui",
+        "c29",
+        "impugnar"
+      ],
+      "timestamp": "2026-07-05T18:06:59.755Z"
+    },
+    {
+      "id": "h_1783274819755_57dt",
+      "categoria": "legal",
+      "hecho": "Multa SIMIT 0000679154 (C29 Medellin, Mar 2025) pendiente de pago . Negociar acuerdo de pago.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "simit",
+        "medellin",
+        "c29"
+      ],
+      "timestamp": "2026-07-05T18:06:59.755Z"
+    },
+    {
+      "id": "h_1783274819755_z1a3",
+      "categoria": "estudio",
+      "hecho": "Bootcamp QA Automation iniciado. Semana 1: JavaScript Core - tipos, coercion, scope. Usando freeCodeCamp.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "bootcamp",
+        "javascript",
+        "semana1"
+      ],
+      "timestamp": "2026-07-05T18:06:59.755Z"
+    },
+    {
+      "id": "h_1783274819756_ff0r",
+      "categoria": "estudio",
+      "hecho": "SENA: Bases de Datos (ficha 3549155). Actividad 2 vence 7 Julio 2026. Evidencia: Cuadro comparativo + Taller aplicado.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "sena",
+        "actividad2",
+        "deadline"
+      ],
+      "timestamp": "2026-07-05T18:06:59.756Z"
+    },
+    {
+      "id": "h_1783274819756_tc85",
+      "categoria": "estudio",
+      "hecho": "CESDE: Clases Lun/Mie/Vie 6-8pm via Teams. Inicia Julio 6 2026.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "cesde",
+        "horario"
+      ],
+      "timestamp": "2026-07-05T18:06:59.756Z"
+    },
+    {
+      "id": "h_1783274819756_u1yu",
+      "categoria": "finanzas",
+      "hecho": "API DeepSeek V4 Flash es la unica activa. -4 USD/mes estimado. En horario pico (8pm-11pm, 1am-5am COL) no funciona.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "deepseek",
+        "api",
+        "costo"
+      ],
+      "timestamp": "2026-07-05T18:06:59.756Z"
+    },
+    {
+      "id": "h_1783274819757_ecbt",
+      "categoria": "personal",
+      "hecho": "Jeiser vive en Ueb Villa Eloisa Bloque 25 Apto 102, Medellin. Trabaja como conductor Didi. Busca empleo como QA Automation.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "direccion",
+        "trabajo",
+        "medellin"
+      ],
+      "timestamp": "2026-07-05T18:06:59.757Z"
+    },
+    {
+      "id": "h_1783274819757_yszt",
+      "categoria": "personal",
+      "hecho": "Vehiculo: KEW496 (Toyota Corolla 2010). Placa: KEW496. SOAT vence 31 Dic 2026.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "vehiculo",
+        "kew496",
+        "soat"
+      ],
+      "timestamp": "2026-07-05T18:06:59.757Z"
+    },
+    {
+      "id": "h_1783274819758_id1q",
+      "categoria": "trabajo",
+      "hecho": "Jeiser busca empleo como QA Automation Engineer Junior/Semi-senior. Industrias: tecnologia, desarrollo de software.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "empleo",
+        "qa",
+        "linkedin"
+      ],
+      "timestamp": "2026-07-05T18:06:59.758Z"
+    },
+    {
+      "id": "h_1783274819758_9qk5",
+      "categoria": "personal",
+      "hecho": "SKILL_EXTRACTOR_v9 y SKILL_MANAGER_SOFTBALL_v3 son skills personales de Jeiser. No modificar sin consultar.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "skills"
+      ],
+      "timestamp": "2026-07-05T18:06:59.758Z"
+    },
+    {
+      "id": "h_1783274819758_gdqf",
+      "categoria": "salud",
+      "hecho": "EPS: sin datos. No hay condiciones medicas registradas ni citas pendientes.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "eps",
+        "salud"
+      ],
+      "timestamp": "2026-07-05T18:06:59.758Z"
+    }
+  ]
+}
