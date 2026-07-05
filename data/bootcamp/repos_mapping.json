@@ -1,0 +1,109 @@
+{
+  "generado": "2026-07-05T17:19:38.881Z",
+  "categorias": {
+    "other": [
+      "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
+      "01_Estudio_y_Desafios - libros-programacion-gratis",
+      "01_Estudio_y_Desafios - path-to-senior-engineer-handbook",
+      "03_Aplicaciones_y_Utilidades - actual",
+      "03_Aplicaciones_y_Utilidades - cal.com",
+      "03_Aplicaciones_y_Utilidades - excalidraw",
+      "03_Aplicaciones_y_Utilidades - kokoclone",
+      "03_Aplicaciones_y_Utilidades - MoneyPrinter",
+      "03_Aplicaciones_y_Utilidades - no-mistakes",
+      "03_Aplicaciones_y_Utilidades - open-webui",
+      "03_Aplicaciones_y_Utilidades - Pake",
+      "03_Aplicaciones_y_Utilidades - superfile",
+      "03_Aplicaciones_y_Utilidades - winutil",
+      "04_Librerias_y_Desarrollo - clay",
+      "04_Librerias_y_Desarrollo - nestjs",
+      "04_Librerias_y_Desarrollo - openclaw",
+      "04_Librerias_y_Desarrollo - resume-schema",
+      "04_Librerias_y_Desarrollo - sportsdataverse-js",
+      "05_Recursos_y_Listas - awesome",
+      "05_Recursos_y_Listas - papers-we-love",
+      "05_Recursos_y_Listas - public-apis"
+    ],
+    "testing": [
+      "01_Estudio_y_Desafios - awesome-playwright",
+      "01_Estudio_y_Desafios - cypress-realworld-app",
+      "01_Estudio_y_Desafios - imba-vitest-playwright",
+      "01_Estudio_y_Desafios - playwright",
+      "01_Estudio_y_Desafios - react-testing-library",
+      "01_Estudio_y_Desafios - vitest"
+    ],
+    "projects": [
+      "01_Estudio_y_Desafios - build-your-own-x",
+      "01_Estudio_y_Desafios - realworld"
+    ],
+    "fundamentals": [
+      "01_Estudio_y_Desafios - coding-interview-university",
+      "01_Estudio_y_Desafios - developer-roadmap",
+      "01_Estudio_y_Desafios - freeCodeCamp",
+      "01_Estudio_y_Desafios - odin-project",
+      "01_Estudio_y_Desafios - roadmap-retos-programacion"
+    ],
+    "typescript": [
+      "01_Estudio_y_Desafios - learning-typescript-projects",
+      "01_Estudio_y_Desafios - type-challenges"
+    ],
+    "javascript": [
+      "01_Estudio_y_Desafios - nodebestpractices"
+    ],
+    "system_design": [
+      "01_Estudio_y_Desafios - system-design-primer",
+      "05_Recursos_y_Listas - awesome-scalability"
+    ],
+    "ai_agents": [
+      "02_IA_y_Herramientas_de_Agentes - agent-skills-vercel",
+      "02_IA_y_Herramientas_de_Agentes - autoskills",
+      "02_IA_y_Herramientas_de_Agentes - beads",
+      "02_IA_y_Herramientas_de_Agentes - bumblebee",
+      "02_IA_y_Herramientas_de_Agentes - CL4R1T4S",
+      "02_IA_y_Herramientas_de_Agentes - ComfyUI",
+      "02_IA_y_Herramientas_de_Agentes - cua",
+      "02_IA_y_Herramientas_de_Agentes - kokoro-tts",
+      "02_IA_y_Herramientas_de_Agentes - nanochat",
+      "02_IA_y_Herramientas_de_Agentes - ollama",
+      "02_IA_y_Herramientas_de_Agentes - opencode",
+      "02_IA_y_Herramientas_de_Agentes - pocket-tts",
+      "02_IA_y_Herramientas_de_Agentes - ponytail",
+      "02_IA_y_Herramientas_de_Agentes - repomix",
+      "02_IA_y_Herramientas_de_Agentes - roast-my-code",
+      "02_IA_y_Herramientas_de_Agentes - skillspector",
+      "02_IA_y_Herramientas_de_Agentes - video-use"
+    ],
+    "infra": [
+      "03_Aplicaciones_y_Utilidades - dokploy",
+      "03_Aplicaciones_y_Utilidades - n8n",
+      "03_Aplicaciones_y_Utilidades - pocketbase",
+      "03_Aplicaciones_y_Utilidades - supabase"
+    ],
+    "react": [
+      "03_Aplicaciones_y_Utilidades - Reactive-Resume",
+      "04_Librerias_y_Desarrollo - bulletproof-react",
+      "04_Librerias_y_Desarrollo - react-tournament-brackets"
+    ],
+    "libraries": [
+      "04_Librerias_y_Desarrollo - animejs",
+      "04_Librerias_y_Desarrollo - apexcharts",
+      "04_Librerias_y_Desarrollo - Chart.js",
+      "04_Librerias_y_Desarrollo - jsPDF",
+      "04_Librerias_y_Desarrollo - shadcn-ui",
+      "04_Librerias_y_Desarrollo - tldraw"
+    ]
+  },
+  "resumen": {
+    "other": 21,
+    "testing": 6,
+    "projects": 2,
+    "fundamentals": 5,
+    "typescript": 2,
+    "javascript": 1,
+    "system_design": 2,
+    "ai_agents": 17,
+    "infra": 4,
+    "react": 3,
+    "libraries": 6
+  }
+}

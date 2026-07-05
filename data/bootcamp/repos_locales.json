@@ -1,0 +1,2783 @@
+{
+  "escaneado": "2026-07-05T17:19:38.880Z",
+  "directorio": "E:\\PROYECTOS\\Proyectos_GitHub",
+  "total": 69,
+  "repos": [
+    {
+      "folder": "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
+      "github": "sharklovin/IT-Support-And-Help-Desk-Lab-Scenarios",
+      "remote": "https://github.com/sharklovin/IT-Support-And-Help-Desk-Lab-Scenarios.git",
+      "branch": "main",
+      "lastCommit": "2026-04-17 16:58:47 +0100",
+      "commitCount": 211,
+      "category": "other",
+      "totalFiles": 187,
+      "languages": [
+        "Markdown"
+      ],
+      "totalSizeKB": 13231,
+      "topFiles": [
+        {
+          "name": "05 Connection established in Tech Side.png",
+          "sizeKB": 1130
+        },
+        {
+          "name": "06 Screen showing in Client Side proving connection Established.png",
+          "sizeKB": 967
+        },
+        {
+          "name": "09 Compatibility Warning.png",
+          "sizeKB": 916
+        },
+        {
+          "name": "Log into Domain Account.png",
+          "sizeKB": 858
+        },
+        {
+          "name": "AD Confirms Password Change.png",
+          "sizeKB": 679
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - awesome-playwright",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - awesome-playwright",
+      "github": "mxschmitt/awesome-playwright",
+      "remote": "https://github.com/mxschmitt/awesome-playwright.git",
+      "branch": "main",
+      "lastCommit": "2026-05-31 22:21:37 -0700",
+      "commitCount": 1,
+      "category": "testing",
+      "totalFiles": 6,
+      "languages": [
+        "YAML",
+        "Markdown"
+      ],
+      "totalSizeKB": 25,
+      "topFiles": [
+        {
+          "name": "README.md",
+          "sizeKB": 13
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - build-your-own-x",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - build-your-own-x",
+      "github": "codecrafters-io/build-your-own-x",
+      "remote": "https://github.com/codecrafters-io/build-your-own-x.git",
+      "branch": "master",
+      "lastCommit": "2026-02-21 01:34:54 -0800",
+      "commitCount": 611,
+      "category": "projects",
+      "totalFiles": 3,
+      "languages": [
+        "Markdown"
+      ],
+      "totalSizeKB": 72,
+      "topFiles": [
+        {
+          "name": "README.md",
+          "sizeKB": 46
+        },
+        {
+          "name": "codecrafters-banner.png",
+          "sizeKB": 24
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - coding-interview-university",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - coding-interview-university",
+      "github": "jwasham/coding-interview-university",
+      "remote": "https://github.com/jwasham/coding-interview-university.git",
+      "branch": "main",
+      "lastCommit": "2024-12-06 10:46:51 +1100",
+      "commitCount": 2511,
+      "category": "fundamentals",
+      "totalFiles": 45,
+      "languages": [
+        "YAML",
+        "Markdown"
+      ],
+      "totalSizeKB": 6608,
+      "topFiles": [
+        {
+          "name": "python-cheat-sheet-v1.pdf",
+          "sizeKB": 389
+        },
+        {
+          "name": "Java Fundamentals Cheatsheet.pdf",
+          "sizeKB": 388
+        },
+        {
+          "name": "README-bn.md",
+          "sizeKB": 267
+        },
+        {
+          "name": "big-o-cheatsheet.pdf",
+          "sizeKB": 255
+        },
+        {
+          "name": "STL Quick Reference 1.29.pdf",
+          "sizeKB": 242
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - cypress-realworld-app",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - cypress-realworld-app",
+      "github": "cypress-io/cypress-realworld-app",
+      "remote": "https://github.com/cypress-io/cypress-realworld-app.git",
+      "branch": "develop",
+      "lastCommit": "2026-06-11 12:23:12 -0600",
+      "commitCount": 1326,
+      "category": "testing",
+      "totalFiles": 210,
+      "languages": [
+        "YAML",
+        "JSON",
+        "TypeScript",
+        "Markdown",
+        "HTML",
+        "JavaScript"
+      ],
+      "totalSizeKB": 2367,
+      "topFiles": [
+        {
+          "name": "yarn.lock",
+          "sizeKB": 612
+        },
+        {
+          "name": "database-seed.json",
+          "sizeKB": 370
+        },
+        {
+          "name": "database.json",
+          "sizeKB": 370
+        },
+        {
+          "name": "rwa-readme-screenshot.png",
+          "sizeKB": 249
+        },
+        {
+          "name": "built-by-cypress.svg",
+          "sizeKB": 27
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - developer-roadmap",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - developer-roadmap",
+      "github": "kamranahmedse/developer-roadmap",
+      "remote": "https://github.com/kamranahmedse/developer-roadmap.git",
+      "branch": "master",
+      "lastCommit": "2026-06-15 16:05:22 +0200",
+      "commitCount": 7656,
+      "category": "fundamentals",
+      "totalFiles": 1316,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "Shell",
+        "JavaScript",
+        "CSS"
+      ],
+      "totalSizeKB": 92262,
+      "topFiles": [
+        {
+          "name": "rust.pdf",
+          "sizeKB": 1418
+        },
+        {
+          "name": "roadmap.svg",
+          "sizeKB": 1373
+        },
+        {
+          "name": "roadmap-postgresql-dba-1-chromium-darwin.png",
+          "sizeKB": 1143
+        },
+        {
+          "name": "roadmap-android-1-chromium-darwin.png",
+          "sizeKB": 1116
+        },
+        {
+          "name": "roadmaps-1-chromium-darwin.png",
+          "sizeKB": 1045
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - freeCodeCamp",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - freeCodeCamp",
+      "github": "freeCodeCamp/freeCodeCamp",
+      "remote": "https://github.com/freeCodeCamp/freeCodeCamp.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 14:39:00 +0000",
+      "commitCount": 41785,
+      "category": "fundamentals",
+      "totalFiles": 1764,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JavaScript",
+        "JSON",
+        "TypeScript",
+        "CSS",
+        "HTML",
+        "Shell"
+      ],
+      "totalSizeKB": 4979,
+      "topFiles": [
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 918
+        },
+        {
+          "name": "user-data.js",
+          "sizeKB": 262
+        },
+        {
+          "name": "glyphicons-halflings-regular.svg",
+          "sizeKB": 104
+        },
+        {
+          "name": "challenge-schema.test.mjs.snap",
+          "sizeKB": 62
+        },
+        {
+          "name": "glyphicons-halflings-regular.ttf",
+          "sizeKB": 44
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - imba-vitest-playwright",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - imba-vitest-playwright",
+      "github": "codeluggage/imba-vitest-playwright",
+      "remote": "https://github.com/codeluggage/imba-vitest-playwright.git",
+      "branch": "main",
+      "lastCommit": "2022-04-17 21:27:21 +0800",
+      "commitCount": 1,
+      "category": "testing",
+      "totalFiles": 13,
+      "languages": [
+        "HTML",
+        "TypeScript",
+        "JSON",
+        "Markdown"
+      ],
+      "totalSizeKB": 286,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 273
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - learning-typescript-projects",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - learning-typescript-projects",
+      "github": "LearningTypeScript/projects",
+      "remote": "https://github.com/LearningTypeScript/projects.git",
+      "branch": "main",
+      "lastCommit": "2025-09-09 07:24:34 -0400",
+      "commitCount": 1,
+      "category": "typescript",
+      "totalFiles": 206,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JavaScript",
+        "JSON",
+        "Shell",
+        "TypeScript"
+      ],
+      "totalSizeKB": 473,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 308
+        },
+        {
+          "name": "cover-conure.png",
+          "sizeKB": 50
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - libros-programacion-gratis",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - libros-programacion-gratis",
+      "github": "midudev/libros-programacion-gratis",
+      "remote": "https://github.com/midudev/libros-programacion-gratis.git",
+      "branch": "main",
+      "lastCommit": "2026-05-26 14:39:22 +0200",
+      "commitCount": 118,
+      "category": "other",
+      "totalFiles": 182,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "CSS"
+      ],
+      "totalSizeKB": 296949,
+      "topFiles": [
+        {
+          "name": "fundamentos-programacion.pdf",
+          "sizeKB": 24930
+        },
+        {
+          "name": "bases-conceptuales-programacion.pdf",
+          "sizeKB": 17817
+        },
+        {
+          "name": "fundamentos-programacion.epub",
+          "sizeKB": 17350
+        },
+        {
+          "name": "logica-de-programacion.epub",
+          "sizeKB": 13818
+        },
+        {
+          "name": "python-aprende-sergio-delgado-quintero.pdf",
+          "sizeKB": 12296
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - nodebestpractices",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - nodebestpractices",
+      "github": "goldbergyoni/nodebestpractices",
+      "remote": "https://github.com/goldbergyoni/nodebestpractices.git",
+      "branch": "master",
+      "lastCommit": "2026-06-15 14:41:03 +0300",
+      "commitCount": 3917,
+      "category": "javascript",
+      "totalFiles": 740,
+      "languages": [
+        "YAML",
+        "Shell",
+        "Markdown",
+        "JSON"
+      ],
+      "totalSizeKB": 12536,
+      "topFiles": [
+        {
+          "name": "keepexpressinweb.gif",
+          "sizeKB": 1501
+        },
+        {
+          "name": "6-parts-in-test.jpg",
+          "sizeKB": 680
+        },
+        {
+          "name": "banner-1.png",
+          "sizeKB": 359
+        },
+        {
+          "name": "apm3.png",
+          "sizeKB": 331
+        },
+        {
+          "name": "kibana-raw-1024x637.png",
+          "sizeKB": 302
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - odin-project",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - odin-project",
+      "github": "TheOdinProject/curriculum",
+      "remote": "https://github.com/TheOdinProject/curriculum.git",
+      "branch": "main",
+      "lastCommit": "2026-06-20 20:53:15 +0100",
+      "commitCount": 1,
+      "category": "fundamentals",
+      "totalFiles": 568,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JavaScript",
+        "JSON"
+      ],
+      "totalSizeKB": 4520,
+      "topFiles": [
+        {
+          "name": "event_attendees_full.csv",
+          "sizeKB": 561
+        },
+        {
+          "name": "project_js_jquery.md",
+          "sizeKB": 110
+        },
+        {
+          "name": "javascript_basics.md",
+          "sizeKB": 64
+        },
+        {
+          "name": "01.png",
+          "sizeKB": 59
+        },
+        {
+          "name": "project_event_manager.md",
+          "sizeKB": 55
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - path-to-senior-engineer-handbook",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - path-to-senior-engineer-handbook",
+      "github": "jordan-cutler/path-to-senior-engineer-handbook",
+      "remote": "https://github.com/jordan-cutler/path-to-senior-engineer-handbook.git",
+      "branch": "main",
+      "lastCommit": "2026-06-01 11:41:53 -0400",
+      "commitCount": 100,
+      "category": "other",
+      "totalFiles": 3,
+      "languages": [
+        "Markdown"
+      ],
+      "totalSizeKB": 24,
+      "topFiles": [
+        {
+          "name": "README.md",
+          "sizeKB": 18
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - playwright",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - playwright",
+      "github": "microsoft/playwright",
+      "remote": "https://github.com/microsoft/playwright.git",
+      "branch": "main",
+      "lastCommit": "2026-06-19 15:15:21 -0600",
+      "commitCount": 1,
+      "category": "testing",
+      "totalFiles": 1949,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "TypeScript",
+        "JavaScript",
+        "Shell",
+        "Batch",
+        "JSON",
+        "HTML",
+        "CSS",
+        "PowerShell",
+        "Python"
+      ],
+      "totalSizeKB": 31652,
+      "topFiles": [
+        {
+          "name": "react-dom_18.1.0.js",
+          "sizeKB": 1049
+        },
+        {
+          "name": "movie.webm",
+          "sizeKB": 1025
+        },
+        {
+          "name": "types.d.ts",
+          "sizeKB": 986
+        },
+        {
+          "name": "types.d.ts",
+          "sizeKB": 986
+        },
+        {
+          "name": "react-dom_17.0.2.js",
+          "sizeKB": 918
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - react-testing-library",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - react-testing-library",
+      "github": "testing-library/react-testing-library",
+      "remote": "https://github.com/testing-library/react-testing-library.git",
+      "branch": "main",
+      "lastCommit": "2026-04-02 10:04:35 +0300",
+      "commitCount": 1,
+      "category": "testing",
+      "totalFiles": 57,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JavaScript",
+        "JSON",
+        "TypeScript"
+      ],
+      "totalSizeKB": 591,
+      "topFiles": [
+        {
+          "name": "testingjavascript.jpg",
+          "sizeKB": 196
+        },
+        {
+          "name": "cheat-sheet.afpub",
+          "sizeKB": 135
+        },
+        {
+          "name": "README.md",
+          "sizeKB": 77
+        },
+        {
+          "name": "cheat-sheet.pdf",
+          "sizeKB": 48
+        },
+        {
+          "name": "toWarnDev.js",
+          "sizeKB": 12
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - realworld",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - realworld",
+      "github": "gothinkster/realworld",
+      "remote": "https://github.com/gothinkster/realworld.git",
+      "branch": "main",
+      "lastCommit": "2026-05-21 08:24:17 +0200",
+      "commitCount": 1144,
+      "category": "projects",
+      "totalFiles": 78,
+      "languages": [
+        "YAML",
+        "TypeScript",
+        "CSS",
+        "Markdown",
+        "JSON",
+        "Shell",
+        "JavaScript"
+      ],
+      "totalSizeKB": 996,
+      "topFiles": [
+        {
+          "name": "stacks_hr.gif",
+          "sizeKB": 360
+        },
+        {
+          "name": "bun.lock",
+          "sizeKB": 150
+        },
+        {
+          "name": "end.png",
+          "sizeKB": 102
+        },
+        {
+          "name": "error-handling.spec.ts",
+          "sizeKB": 34
+        },
+        {
+          "name": "styles.css",
+          "sizeKB": 30
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - roadmap-retos-programacion",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - roadmap-retos-programacion",
+      "github": "mouredev/roadmap-retos-programacion",
+      "remote": "https://github.com/mouredev/roadmap-retos-programacion.git",
+      "branch": "main",
+      "lastCommit": "2026-06-12 00:54:07 +0000",
+      "commitCount": 26094,
+      "category": "fundamentals",
+      "totalFiles": 11443,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "Shell",
+        "Go",
+        "Java",
+        "JavaScript",
+        "Python",
+        "Rust",
+        "TypeScript",
+        "JSON"
+      ],
+      "totalSizeKB": 39592,
+      "topFiles": [
+        {
+          "name": "GitHjuan.php",
+          "sizeKB": 571
+        },
+        {
+          "name": "header.jpg",
+          "sizeKB": 526
+        },
+        {
+          "name": "pro.jpg",
+          "sizeKB": 283
+        },
+        {
+          "name": "stats.json",
+          "sizeKB": 269
+        },
+        {
+          "name": "Jalivur.js",
+          "sizeKB": 39
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - system-design-primer",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - system-design-primer",
+      "github": "donnemartin/system-design-primer",
+      "remote": "https://github.com/donnemartin/system-design-primer.git",
+      "branch": "master",
+      "lastCommit": "2026-03-19 21:52:18 -0400",
+      "commitCount": 343,
+      "category": "system_design",
+      "totalFiles": 137,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "Shell",
+        "Python"
+      ],
+      "totalSizeKB": 13281,
+      "topFiles": [
+        {
+          "name": "Xkm5CXz.png",
+          "sizeKB": 1839
+        },
+        {
+          "name": "zdCAkB3.png",
+          "sizeKB": 1365
+        },
+        {
+          "name": "b4YtAEN.png",
+          "sizeKB": 543
+        },
+        {
+          "name": "TcUo2fw.png",
+          "sizeKB": 482
+        },
+        {
+          "name": "twitter.png",
+          "sizeKB": 335
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - type-challenges",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - type-challenges",
+      "github": "type-challenges/type-challenges",
+      "remote": "https://github.com/type-challenges/type-challenges.git",
+      "branch": "main",
+      "lastCommit": "2026-03-01 15:19:21 +0900",
+      "commitCount": 1,
+      "category": "typescript",
+      "totalFiles": 1084,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JavaScript",
+        "JSON",
+        "TypeScript",
+        "Shell",
+        "HTML",
+        "CSS"
+      ],
+      "totalSizeKB": 1732,
+      "topFiles": [
+        {
+          "name": "README.zh-CN.md",
+          "sizeKB": 114
+        },
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 113
+        },
+        {
+          "name": "README.md",
+          "sizeKB": 109
+        },
+        {
+          "name": "README.pt-BR.md",
+          "sizeKB": 108
+        },
+        {
+          "name": "README.ja.md",
+          "sizeKB": 107
+        }
+      ]
+    },
+    {
+      "folder": "01_Estudio_y_Desafios - vitest",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\01_Estudio_y_Desafios - vitest",
+      "github": "vitest-dev/vitest",
+      "remote": "https://github.com/vitest-dev/vitest.git",
+      "branch": "main",
+      "lastCommit": "2026-06-19 18:24:43 +0900",
+      "commitCount": 1,
+      "category": "testing",
+      "totalFiles": 1186,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "Vue",
+        "CSS"
+      ],
+      "totalSizeKB": 27837,
+      "topFiles": [
+        {
+          "name": "new-reporter.webm",
+          "sizeKB": 7336
+        },
+        {
+          "name": "on-task-update.gif",
+          "sizeKB": 5550
+        },
+        {
+          "name": "og-vitest-4.jpg",
+          "sizeKB": 841
+        },
+        {
+          "name": "og-vitest-4-1.jpg",
+          "sizeKB": 788
+        },
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 664
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - agent-skills-vercel",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - agent-skills-vercel",
+      "github": "vercel-labs/agent-skills",
+      "remote": "https://github.com/vercel-labs/agent-skills.git",
+      "branch": "main",
+      "lastCommit": "2026-06-10 14:21:47 -0700",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 291,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "Shell"
+      ],
+      "totalSizeKB": 1961,
+      "topFiles": [
+        {
+          "name": "AGENTS.md",
+          "sizeKB": 109
+        },
+        {
+          "name": "react-best-practices.zip",
+          "sizeKB": 97
+        },
+        {
+          "name": "AGENTS.md",
+          "sizeKB": 75
+        },
+        {
+          "name": "test-cases.json",
+          "sizeKB": 67
+        },
+        {
+          "name": "verify-claim.mjs",
+          "sizeKB": 61
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - autoskills",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - autoskills",
+      "github": "midudev/autoskills",
+      "remote": "https://github.com/midudev/autoskills.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 15:53:43 +0200",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 151,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ],
+      "totalSizeKB": 1998,
+      "topFiles": [
+        {
+          "name": "index.json",
+          "sizeKB": 1020
+        },
+        {
+          "name": "og.jpg",
+          "sizeKB": 156
+        },
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 132
+        },
+        {
+          "name": "detect.test.ts",
+          "sizeKB": 64
+        },
+        {
+          "name": "zod.svg",
+          "sizeKB": 44
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - beads",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - beads",
+      "github": "gastownhall/beads",
+      "remote": "https://github.com/gastownhall/beads.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 00:01:22 -0700",
+      "commitCount": 9291,
+      "category": "ai_agents",
+      "totalFiles": 1732,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "Shell",
+        "Go",
+        "JSON",
+        "Python",
+        "PowerShell",
+        "JavaScript",
+        "TypeScript",
+        "CSS"
+      ],
+      "totalSizeKB": 17644,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 741
+        },
+        {
+          "name": "agent-using-beads.jpg",
+          "sizeKB": 406
+        },
+        {
+          "name": "llms-full.txt",
+          "sizeKB": 400
+        },
+        {
+          "name": "uv.lock",
+          "sizeKB": 334
+        },
+        {
+          "name": "bun.lock",
+          "sizeKB": 328
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - bumblebee",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - bumblebee",
+      "github": "perplexityai/bumblebee",
+      "remote": "https://github.com/perplexityai/bumblebee.git",
+      "branch": "main",
+      "lastCommit": "2026-06-06 12:31:33 +0100",
+      "commitCount": 12,
+      "category": "ai_agents",
+      "totalFiles": 86,
+      "languages": [
+        "YAML",
+        "Go",
+        "JSON",
+        "Markdown"
+      ],
+      "totalSizeKB": 1005,
+      "topFiles": [
+        {
+          "name": "antv-mini-shai-hulud.json",
+          "sizeKB": 128
+        },
+        {
+          "name": "glassworm.json",
+          "sizeKB": 105
+        },
+        {
+          "name": "mini-shai-hulud.json",
+          "sizeKB": 79
+        },
+        {
+          "name": "gemstuffer.json",
+          "sizeKB": 46
+        },
+        {
+          "name": "mcp_test.go",
+          "sizeKB": 44
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - CL4R1T4S",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - CL4R1T4S",
+      "github": "elder-plinius/CL4R1T4S",
+      "remote": "https://github.com/elder-plinius/CL4R1T4S.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 07:09:58 -0400",
+      "commitCount": 189,
+      "category": "ai_agents",
+      "totalFiles": 68,
+      "languages": [
+        "Markdown"
+      ],
+      "totalSizeKB": 1636,
+      "topFiles": [
+        {
+          "name": "Claude-Opus-4.7.txt",
+          "sizeKB": 148
+        },
+        {
+          "name": "CLAUDE-FABLE-5.md",
+          "sizeKB": 121
+        },
+        {
+          "name": "Claude_Opus_4.6.txt",
+          "sizeKB": 101
+        },
+        {
+          "name": "Claude-4.5-Opus.txt",
+          "sizeKB": 92
+        },
+        {
+          "name": "Claude_Sonnet-4.5_Sep-29-2025.txt",
+          "sizeKB": 84
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - ComfyUI",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - ComfyUI",
+      "github": "comfyanonymous/ComfyUI",
+      "remote": "https://github.com/comfyanonymous/ComfyUI.git",
+      "branch": "master",
+      "lastCommit": "2026-06-20 19:28:09 -0700",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 858,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Shell",
+        "Python",
+        "JSON"
+      ],
+      "totalSizeKB": 42692,
+      "topFiles": [
+        {
+          "name": "tokenizer.json",
+          "sizeKB": 9274
+        },
+        {
+          "name": "vocab.json",
+          "sizeKB": 6807
+        },
+        {
+          "name": "merges.txt",
+          "sizeKB": 3516
+        },
+        {
+          "name": "vocab.json",
+          "sizeKB": 2712
+        },
+        {
+          "name": "tokenizer.json",
+          "sizeKB": 2494
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - cua",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - cua",
+      "github": "trycua/cua",
+      "remote": "https://github.com/trycua/cua.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 09:42:56 +0000",
+      "commitCount": 3503,
+      "category": "ai_agents",
+      "totalFiles": 572,
+      "languages": [
+        "YAML",
+        "Python",
+        "Markdown",
+        "JSON",
+        "HTML",
+        "JavaScript",
+        "TypeScript",
+        "CSS",
+        "Shell",
+        "PowerShell"
+      ],
+      "totalSizeKB": 119510,
+      "topFiles": [
+        {
+          "name": "sandbox-options.png",
+          "sizeKB": 6796
+        },
+        {
+          "name": "what-is-cua.png",
+          "sizeKB": 6499
+        },
+        {
+          "name": "what-is-sandbox.png",
+          "sizeKB": 6249
+        },
+        {
+          "name": "grounding-with-gemini3.gif",
+          "sizeKB": 5334
+        },
+        {
+          "name": "hack-cua-ollama-hud.jpeg",
+          "sizeKB": 5271
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - kokoro-tts",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - kokoro-tts",
+      "github": "hexgrad/kokoro",
+      "remote": "https://github.com/hexgrad/kokoro.git",
+      "branch": "main",
+      "lastCommit": "2025-08-06 15:28:53 -0700",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 104,
+      "languages": [
+        "YAML",
+        "Python",
+        "Markdown",
+        "JavaScript",
+        "HTML",
+        "JSON",
+        "CSS"
+      ],
+      "totalSizeKB": 28478,
+      "topFiles": [
+        {
+          "name": "af_alloy.bin",
+          "sizeKB": 510
+        },
+        {
+          "name": "af_aoede.bin",
+          "sizeKB": 510
+        },
+        {
+          "name": "af_bella.bin",
+          "sizeKB": 510
+        },
+        {
+          "name": "af_heart.bin",
+          "sizeKB": 510
+        },
+        {
+          "name": "af_jessica.bin",
+          "sizeKB": 510
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - nanochat",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - nanochat",
+      "github": "karpathy/nanochat",
+      "remote": "https://github.com/karpathy/nanochat.git",
+      "branch": "master",
+      "lastCommit": "2026-05-05 03:17:21 +0000",
+      "commitCount": 381,
+      "category": "ai_agents",
+      "totalFiles": 53,
+      "languages": [
+        "HTML",
+        "Python",
+        "Markdown",
+        "Shell"
+      ],
+      "totalSizeKB": 1368,
+      "topFiles": [
+        {
+          "name": "uv.lock",
+          "sizeKB": 651
+        },
+        {
+          "name": "scaling_laws_jan26.png",
+          "sizeKB": 91
+        },
+        {
+          "name": "estimate_gpt3_core.ipynb",
+          "sizeKB": 74
+        },
+        {
+          "name": "LOG.md",
+          "sizeKB": 63
+        },
+        {
+          "name": "base_train.py",
+          "sizeKB": 33
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - ollama",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - ollama",
+      "github": "ollama/ollama",
+      "remote": "https://github.com/ollama/ollama.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 11:36:50 -0700",
+      "commitCount": 5459,
+      "category": "ai_agents",
+      "totalFiles": 1049,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Go",
+        "JavaScript",
+        "HTML",
+        "JSON",
+        "TypeScript",
+        "CSS",
+        "Shell",
+        "PowerShell"
+      ],
+      "totalSizeKB": 51371,
+      "topFiles": [
+        {
+          "name": "shakespeare.txt",
+          "sizeKB": 5452
+        },
+        {
+          "name": "tokenizer.model",
+          "sizeKB": 4142
+        },
+        {
+          "name": "ollama-settings.png",
+          "sizeKB": 3653
+        },
+        {
+          "name": "vocab.bpe",
+          "sizeKB": 3441
+        },
+        {
+          "name": "war-and-peace.txt",
+          "sizeKB": 3190
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - opencode",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - opencode",
+      "github": "opencode-ai/opencode",
+      "remote": "https://github.com/opencode-ai/opencode.git",
+      "branch": "main",
+      "lastCommit": "2025-09-17 21:56:54 -0400",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 136,
+      "languages": [
+        "YAML",
+        "Go",
+        "Markdown",
+        "JSON",
+        "Shell"
+      ],
+      "totalSizeKB": 1217,
+      "topFiles": [
+        {
+          "name": "tsprotocol.go",
+          "sizeKB": 279
+        },
+        {
+          "name": "tsjson.go",
+          "sizeKB": 90
+        },
+        {
+          "name": "methods.go",
+          "sizeKB": 34
+        },
+        {
+          "name": "go.sum",
+          "sizeKB": 33
+        },
+        {
+          "name": "config.go",
+          "sizeKB": 29
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - pocket-tts",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - pocket-tts",
+      "github": "kyutai-labs/pocket-tts",
+      "remote": "https://github.com/kyutai-labs/pocket-tts.git",
+      "branch": "main",
+      "lastCommit": "2026-06-03 10:55:08 +0200",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 79,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Shell",
+        "Python",
+        "HTML"
+      ],
+      "totalSizeKB": 1110,
+      "topFiles": [
+        {
+          "name": "uv.lock",
+          "sizeKB": 383
+        },
+        {
+          "name": "model_arch.png",
+          "sizeKB": 206
+        },
+        {
+          "name": "logo.png",
+          "sizeKB": 175
+        },
+        {
+          "name": "mascot.png",
+          "sizeKB": 69
+        },
+        {
+          "name": "tts_model.py",
+          "sizeKB": 45
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - ponytail",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - ponytail",
+      "github": "DietrichGebert/ponytail",
+      "remote": "https://github.com/DietrichGebert/ponytail.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 17:04:56 +0200",
+      "commitCount": 62,
+      "category": "ai_agents",
+      "totalFiles": 69,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JSON",
+        "JavaScript",
+        "Python",
+        "PowerShell",
+        "Shell"
+      ],
+      "totalSizeKB": 972,
+      "topFiles": [
+        {
+          "name": "logo.png",
+          "sizeKB": 554
+        },
+        {
+          "name": "logo-dark.png",
+          "sizeKB": 129
+        },
+        {
+          "name": "logo-dark.svg",
+          "sizeKB": 84
+        },
+        {
+          "name": "social-preview.png",
+          "sizeKB": 58
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - repomix",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - repomix",
+      "github": "yamadashy/repomix",
+      "remote": "https://github.com/yamadashy/repomix.git",
+      "branch": "main",
+      "lastCommit": "2026-06-22 00:15:00 +0900",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 473,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "CSS",
+        "Shell",
+        "JavaScript",
+        "Vue"
+      ],
+      "totalSizeKB": 3514,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 335
+        },
+        {
+          "name": "package-lock.json",
+          "sizeKB": 265
+        },
+        {
+          "name": "Screenshot_1280x800.png",
+          "sizeKB": 235
+        },
+        {
+          "name": "Promo-Image-Marquee_1400x560.png",
+          "sizeKB": 219
+        },
+        {
+          "name": "package-lock.json",
+          "sizeKB": 198
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - roast-my-code",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - roast-my-code",
+      "github": "christina-de-martinez/roast-my-code",
+      "remote": "https://github.com/christina-de-martinez/roast-my-code",
+      "branch": "main",
+      "lastCommit": "2024-12-23 19:45:54 -0800",
+      "commitCount": 94,
+      "category": "ai_agents",
+      "totalFiles": 12,
+      "languages": [
+        "YAML",
+        "JavaScript",
+        "JSON",
+        "Markdown",
+        "TypeScript"
+      ],
+      "totalSizeKB": 2851,
+      "topFiles": [
+        {
+          "name": "index.js",
+          "sizeKB": 1492
+        },
+        {
+          "name": "index.js.map",
+          "sizeKB": 1188
+        },
+        {
+          "name": "licenses.txt",
+          "sizeKB": 63
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 52
+        },
+        {
+          "name": "sourcemap-register.js",
+          "sizeKB": 40
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - skillspector",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - skillspector",
+      "github": "NVIDIA/skillspector",
+      "remote": "https://github.com/NVIDIA/skillspector.git",
+      "branch": "main",
+      "lastCommit": "2026-06-13 11:34:29 -0700",
+      "commitCount": 23,
+      "category": "ai_agents",
+      "totalFiles": 82,
+      "languages": [
+        "Markdown",
+        "JSON",
+        "YAML",
+        "Python"
+      ],
+      "totalSizeKB": 938,
+      "topFiles": [
+        {
+          "name": "uv.lock",
+          "sizeKB": 312
+        },
+        {
+          "name": "test_llm_analyzer_base.py",
+          "sizeKB": 47
+        },
+        {
+          "name": "test_patterns_new.py",
+          "sizeKB": 44
+        },
+        {
+          "name": "test_semantic_quality_policy.py",
+          "sizeKB": 32
+        },
+        {
+          "name": "test_mcp_tool_poisoning.py",
+          "sizeKB": 27
+        }
+      ]
+    },
+    {
+      "folder": "02_IA_y_Herramientas_de_Agentes - video-use",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - video-use",
+      "github": "browser-use/video-use",
+      "remote": "https://github.com/browser-use/video-use.git",
+      "branch": "main",
+      "lastCommit": "2026-05-14 23:53:01 -0400",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 31,
+      "languages": [
+        "Python",
+        "Markdown",
+        "HTML",
+        "Shell"
+      ],
+      "totalSizeKB": 737,
+      "topFiles": [
+        {
+          "name": "video-use-banner.png",
+          "sizeKB": 500
+        },
+        {
+          "name": "render.py",
+          "sizeKB": 23
+        },
+        {
+          "name": "SKILL.md",
+          "sizeKB": 23
+        },
+        {
+          "name": "poster.html",
+          "sizeKB": 20
+        },
+        {
+          "name": "timeline_view.py",
+          "sizeKB": 14
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - actual",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - actual",
+      "github": "actualbudget/actual",
+      "remote": "https://github.com/actualbudget/actual.git",
+      "branch": "master",
+      "lastCommit": "2026-06-14 05:28:37 +0000",
+      "commitCount": 5154,
+      "category": "other",
+      "totalFiles": 676,
+      "languages": [
+        "Markdown",
+        "JavaScript",
+        "YAML",
+        "TypeScript",
+        "JSON",
+        "HTML",
+        "Shell"
+      ],
+      "totalSizeKB": 10374,
+      "topFiles": [
+        {
+          "name": "icon.icns",
+          "sizeKB": 2380
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 1048
+        },
+        {
+          "name": "LargeTile.scale-400.png",
+          "sizeKB": 675
+        },
+        {
+          "name": "SplashScreen.scale-400.png",
+          "sizeKB": 604
+        },
+        {
+          "name": "releases.md",
+          "sizeKB": 539
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - cal.com",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - cal.com",
+      "github": "calcom/cal.com",
+      "remote": "https://github.com/calcom/cal.com.git",
+      "branch": "main",
+      "lastCommit": "2026-06-14 16:11:21 +0000",
+      "commitCount": 16454,
+      "category": "other",
+      "totalFiles": 1646,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "JavaScript",
+        "TypeScript",
+        "CSS",
+        "Shell",
+        "HTML"
+      ],
+      "totalSizeKB": 13843,
+      "topFiles": [
+        {
+          "name": "tsconfig.build.tsbuildinfo",
+          "sizeKB": 4133
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 1518
+        },
+        {
+          "name": "openapi.json",
+          "sizeKB": 563
+        },
+        {
+          "name": "oasdiff-err-ignore.txt",
+          "sizeKB": 479
+        },
+        {
+          "name": "video-og-image.png",
+          "sizeKB": 401
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - dokploy",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - dokploy",
+      "github": "Dokploy/dokploy",
+      "remote": "https://github.com/Dokploy/dokploy.git",
+      "branch": "canary",
+      "lastCommit": "2026-06-16 23:15:19 -0600",
+      "commitCount": 1,
+      "category": "infra",
+      "totalFiles": 310,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "Shell",
+        "CSS",
+        "Go",
+        "JavaScript"
+      ],
+      "totalSizeKB": 3382,
+      "topFiles": [
+        {
+          "name": "openapi.json",
+          "sizeKB": 1357
+        },
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 604
+        },
+        {
+          "name": "tuple.png",
+          "sizeKB": 264
+        },
+        {
+          "name": "lxaer.png",
+          "sizeKB": 248
+        },
+        {
+          "name": "hostinger.jpg",
+          "sizeKB": 173
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - excalidraw",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - excalidraw",
+      "github": "excalidraw/excalidraw",
+      "remote": "https://github.com/excalidraw/excalidraw.git",
+      "branch": "master",
+      "lastCommit": "2026-06-15 18:19:20 +0200",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 713,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JavaScript",
+        "JSON",
+        "CSS",
+        "TypeScript",
+        "HTML"
+      ],
+      "totalSizeKB": 34835,
+      "topFiles": [
+        {
+          "name": "Xiaolai-Regular.ttf",
+          "sizeKB": 21236
+        },
+        {
+          "name": "LiberationSans-Regular-2048.ttf",
+          "sizeKB": 877
+        },
+        {
+          "name": "NotoEmoji-Regular-2048.ttf",
+          "sizeKB": 876
+        },
+        {
+          "name": "LiberationSans-Regular.ttf",
+          "sizeKB": 845
+        },
+        {
+          "name": "NotoEmoji-Regular.ttf",
+          "sizeKB": 842
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - kokoclone",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - kokoclone",
+      "github": "Ashish-Patnaik/kokoclone",
+      "remote": "https://github.com/Ashish-Patnaik/kokoclone.git",
+      "branch": "main",
+      "lastCommit": "2026-04-20 02:08:50 +0530",
+      "commitCount": 13,
+      "category": "other",
+      "totalFiles": 10,
+      "languages": [
+        "Python",
+        "Markdown"
+      ],
+      "totalSizeKB": 49,
+      "topFiles": [
+        {
+          "name": "LICENSE",
+          "sizeKB": 11
+        },
+        {
+          "name": "cloner.py",
+          "sizeKB": 11
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - MoneyPrinter",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - MoneyPrinter",
+      "github": "FujiwaraChoki/MoneyPrinter",
+      "remote": "https://github.com/FujiwaraChoki/MoneyPrinter.git",
+      "branch": "main",
+      "lastCommit": "2026-03-26 23:17:17 +0100",
+      "commitCount": 219,
+      "category": "other",
+      "totalFiles": 42,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Python",
+        "JavaScript",
+        "HTML",
+        "Shell"
+      ],
+      "totalSizeKB": 683,
+      "topFiles": [
+        {
+          "name": "uv.lock",
+          "sizeKB": 257
+        },
+        {
+          "name": "PostBridgeBanner.png",
+          "sizeKB": 221
+        },
+        {
+          "name": "index.html",
+          "sizeKB": 30
+        },
+        {
+          "name": "bold_font.ttf",
+          "sizeKB": 28
+        },
+        {
+          "name": "app.js",
+          "sizeKB": 12
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - n8n",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - n8n",
+      "github": "n8n-io/n8n",
+      "remote": "https://github.com/n8n-io/n8n.git",
+      "branch": "master",
+      "lastCommit": "2026-06-15 18:36:45 +0000",
+      "commitCount": 20759,
+      "category": "infra",
+      "totalFiles": 1538,
+      "languages": [
+        "YAML",
+        "JSON",
+        "Markdown",
+        "JavaScript",
+        "Shell",
+        "TypeScript",
+        "HTML"
+      ],
+      "totalSizeKB": 10609,
+      "topFiles": [
+        {
+          "name": "CHANGELOG.md",
+          "sizeKB": 1580
+        },
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 1445
+        },
+        {
+          "name": "e2e-impact-map.json",
+          "sizeKB": 812
+        },
+        {
+          "name": "schema.json",
+          "sizeKB": 557
+        },
+        {
+          "name": "schema.json",
+          "sizeKB": 437
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - no-mistakes",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - no-mistakes",
+      "github": "kunchenguid/no-mistakes",
+      "remote": "https://github.com/kunchenguid/no-mistakes.git",
+      "branch": "main",
+      "lastCommit": "2026-06-26 17:01:47 -0700",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 439,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Go",
+        "PowerShell",
+        "Shell",
+        "JSON",
+        "TypeScript",
+        "CSS"
+      ],
+      "totalSizeKB": 4842,
+      "topFiles": [
+        {
+          "name": "demo.gif",
+          "sizeKB": 676
+        },
+        {
+          "name": "demo.mp4",
+          "sizeKB": 467
+        },
+        {
+          "name": "package-lock.json",
+          "sizeKB": 319
+        },
+        {
+          "name": "journey_test.go",
+          "sizeKB": 110
+        },
+        {
+          "name": "service_test.go",
+          "sizeKB": 52
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - open-webui",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - open-webui",
+      "github": "open-webui/open-webui",
+      "remote": "https://github.com/open-webui/open-webui.git",
+      "branch": "main",
+      "lastCommit": "2026-06-01 19:10:46 -0700",
+      "commitCount": 16810,
+      "category": "other",
+      "totalFiles": 4117,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Shell",
+        "Python",
+        "CSS",
+        "JavaScript",
+        "Batch",
+        "TypeScript",
+        "JSON",
+        "HTML",
+        "Svelte"
+      ],
+      "totalSizeKB": 23179,
+      "topFiles": [
+        {
+          "name": "galaxy.jpg",
+          "sizeKB": 2912
+        },
+        {
+          "name": "adam.jpg",
+          "sizeKB": 1022
+        },
+        {
+          "name": "CHANGELOG.md",
+          "sizeKB": 835
+        },
+        {
+          "name": "Inter-Variable.ttf",
+          "sizeKB": 786
+        },
+        {
+          "name": "earth.jpg",
+          "sizeKB": 781
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - Pake",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - Pake",
+      "github": "tw93/Pake",
+      "remote": "https://github.com/tw93/Pake.git",
+      "branch": "main",
+      "lastCommit": "2026-06-18 11:02:22 +0800",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 193,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "TypeScript",
+        "JSON",
+        "JavaScript",
+        "Python",
+        "Rust"
+      ],
+      "totalSizeKB": 14636,
+      "topFiles": [
+        {
+          "name": "lizhi.icns",
+          "sizeKB": 1920
+        },
+        {
+          "name": "qwerty.icns",
+          "sizeKB": 1368
+        },
+        {
+          "name": "xiaohongshu.icns",
+          "sizeKB": 1205
+        },
+        {
+          "name": "grok.icns",
+          "sizeKB": 1090
+        },
+        {
+          "name": "deepseek.icns",
+          "sizeKB": 1088
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - pocketbase",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - pocketbase",
+      "github": "pocketbase/pocketbase",
+      "remote": "https://github.com/pocketbase/pocketbase.git",
+      "branch": "master",
+      "lastCommit": "2026-06-14 18:25:21 +0300",
+      "commitCount": 2387,
+      "category": "infra",
+      "totalFiles": 620,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "Go",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "JSON"
+      ],
+      "totalSizeKB": 10380,
+      "topFiles": [
+        {
+          "name": "dprint-typescript-0.95.15.wasm",
+          "sizeKB": 4074
+        },
+        {
+          "name": "index-S5_fUVjl.js",
+          "sizeKB": 613
+        },
+        {
+          "name": "data.db",
+          "sizeKB": 336
+        },
+        {
+          "name": "index-CruzjZev.css",
+          "sizeKB": 269
+        },
+        {
+          "name": "remixicon.css",
+          "sizeKB": 165
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - Reactive-Resume",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - Reactive-Resume",
+      "github": "AmruthPillai/Reactive-Resume",
+      "remote": "https://github.com/AmruthPillai/Reactive-Resume.git",
+      "branch": "main",
+      "lastCommit": "2026-06-06 09:33:09 +0200",
+      "commitCount": 5486,
+      "category": "react",
+      "totalFiles": 414,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ],
+      "totalSizeKB": 15557,
+      "topFiles": [
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 498
+        },
+        {
+          "name": "webfontlist.json",
+          "sizeKB": 481
+        },
+        {
+          "name": "pikachu.webp",
+          "sizeKB": 299
+        },
+        {
+          "name": "gengar.webp",
+          "sizeKB": 291
+        },
+        {
+          "name": "leafish.webp",
+          "sizeKB": 277
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - supabase",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - supabase",
+      "github": "supabase/supabase",
+      "remote": "https://github.com/supabase/supabase.git",
+      "branch": "master",
+      "lastCommit": "2026-06-15 15:07:03 +0000",
+      "commitCount": 36837,
+      "category": "infra",
+      "totalFiles": 2085,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "TypeScript",
+        "JavaScript",
+        "JSON",
+        "CSS",
+        "Shell",
+        "Batch",
+        "HTML",
+        "Vue",
+        "Python"
+      ],
+      "totalSizeKB": 20543,
+      "topFiles": [
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 1290
+        },
+        {
+          "name": "face_similarity.ipynb",
+          "sizeKB": 1177
+        },
+        {
+          "name": "platform.d.ts",
+          "sizeKB": 756
+        },
+        {
+          "name": "chat_success.png",
+          "sizeKB": 705
+        },
+        {
+          "name": "chat_unauthorized.png",
+          "sizeKB": 678
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - superfile",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - superfile",
+      "github": "yorukot/superfile",
+      "remote": "https://github.com/yorukot/superfile.git",
+      "branch": "main",
+      "lastCommit": "2026-06-21 01:54:52 +0800",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 220,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "Shell",
+        "PowerShell",
+        "Go",
+        "Python",
+        "HTML",
+        "TypeScript",
+        "CSS"
+      ],
+      "totalSizeKB": 6676,
+      "topFiles": [
+        {
+          "name": "warp.png",
+          "sizeKB": 2888
+        },
+        {
+          "name": "demo.gif",
+          "sizeKB": 2166
+        },
+        {
+          "name": "demo.png",
+          "sizeKB": 309
+        },
+        {
+          "name": "NOTICE.md",
+          "sizeKB": 271
+        },
+        {
+          "name": "og.png",
+          "sizeKB": 146
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - winutil",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - winutil",
+      "github": "ChrisTitusTech/winutil",
+      "remote": "https://github.com/ChrisTitusTech/winutil.git",
+      "branch": "main",
+      "lastCommit": "2026-06-11 23:15:05 -0500",
+      "commitCount": 1496,
+      "category": "other",
+      "totalFiles": 146,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "PowerShell",
+        "JSON",
+        "HTML",
+        "Batch"
+      ],
+      "totalSizeKB": 1401,
+      "topFiles": [
+        {
+          "name": "Title-Screen.png",
+          "sizeKB": 173
+        },
+        {
+          "name": "tweaks-tab-new.png",
+          "sizeKB": 149
+        },
+        {
+          "name": "android-chrome-512x512.png",
+          "sizeKB": 114
+        },
+        {
+          "name": "inputXML.xaml",
+          "sizeKB": 111
+        },
+        {
+          "name": "applications.json",
+          "sizeKB": 74
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - animejs",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - animejs",
+      "github": "juliangarnier/anime",
+      "remote": "https://github.com/juliangarnier/anime.git",
+      "branch": "master",
+      "lastCommit": "2026-04-30 08:47:10 +0200",
+      "commitCount": 1,
+      "category": "libraries",
+      "totalFiles": 407,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "JSON"
+      ],
+      "totalSizeKB": 7994,
+      "topFiles": [
+        {
+          "name": "animejs-v4-logo-animation-dark.gif",
+          "sizeKB": 1622
+        },
+        {
+          "name": "animejs-v4-logo-animation.gif",
+          "sizeKB": 1088
+        },
+        {
+          "name": "IoskeleyMono-Regular.woff2",
+          "sizeKB": 467
+        },
+        {
+          "name": "IoskeleyMono-Bold.woff2",
+          "sizeKB": 464
+        },
+        {
+          "name": "anime.umd.js",
+          "sizeKB": 415
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - apexcharts",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - apexcharts",
+      "github": "apexcharts/apexcharts.js",
+      "remote": "https://github.com/apexcharts/apexcharts.js.git",
+      "branch": "main",
+      "lastCommit": "2026-06-19 23:06:13 +0530",
+      "commitCount": 1,
+      "category": "libraries",
+      "totalFiles": 1174,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JavaScript",
+        "JSON",
+        "CSS",
+        "Vue",
+        "HTML",
+        "TypeScript"
+      ],
+      "totalSizeKB": 14575,
+      "topFiles": [
+        {
+          "name": "apexcharts.js",
+          "sizeKB": 1303
+        },
+        {
+          "name": "apexcharts.ssr.esm.js",
+          "sizeKB": 1245
+        },
+        {
+          "name": "apexcharts.esm.js",
+          "sizeKB": 1231
+        },
+        {
+          "name": "core.esm.js",
+          "sizeKB": 771
+        },
+        {
+          "name": "apexcharts.ssr.common.js",
+          "sizeKB": 592
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - bulletproof-react",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - bulletproof-react",
+      "github": "alan2207/bulletproof-react",
+      "remote": "https://github.com/alan2207/bulletproof-react.git",
+      "branch": "master",
+      "lastCommit": "2026-05-14 15:53:03 +0200",
+      "commitCount": 271,
+      "category": "react",
+      "totalFiles": 89,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "HTML",
+        "TypeScript",
+        "JSON",
+        "JavaScript",
+        "CSS"
+      ],
+      "totalSizeKB": 2029,
+      "topFiles": [
+        {
+          "name": "yarn.lock",
+          "sizeKB": 567
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 566
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 500
+        },
+        {
+          "name": "unidirectional-codebase.png",
+          "sizeKB": 203
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - Chart.js",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - Chart.js",
+      "github": "chartjs/Chart.js",
+      "remote": "https://github.com/chartjs/Chart.js.git",
+      "branch": "master",
+      "lastCommit": "2026-05-27 17:17:31 -0400",
+      "commitCount": 1,
+      "category": "libraries",
+      "totalFiles": 898,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "TypeScript",
+        "JavaScript",
+        "JSON",
+        "Shell",
+        "HTML"
+      ],
+      "totalSizeKB": 9609,
+      "topFiles": [
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 615
+        },
+        {
+          "name": "usage-8.png",
+          "sizeKB": 341
+        },
+        {
+          "name": "usage-7.png",
+          "sizeKB": 220
+        },
+        {
+          "name": "usage-4.png",
+          "sizeKB": 217
+        },
+        {
+          "name": "usage-5.png",
+          "sizeKB": 214
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - clay",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - clay",
+      "github": "nicbarker/clay",
+      "remote": "https://github.com/nicbarker/clay.git",
+      "branch": "main",
+      "lastCommit": "2026-05-20 02:17:58 +0000",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 137,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "Shell",
+        "JSON",
+        "HTML",
+        "PowerShell"
+      ],
+      "totalSizeKB": 5276,
+      "topFiles": [
+        {
+          "name": "renderer.png",
+          "sizeKB": 310
+        },
+        {
+          "name": "clay.h",
+          "sizeKB": 302
+        },
+        {
+          "name": "debugger.png",
+          "sizeKB": 296
+        },
+        {
+          "name": "millbank.jpeg",
+          "sizeKB": 264
+        },
+        {
+          "name": "declarative.png",
+          "sizeKB": 193
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - jsPDF",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - jsPDF",
+      "github": "parallax/jsPDF",
+      "remote": "https://github.com/parallax/jsPDF.git",
+      "branch": "master",
+      "lastCommit": "2026-05-26 12:29:23 +0200",
+      "commitCount": 1,
+      "category": "libraries",
+      "totalFiles": 634,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JSON",
+        "HTML",
+        "JavaScript",
+        "CSS",
+        "TypeScript"
+      ],
+      "totalSizeKB": 52461,
+      "topFiles": [
+        {
+          "name": "jspdf.umd.js.map",
+          "sizeKB": 6703
+        },
+        {
+          "name": "jspdf.node.js.map",
+          "sizeKB": 5096
+        },
+        {
+          "name": "jspdf.es.js.map",
+          "sizeKB": 4902
+        },
+        {
+          "name": "jspdf.umd.min.js.map",
+          "sizeKB": 3341
+        },
+        {
+          "name": "jspdf.node.min.js.map",
+          "sizeKB": 2679
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - nestjs",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - nestjs",
+      "github": "nestjs/nest",
+      "remote": "https://github.com/nestjs/nest.git",
+      "branch": "master",
+      "lastCommit": "2026-06-15 13:21:58 +0200",
+      "commitCount": 20896,
+      "category": "other",
+      "totalFiles": 1092,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JavaScript",
+        "TypeScript",
+        "JSON",
+        "HTML",
+        "Shell"
+      ],
+      "totalSizeKB": 3652,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 1001
+        },
+        {
+          "name": "nestjs.jpg",
+          "sizeKB": 274
+        },
+        {
+          "name": "package-lock.json",
+          "sizeKB": 93
+        },
+        {
+          "name": "mosquitto.conf",
+          "sizeKB": 40
+        },
+        {
+          "name": "injector.ts",
+          "sizeKB": 40
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - openclaw",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - openclaw",
+      "github": "openclaw/openclaw",
+      "remote": "https://github.com/openclaw/openclaw.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 23:56:39 +0800",
+      "commitCount": 58982,
+      "category": "other",
+      "totalFiles": 15720,
+      "languages": [
+        "YAML",
+        "Shell",
+        "Markdown",
+        "JSON",
+        "Batch",
+        "TypeScript",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "Python",
+        "Go",
+        "PowerShell"
+      ],
+      "totalSizeKB": 144368,
+      "topFiles": [
+        {
+          "name": "CHANGELOG.md",
+          "sizeKB": 2405
+        },
+        {
+          "name": "oura-health.png",
+          "sizeKB": 1225
+        },
+        {
+          "name": "dmg-background.png",
+          "sizeKB": 990
+        },
+        {
+          "name": "snag.png",
+          "sizeKB": 798
+        },
+        {
+          "name": "taxonomy.yaml",
+          "sizeKB": 614
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - react-tournament-brackets",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - react-tournament-brackets",
+      "github": "g-loot/react-tournament-brackets",
+      "remote": "https://github.com/g-loot/react-tournament-brackets.git",
+      "branch": "master",
+      "lastCommit": "2023-06-11 16:59:08 +0200",
+      "commitCount": 138,
+      "category": "react",
+      "totalFiles": 60,
+      "languages": [
+        "YAML",
+        "JavaScript",
+        "TypeScript",
+        "JSON",
+        "Markdown"
+      ],
+      "totalSizeKB": 2881,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 1752
+        },
+        {
+          "name": "screenshot_single.png",
+          "sizeKB": 464
+        },
+        {
+          "name": "screenshot_double.png",
+          "sizeKB": 410
+        },
+        {
+          "name": "simple-data.ts",
+          "sizeKB": 50
+        },
+        {
+          "name": "LICENSE",
+          "sizeKB": 26
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - resume-schema",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - resume-schema",
+      "github": "jsonresume/resume-schema",
+      "remote": "https://github.com/jsonresume/resume-schema.git",
+      "branch": "master",
+      "lastCommit": "2026-06-12 21:51:57 +1000",
+      "commitCount": 358,
+      "category": "other",
+      "totalFiles": 42,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JSON",
+        "JavaScript"
+      ],
+      "totalSizeKB": 220,
+      "topFiles": [
+        {
+          "name": "package-lock.json",
+          "sizeKB": 113
+        },
+        {
+          "name": "schema.json",
+          "sizeKB": 15
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - shadcn-ui",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - shadcn-ui",
+      "github": "shadcn-ui/ui",
+      "remote": "https://github.com/shadcn-ui/ui.git",
+      "branch": "main",
+      "lastCommit": "2026-06-19 11:38:39 +0400",
+      "commitCount": 1,
+      "category": "libraries",
+      "totalFiles": 293,
+      "languages": [
+        "JavaScript",
+        "YAML",
+        "CSS",
+        "TypeScript",
+        "JSON",
+        "Markdown",
+        "Shell",
+        "HTML"
+      ],
+      "totalSizeKB": 5241,
+      "topFiles": [
+        {
+          "name": "__index__.tsx",
+          "sizeKB": 745
+        },
+        {
+          "name": "pnpm-lock.yaml",
+          "sizeKB": 608
+        },
+        {
+          "name": "directory.json",
+          "sizeKB": 535
+        },
+        {
+          "name": "__components__.tsx",
+          "sizeKB": 454
+        },
+        {
+          "name": "__components__.tsx",
+          "sizeKB": 308
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - sportsdataverse-js",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - sportsdataverse-js",
+      "github": "sportsdataverse/sportsdataverse-js",
+      "remote": "https://github.com/sportsdataverse/sportsdataverse-js.git",
+      "branch": "main",
+      "lastCommit": "2026-06-18 23:27:29 -0400",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 325,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JavaScript",
+        "JSON",
+        "CSS",
+        "TypeScript"
+      ],
+      "totalSizeKB": 18526,
+      "topFiles": [
+        {
+          "name": "injuries_nba.json",
+          "sizeKB": 2269
+        },
+        {
+          "name": "sdv-py-logo.png",
+          "sizeKB": 1199
+        },
+        {
+          "name": "sdv-plain-hex.png",
+          "sizeKB": 1184
+        },
+        {
+          "name": "sdv-js-logo.png",
+          "sizeKB": 1183
+        },
+        {
+          "name": "sdv-purple-white.png",
+          "sizeKB": 1044
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - tldraw",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - tldraw",
+      "github": "tldraw/tldraw",
+      "remote": "https://github.com/tldraw/tldraw.git",
+      "branch": "main",
+      "lastCommit": "2026-06-15 09:39:18 +0000",
+      "commitCount": 5901,
+      "category": "libraries",
+      "totalFiles": 1030,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "HTML",
+        "JSON",
+        "TypeScript",
+        "CSS",
+        "JavaScript",
+        "Shell",
+        "Vue"
+      ],
+      "totalSizeKB": 13377,
+      "topFiles": [
+        {
+          "name": "fluid.mp4",
+          "sizeKB": 3195
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 1166
+        },
+        {
+          "name": "bonk.webm",
+          "sizeKB": 865
+        },
+        {
+          "name": "arch.png",
+          "sizeKB": 460
+        },
+        {
+          "name": "VS-Code-Extension-1.png",
+          "sizeKB": 383
+        }
+      ]
+    },
+    {
+      "folder": "05_Recursos_y_Listas - awesome",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\05_Recursos_y_Listas - awesome",
+      "github": "sindresorhus/awesome",
+      "remote": "https://github.com/sindresorhus/awesome.git",
+      "branch": "main",
+      "lastCommit": "2026-06-02 14:50:12 +0200",
+      "commitCount": 1202,
+      "category": "other",
+      "totalFiles": 21,
+      "languages": [
+        "YAML",
+        "Shell",
+        "Markdown"
+      ],
+      "totalSizeKB": 309,
+      "topFiles": [
+        {
+          "name": "logo.ai",
+          "sizeKB": 80
+        },
+        {
+          "name": "readme.md",
+          "sizeKB": 79
+        },
+        {
+          "name": "badge.ai",
+          "sizeKB": 66
+        },
+        {
+          "name": "mentioned-badge.sketch",
+          "sizeKB": 21
+        }
+      ]
+    },
+    {
+      "folder": "05_Recursos_y_Listas - awesome-scalability",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\05_Recursos_y_Listas - awesome-scalability",
+      "github": "binhnguyennus/awesome-scalability",
+      "remote": "https://github.com/binhnguyennus/awesome-scalability.git",
+      "branch": "master",
+      "lastCommit": "2026-01-04 11:51:41 +0800",
+      "commitCount": 1216,
+      "category": "system_design",
+      "totalFiles": 10,
+      "languages": [
+        "YAML",
+        "Markdown"
+      ],
+      "totalSizeKB": 146,
+      "topFiles": [
+        {
+          "name": "README.md",
+          "sizeKB": 123
+        },
+        {
+          "name": "logo.png",
+          "sizeKB": 16
+        }
+      ]
+    },
+    {
+      "folder": "05_Recursos_y_Listas - papers-we-love",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\05_Recursos_y_Listas - papers-we-love",
+      "github": "papers-we-love/papers-we-love",
+      "remote": "https://github.com/papers-we-love/papers-we-love.git",
+      "branch": "main",
+      "lastCommit": "2026-05-17 08:22:19 -0400",
+      "commitCount": 886,
+      "category": "other",
+      "totalFiles": 299,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "Shell"
+      ],
+      "totalSizeKB": 201354,
+      "topFiles": [
+        {
+          "name": "an-ethnographic-and-technological-study-of-breakbeats.pdf",
+          "sizeKB": 36428
+        },
+        {
+          "name": "incremental_mature_garbage_collection_using_the_train_algorithm.pdf",
+          "sizeKB": 12103
+        },
+        {
+          "name": "viewing-control-structures-as-patterns-of-passing-messages.pdf",
+          "sizeKB": 11413
+        },
+        {
+          "name": "pushpull++.pdf",
+          "sizeKB": 11013
+        },
+        {
+          "name": "kvm-linux-virtual-machines-monitor.pdf",
+          "sizeKB": 5968
+        }
+      ]
+    },
+    {
+      "folder": "05_Recursos_y_Listas - public-apis",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\05_Recursos_y_Listas - public-apis",
+      "github": "public-apis/public-apis",
+      "remote": "https://github.com/public-apis/public-apis.git",
+      "branch": "master",
+      "lastCommit": "2026-06-13 11:44:44 +0530",
+      "commitCount": 4862,
+      "category": "other",
+      "totalFiles": 20,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "Shell",
+        "Python"
+      ],
+      "totalSizeKB": 291,
+      "topFiles": [
+        {
+          "name": "README.md",
+          "sizeKB": 213
+        },
+        {
+          "name": "test_validate_format.py",
+          "sizeKB": 18
+        },
+        {
+          "name": "cs1586-APILayerLogoUpdate2022-LJ_v2-HighRes.png",
+          "sizeKB": 14
+        }
+      ]
+    }
+  ]
+}

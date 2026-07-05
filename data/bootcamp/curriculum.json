@@ -1,0 +1,445 @@
+{
+  "nombre": "QA Automation Engineer Bootcamp",
+  "version": "1.0",
+  "creado": "2026-07-05",
+  "perfil_objetivo": "QA Automation Engineer Junior/Semi-senior",
+  "tiempo_estimado": "28 semanas (7 meses)",
+  "horas_por_semana": "10-15 horas (2h/dia Lun-Vie + 4h finde)",
+  "prerrequisitos": {
+    "nivel_actual": "IT Support con experiencia practica en Node.js, GitHub Actions, automatizacion",
+    "fortalezas": ["Resolucion de problemas", "Infraestructura", "Automatizacion de procesos", "Git", "Node.js basico"],
+    "debilidades": ["Fundamentos JS/TS", "Testing formal", "Patrones de diseño", "Entrevistas tecnicas"]
+  },
+  "repos_locales_usados": {
+    "testing": ["playwright", "cypress-realworld-app", "vitest", "awesome-playwright", "react-testing-library", "imba-vitest-playwright"],
+    "typescript": ["type-challenges", "learning-typescript-projects"],
+    "javascript": ["nodebestpractices"],
+    "fundamentals": ["freeCodeCamp", "coding-interview-university", "developer-roadmap", "odin-project", "roadmap-retos-programacion"],
+    "projects": ["build-your-own-x", "realworld"],
+    "system_design": ["system-design-primer", "awesome-scalability"]
+  },
+  "fases": [
+    {
+      "id": "fase1",
+      "nombre": "Fundamentos solidos de JavaScript y TypeScript",
+      "semanas": "1-6",
+      "objetivo": "Cerrar los gaps de JS/TS. Tipos, coercion, async, POO, modulos. El equivalente a 3 meses de bootcamp tradicional.",
+      "repos": ["learning-typescript-projects", "type-challenges", "freeCodeCamp", "nodebestpractices"],
+      "modulos": [
+        {
+          "semana": 1,
+          "titulo": "JavaScript Core - Tipos, coercion, scope",
+          "repos": ["freeCodeCamp"],
+          "ejercicios": [
+            "Completar modulo Basic JavaScript de freeCodeCamp",
+            "Ejercicios de coercion (== vs ===, falsy/truthy)",
+            "Scope, hoisting, closures - explicar con ejemplos propios"
+          ],
+          "entregable": "Cheatsheet personal de JS Core (1 pagina Markdown)",
+          "horas": 10
+        },
+        {
+          "semana": 2,
+          "titulo": "JavaScript Avanzado - Async, Promises, Event Loop",
+          "repos": ["nodebestpractices"],
+          "ejercicios": [
+            "Implementar 5 funciones async con manejo de errores",
+            "Entender el Event Loop (video + diagrama propio)",
+            "Leer nodebestpractices secciones 1-3"
+          ],
+          "entregable": "Script CLI que consuma 2 APIs en paralelo con Promise.all",
+          "horas": 10
+        },
+        {
+          "semana": 3,
+          "titulo": "TypeScript Fundamentals - Types, Interfaces, Generics",
+          "repos": ["learning-typescript-projects", "type-challenges"],
+          "ejercicios": [
+            "Migrar el script CLI de la semana 2 a TypeScript",
+            "Resolver 10 type-challenges (easy)",
+            "Crear interfaces para los datos del proyecto Life OS"
+          ],
+          "entregable": "Version TypeScript del script CLI con tipos estrictos",
+          "horas": 12
+        },
+        {
+          "semana": 4,
+          "titulo": "TypeScript Avanzado - Generics, Utility Types, Narrowing",
+          "repos": ["type-challenges"],
+          "ejercicios": [
+            "Resolver 15 type-challenges (medium)",
+            "Crear un tipo generico para paginacion de APIs",
+            "Implementar discriminated unions para estados de UI"
+          ],
+          "entregable": "Libreria de tipos utilitarios propia (5 generics utiles)",
+          "horas": 12
+        },
+        {
+          "semana": 5,
+          "titulo": "Node.js y Testing Fundamentals",
+          "repos": ["nodebestpractices", "vitest"],
+          "ejercicios": [
+            "Leer nodebestpractices secciones 4-6",
+            "Crear proyecto Node.js con estructura limpia",
+            "Escribir 10 unit tests con Vitest para funciones puras"
+          ],
+          "entregable": "Proyecto Node.js con minimo 80% code coverage en tests unitarios",
+          "horas": 12
+        },
+        {
+          "semana": 6,
+          "titulo": "Git avanzado y flujo de trabajo profesional",
+          "repos": [],
+          "ejercicios": [
+            "Rebase interactivo, cherry-pick, bisect",
+            "Crear CI/CD con GitHub Actions para el proyecto de semana 5",
+            "Code review de tu propio codigo (simulando PR review)"
+          ],
+          "entregable": "Pipeline CI/CD funcional + historial de git limpio",
+          "horas": 8
+        }
+      ]
+    },
+    {
+      "id": "fase2",
+      "nombre": "Testing Foundations - Unit Testing y TDD",
+      "semanas": "7-12",
+      "objetivo": "Dominar testing unitario, TDD, mocking. Escribir tests ANTES del codigo.",
+      "repos": ["vitest", "react-testing-library", "imba-vitest-playwright", "nodebestpractices"],
+      "modulos": [
+        {
+          "semana": 7,
+          "titulo": "TDD - Test-Driven Development",
+          "repos": ["vitest"],
+          "ejercicios": [
+            "Implementar una calculadora con TDD (red-green-refactor)",
+            "Implementar un validador de formularios con TDD",
+            "Leer sobre testing patterns: AAA, Given-When-Then"
+          ],
+          "entregable": "2 modulos con TDD puro (commits mostrando red→green→refactor)",
+          "horas": 12
+        },
+        {
+          "semana": 8,
+          "titulo": "Mocking, Stubs y Spies",
+          "repos": ["vitest"],
+          "ejercicios": [
+            "Mockear APIs externas (fetch, axios)",
+            "Mockear modulos del sistema de archivos (fs)",
+            "Crear factory functions para datos de prueba"
+          ],
+          "entregable": "Suite de tests con minimo 3 tipos de mocks diferentes",
+          "horas": 10
+        },
+        {
+          "semana": 9,
+          "titulo": "Testing de bases de datos y APIs",
+          "repos": ["nodebestpractices"],
+          "ejercicios": [
+            "Crear tests de integracion para una API REST",
+            "Test de base de datos SQLite en memoria",
+            "Snapshot testing y su uso correcto"
+          ],
+          "entregable": "API con tests de integracion en SQLite (sin dependencias externas)",
+          "horas": 12
+        },
+        {
+          "semana": 10,
+          "titulo": "React Testing Library",
+          "repos": ["react-testing-library"],
+          "ejercicios": [
+            "Testear componentes React: renderizado, eventos, estado",
+            "Test de accesibilidad con jest-axe",
+            "Test de hooks personalizados"
+          ],
+          "entregable": "3 componentes React con tests completos (unit + integracion + a11y)",
+          "horas": 12
+        },
+        {
+          "semana": 11,
+          "titulo": "Testing Patterns Avanzados",
+          "repos": ["imba-vitest-playwright", "vitest"],
+          "ejercicios": [
+            "Parametrized tests, test.each",
+            "Test fixtures y setup/teardown patterns",
+            "Property-based testing basico"
+          ],
+          "entregable": "Refactorizar tests anteriores usando patrones avanzados",
+          "horas": 10
+        },
+        {
+          "semana": 12,
+          "titulo": "Code Review y Calidad de Tests",
+          "repos": ["nodebestpractices"],
+          "ejercicios": [
+            "Auditar tests propios: ¿son utiles o son ruido?",
+            "Escribir tests que documenten el comportamiento",
+            "Mutation testing basico (Stryker)"
+          ],
+          "entregable": "Informe de calidad de tests + mejoras aplicadas",
+          "horas": 8
+        }
+      ]
+    },
+    {
+      "id": "fase3",
+      "nombre": "E2E Automation - Playwright y Cypress",
+      "semanas": "13-20",
+      "objetivo": "Dominio profesional de Playwright y Cypress. Automatizar aplicaciones reales.",
+      "repos": ["playwright", "cypress-realworld-app", "awesome-playwright", "realworld"],
+      "modulos": [
+        {
+          "semana": 13,
+          "titulo": "Playwright Fundamentals",
+          "repos": ["playwright"],
+          "ejercicios": [
+            "Instalar y configurar Playwright",
+            "Escribir primeros 10 tests E2E (navegacion, clicks, asserts)",
+            "Selectores: CSS, texto, role, test-id"
+          ],
+          "entregable": "Suite de 10 tests E2E contra una web publica (ej. GitHub)",
+          "horas": 12
+        },
+        {
+          "semana": 14,
+          "titulo": "Playwright Intermedio - Fixtures, API mocking, Auth",
+          "repos": ["playwright"],
+          "ejercicios": [
+            "Autenticacion en tests (storageState)",
+            "Interceptar y mockear llamadas API",
+            "Page Objects pattern"
+          ],
+          "entregable": "Tests con login + API mocking + Page Objects",
+          "horas": 12
+        },
+        {
+          "semana": 15,
+          "titulo": "Playwright Avanzado - Visual, Mobile, Parallel",
+          "repos": ["awesome-playwright", "playwright"],
+          "ejercicios": [
+            "Visual regression testing (toHaveScreenshot)",
+            "Test en dispositivos moviles (viewport iPhone, Android)",
+            "Ejecucion paralela y sharding"
+          ],
+          "entregable": "Suite con visual testing + mobile + config paralela",
+          "horas": 12
+        },
+        {
+          "semana": 16,
+          "titulo": "Cypress Fundamentals",
+          "repos": ["cypress-realworld-app"],
+          "ejercicios": [
+            "Configurar Cypress desde cero",
+            "Escribir tests equivalentes a los de Playwright en Cypress",
+            "Diferencias clave Playwright vs Cypress"
+          ],
+          "entregable": "Comparativa Playwright vs Cypress (mismos tests, ambas herramientas)",
+          "horas": 12
+        },
+        {
+          "semana": 17,
+          "titulo": "Cypress Avanzado - Custom Commands, Plugins",
+          "repos": ["cypress-realworld-app"],
+          "ejercicios": [
+            "Custom commands reutilizables",
+            "Cypress con API mocking (cy.intercept)",
+            "Ejecutar cypress-realworld-app y escribir tests adicionales"
+          ],
+          "entregable": "Extension de cypress-realworld-app con 10 tests propios",
+          "horas": 12
+        },
+        {
+          "semana": 18,
+          "titulo": "Testing en CI/CD (GitHub Actions)",
+          "repos": ["playwright", "cypress-realworld-app"],
+          "ejercicios": [
+            "Configurar GitHub Actions para Playwright",
+            "Configurar GitHub Actions para Cypress",
+            "Reportes: HTML, JUnit, Allure",
+            "Notificaciones de fallos a Telegram"
+          ],
+          "entregable": "Pipeline CI/CD que ejecuta tests E2E en cada push + notifica fallos",
+          "horas": 10
+        },
+        {
+          "semana": 19,
+          "titulo": "Proyecto Real #1 - Automatizar app existente",
+          "repos": ["realworld", "playwright"],
+          "ejercicios": [
+            "Clonar realworld app (React + Node)",
+            "Escribir suite completa E2E para RealWorld",
+            "Cubrir: registro, login, CRUD articulos, comentarios, favoritos"
+          ],
+          "entregable": "Suite E2E completa de RealWorld app (20+ tests) en GitHub",
+          "horas": 15
+        },
+        {
+          "semana": 20,
+          "titulo": "Proyecto Real #2 - Automatizar SENA o app propia",
+          "repos": ["playwright"],
+          "ejercicios": [
+            "Identificar una app real para automatizar (SENA Moodle, app propia, o web publica)",
+            "Plan de pruebas: smoke, regression, E2E",
+            "Ejecutar y documentar bugs encontrados"
+          ],
+          "entregable": "Suite de tests contra app real + informe de bugs encontrados",
+          "horas": 12
+        }
+      ]
+    },
+    {
+      "id": "fase4",
+      "nombre": "Portfolio, Entrevistas y Proyecto Final",
+      "semanas": "21-28",
+      "objetivo": "Portfolio profesional en GitHub, preparacion de entrevistas, proyecto final full-stack.",
+      "repos": ["build-your-own-x", "system-design-primer", "coding-interview-university", "developer-roadmap", "realworld"],
+      "modulos": [
+        {
+          "semana": 21,
+          "titulo": "System Design para QA Engineers",
+          "repos": ["system-design-primer"],
+          "ejercicios": [
+            "Estudiar conceptos: load balancing, caching, DB scaling",
+            "Disenar arquitectura de testing para una app a escala",
+            "Entender CI/CD pipelines a nivel arquitectura"
+          ],
+          "entregable": "Diagrama de arquitectura de testing para sistema distribuido (Mermaid)",
+          "horas": 10
+        },
+        {
+          "semana": 22,
+          "titulo": "API Testing - REST, GraphQL, Contract Testing",
+          "repos": ["nodebestpractices"],
+          "ejercicios": [
+            "Tests de API REST con Supertest + Vitest",
+            "Contract testing con Pact (intro)",
+            "Test de GraphQL API"
+          ],
+          "entregable": "Suite de API tests para backend del proyecto RealWorld",
+          "horas": 10
+        },
+        {
+          "semana": 23,
+          "titulo": "Performance Testing Basics",
+          "repos": [],
+          "ejercicios": [
+            "k6 para load testing",
+            "Lighthouse CI para performance web",
+            "Identificar y reportar bottlenecks"
+          ],
+          "entregable": "Script k6 + informe de performance para una API",
+          "horas": 8
+        },
+        {
+          "semana": 24,
+          "titulo": "Proyecto Final - Testing Framework Propio",
+          "repos": ["build-your-own-x", "nodebestpractices"],
+          "ejercicios": [
+            "Construir un mini test runner (inspirado en build-your-own-x)",
+            "Assertions, test discovery, reporting",
+            "Integrar con CI/CD"
+          ],
+          "entregable": "Mini test runner funcionando en npm + CI/CD pipeline",
+          "horas": 15
+        },
+        {
+          "semana": 25,
+          "titulo": "Portfolio GitHub - Documentacion y Showcase",
+          "repos": [],
+          "ejercicios": [
+            "README profesional para cada proyecto del portfolio",
+            "Demo videos/GIFs de los tests ejecutandose",
+            "Crear github.io portfolio page"
+          ],
+          "entregable": "Portfolio con 4 proyectos destacados documentados",
+          "horas": 10
+        },
+        {
+          "semana": 26,
+          "titulo": "Preparacion de Entrevistas Tecnicas",
+          "repos": ["coding-interview-university"],
+          "ejercicios": [
+            "Practicar preguntas de QA en entrevistas: ¿como testearias X?",
+            "Resolver coding challenges basicos (FizzBuzz, palindromo, etc.)",
+            "Mock interviews: explicar conceptos de testing en voz alta"
+          ],
+          "entregable": "Respuestas escritas a top 20 preguntas de entrevista QA Automation",
+          "horas": 12
+        },
+        {
+          "semana": 27,
+          "titulo": "LinkedIn y Job Hunting Strategy",
+          "repos": ["developer-roadmap"],
+          "ejercicios": [
+            "Optimizar perfil de LinkedIn con keywords QA Automation",
+            "Preparar 3 versiones de CV (QA, Fullstack QA, SDET)",
+            "Aplicar a 20+ posiciones y trackear con job_tracker.js"
+          ],
+          "entregable": "LinkedIn actualizado + CVs + 20 aplicaciones enviadas",
+          "horas": 8
+        },
+        {
+          "semana": 28,
+          "titulo": "Retrospectiva y Plan de Carrera",
+          "repos": ["path-to-senior-engineer-handbook"],
+          "ejercicios": [
+            "Revisar TODO el codigo escrito en el bootcamp",
+            "Identificar areas de mejora para siguientes 6 meses",
+            "Definir meta de carrera a 2 años"
+          ],
+          "entregable": "Plan de carrera personal a 2 años con milestones concretos",
+          "horas": 6
+        }
+      ]
+    }
+  ],
+  "proyectos_portfolio": [
+    {
+      "nombre": "Life OS Test Suite",
+      "descripcion": "Suite de tests E2E y unitarios para tu propio proyecto Asistente_Personal",
+      "tecnologias": ["Playwright", "Vitest", "GitHub Actions"],
+      "semana_entrega": 16
+    },
+    {
+      "nombre": "RealWorld E2E Suite",
+      "descripcion": "Suite completa E2E para la app RealWorld (React + Node) con 30+ tests",
+      "tecnologias": ["Playwright", "Cypress", "GitHub Actions"],
+      "semana_entrega": 19
+    },
+    {
+      "nombre": "SENA Moodle Automation",
+      "descripcion": "Tests E2E automatizados para la plataforma SENA Zajuna (el scraper convertido en test suite)",
+      "tecnologias": ["Playwright", "GitHub Actions"],
+      "semana_entrega": 20
+    },
+    {
+      "nombre": "Mini Test Runner",
+      "descripcion": "Framework de testing minimalista construido desde cero (inspirado en build-your-own-x)",
+      "tecnologias": ["TypeScript", "Node.js", "npm"],
+      "semana_entrega": 24
+    }
+  ],
+  "metricas_exito": {
+    "skills_dominadas": [
+      "Escribir tests unitarios, integracion y E2E profesionalmente",
+      "Configurar CI/CD pipelines para testing",
+      "Usar Playwright y Cypress a nivel profesional",
+      "TypeScript con tipos avanzados",
+      "Debuggear fallos en pipelines de CI",
+      "Documentar bugs con reportes profesionales",
+      "Hacer code review de tests"
+    ],
+    "indicadores": [
+      "Portfolio GitHub con 4+ proyectos de testing",
+      "100+ tests escritos entre todos los proyectos",
+      "Pipeline CI/CD ejecutandose en cada push",
+      "CV y LinkedIn optimizados para QA Automation",
+      "20+ aplicaciones a empleo enviadas"
+    ]
+  },
+  "recursos_extra": {
+    "canales_youtube": ["Theo - t3.gg", "Fireship", "Kent C Dodds", "Simon Hoiberg"],
+    "comunidades": ["Playwright Discord", "Cypress Discord", "Testing Library Discord"],
+    "certificaciones_opcionales": ["ISTQB Foundation Level (opcional, no requerido)"]
+  }
+}

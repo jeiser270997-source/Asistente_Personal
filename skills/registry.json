@@ -35,6 +35,12 @@
       "nombre": "Salud y Bienestar",
       "keywords": ["eps", "cita medica", "medicamento", "salud", "doctor", "hospital", "clinica", "examen", "formula", "sintomas"],
       "prioridad": 6
+    },
+    {
+      "id": "bootcamp_qa",
+      "nombre": "Bootcamp QA Automation",
+      "keywords": ["bootcamp", "estudiar", "aprender", "playwright", "cypress", "vitest", "testing", "qa", "automation", "ejercicio", "practica", "tarea", "entregable", "semana", "fase", "progreso", "portfolio", "entrevista", "cv", "linkedin", "trabajo", "empleo", "carrera", "typescript", "javascript", "fundamentos", "mentoria"],
+      "prioridad": 10
     }
   ]
 }
