@@ -1,0 +1,162 @@
+{
+  "curso": "BASES DE DATOS GENERALIDADES Y SISTEMAS DE GESTION (3549155)",
+  "ficha": "3549155",
+  "actualizado": "2026-07-05T17:02:49.374Z",
+  "actividades": {
+    "iniciales": {
+      "nombre": "Actividades Iniciales",
+      "fecha_limite": "2026-06-30",
+      "estado": "vencida",
+      "evidencias": [
+        {
+          "id": "ini-01",
+          "nombre": "Actualizacion de datos personales",
+          "tipo": "pagina",
+          "completado": true
+        },
+        {
+          "id": "ini-02",
+          "nombre": "Sondeo de conocimientos previos",
+          "tipo": "cuestionario",
+          "completado": true
+        },
+        {
+          "id": "ini-03",
+          "nombre": "Foro social (presentacion)",
+          "tipo": "foro",
+          "completado": true
+        }
+      ],
+      "dias_restantes": -5
+    },
+    "act1": {
+      "nombre": "Actividad 1 - Generalidades y conceptos basicos de BD",
+      "fecha_inicio": "2026-06-22",
+      "fecha_limite": "2026-06-30",
+      "estado": "vencida",
+      "evidencias": [
+        {
+          "id": "a1-01",
+          "nombre": "Foro Tematico - Evolucion de las bases de datos",
+          "tipo": "foro",
+          "completado": false
+        },
+        {
+          "id": "a1-02",
+          "nombre": "Taller - Aplicar conceptos de BD segun requerimientos de empresa",
+          "tipo": "tarea",
+          "completado": false
+        }
+      ],
+      "materiales": [
+        "Guia_de_aprendizaje_AA1.pdf",
+        "MF_AA1_Generalidades_y_conceptos_basicos_bases_de_datos.pdf",
+        "MC_AA1_bases_de_datos.pdf",
+        "MC_AA1_gestion_bases_datos.pdf",
+        "MC_AA1_Historia_de_las_bases_de_datos.pdf",
+        "MC_AA1_Historia_evolucion_bases_datos.pdf",
+        "Evidencia_Protocolo_Aplicar_conceptos_base_datos_segun_requerimientos_empresa.pdf",
+        "IE_Evidencia_Taller_Aplicar_conceptos_base_datos_segun_requerimientos_empresa.pdf"
+      ],
+      "dias_restantes": -5
+    },
+    "act2": {
+      "nombre": "Actividad 2 - Conceptos de bases de datos conceptuales",
+      "fecha_inicio": "2026-07-01",
+      "fecha_limite": "2026-07-07",
+      "estado": "urgente",
+      "dias_restantes": 2,
+      "evidencias": [
+        {
+          "id": "a2-01",
+          "nombre": "Cuadro comparativo - Comprender conceptos de BD conceptuales",
+          "tipo": "tarea",
+          "completado": false
+        },
+        {
+          "id": "a2-02",
+          "nombre": "Taller aplicado - Desarrollar componentes de BD conceptuales",
+          "tipo": "tarea",
+          "completado": false
+        }
+      ],
+      "materiales": [
+        "Guia_de_aprendizaje_AA2.pdf",
+        "MF_AA2_Conceptos_de_bases_datos_conceptuales.pdf",
+        "MC_AA2_Diseno_conceptual_base_datos.pdf",
+        "MC_AA2_Que_es_base_dato_relacional.pdf",
+        "Evidencia_Cuadro_Comparativo_Comprender_conceptos_bases_datos_conceptuales.pdf",
+        "IE_Evidencia_Cuadro_Comparativo_Comprender_conceptos_bases_datos_conceptuales.pdf",
+        "Evidencia_Taller_aplicado_Desarrollar_componentes_bases_datos_conceptuales.pdf",
+        "IE_Evidencia_Taller_aplicado_Desarrollar_componentes_bases_datos_conceptuales.pdf"
+      ]
+    },
+    "act3": {
+      "nombre": "Actividad 3 - Normalizacion de bases de datos",
+      "fecha_inicio": "2026-07-08",
+      "fecha_limite": "2026-07-20",
+      "estado": "pendiente",
+      "dias_restantes": 15,
+      "evidencias": [
+        {
+          "id": "a3-01",
+          "nombre": "SCORM - Actividad interactiva de normalizacion",
+          "tipo": "scorm",
+          "completado": false
+        },
+        {
+          "id": "a3-02",
+          "nombre": "Documento - Aplicar tecnica de normalizacion",
+          "tipo": "tarea",
+          "completado": false
+        }
+      ],
+      "materiales": [
+        "Guia_de_aprendizaje_AA3.pdf",
+        "MF_AA3_Reglas_para_la_normalizacion_de_una_base_de_datos.pdf",
+        "Evidencia_Documento_Aplicar_tecnica_normalizacion_bases_de_datos_en_empresa.pdf",
+        "IE_Evidencia_Documento_Aplicar_tecnica_normalizacion_bases_de_datos_en_empresa.pdf"
+      ]
+    },
+    "act4": {
+      "nombre": "Actividad 4 - Diseno de bases de datos relacionales",
+      "fecha_inicio": "2026-07-21",
+      "fecha_limite": "2026-07-27",
+      "estado": "pendiente",
+      "dias_restantes": 22,
+      "evidencias": [
+        {
+          "id": "a4-01",
+          "nombre": "SCORM - Reconocer conceptos de BD relacional",
+          "tipo": "scorm",
+          "completado": false
+        },
+        {
+          "id": "a4-02",
+          "nombre": "Estudio de caso - Disenar BD relacional para empresa",
+          "tipo": "tarea",
+          "completado": false
+        },
+        {
+          "id": "a4-03",
+          "nombre": "Sondeo de evaluacion del programa",
+          "tipo": "cuestionario",
+          "completado": false
+        }
+      ],
+      "materiales": [
+        "Guia_de_aprendizaje_AA4.pdf",
+        "MF_AA4_Aplicacion_y_diseno_de_bases_de_datos_relacional.pdf",
+        "MC_AA4_Diseno_conceptual_bases_datos.pdf",
+        "Evidencia_Estudio_caso_Disenar_base_datos_relacional_para_una_empresa.pdf",
+        "IE_Evidencia_Estudio_caso_Disenar_base_datos_relacional_para_una_empresa.pdf"
+      ]
+    }
+  },
+  "estadisticas": {
+    "total": 12,
+    "completadas": 3,
+    "pendientes": 9,
+    "vencidas_sin_completar": 2
+  }
+}
