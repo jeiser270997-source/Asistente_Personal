@@ -1,6 +1,6 @@
 {
   "categorias": {
-    "legal": 3,
+    "legal": 5,
     "estudio": 3,
     "finanzas": 1,
     "personal": 3,
@@ -8,10 +8,10 @@
     "salud": 1
   },
   "tags": {
-    "simit": 3,
-    "itagui": 2,
+    "simit": 5,
+    "itagui": 4,
     "pagada": 1,
-    "c29": 2,
+    "c29": 3,
     "impugnar": 1,
     "medellin": 2,
     "bootcamp": 1,
@@ -35,6 +35,10 @@
     "linkedin": 1,
     "skills": 1,
     "eps": 1,
-    "salud": 1
+    "salud": 1,
+    "impugnacion": 1,
+    "recurso": 1,
+    "impugnado": 1,
+    "enviado": 1
   }
 }

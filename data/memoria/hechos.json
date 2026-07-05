@@ -152,6 +152,35 @@
         "salud"
       ],
       "timestamp": "2026-07-05T18:06:59.758Z"
+    },
+    {
+      "id": "h_1783275582893_r3va",
+      "categoria": "legal",
+      "hecho": "Recurso de reposicion contra comparendo 0000838097 (C29 Itagui, 22 de junio de 2026) enviado por correo el 5/7/2026.",
+      "fuente": "email_automatico",
+      "confianza": "alta",
+      "tags": [
+        "simit",
+        "itagui",
+        "impugnacion",
+        "recurso"
+      ],
+      "timestamp": "2026-07-05T18:19:42.893Z"
+    },
+    {
+      "id": "h_1783275601660_m9ns",
+      "categoria": "legal",
+      "hecho": "Recurso de reposicion comparendo 0000838097 (C29 Itagui) ENVIADO 05/07/2026. 5 correos a SIMIT+Itagui. En espera de respuesta.",
+      "fuente": "manual",
+      "confianza": "alta",
+      "tags": [
+        "simit",
+        "itagui",
+        "c29",
+        "impugnado",
+        "enviado"
+      ],
+      "timestamp": "2026-07-05T18:20:01.660Z"
     }
   ]
 }
