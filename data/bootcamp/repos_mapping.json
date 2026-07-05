@@ -1,5 +1,5 @@
 {
-  "generado": "2026-07-05T17:58:52.762Z",
+  "generado": "2026-07-05T18:55:30.438Z",
   "categorias": {
     "other": [
       "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
@@ -7,6 +7,7 @@
       "01_Estudio_y_Desafios - path-to-senior-engineer-handbook",
       "03_Aplicaciones_y_Utilidades - actual",
       "03_Aplicaciones_y_Utilidades - cal.com",
+      "03_Aplicaciones_y_Utilidades - evolution-api",
       "03_Aplicaciones_y_Utilidades - excalidraw",
       "03_Aplicaciones_y_Utilidades - kokoclone",
       "03_Aplicaciones_y_Utilidades - MoneyPrinter",
@@ -20,6 +21,7 @@
       "04_Librerias_y_Desarrollo - openclaw",
       "04_Librerias_y_Desarrollo - resume-schema",
       "04_Librerias_y_Desarrollo - sportsdataverse-js",
+      "04_Librerias_y_Desarrollo - whatsapp-web-reveng",
       "05_Recursos_y_Listas - awesome",
       "05_Recursos_y_Listas - papers-we-love",
       "05_Recursos_y_Listas - public-apis"
@@ -59,6 +61,7 @@
       "02_IA_y_Herramientas_de_Agentes - cua",
       "02_IA_y_Herramientas_de_Agentes - kokoro-tts",
       "02_IA_y_Herramientas_de_Agentes - nanochat",
+      "02_IA_y_Herramientas_de_Agentes - nanoclaw",
       "02_IA_y_Herramientas_de_Agentes - ollama",
       "02_IA_y_Herramientas_de_Agentes - opencode",
       "02_IA_y_Herramientas_de_Agentes - OpenViking",
@@ -100,12 +103,12 @@
     ]
   },
   "resumen": {
-    "other": 21,
+    "other": 23,
     "testing": 6,
     "projects": 2,
     "fundamentals": 5,
     "typescript": 2,
-    "ai_agents": 23,
+    "ai_agents": 24,
     "javascript": 1,
     "system_design": 2,
     "infra": 4,

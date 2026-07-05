@@ -1,7 +1,7 @@
 {
-  "escaneado": "2026-07-05T17:58:52.761Z",
+  "escaneado": "2026-07-05T18:55:30.437Z",
   "directorio": "E:\\PROYECTOS\\Proyectos_GitHub",
-  "total": 75,
+  "total": 78,
   "repos": [
     {
       "folder": "00_BLOQUEADO_HASTA_SEMANA_6_IT_Support",
@@ -1209,6 +1209,49 @@
       ]
     },
     {
+      "folder": "02_IA_y_Herramientas_de_Agentes - nanoclaw",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - nanoclaw",
+      "github": "nanocoai/nanoclaw",
+      "remote": "https://github.com/nanocoai/nanoclaw.git",
+      "branch": "main",
+      "lastCommit": "2026-07-04 23:06:27 +0200",
+      "commitCount": 1,
+      "category": "ai_agents",
+      "totalFiles": 422,
+      "languages": [
+        "Markdown",
+        "YAML",
+        "JSON",
+        "TypeScript",
+        "Shell",
+        "HTML",
+        "JavaScript"
+      ],
+      "totalSizeKB": 11195,
+      "topFiles": [
+        {
+          "name": "nanoclaw-profile.jpeg",
+          "sizeKB": 5768
+        },
+        {
+          "name": "nanoclaw-favicon.png",
+          "sizeKB": 878
+        },
+        {
+          "name": "social-preview.jpg",
+          "sizeKB": 568
+        },
+        {
+          "name": "nanoclaw-icon.png",
+          "sizeKB": 517
+        },
+        {
+          "name": "nanoclaw-sales.png",
+          "sizeKB": 513
+        }
+      ]
+    },
+    {
       "folder": "02_IA_y_Herramientas_de_Agentes - ollama",
       "path": "E:\\PROYECTOS\\Proyectos_GitHub\\02_IA_y_Herramientas_de_Agentes - ollama",
       "github": "ollama/ollama",
@@ -1762,6 +1805,50 @@
         {
           "name": "hostinger.jpg",
           "sizeKB": 173
+        }
+      ]
+    },
+    {
+      "folder": "03_Aplicaciones_y_Utilidades - evolution-api",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\03_Aplicaciones_y_Utilidades - evolution-api",
+      "github": "evolution-foundation/evolution-api",
+      "remote": "https://github.com/evolution-foundation/evolution-api.git",
+      "branch": "main",
+      "lastCommit": "2026-05-06 14:38:27 -0300",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 243,
+      "languages": [
+        "YAML",
+        "Markdown",
+        "JavaScript",
+        "Shell",
+        "JSON",
+        "CSS",
+        "HTML",
+        "TypeScript"
+      ],
+      "totalSizeKB": 3248,
+      "topFiles": [
+        {
+          "name": "index-CO3NSIFj.js",
+          "sizeKB": 1199
+        },
+        {
+          "name": "package-lock.json",
+          "sizeKB": 592
+        },
+        {
+          "name": "evolution-pro.png",
+          "sizeKB": 217
+        },
+        {
+          "name": "picpay-qr.jpeg",
+          "sizeKB": 111
+        },
+        {
+          "name": "picpay-image.png",
+          "sizeKB": 65
         }
       ]
     },
@@ -2815,6 +2902,48 @@
         {
           "name": "VS-Code-Extension-1.png",
           "sizeKB": 383
+        }
+      ]
+    },
+    {
+      "folder": "04_Librerias_y_Desarrollo - whatsapp-web-reveng",
+      "path": "E:\\PROYECTOS\\Proyectos_GitHub\\04_Librerias_y_Desarrollo - whatsapp-web-reveng",
+      "github": "sigalor/whatsapp-web-reveng",
+      "remote": "https://github.com/sigalor/whatsapp-web-reveng.git",
+      "branch": "master",
+      "lastCommit": "2024-04-22 21:38:56 +1000",
+      "commitCount": 1,
+      "category": "other",
+      "totalFiles": 37,
+      "languages": [
+        "Python",
+        "CSS",
+        "HTML",
+        "JavaScript",
+        "JSON",
+        "Markdown"
+      ],
+      "totalSizeKB": 817,
+      "topFiles": [
+        {
+          "name": "whatsapp_protobuf_pb2.py",
+          "sizeKB": 222
+        },
+        {
+          "name": "app-architecture-staticfonts.svg",
+          "sizeKB": 130
+        },
+        {
+          "name": "package-lock.json",
+          "sizeKB": 113
+        },
+        {
+          "name": "yarn.lock",
+          "sizeKB": 94
+        },
+        {
+          "name": "README.md",
+          "sizeKB": 35
         }
       ]
     },
