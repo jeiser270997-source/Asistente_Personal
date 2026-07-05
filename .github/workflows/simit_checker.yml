@@ -1,0 +1,32 @@
+name: SIMIT Checker
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install --legacy-peer-deps
+      - run: npx playwright install chromium --with-deps
+      - name: Consultar SIMIT
+        run: node scripts/simit_scraper.js
+      - name: Commit data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "jarvis-bot"
+          git config user.email "jarvis@lifeos.local"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git add data/simit/
+          git diff --cached --quiet || (git commit -m "chore(simit): actualizacion automatica" && git push)

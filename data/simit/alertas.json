@@ -1,0 +1,9 @@
+{
+  "ultima_revision": "2026-07-05T18:40:32.786Z",
+  "alertas": [
+    {
+      "tipo": "primera_consulta",
+      "mensaje": "Primera consulta automatica SIMIT. Datos base guardados."
+    }
+  ]
+}
