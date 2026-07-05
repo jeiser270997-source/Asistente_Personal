@@ -177,37 +177,38 @@ Solo responde con un array JSON plano:
 Correos:
 ${emails.map(e => `- De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
 
-  const providers = [
-    {
-      name: 'Gemini Flash', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
-      key: process.env.GEMINI_API_KEY, model: 'gemini-2.5-flash'
-    },
-    {
-      name: 'OpenRouter Free', url: 'https://openrouter.ai/api/v1/chat/completions',
-      key: process.env.OPENROUTER_API_KEY, model: 'google/gemini-2.5-flash-free-1'
-    },
-  ];
+  const provider = {
+    name: 'DeepSeek V4 Flash',
+    url: 'https://api.deepseek.com/v1/chat/completions',
+    key: process.env.DEEPSEEK_API_KEY,
+    model: 'deepseek-v4-flash'
+  };
 
-  for (const p of providers) {
-    if (!p.key || p.key === 'undefined') continue;
-    try {
-      const res = await fetch(p.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${p.key}` },
-        body: JSON.stringify({
-          model: p.model,
-          messages: [{ role: 'user', content: prompt }],
-          temperature: 0.1, max_tokens: 1000
-        }),
-        signal: AbortSignal.timeout(30000),
-      });
-      if (!res.ok) continue;
-      const data = await res.json();
-      const content = data.choices?.[0]?.message?.content;
-      if (!content) continue;
-      const parsed = JSON.parse(content.replace(/```json|```/g, '').trim());
-      if (Array.isArray(parsed)) return parsed;
-    } catch {}
+  if (!provider.key) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(DeepSeek no configurado)' }));
+
+  try {
+    const res = await fetch(provider.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provider.key}` },
+      body: JSON.stringify({
+        model: provider.model,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.1, max_tokens: 1000
+      }),
+      signal: AbortSignal.timeout(30000),
+    });
+    if (!res.ok) {
+      log(`⚠ DeepSeek: HTTP ${res.status}`);
+      return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(error API)' }));
+    }
+    const data = await res.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(resp vacia)' }));
+
+    const parsed = JSON.parse(content.replace(/```json|```/g, '').trim());
+    if (Array.isArray(parsed)) return parsed;
+  } catch (err) {
+    log(`⚠ DeepSeek error: ${err.message.substring(0, 60)}`);
   }
 
   return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(resumen no disponible)' }));

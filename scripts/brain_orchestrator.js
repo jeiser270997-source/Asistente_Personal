@@ -286,103 +286,77 @@ ${senaBlock}
 `.trim();
 }
 
-const LLM_PROVIDERS_STATIC = [
-  // ── Nivel 0: DeepSeek V4 Flash (directo, $0.14/M input) ──
-  { name: 'DeepSeek V4 Flash', baseUrl: 'https://api.deepseek.com/v1', apiKey: process.env.DEEPSEEK_API_KEY, model: 'deepseek-v4-flash', retry: 2, paid: true },
-  // ── Nivel 1: NVIDIA (build.nvidia.com) — mejor calidad de razonamiento ──
-  { name: 'NVIDIA DeepSeek V4 Flash', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'deepseek-ai/deepseek-v4-flash', retry: 1 },
-  { name: 'NVIDIA Nemotron Super 49B', baseUrl: 'https://integrate.api.nvidia.com/v1', apiKey: process.env.NVIDIA_API_KEY, model: 'nvidia/llama-3.3-nemotron-super-49b-v1', retry: 1 },
-  // ── Nivel 2: Cerebras (api.cerebras.ai) — velocidad extrema ──
-  { name: 'Cerebras GLM-4.7', baseUrl: 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: 'zai-glm-4.7', retry: 1 },
-  { name: 'Cerebras Gemma 4 31B', baseUrl: 'https://api.cerebras.ai/v1', apiKey: process.env.CEREBRAS_API_KEY, model: 'gemma-4-31b', retry: 1 },
-  // ── Nivel 3: OpenRouter — modelos gratuitos rotativos ──
-  { name: 'OpenRouter Free', baseUrl: 'https://openrouter.ai/api/v1', apiKey: process.env.OPENROUTER_API_KEY, model: 'openrouter/free', retry: 1 },
-  // ── Nivel 4: Gemini 2.5 Flash — tasas generosas gratuitas ──
-  { name: 'Gemini 2.5 Flash', baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai', apiKey: process.env.GEMINI_API_KEY, model: 'gemini-2.5-flash', retry: 2 },
-  // ── Nivel 5: Ollama Local — último recurso ──
-  { name: 'Ollama Local', baseUrl: process.env.OLLAMA_HOST || 'http://127.0.0.1:11434/v1', apiKey: 'ollama', model: process.env.OLLAMA_MODEL || 'llama3.1:latest', retry: 1 }
-];
-
-function getActiveProviders() {
-  const valley = isDeepSeekValley();
-  return LLM_PROVIDERS_STATIC.filter(p => {
-    if (!p.apiKey || p.apiKey === 'undefined') return false;
-    if (p.paid && !valley) return false;
-    return true;
-  });
-}
+const DEEPSEEK_URL = 'https://api.deepseek.com/v1/chat/completions';
+const DEEPSEEK_MODEL = 'deepseek-v4-flash';
 
 async function callLLM(systemPrompt, userContext) {
-  const providers = getActiveProviders();
-  log(`⏰ ${getScheduleLabel()} — ${providers.length} proveedores activos`);
+  if (!process.env.DEEPSEEK_API_KEY) throw new Error('DEEPSEEK_API_KEY no configurada');
 
-  for (const provider of providers) {
-    const maxAttempts = (provider.retry ?? 0) + 1;
+  const valley = isDeepSeekValley();
+  if (!valley) {
+    const hora = getColombiaDate().getHours();
+    throw new Error(`DeepSeek en horario PICO (${hora}h Colombia). Briefing se generara en el siguiente ciclo valle.`);
+  }
 
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      try {
-        const url = `${provider.baseUrl.replace(/\/+$/, '')}/chat/completions`;
-        const body = {
-          model: provider.model,
+  log(`🧠 DeepSeek ${DEEPSEEK_MODEL} | ${getScheduleLabel()}`);
+
+  const compressedUser = userContext.length > 12000
+    ? userContext.substring(0, 12000) + '\n... (contexto comprimido)'
+    : userContext;
+
+  let attempt = 0;
+  const maxAttempts = 2;
+
+  while (attempt < maxAttempts) {
+    attempt++;
+    try {
+      const res = await fetch(DEEPSEEK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: DEEPSEEK_MODEL,
           messages: [
             { role: 'system', content: systemPrompt },
-            { role: 'user', content: userContext }
+            { role: 'user', content: compressedUser }
           ],
           temperature: 0.3,
-          max_tokens: 1500,
-          format: "json"
-        };
+          max_tokens: 1500
+        }),
+        signal: AbortSignal.timeout(60000)
+      });
 
-        log(`📡 [${provider.name}] Llamando a ${url} (modelo: ${provider.model})`);
-
-        const headers = { 'Content-Type': 'application/json' };
-        if (provider.apiKey) {
-          headers['Authorization'] = `Bearer ${provider.apiKey}`;
-        }
-
-        const res = await fetch(url, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify(body)
-        });
-
-        if (!res.ok) {
-          const errText = await res.text();
-          if (attempt < maxAttempts - 1 && (res.status === 429 || res.status >= 500)) {
-            const delay = Math.pow(2, attempt + 1) * 1000;
-            log(`⚠️ [${provider.name}] Saturación (${res.status}), reintentando en ${delay/1000}s... (${attempt + 1}/${maxAttempts - 1})`);
-            await new Promise(r => setTimeout(r, delay));
-            continue;
-          }
-          lastError[provider.name] = `${res.status}: ${errText}`;
-          log(`⚠️ [${provider.name}] Falló (${res.status}), probando siguiente...`);
-          break;
-        }
-
-        const data = await res.json();
-        const content = data.choices?.[0]?.message?.content;
-        if (content) {
-          log(`✅ [${provider.name}] Respuesta exitosa.`);
-          return content;
-        }
-        lastError[provider.name] = 'Respuesta vacía';
-        break;
-      } catch (err) {
-        if (attempt < maxAttempts - 1) {
-          const delay = Math.pow(2, attempt + 1) * 1000;
-          log(`⚠️ [${provider.name}] Error de red, reintentando en ${delay/1000}s... (${attempt + 1}/${maxAttempts - 1})`);
-          await new Promise(r => setTimeout(r, delay));
-          continue;
-        }
-        lastError[provider.name] = err.message;
-        log(`⚠️ [${provider.name}] Error: ${err.message}, probando siguiente...`);
-        break;
+      if (res.status === 429) {
+        const delay = Math.pow(2, attempt) * 2000;
+        log(`⚠ Rate limit, reintentando en ${delay/1000}s...`);
+        await new Promise(r => setTimeout(r, delay));
+        continue;
       }
+
+      if (!res.ok) {
+        const err = await res.text().catch(() => '');
+        throw new Error(`HTTP ${res.status}: ${err.substring(0, 100)}`);
+      }
+
+      const data = await res.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (content) {
+        const tokens = data.usage;
+        const tokStr = tokens ? `${tokens.total_tokens} tokens` : 'OK';
+        log(`✅ DeepSeek | ${tokStr}`);
+        return content;
+      }
+      throw new Error('Respuesta vacia');
+    } catch (err) {
+      if (attempt >= maxAttempts) throw err;
+      log(`⚠ Intento ${attempt} fallido: ${err.message.substring(0, 80)}`);
+      await new Promise(r => setTimeout(r, 3000));
     }
   }
 
-  const details = Object.entries(lastError).map(([k, v]) => `  ${k}: ${v}`).join('\n');
-  throw new Error(`Todos los LLM fallaron:\n${details}`);
+  throw new Error('DeepSeek agotado tras reintentos');
 }
 
 async function run() {
