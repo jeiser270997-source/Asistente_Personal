@@ -1,5 +1,5 @@
 # Alertas SENA - BASES DE DATOS GENERALIDADES Y SISTEMAS DE GESTION (3549155)
-> Extraido: 5/7/2026, 11:57:01 a. m.
+> Extraido: 5/7/2026, 12:02:57 p. m.
 > **FECHA LIMITE GLOBAL: 27/07/2026**
 
 ## Cronograma con Fechas
