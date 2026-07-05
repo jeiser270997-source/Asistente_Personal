@@ -24,15 +24,16 @@
   },
   "estudio": {
     "sena": {
-      "programa": "",
-      "ficha": "",
+      "programa": "Bases de Datos Generalidades y Sistemas de Gestion",
+      "ficha": "3549155",
       "inicio": "",
-      "fin_estimado": ""
+      "fin_estimado": "",
+      "moodle_url": "https://zajuna.sena.edu.co/zajuna/course/view.php?id=121953"
     },
     "cesde": {
       "cursos": []
     },
-    "habilidades": []
+    "habilidades": ["Node.js", "JavaScript", "TypeScript", "Playwright", "Cypress", "Vitest", "Soporte IT", "Windows Domain", "Dokploy", "Supabase", "n8n", "Ollama", "Git", "GitHub Actions"]
   },
   "trabajo": {
     "buscando": true,

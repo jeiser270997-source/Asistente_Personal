@@ -1,0 +1,36 @@
+name: SENA Moodle Scraper
+
+on:
+  schedule:
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install
+      - run: npx playwright install chromium --with-deps
+      - name: Scrape SENA Moodle
+        env:
+          SENA_MOODLE_USER: ${{ secrets.SENA_MOODLE_USER }}
+          SENA_MOODLE_PASS: ${{ secrets.SENA_MOODLE_PASS }}
+          SENA_MOODLE_COURSE_ID: '121953'
+        run: node scripts/moodle_sena_scraper.js
+      - name: Commit data if changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "jarvis-bot"
+          git config user.email "jarvis@lifeos.local"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git add data/sena/ data/contexto_maestro/ALERTAS_SENA.md
+          git diff --cached --quiet || (git commit -m "chore(sena): actualizacion automatica de datos Moodle" && git push)

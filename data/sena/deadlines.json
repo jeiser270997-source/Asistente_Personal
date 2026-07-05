@@ -1,0 +1,53 @@
+{
+  "deadlines": [
+    {
+      "nombre": "Evidencia: Cuadro comparativo. Comprender los conceptos de bases de datos conceptuales\n                        \n        ",
+      "fecha_texto": "",
+      "es_vencimiento": true
+    },
+    {
+      "nombre": "Evidencia: Taller aplicado. Desarrollar los componentes de las bases de datos conceptuales\n                        \n    ",
+      "fecha_texto": "",
+      "es_vencimiento": true
+    }
+  ],
+  "inlineDates": [
+    {
+      "actividad": "Foro Temático. Reconocer las características de la evolución de las  bases de da",
+      "fecha": "30 de junio de 2026"
+    },
+    {
+      "actividad": "Taller: Aplicar los conceptos de una base de datos según requerimientos de una e",
+      "fecha": "30 de junio de 2026"
+    },
+    {
+      "actividad": "Evidencia: Cuadro comparativo. Comprender los conceptos de bases de datos concep",
+      "fecha": "22 de junio de 2026"
+    },
+    {
+      "actividad": "Evidencia: Taller aplicado. Desarrollar los componentes de las bases de datos co",
+      "fecha": "22 de junio de 2026"
+    },
+    {
+      "actividad": "SCORM Evidencia: Actividad interactiva. Identificar los conceptos de normalizaci",
+      "fecha": "22 de junio de 2026"
+    },
+    {
+      "actividad": "Evidencia documento: Aplicar la técnica de normalización a una base de datos en ",
+      "fecha": "22 de junio de 2026"
+    },
+    {
+      "actividad": "SCORM Evidencia: Actividad interactiva. Reconocer los conceptos generales de una",
+      "fecha": "22 de junio de 2026"
+    },
+    {
+      "actividad": "Evidencia: Estudio de caso. Diseñar una base de datos relacional para una empres",
+      "fecha": "22 de junio de 2026"
+    },
+    {
+      "actividad": "Sondeo de evaluacion del programa  Prueba de Conocimiento",
+      "fecha": "22 de junio de 2026"
+    }
+  ],
+  "extraido": "2026-07-05T16:39:48.156Z"
+}
