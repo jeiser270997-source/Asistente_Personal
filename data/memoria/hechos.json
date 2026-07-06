@@ -495,6 +495,35 @@
         "monitoreo"
       ],
       "timestamp": "2026-07-06T11:16:21.920Z"
+    },
+    {
+      "id": "h_ct_login_fix_20260706",
+      "categoria": "tecnico",
+      "hecho": "Computrabajo login URL corregida: https://candidato.co.computrabajo.com/acceso/ (subdominio diferente). Selectores exactos: #Email (input[name=Email]) y #password (input[name=Password]). Login verificado exitoso - muestra Jeiser Gutierrez logueado.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "computrabajo",
+        "login",
+        "playwright",
+        "fix",
+        "url"
+      ],
+      "timestamp": "2026-07-06T12:28:41.115Z"
+    },
+    {
+      "id": "h_ct_preguntas_20260706",
+      "categoria": "tecnico",
+      "hecho": "CT muestra Preguntas de seleccion despues del click Postularme. Incluye: tipo documento (CC), textareas de localidad/barrio, info academica, experiencia, contacto, y radios Si/No. Script maneja todo automaticamente con respuestas predefinidas por Jeiser.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "computrabajo",
+        "preguntas_seleccion",
+        "auto_apply",
+        "formulario"
+      ],
+      "timestamp": "2026-07-06T12:28:41.115Z"
     }
   ]
 }

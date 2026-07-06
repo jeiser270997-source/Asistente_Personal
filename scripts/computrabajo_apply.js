@@ -236,11 +236,26 @@ Ubicación: Medellín, Villa Eloisa. Experiencia: QA Automation (LifeOS - proyec
 
         await page.waitForTimeout(800);
 
-        // 5. Submit
-        const btnContinuar = page.locator('button:has-text("Continuar"), button:has-text("Enviar"), button:has-text("Postularme"), button[type="submit"]').first();
-        await btnContinuar.click({ timeout: 5000 }).catch(() => {});
-        await page.waitForTimeout(4000);
+        // 5. Submit — scroll al botón antes de clickear
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        await page.waitForTimeout(600);
+        // CT usa "Enviar mi HdV" como texto del botón de submit
+        const btnContinuar = page.locator(
+          'button:has-text("Enviar mi HdV"), button:has-text("Enviar mi"), ' +
+          'button:has-text("Continuar"), button:has-text("Enviar"), ' +
+          'button:has-text("Postularme"), button[type="submit"]'
+        ).last();
+        await btnContinuar.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
+        const btnText = await btnContinuar.textContent().catch(() => 'n/a');
+        log(`   🖱 Clickeando: "${btnText.trim()}"`);
+        await btnContinuar.click({ timeout: 5000, force: true }).catch(async () => {
+          log('   ⚠ Click falló, intentando Enter...');
+          await page.keyboard.press('Enter');
+        });
+        await page.waitForTimeout(5000);
+        log(`   URL post-submit: ${page.url()}`);
         log('   ✅ Preguntas respondidas y enviadas');
+
       } catch (e) {
         log(`   ⚠ Error en preguntas: ${e.message.substring(0, 100)}`);
       }
@@ -249,10 +264,15 @@ Ubicación: Medellín, Villa Eloisa. Experiencia: QA Automation (LifeOS - proyec
     // ── Verificar confirmación final ───────────────────────────────
     const confirmado = await page.evaluate(() => {
       const body = document.body.innerText;
+      const url  = window.location.href;
       return body.includes('postulación') || body.includes('enviada') ||
-             body.includes('éxito') || body.includes('aplicación') ||
-             body.includes('registrada') || body.includes('¡Gracias') ||
-             body.includes('Gracias por') || body.includes('Tu candidatura');
+             body.includes('éxito') || body.includes('registrada') ||
+             body.includes('¡Gracias') || body.includes('Gracias por') ||
+             body.includes('Tu candidatura') || body.includes('inscripción') ||
+             body.includes('Mis aplicaciones') ||
+             url.includes('candidate/kq') ||       // ← URL de confirmación de CT
+             url.includes('candidate/applications') ||
+             url.includes('mis-aplicaciones');
     });
 
     const screenshot = path.join(JOBS_DIR, `apply_${Date.now()}.png`);

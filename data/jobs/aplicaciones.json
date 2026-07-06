@@ -372,5 +372,41 @@
     "estado": "error",
     "razon": "No se pudo confirmar",
     "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783340790012.png"
+  },
+  {
+    "oferta_id": "de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-52C8837C3227C9D261373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-52C8837C3227C9D261373E686DCF3405#lc=ListOffers-Score4-7",
+    "titulo": "multiplicadora de calidad jr",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T12:29:25.302Z",
+    "score": 85,
+    "estado": "error",
+    "razon": "No se pudo confirmar",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783340965253.png"
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-BB5857E0062F470461373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-BB5857E0062F470461373E686DCF3405#lc=ListOffers-Score4-8",
+    "titulo": "Analista Jr Gestión de Calidad",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T12:31:52.285Z",
+    "score": 75,
+    "estado": "error",
+    "razon": "No se pudo confirmar",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783341112228.png"
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-funcional-de-proyectos-qa-profesional-ti-junior-en-bogota-dc-8D85B3565A8582B261373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-funcional-de-proyectos-qa-profesional-ti-junior-en-bogota-dc-8D85B3565A8582B261373E686DCF3405#lc=ListOffers-Score4-1",
+    "titulo": "Analista funcional de proyectos QA",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T12:34:34.629Z",
+    "score": 60,
+    "estado": "error",
+    "razon": "No se pudo confirmar",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783341274569.png"
   }
 ]
