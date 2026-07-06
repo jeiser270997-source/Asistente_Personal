@@ -1,0 +1,37 @@
+name: Computrabajo QA Job Scraper
+
+on:
+  schedule:
+    - cron: '0 13 * * 1-5'   # Lun-Vie 8am Colombia (1pm UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install --legacy-peer-deps
+      - run: npx playwright install chromium --with-deps
+      - name: Scrape Computrabajo QA
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          COMPUTRABAJO_EMAIL: ${{ secrets.COMPUTRABAJO_EMAIL }}
+          COMPUTRABAJO_PASS: ${{ secrets.COMPUTRABAJO_PASS }}
+        run: node scripts/computrabajo_scraper.js
+      - name: Commit nuevas ofertas
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "jarvis-bot"
+          git config user.email "jarvis@lifeos.local"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git add data/jobs/
+          git diff --cached --quiet || (git commit -m "chore(jobs): actualizacion ofertas QA Computrabajo" && git push)
