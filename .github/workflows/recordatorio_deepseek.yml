@@ -1,13 +1,11 @@
 name: DeepSeek Recordatorio
 
 on:
-  schedule:
-    # 6 AM Colombia (11 UTC) — horario del día
-    - cron: '0 11 * * *'
-    # 7 PM Colombia (0 UTC) — aviso 1h antes del pico
-    - cron: '0 0 * * *'
-    # 10 PM Colombia (3 UTC) — aviso 1h antes del valle
-    - cron: '0 3 * * *'
+  # DESACTIVADO — recordatorios Telegram dan error
+  # schedule:
+  #   - cron: '0 11 * * *'
+  #   - cron: '0 0 * * *'
+  #   - cron: '0 3 * * *'
   workflow_dispatch:
 
 jobs:
