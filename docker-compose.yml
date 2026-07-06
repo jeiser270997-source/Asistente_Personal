@@ -24,8 +24,33 @@ services:
     environment:
       - MEMOS_MODE=prod
       - MEMOS_PORT=5230
-    # Acceder via Tailscale: http://<tailscale-ip>:5230
-    # Token: generarlo en Settings > Access Tokens → copiar a .env como MEMOS_TOKEN
+    # Token: Settings > Access Tokens → copiar a .env como MEMOS_TOKEN
+
+  # ── Presupuesto personal local-first (Actual Budget) ─────────
+  actual:
+    image: actualbudget/actual-server:latest
+    container_name: lifeos-actual
+    restart: unless-stopped
+    ports:
+      - "5006:5006"
+    volumes:
+      - ./data/actual:/data
+    environment:
+      - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=20
+    # Acceder: http://localhost:5006
+    # Usar para tracking gastos Didi + deudas DIAN + ahorro
+
+  # ── Backup streaming de SQLite (Litestream) ───────────────────
+  litestream:
+    image: litestream/litestream:latest
+    container_name: lifeos-litestream
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+      - ./litestream.yml:/etc/litestream.yml
+    command: replicate
+    # Replica memoria_hipocampo.db localmente a data/backups/
+    # Para activar: crear litestream.yml con la config abajo
 
   # ── Crawler LLM-optimizado (opcional, requiere Python) ───────
   # crawl4ai:

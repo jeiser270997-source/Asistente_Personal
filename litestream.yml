@@ -1,0 +1,10 @@
+dbs:
+  - path: /data/memoria_hipocampo.db
+    replicas:
+      - type: file
+        path: /data/backups/memoria_hipocampo
+        # Para S3 en el futuro, reemplazar con:
+        # - type: s3
+        #   bucket: lifeos-backups
+        #   path: memoria_hipocampo
+        #   region: us-east-1

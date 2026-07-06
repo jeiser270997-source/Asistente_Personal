@@ -36,10 +36,15 @@
 | **tributaria-colombia-defensa** | v6.0 | ✅ UVT 2026 ($52.374) |
 | **anti-sycophancy** | v1.0 | ✅ Sinceridad Radical |
 | **ingeniero_avanzado** | v1.0 | ✅ Basado en Top 200 GitHub |
+| **karpathy_guidelines** | v1.0 | ✅ Think→Code, Simplicity, Surgical |
 | **buen_gusto** | v1.0 | ✅ Anti-Slop activo |
 | **psicologo** | v1.0 | ✅ Soporte emocional |
+| **modo_diario** | v1.0 | ✅ Escucha activa sin filtros |
 | **financiero** | v1.0 | ✅ Consejos personalizados |
+| **finanzas_didi** | v1.0 | ✅ Budget Didi + DIAN + ahorro |
 | **tutor** | v1.0 | ✅ Técnica Feynman |
+| **qa_bootcamp** | v1.0 | ✅ 28 semanas CESDE + roadmap |
+| **job_hunter** | v1.0 | ✅ QA Colombia + CV + entrevistas |
 | **ciberseguridad** | v1.0 | ✅ MITRE/NIST |
 | **memory-engine** | v1.0 | ✅ Búsqueda semántica |
 
