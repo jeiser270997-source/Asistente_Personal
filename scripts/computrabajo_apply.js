@@ -305,9 +305,20 @@ async function main() {
   const aplicaciones = loadLog();
   const yaAplicadas = new Set(aplicaciones.map(a => a.oferta_id || a.url));
 
-  // Filtrar las no aplicadas que tienen URL
-  const candidatas = ofertas.filter(o => o.url && !yaAplicadas.has(o.id || o.url));
-  log(`Ofertas candidatas (no aplicadas): ${candidatas.length}`);
+  // Filtrar las no aplicadas que tienen URL + filtro de ubicación
+  const UBICACIONES_OK = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|work.?from.?home|teletrabajo/i;
+  const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;
+
+  const candidatas = ofertas.filter(o => {
+    if (!o.url || yaAplicadas.has(o.id || o.url)) return false;
+    const lugar = (o.lugar || o.ciudad || o.ubicacion || o.titulo || '').toLowerCase();
+    const url   = (o.url || '').toLowerCase();
+    const texto = lugar + ' ' + url;
+    // Si menciona ciudad fuera de Antioquia y NO es remoto → descartar
+    if (UBICACIONES_NOK.test(texto) && !UBICACIONES_OK.test(texto)) return false;
+    return true;
+  });
+  log(`Ofertas candidatas (no aplicadas, ubicación OK): ${candidatas.length}`);
 
   const browser = await chromium.launch({ headless: true });
 

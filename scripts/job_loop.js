@@ -266,11 +266,19 @@ async function main() {
     // PASO 1: Scrape
     log('📡 [1/4] Scraping Computrabajo...');
     const ofertas = await scrapeOfertasList();
-    const nuevas  = ofertas.filter(o => !yaAplicadas.has(o.id));
-    log(`  Total: ${ofertas.length} | Nuevas: ${nuevas.length}`);
+    const UBICACIONES_OK  = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo/i;
+    const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;
+
+    const nuevas = ofertas.filter(o => {
+      if (yaAplicadas.has(o.id)) return false;
+      const texto = ((o.lugar || '') + ' ' + (o.url || '')).toLowerCase();
+      if (UBICACIONES_NOK.test(texto) && !UBICACIONES_OK.test(texto)) return false;
+      return true;
+    });
+    log(`  Total: ${ofertas.length} | Nuevas (Medellín/Remoto): ${nuevas.length}`);
 
     if (nuevas.length === 0) {
-      log('  Sin ofertas nuevas este loop.');
+      log('  Sin ofertas nuevas en Medellín/Remoto este loop.');
       await new Promise(r => setTimeout(r, 3000));
       continue;
     }
