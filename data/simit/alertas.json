@@ -1,9 +1,17 @@
 {
-  "ultima_revision": "2026-07-05T18:40:32.786Z",
+  "ultima_revision": "2026-07-06T04:02:16.109Z",
   "alertas": [
     {
-      "tipo": "primera_consulta",
-      "mensaje": "Primera consulta automatica SIMIT. Datos base guardados."
+      "tipo": "multa_resuelta",
+      "mensaje": "✅ MULTA RESUELTA: 000083809722062026 ya no aparece en SIMIT"
+    },
+    {
+      "tipo": "multa_resuelta",
+      "mensaje": "✅ MULTA RESUELTA: 000043026508052024 ya no aparece en SIMIT"
+    },
+    {
+      "tipo": "multa_resuelta",
+      "mensaje": "✅ MULTA RESUELTA: 000067915426032025 ya no aparece en SIMIT"
     }
   ]
 }

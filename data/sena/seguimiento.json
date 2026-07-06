@@ -1,7 +1,7 @@
 {
   "curso": "BASES DE DATOS GENERALIDADES Y SISTEMAS DE GESTION (3549155)",
   "ficha": "3549155",
-  "actualizado": "2026-07-05T17:09:44.338Z",
+  "actualizado": "2026-07-06T03:54:44.598Z",
   "actividades": {
     "iniciales": {
       "nombre": "Actividades Iniciales",
@@ -39,13 +39,13 @@
           "id": "a1-01",
           "nombre": "Foro Tematico - Evolucion de las bases de datos",
           "tipo": "foro",
-          "completado": false
+          "completado": true
         },
         {
           "id": "a1-02",
           "nombre": "Taller - Aplicar conceptos de BD segun requerimientos de empresa",
           "tipo": "tarea",
-          "completado": false
+          "completado": true
         }
       ],
       "materiales": [
@@ -155,8 +155,8 @@
   },
   "estadisticas": {
     "total": 12,
-    "completadas": 3,
-    "pendientes": 9,
-    "vencidas_sin_completar": 2
+    "completadas": 5,
+    "pendientes": 7,
+    "vencidas_sin_completar": 0
   }
 }

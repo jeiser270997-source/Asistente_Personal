@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 
-const DIAN_LOGIN = 'https://muisca.dian.gov.co/WebIdentidadLogin/?ideRequest=eyJjbGllbnRJZCI6IldvMGFLQWxCN3ZSUF8xNmZyUEkxeDlacGhCRWEiLCJyZWRpcmVjdF91cmkiOiJodHRwOi8vbXVpc2NhLmRpYW4uZ292LmNvL0lkZW50aWRhZFJlc3RfTG9naW5GaWx0cm8vYXBpL3N0cy92MS9hdXRoL2NhbGxiYWNrP3JlZGlyZWN0X3VyaT1odHRwJTNBJTJGJTJGbXVpc2NhLmRpYW4uZ292LmNvJTJGV2ViQXJxdWl0ZWN0dXJhJTJGRGVmTG9naW4uZmFjZXMiLCJyZXNwb25zZVR5cGUiOiIiLCJzY29wZSI6IiIsInN0YXRlIjoiIiwibm9uY2UiOiIiLCJwYXJhbXMiOnsidGlwb1VzdWFyaW8iOiJtdWlzY2EifX0%3D';
+const DIAN_URL = 'https://muisca.dian.gov.co/WebIdentidadLogin/?ideRequest=eyJjbGllbnRJZCI6IldvMGFLQWxCN3ZSUF8xNmZyUEkxeDlacGhCRWEiLCJyZWRpcmVjdF91cmkiOiJodHRwOi8vbXVpc2NhLmRpYW4uZ292LmNvL0lkZW50aWRhZFJlc3RfTG9naW5GaWx0cm8vYXBpL3N0cy92MS9hdXRoL2NhbGxiYWNrP3JlZGlyZWN0X3VyaT1odHRwJTNBJTJGJTJGbXVpc2NhLmRpYW4uZ292LmNvJTJGV2ViQXJxdWl0ZWN0dXJhJTJGRGVmTG9naW4uZmFjZXMiLCJyZXNwb25zZVR5cGUiOiIiLCJzY29wZSI6IiIsInN0YXRlIjoiIiwibm9uY2UiOiIiLCJwYXJhbXMiOnsidGlwb1VzdWFyaW8iOiJtdWlzY2EifX0%3D';
 const DIAN_USER = process.env.DIAN_USER || '1019156838';
 const DIAN_PASS = process.env.DIAN_PASS || 'A125%230aa';
 
@@ -19,92 +19,89 @@ function log(msg) { console.log(`[${new Date().toISOString()}] ${msg}`); }
 
 async function loginDIAN(page) {
   log('🔐 Login DIAN MUISCA...');
-  await page.goto(DIAN_LOGIN, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(2000);
-
-  // Wait for Angular/Material to finish rendering
+  await page.goto(DIAN_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
   await page.waitForTimeout(3000);
 
-  // Force-enable the form (Angular Material may disable inputs initially)
-  await page.evaluate(() => {
-    const docInput = document.querySelector('input[name="numDocumento"]');
-    const passInput = document.querySelector('input[name="password"]');
-    if (docInput) { docInput.disabled = false; docInput.removeAttribute('disabled'); }
-    if (passInput) { passInput.disabled = false; passInput.removeAttribute('disabled'); }
-  });
+  // PASO 1: Seleccionar tipo de documento (mat-select Angular)
+  log('   Paso 1: Seleccionando Cédula de Ciudadanía...');
+  try {
+    // Click en el trigger del mat-select para abrir el dropdown
+    await page.click('mat-select, .mat-select-trigger', { timeout: 5000 });
+    await page.waitForTimeout(1000);
+    // Buscar y click en la opción CC en el panel que se abrió
+    await page.click('mat-option:has-text("Cédula de ciudadanía"), mat-option:has-text("Cedula")', { timeout: 5000 });
+    await page.waitForTimeout(500);
+    log('   ✅ Tipo de documento seleccionado: CC');
+  } catch (e) {
+    log('   ⚠ mat-select: ' + e.message.substring(0, 60));
+  }
 
-  // Fill credentials with force
-  await page.fill('input[name="numDocumento"]', DIAN_USER, { force: true });
-  await page.fill('input[name="password"]', DIAN_PASS, { force: true });
-  
-  log('   Credenciales ingresadas. Enviando via JS...');
+  // PASO 2: Número de documento — click primero para activar Angular, luego type
+  log('   Paso 2: Ingresando número de documento...');
+  try {
+    await page.click('input[name="numDocumento"], input[formcontrolname="numDocumento"]');
+    await page.waitForTimeout(200);
+    await page.type('input[name="numDocumento"], input[formcontrolname="numDocumento"]', DIAN_USER, { delay: 50 });
+  } catch (e) {
+    log('   ⚠ numDocumento: ' + e.message.substring(0, 60));
+  }
+  await page.waitForTimeout(300);
 
-  // DIAN MUISCA uses Angular Material - bypass overlay with JS injection
-  const loginResult = await page.evaluate(({ user, pass }) => {
-    return new Promise((resolve) => {
-      try {
-        const docInput = document.querySelector('input[name="numDocumento"]');
-        const passInput = document.querySelector('input[name="password"]');
-        const checkbox = document.querySelector('#mat-checkbox-1-input, input[type="checkbox"]');
-        
-        if (docInput) { docInput.value = user; docInput.dispatchEvent(new Event('input', { bubbles: true })); }
-        if (passInput) { passInput.value = pass; passInput.dispatchEvent(new Event('input', { bubbles: true })); }
-        if (checkbox) { checkbox.checked = true; checkbox.dispatchEvent(new Event('change', { bubbles: true })); }
-        
-        // Try all possible submit buttons
-        setTimeout(() => {
-          const btns = document.querySelectorAll('button');
-          let clicked = false;
-          for (const btn of btns) {
-            const text = btn.textContent.toLowerCase();
-            if (text.includes('ingresar') || text.includes('entrar') || text.includes('iniciar') || text.includes('continuar')) {
-              btn.click();
-              clicked = true;
-              break;
-            }
-          }
-          if (!clicked) {
-            const firstBtn = document.querySelector('button[type="submit"], button.btn-primary');
-            if (firstBtn) firstBtn.click();
-            else {
-              const form = document.querySelector('form');
-              if (form) form.submit();
-            }
-          }
-          resolve({ submitted: true });
-        }, 1000);
-      } catch(e) {
-        resolve({ error: e.message });
-      }
+  // PASO 3: Contraseña
+  log('   Paso 3: Ingresando contraseña...');
+  try {
+    await page.click('input[name="password"], input[formcontrolname="password"], input[type="password"]');
+    await page.waitForTimeout(200);
+    await page.type('input[name="password"], input[formcontrolname="password"], input[type="password"]', DIAN_PASS, { delay: 50 });
+  } catch (e) {
+    log('   ⚠ password: ' + e.message.substring(0, 60));
+  }
+  await page.waitForTimeout(300);
+
+  // PASO 4: Checkbox términos — click en el contenedor visible
+  log('   Paso 4: Marcando checkbox términos...');
+  try {
+    await page.click('mat-checkbox, .mat-checkbox-layout', { timeout: 3000 });
+    log('   ✅ Checkbox marcado');
+  } catch (e) {
+    log('   ⚠ checkbox: ' + e.message.substring(0, 60));
+  }
+  await page.waitForTimeout(500);
+
+  // Screenshot antes de submit
+  await page.screenshot({ path: require('node:path').join(DATA_DIR, 'dian_presubmit.png') });
+
+  // PASO 5: Click en Ingresar
+  log('   Paso 5: Haciendo click en Ingresar...');
+  try {
+    await page.click('button:has-text("Ingresar")', { timeout: 3000 });
+  } catch {
+    await page.evaluate(() => {
+      const btn = Array.from(document.querySelectorAll('button')).find(b => /ingresar/i.test(b.textContent));
+      if (btn) { btn.removeAttribute('disabled'); btn.click(); }
     });
-  }, { user: DIAN_USER, pass: DIAN_PASS });
-  
-  log(`   Submit: ${JSON.stringify(loginResult)}`);
-  
+  }
+
   await page.waitForTimeout(8000);
   log(`   Post-login URL: ${page.url()}`);
-  log(`   Post-login Title: ${await page.title()}`);
 
-  // Check if we're past login
+  await page.screenshot({ path: require('node:path').join(DATA_DIR, 'ultima_consulta.png') });
+
   if (page.url().includes('muisca.dian.gov.co') && !page.url().includes('WebIdentidadLogin')) {
     log('✅ Login exitoso a MUISCA');
     return true;
   }
 
-  // Check for error messages
   const errorText = await page.evaluate(() => {
-    const alerts = document.querySelectorAll('.alert-danger, .error, .msg-error');
+    const alerts = document.querySelectorAll('.alert-danger, .error, mat-error, .cdk-overlay-container mat-dialog-content');
     return Array.from(alerts).map(a => a.textContent.trim()).join(' | ');
   });
-
-  if (errorText) {
-    log(`❌ Error de login: ${errorText}`);
-  } else {
-    log('⚠ Login outcome unclear - posiblemente requiere paso adicional');
-  }
-
+  if (errorText) log(`❌ Error: ${errorText.substring(0, 150)}`);
+  else log('⚠ Aún en login');
   return false;
 }
+
+
 
 async function scrapeDIAN(page) {
   log('📋 Extrayendo datos DIAN...');
