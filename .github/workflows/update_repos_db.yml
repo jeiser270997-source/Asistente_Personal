@@ -37,5 +37,7 @@ jobs:
           git config user.name "LifeOS Bot"
           git config user.email "lifeos@jeiser.dev"
           git add data/repos_db.json data/repos_db_meta.json
-          git diff --cached --quiet || git commit -m "auto: repos_db actualizada $(date -u +%Y-%m-%d)"
+          git diff --cached --quiet && echo "Sin cambios, nada que pushear." && exit 0
+          git commit -m "auto: repos_db actualizada $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
           git push origin main
