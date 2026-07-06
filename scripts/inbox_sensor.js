@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { google } = require('googleapis');
-const { authorize } = require('../Herramientas/Gmail_Cleaner/auth');
+const { authorize } = require('../lib/google_auth');
 const { sendTelegramMessage } = require('../lib/telegram');
 
 const LOG_FILE = path.join(__dirname, '..', 'data', 'processed_emails.json');
