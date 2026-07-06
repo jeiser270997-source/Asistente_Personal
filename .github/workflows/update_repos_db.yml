@@ -1,0 +1,41 @@
+name: Update Repos DB
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Lunes 9am UTC (4am Colombia)
+  workflow_dispatch:       # Ejecución manual
+
+jobs:
+  update-db:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Update repos DB desde EvanLi
+        run: node scripts/update_repos_db.js
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      - name: Commit y push si hay cambios
+        run: |
+          git config user.name "LifeOS Bot"
+          git config user.email "lifeos@jeiser.dev"
+          git add data/repos_db.json data/repos_db_meta.json
+          git diff --cached --quiet || git commit -m "auto: repos_db actualizada $(date -u +%Y-%m-%d)"
+          git push origin main
