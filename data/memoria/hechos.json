@@ -326,6 +326,115 @@
         "monitoreo"
       ],
       "timestamp": "2026-07-05T19:25:47.502Z"
+    },
+    {
+      "id": "h_sesion_20260706_001",
+      "categoria": "trabajo",
+      "hecho": "Job Hunter pipeline completo: job_loop.js (scrape+analisis+tailoring), computrabajo_apply.js (auto-apply), cv_tailorer.js (HTML sb2nov). 12 busquedas activas en CT.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "job_hunter",
+        "computrabajo",
+        "cv",
+        "automatizacion"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_002",
+      "categoria": "trabajo",
+      "hecho": "Mejor match laboral: Software QA Analyst (Itconsultores SAS, Medellin) score 65/100. Gap unico: 1 año experiencia formal. Skills tecnicas completas.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "job_hunter",
+        "qa_analyst",
+        "itconsultores",
+        "score"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_003",
+      "categoria": "trabajo",
+      "hecho": "CV creado en formato sb2nov/resume (https://github.com/sb2nov/resume). HTML puro, sin LaTeX. Ubicacion: data/jobs/cv_jeiser.html y copia en Escritorio.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "cv",
+        "sb2nov",
+        "html",
+        "escritorio"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_004",
+      "categoria": "estudio",
+      "hecho": "CESDE horario: ACTUAL Lun/Mie/Vie 6-8pm (curso inicial). PROXIMO: Sabados 7am-6pm (bootcamp completo). Esto libera Lun-Vie completo para trabajo.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "cesde",
+        "horario",
+        "sabados"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_005",
+      "categoria": "estudio",
+      "hecho": "SENA: tiene DOS cursos en Zajuna. 1) Bases de Datos (ficha 3549155). 2) Excel (nombre exacto pendiente confirmar). Ambos en plataforma Zajuna.",
+      "fuente": "sesion_20260706",
+      "confianza": "media",
+      "tags": [
+        "sena",
+        "zajuna",
+        "excel",
+        "bases_datos"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_006",
+      "categoria": "personal",
+      "hecho": "Telefono real de Jeiser: +57 304 461 5613 (antes habia placeholder +57 301 XXX XXXX). Actualizado en CV base y todos los tailored.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "telefono",
+        "contacto",
+        "cv"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_007",
+      "categoria": "trabajo",
+      "hecho": "Experiencia laboral anterior de Jeiser: NO registrada en sistema. PENDIENTE: Preguntar al usuario empresas, cargos y fechas para completar CV.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "experiencia",
+        "cv",
+        "pendiente"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_sesion_20260706_008",
+      "categoria": "tecnico",
+      "hecho": "Bug computrabajo_apply.js: selector login timeout. input[type=email] no funciona en CT. Fix aplicado: locator con fallback multiple. Pendiente validar en produccion.",
+      "fuente": "sesion_20260706",
+      "confianza": "alta",
+      "tags": [
+        "computrabajo",
+        "bug",
+        "login",
+        "playwright"
+      ],
+      "timestamp": "2026-07-06T05:39:30.761Z"
     }
   ]
 }

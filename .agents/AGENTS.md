@@ -1,9 +1,10 @@
-# Life OS - Segundo Cerebro de Jeiser v2.1
+# Life OS - Segundo Cerebro de Jeiser v2.2
+**Última actualización:** 2026-07-06 (sesión completa: DIAN + Jobs + CV)
 
-## Arquitectura (Julio 2026) — 85/100 seguridad, 90/100 funcionalidad
+## Arquitectura (Julio 2026) — 87/100 seguridad, 93/100 funcionalidad
 
 ```
-📱 Telegram (solo notif) ← → ☁️ GitHub Actions (10 workflows, ubuntu-22.04)
+📱 Telegram (solo notif) ← → ☁️ GitHub Actions (12 workflows, ubuntu-22.04)
                                          ↓
                           🧠 DeepSeek V4 Flash (único LLM, horario valle)
                                          ↓
@@ -11,6 +12,8 @@
               ▼                          ▼                          ▼
        🚗 SIMIT (auto)           🎓 SENA (auto)           💼 Jobs (auto)
               │                          │                          │
+              │                          │                 Computrabajo scraper
+              │                          │                 Auto-apply + CV tailor
               └──────────────────────────┼──────────────────────────┘
                                          ▼
               ┌──────────── 🧠 Arquitectura Lobular ────────────────┐
@@ -25,8 +28,26 @@
               │  MD: data/contexto_maestro/ESTADO_VIVO.md (perfil)  │
               └─────────────────────────────────────────────────────┘
                                          ↓
-                 ⚖ Tributaria v6  │  🚦 Transito v1  │  🎯 Bootcamp QA
+         ⚖ Tributaria v6  │  🚦 Transito v1  │  🎯 Bootcamp QA  │  💼 Job Hunter
 ```
+
+## CONTEXTO RÁPIDO — Leer al inicio de cada sesión
+
+**Jeiser Abraham Gutierrez Torres** · CC 1019156838 · +57 304 461 5613
+Medellín, Colombia · jeiser270997@gmail.com · Conductor DiDi → busca trabajo QA Tech
+
+**Perfil técnico:** QA Automation Junior · Playwright · JS · Node.js · Git · GitHub Actions · Postman · SQL
+**Proyecto clave:** LifeOS (11 workflows en producción, scraping SIMIT/SENA/DIAN/CT, LLM integration)
+**Mejor match laboral:** Software QA Analyst 55-65/100 · Gap único: 1 año exp formal
+**CESDE:** Sábados 7am-6pm (próximo horario) · actual Lun/Mié/Vie 6-8pm
+**SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
+
+**⚠️ PENDIENTES ACTIVOS:**
+1. Experiencia laboral anterior de Jeiser — NO registrada. Preguntar.
+2. SENA Excel — confirmar nombre exacto del curso para el CV.
+3. Fix login Computrabajo — `computrabajo_apply.js` falla selector email.
+4. DIAN obligaciones detalle — navegar Dashboard por clicks (no URL directa).
+5. SENA Actividad 2 — Cuadro Comparativo + Taller (vence 07/07/2026 ⚠️ HOY).
 
 ## Skills de Producción
 
@@ -48,7 +69,7 @@
 | **ciberseguridad** | v1.0 | ✅ MITRE/NIST |
 | **memory-engine** | v1.0 | ✅ Búsqueda semántica |
 
-## Automatizaciones Cloud (10 GitHub Actions — todos en ubuntu-22.04)
+## Automatizaciones Cloud (12 GitHub Actions — todos en ubuntu-22.04)
 
 | Workflow | Frecuencia | Estado |
 |----------|-----------|:------:|
@@ -57,20 +78,32 @@
 | `simit_checker.yml` | Diario 7am | ✅ |
 | `cloud-orchestrator.yml` | Diario 7am | ✅ |
 | `email-cleaner.yml` | Cada 3h | ✅ |
-| `recordatorio_cesde.yml` | Lun/Mie/Vie 5pm | ✅ |
+| `recordatorio_cesde.yml` | Lun/Mié/Vie 5pm + Sáb 2am UTC | ✅ |
 | `recordatorio_deepseek.yml` | 6am/7pm/10pm | ✅ |
 | `document-pipeline.yml` | Diario 9am | ✅ |
 | `healthcheck.yml` | Diario 8am | ✅ |
 | `ci.yml` | Push | ✅ |
+| `computrabajo_scraper.yml` | Lun-Vie 8am Colombia | ✅ NEW |
+| `dian_scraper.yml` | Lunes 9am Colombia | ✅ NEW |
 
-## Auditoría (06/07/2026)
+## Scripts Job Hunter (NEW — 2026-07-06)
 
-- **Sintaxis**: ✅ 22 archivos — 0 errores
-- **Imports rotos**: ✅ 0 encontrados
-- **Vulnerabilidades npm**: ✅ 0 críticas/altas
-- **OS workflows**: ✅ Todos fijados a `ubuntu-22.04` (fix better-sqlite3)
-- **Bug crítico corregido**: `reflexion_nocturna.js:45` — `.replace()` sin paréntesis
-- **Memoria**: SQLite persistente (`better-sqlite3`) — migración desde lowdb ✅
+```bash
+# Scraping diario Computrabajo
+node scripts/computrabajo_scraper.js
+
+# Pipeline completo: scrape→analiza→tailoring (dry-run)
+node scripts/job_loop.js --loops=3 --min-score=40 --dry-run
+
+# Auto-apply (requiere fix login CT)
+node scripts/computrabajo_apply.js --auto
+
+# CV personalizado para oferta específica
+node scripts/cv_tailorer.js <url_oferta>
+
+# DIAN extracción exhaustiva
+node scripts/dian_scraper.js
+```
 
 ## Comandos Rápidos (SSH)
 
@@ -80,7 +113,6 @@ node scripts/email_processor.js
 
 # SENA
 node scripts/moodle_sena_tracker.js ver
-node scripts/moodle_sena_tracker.js completar <id>
 
 # SIMIT
 node scripts/simit_scraper.js
@@ -93,14 +125,23 @@ node scripts/audit.js
 
 # Reflexión nocturna (manual)
 node scripts/reflexion_nocturna.js
-
-# Bootcamp repos
-node scripts/scan_local_repos.js
 ```
+
+## Auditoría (06/07/2026)
+
+- **Sintaxis**: ✅ 0 errores
+- **Workflows**: ✅ 12 activos, todos ubuntu-22.04
+- **DIAN Login**: ✅ Angular mat-select fix funcional
+- **Computrabajo Scraper**: ✅ 38-43 ofertas/día
+- **CV**: ✅ sb2nov/resume HTML · Escritorio de Jeiser
+- **Job Loop**: ✅ Scrape + DeepSeek análisis + tailoring funcional
+- **Fix pendiente**: ❌ Login CT en `computrabajo_apply.js` (timeout selector email)
 
 ## Reglas de Comportamiento
 
 - **Sinceridad Radical**: Si Jeiser está equivocado, decirlo directamente.
 - **Anti-adulación**: Prohibido "esto es oro puro", "excelente pregunta", etc.
 - **Prioriza la verdad** sobre la validación emocional.
-- **DeepSeek**: Solo usar en horario valle (11pm–8am Colombia). Fuera de ese horario usar fallback.
+- **DeepSeek**: Solo usar en horario valle (11pm–8am Colombia). Fuera usar fallback.
+- **Al inicio de sesión**: Leer ESTADO_VIVO.md primero, luego responder.
+- **Regla GitHub**: Si existe repo en GitHub para la tarea, usarlo. Inventar solo si no existe.
