@@ -2,19 +2,17 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { askLLM } = require('../lib/llm_service');
 const { agregarHecho } = require('../lib/memory_engine');
+const { getAllHistory } = require('../lib/memory');
 
 const CONTEXT_DIR = path.join(__dirname, '..', 'data', 'contexto_maestro');
 const ESTADO_PATH = path.join(CONTEXT_DIR, 'ESTADO_VIVO.md');
-const HISTORY_PATH = path.join(__dirname, '..', 'data', 'chat_history.json');
 
 async function reflexionar() {
   console.log('🧠 [Corteza Prefrontal] Iniciando ciclo de reflexión nocturna y auto-aprendizaje (GEPA)...');
 
   try {
-    const historyData = fs.readFileSync(HISTORY_PATH, 'utf8');
-    const history = JSON.parse(historyData);
-    
-    const jeiserBrainHistory = history['jeiser_brain'] || history['jarvis'] || [];
+    // Leer historial desde SQLite (memoria_hipocampo.db)
+    const jeiserBrainHistory = getAllHistory('jeiser_brain');
     if (jeiserBrainHistory.length === 0) {
       console.log('😴 Sin interacciones hoy. No hay nada que aprender.');
       return;
