@@ -348,5 +348,29 @@
     "score": 85,
     "estado": "error",
     "razon": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], inp"
+  },
+  {
+    "oferta_id": "de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-7C784BF8F4FC8A2A61373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-7C784BF8F4FC8A2A61373E686DCF3405#lc=ListOffers-Score4-5",
+    "titulo": "Multiplicador/a de calidad jr",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T12:22:55.158Z",
+    "score": 85,
+    "estado": "error",
+    "razon": "No se pudo confirmar",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783340575076.png"
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-CFDB07DFE483213861373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-CFDB07DFE483213861373E686DCF3405#lc=ListOffers-Score4-6",
+    "titulo": "Analista Jr Gestión de Calidad",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T12:26:30.058Z",
+    "score": 85,
+    "estado": "error",
+    "razon": "No se pudo confirmar",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783340790012.png"
   }
 ]

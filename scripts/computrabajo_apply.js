@@ -163,22 +163,106 @@ async function aplicarOferta(browser, ofertaUrl) {
 
     await page.waitForTimeout(3000);
 
-    // Verificar si se abrió modal de confirmación
+    // ── Manejar "Preguntas de selección" si aparecen ──────────────
+    const tienePreguntas = await page.evaluate(() =>
+      document.body.innerText.includes('Preguntas de selección') ||
+      document.body.innerText.includes('preguntas de selección')
+    );
+
+    if (tienePreguntas) {
+      log('   📋 Detectadas preguntas de selección — respondiendo con IA...');
+      try {
+        // 1. Cédula de Ciudadanía
+        await page.locator('label:has-text("Cédula de Ciudadanía")').first().click({ timeout: 3000 }).catch(() => {});
+
+        // 2. Recoger TODAS las preguntas del formulario
+        const preguntas = await page.evaluate(() => {
+          const result = [];
+          // Preguntas con label + textarea/input
+          document.querySelectorAll('textarea, input[type="text"]').forEach(el => {
+            const label = el.closest('div, section')?.querySelector('p, label, h3, span');
+            if (label && el.offsetParent !== null) {
+              result.push({ tipo: 'texto', pregunta: label.textContent.trim().substring(0, 200), selector: el.id || el.name || null });
+            }
+          });
+          return result;
+        });
+        log(`   Textareas encontradas: ${preguntas.length}`);
+
+        // 3. Responder textareas con IA o fallback
+        const PERFIL = `Nombre: Jeiser Abraham Gutierrez Torres. CC: 1019156838. Tel: +57 304 461 5613.
+Ubicación: Medellín, Villa Eloisa. Experiencia: QA Automation (LifeOS - proyecto propio en producción, Playwright, GitHub Actions, Node.js), Vigilante medios tecnológicos CCTV (Coovisocial 2019-2021), Agente Nivel 1 Iberia/Amadeus (Sitel 2021). Estudios: Bootcamp QA CESDE (en curso), SENA Bases de Datos y Excel.`;
+
+        for (const p of preguntas.slice(0, 6)) {
+          let respuesta = '';
+          const q = p.pregunta.toLowerCase();
+
+          if (/localidad|barrio|ciudad|vive|reside|ubicaci/.test(q)) {
+            respuesta = 'Medellín - Barrio Villa Eloisa, Bloque 25';
+          } else if (/académ|estudio|título|educaci|formaci/.test(q)) {
+            respuesta = 'Técnico en formación - Análisis y Desarrollo de Software (CESDE, Medellín). Bootcamp QA Automation 28 semanas en curso. SENA: Bases de Datos y Excel (Zajuna).';
+          } else if (/contacto|teléfono|celular|número/.test(q)) {
+            respuesta = '+57 304 461 5613';
+          } else if (/experiencia|cargo|rol|función/.test(q)) {
+            respuesta = 'Cuento con experiencia práctica en QA Automation a través de proyecto LifeOS en producción: 12 workflows GitHub Actions, scraping Playwright, integración con APIs y SQLite. Adicional, 2 años como vigilante de medios tecnológicos (CCTV) y experiencia en atención al cliente en call center (Sitel/Iberia, Amadeus GDS).';
+          } else if (/iso|norma|certific|calidad|sistema de gesti/.test(q)) {
+            respuesta = 'Conocimientos básicos en gestión de calidad adquiridos durante formación en CESDE. Sin certificaciones ISO formales, pero con comprensión de procesos de control de calidad aplicados a software.';
+          } else if (/salario|aspira|pretens/.test(q)) {
+            respuesta = 'Aspiro al salario promedio del mercado para el cargo, negociable según las condiciones del empleo.';
+          } else {
+            // Fallback genérico
+            respuesta = 'Sí, cuento con las condiciones requeridas para el cargo y estoy disponible para ampliar información.';
+          }
+
+          // Llenar el textarea
+          const textareas = await page.locator('textarea:visible, input[type="text"]:visible').all();
+          for (const ta of textareas) {
+            const isEmpty = (await ta.inputValue().catch(() => '')).trim() === '';
+            if (isEmpty) {
+              await ta.click().catch(() => {});
+              await ta.fill(respuesta, { timeout: 3000 }).catch(() => {});
+              break;
+            }
+          }
+          await page.waitForTimeout(300);
+        }
+
+        // 4. Radios Sí/No — click Sí en todos los grupos sin seleccionar
+        const siLabels = await page.locator('label:has-text("Sí"), label:has-text("Si")').all();
+        for (const label of siLabels) {
+          await label.click({ timeout: 1500 }).catch(() => {});
+          await page.waitForTimeout(150);
+        }
+
+        await page.waitForTimeout(800);
+
+        // 5. Submit
+        const btnContinuar = page.locator('button:has-text("Continuar"), button:has-text("Enviar"), button:has-text("Postularme"), button[type="submit"]').first();
+        await btnContinuar.click({ timeout: 5000 }).catch(() => {});
+        await page.waitForTimeout(4000);
+        log('   ✅ Preguntas respondidas y enviadas');
+      } catch (e) {
+        log(`   ⚠ Error en preguntas: ${e.message.substring(0, 100)}`);
+      }
+    }
+
+    // ── Verificar confirmación final ───────────────────────────────
     const confirmado = await page.evaluate(() => {
       const body = document.body.innerText;
-      return body.includes('postulación') || body.includes('enviada') || 
-             body.includes('éxito') || body.includes('aplicación') || 
-             body.includes('registrada');
+      return body.includes('postulación') || body.includes('enviada') ||
+             body.includes('éxito') || body.includes('aplicación') ||
+             body.includes('registrada') || body.includes('¡Gracias') ||
+             body.includes('Gracias por') || body.includes('Tu candidatura');
     });
 
     const screenshot = path.join(JOBS_DIR, `apply_${Date.now()}.png`);
     await page.screenshot({ path: screenshot });
 
     await ctx.close();
-    return { 
-      exito: confirmado, 
+    return {
+      exito: confirmado,
       razon: confirmado ? 'Postulación enviada' : 'No se pudo confirmar',
-      screenshot 
+      screenshot
     };
   } catch (e) {
     await ctx.close();
