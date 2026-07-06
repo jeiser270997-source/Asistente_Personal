@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  # ── Monitor de salud del sistema ─────────────────────────────
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: lifeos-uptime
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma-data:/app/data
+    # Acceder via Tailscale: http://<tailscale-ip>:3001
+
+  # ── App de notas Markdown ────────────────────────────────────
+  memos:
+    image: neosmemo/memos:stable
+    container_name: lifeos-memos
+    restart: unless-stopped
+    ports:
+      - "5230:5230"
+    volumes:
+      - ./data/memos:/var/opt/memos
+    environment:
+      - MEMOS_MODE=prod
+      - MEMOS_PORT=5230
+    # Acceder via Tailscale: http://<tailscale-ip>:5230
+    # Token: generarlo en Settings > Access Tokens → copiar a .env como MEMOS_TOKEN
+
+  # ── Crawler LLM-optimizado (opcional, requiere Python) ───────
+  # crawl4ai:
+  #   image: unclecode/crawl4ai:latest
+  #   container_name: lifeos-crawl4ai
+  #   restart: unless-stopped
+  #   ports:
+  #     - "11235:11235"
+  #   environment:
+  #     - CRAWL4AI_API_TOKEN=lifeos-local
+
+volumes:
+  uptime-kuma-data:

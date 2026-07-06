@@ -1,0 +1,508 @@
+{
+  "🤖 Agente/AI Personal": [
+    {
+      "name": "openclaw/openclaw",
+      "url": "https://github.com/openclaw/openclaw",
+      "stars": 381747,
+      "forks": 80040,
+      "lang": "TypeScript",
+      "desc": "Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞"
+    },
+    {
+      "name": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers",
+      "desc": "An agentic skills framework & software development methodology that...",
+      "stars": 245047,
+      "lang": "Shell"
+    },
+    {
+      "name": "affaan-m/ECC",
+      "url": "https://github.com/affaan-m/ECC",
+      "desc": "The agent harness performance optimization system. Skills, instinct...",
+      "stars": 225509,
+      "lang": "JavaScript"
+    },
+    {
+      "name": "NousResearch/hermes-agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "desc": "The agent that grows with you",
+      "stars": 208690,
+      "lang": "Python"
+    },
+    {
+      "name": "ultraworkers/claw-code",
+      "url": "https://github.com/ultraworkers/claw-code",
+      "stars": 194560,
+      "forks": 109828,
+      "lang": "Rust",
+      "desc": "An agent-managed museum exhibit, built in Rust with Gajae-Code / LazyCodex — developed and maintained with no human intervention."
+    },
+    {
+      "name": "anomalyco/opencode",
+      "url": "https://github.com/anomalyco/opencode",
+      "stars": 182403,
+      "forks": 22571,
+      "lang": "TypeScript",
+      "desc": "The open source coding agent."
+    },
+    {
+      "name": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills",
+      "stars": 158246,
+      "forks": 18652,
+      "lang": "Python",
+      "desc": "Public repository for Agent Skills"
+    },
+    {
+      "name": "langflow-ai/langflow",
+      "url": "https://github.com/langflow-ai/langflow",
+      "stars": 151141,
+      "forks": 9432,
+      "lang": "Python",
+      "desc": "Langflow is a powerful tool for building and deploying AI-powered agents and workflows."
+    },
+    {
+      "name": "langgenius/dify",
+      "url": "https://github.com/langgenius/dify",
+      "desc": "Production-ready platform for agentic workflow development.",
+      "stars": 147559,
+      "lang": "TypeScript"
+    },
+    {
+      "name": "x1xhlol/system-prompts-and-models-of-ai-tools",
+      "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools",
+      "stars": 141529,
+      "forks": 34777,
+      "lang": "None",
+      "desc": "FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, Lovable, Manus, NotionAI, Orchids.app, Perplexity, Poke, Qoder, Replit, Same.dev, Trae, Traycer AI, VSCode Agent, Warp.dev, Windsurf, Xcode, Z.ai Code, Dia & v0. (And other Open Sourced) System Prompts, Internal Tools & AI Models"
+    }
+  ],
+  "💾 Memoria/RAG": [
+    {
+      "name": "trimstray/the-book-of-secret-knowledge",
+      "url": "https://github.com/trimstray/the-book-of-secret-knowledge",
+      "desc": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks...",
+      "stars": 231427,
+      "lang": "?"
+    },
+    {
+      "name": "vllm-project/vllm",
+      "url": "https://github.com/vllm-project/vllm",
+      "stars": 85382,
+      "forks": 18932,
+      "lang": "Python",
+      "desc": "A high-throughput and memory-efficient inference and serving engine for LLMs"
+    },
+    {
+      "name": "anuraghazra/github-readme-stats",
+      "url": "https://github.com/anuraghazra/github-readme-stats",
+      "desc": ":zap: Dynamically generated stats for your github readmes",
+      "stars": 79775,
+      "lang": "JavaScript"
+    },
+    {
+      "name": "unionlabs/union",
+      "url": "https://github.com/unionlabs/union",
+      "stars": 73932,
+      "forks": 3896,
+      "lang": "Rust",
+      "desc": "The trust-minimized, zero-knowledge bridging protocol, designed for censorship resistance, extremely high security, and usage in decentralized finance."
+    },
+    {
+      "name": "toeverything/AFFiNE",
+      "url": "https://github.com/toeverything/AFFiNE",
+      "stars": 70078,
+      "forks": 5017,
+      "lang": "TypeScript",
+      "desc": "There can be more than Notion and Miro. AFFiNE(pronounced [ə‘fain]) is a next-gen knowledge base that brings planning, sorting and creating all together. Privacy first, open-source, customizable and ready to use."
+    },
+    {
+      "name": "pathwaycom/llm-app",
+      "url": "https://github.com/pathwaycom/llm-app",
+      "desc": "Ready-to-run cloud templates for RAG, AI pipelines, and enterprise ...",
+      "stars": 59209,
+      "lang": "Jupyter Notebook"
+    },
+    {
+      "name": "rclone/rclone",
+      "url": "https://github.com/rclone/rclone",
+      "desc": "\"rsync for cloud storage\" - Google Drive, S3, Dropbox, Backblaze B2...",
+      "stars": 57949,
+      "lang": "Go"
+    },
+    {
+      "name": "MemPalace/mempalace",
+      "url": "https://github.com/MemPalace/mempalace",
+      "stars": 56954,
+      "forks": 7356,
+      "lang": "Python",
+      "desc": "The best-benchmarked open-source AI memory system. And it's free."
+    },
+    {
+      "name": "headroomlabs-ai/headroom",
+      "url": "https://github.com/headroomlabs-ai/headroom",
+      "stars": 56574,
+      "forks": 4134,
+      "lang": "Python",
+      "desc": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 60-95% fewer tokens, same answers. Library, proxy, MCP server."
+    },
+    {
+      "name": "colbymchenry/codegraph",
+      "url": "https://github.com/colbymchenry/codegraph",
+      "desc": "Pre-indexed code knowledge graph, auto syncs on code changes, for C...",
+      "stars": 56035,
+      "lang": "TypeScript"
+    }
+  ],
+  "📧 Email/Notificaciones": [
+    {
+      "name": "sansan0/TrendRadar",
+      "url": "https://github.com/sansan0/TrendRadar",
+      "stars": 60249,
+      "forks": 24761,
+      "lang": "Python",
+      "desc": "⭐AI-driven public opinion & trend monitor with multi-platform aggregation, RSS, and smart alerts.🎯 告别信息过载，你的 AI 舆情监控助手与热点筛选工具！聚合多平台热点 +  RSS 订阅，支持关键词精准筛选。AI 智能筛选新闻 + AI 翻译 +  AI 分析简报直推手机，也支持接入 MCP 架构，赋能 AI 自然语言对话分析、情感洞察与趋势预测等。支持 Docker ，数据本地/云端自持。集成微信/飞书/钉钉/Telegram/邮件/ntfy/bark/slack 等渠道智能推送。"
+    },
+    {
+      "name": "ZhuLinsen/daily_stock_analysis",
+      "url": "https://github.com/ZhuLinsen/daily_stock_analysis",
+      "stars": 54350,
+      "forks": 47051,
+      "lang": "Python",
+      "desc": "LLM 驱动的多市场股票智能分析系统：多源行情、实时新闻、决策看板与自动推送，支持零成本定时运行。  LLM-powered multi-market stock analysis system with multi-source market data, real-time news, decision dashboard, automated notifications, and cost-free scheduled runs."
+    },
+    {
+      "name": "chatwoot/chatwoot",
+      "url": "https://github.com/chatwoot/chatwoot",
+      "desc": "Open-source live-chat, email support, omni-channel desk. An alterna...",
+      "stars": 32716,
+      "lang": "Ruby"
+    },
+    {
+      "name": "binwiederhier/ntfy",
+      "url": "https://github.com/binwiederhier/ntfy",
+      "desc": "Send push notifications to your phone or desktop using PUT/POST",
+      "stars": 31010,
+      "lang": "Go"
+    },
+    {
+      "name": "telegramdesktop/tdesktop",
+      "url": "https://github.com/telegramdesktop/tdesktop",
+      "desc": "Telegram Desktop messaging app",
+      "stars": 30007,
+      "lang": "C++"
+    },
+    {
+      "name": "DrKLO/Telegram",
+      "url": "https://github.com/DrKLO/Telegram",
+      "desc": "Telegram for Android source",
+      "stars": 29446,
+      "lang": "Java"
+    },
+    {
+      "name": "python-telegram-bot/python-telegram-bot",
+      "url": "https://github.com/python-telegram-bot/python-telegram-bot",
+      "desc": "We have made you a wrapper you can't refuse",
+      "stars": 29232,
+      "lang": "Python"
+    },
+    {
+      "name": "t4t5/sweetalert",
+      "url": "https://github.com/t4t5/sweetalert",
+      "desc": "A beautiful replacement for JavaScript's \"alert\"",
+      "stars": 22288,
+      "lang": "TypeScript"
+    },
+    {
+      "name": "PHPMailer/PHPMailer",
+      "url": "https://github.com/PHPMailer/PHPMailer",
+      "desc": "The classic email sending library for PHP",
+      "stars": 22040,
+      "lang": "PHP"
+    },
+    {
+      "name": "Seldaek/monolog",
+      "url": "https://github.com/Seldaek/monolog",
+      "desc": "Sends your logs to files, sockets, inboxes, databases and various w...",
+      "stars": 21394,
+      "lang": "PHP"
+    }
+  ],
+  "🧠 LLM/Self-Improving": [
+    {
+      "name": "PKUFlyingPig/cs-self-learning",
+      "url": "https://github.com/PKUFlyingPig/cs-self-learning",
+      "desc": "计算机自学指南",
+      "stars": 73401,
+      "lang": "HTML"
+    },
+    {
+      "name": "msgpack/msgpack",
+      "url": "https://github.com/msgpack/msgpack",
+      "desc": "MessagePack is an extremely efficient object serialization library....",
+      "stars": 7416,
+      "lang": "?"
+    },
+    {
+      "name": "PKUFlyingPig/Self-learning-Computer-Science",
+      "url": "https://github.com/PKUFlyingPig/Self-learning-Computer-Science",
+      "stars": 4750,
+      "forks": 413,
+      "lang": "?",
+      "desc": "the resources I use to learn computer science in my spare time",
+      "topics": [],
+      "updatedAt": "2026-07-05T03:03:29Z"
+    },
+    {
+      "name": "WecoAI/awesome-autoresearch",
+      "url": "https://github.com/WecoAI/awesome-autoresearch",
+      "stars": 998,
+      "forks": 74,
+      "lang": "?",
+      "desc": "Curated list of AutoResearch use cases with optimization traces and open source implementations",
+      "topics": [
+        "ai-agents",
+        "ai-research",
+        "automated-machine-learning",
+        "autonomous-agents",
+        "autoresearch",
+        "awesome",
+        "awesome-list",
+        "claude-code",
+        "code-optimization",
+        "curated-list",
+        "llm",
+        "self-improving-ai"
+      ],
+      "updatedAt": "2026-07-05T14:02:25Z"
+    }
+  ],
+  "📊 Scraping/Automation": [
+    {
+      "name": "n8n-io/n8n",
+      "url": "https://github.com/n8n-io/n8n",
+      "stars": 195203,
+      "forks": 59063,
+      "lang": "TypeScript",
+      "desc": "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations."
+    },
+    {
+      "name": "puppeteer/puppeteer",
+      "url": "https://github.com/puppeteer/puppeteer",
+      "desc": "JavaScript API for Chrome and Firefox",
+      "stars": 95269,
+      "lang": "TypeScript"
+    },
+    {
+      "name": "microsoft/playwright",
+      "url": "https://github.com/microsoft/playwright",
+      "desc": "Playwright is a framework for Web Testing and Automation. It allows...",
+      "stars": 92159,
+      "lang": "TypeScript"
+    },
+    {
+      "name": "unclecode/crawl4ai",
+      "url": "https://github.com/unclecode/crawl4ai",
+      "desc": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't ...",
+      "stars": 70289,
+      "lang": "Python"
+    },
+    {
+      "name": "ansible/ansible",
+      "url": "https://github.com/ansible/ansible",
+      "desc": "Ansible is a radically simple IT automation platform that makes you...",
+      "stars": 69062,
+      "lang": "Python"
+    },
+    {
+      "name": "ComposioHQ/awesome-claude-skills",
+      "url": "https://github.com/ComposioHQ/awesome-claude-skills",
+      "stars": 66822,
+      "forks": 7456,
+      "lang": "Python",
+      "desc": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows"
+    },
+    {
+      "name": "Zie619/n8n-workflows",
+      "url": "https://github.com/Zie619/n8n-workflows",
+      "stars": 55551,
+      "forks": 7382,
+      "lang": "Python",
+      "desc": "all of the workflows of n8n i could find (also from the site itself)"
+    },
+    {
+      "name": "acmesh-official/acme.sh",
+      "url": "https://github.com/acmesh-official/acme.sh",
+      "stars": 47059,
+      "forks": 5628,
+      "lang": "Shell",
+      "desc": "A pure Unix shell script ACME client for SSL / TLS certificate automation"
+    },
+    {
+      "name": "microsoft/playwright-mcp",
+      "url": "https://github.com/microsoft/playwright-mcp",
+      "desc": "Playwright MCP server",
+      "stars": 34663,
+      "lang": "TypeScript"
+    },
+    {
+      "name": "SeleniumHQ/selenium",
+      "url": "https://github.com/SeleniumHQ/selenium",
+      "desc": "A browser automation framework and ecosystem.",
+      "stars": 34209,
+      "lang": "Java"
+    }
+  ],
+  "🔐 Seguridad/Privacidad": [
+    {
+      "name": "fatedier/frp",
+      "url": "https://github.com/fatedier/frp",
+      "desc": "A fast reverse proxy to help you expose a local server behind a NAT...",
+      "stars": 107759,
+      "lang": "Go"
+    },
+    {
+      "name": "immich-app/immich",
+      "url": "https://github.com/immich-app/immich",
+      "stars": 105693,
+      "forks": 6032,
+      "lang": "TypeScript",
+      "desc": "High performance self-hosted photo and video management solution."
+    },
+    {
+      "name": "louislam/uptime-kuma",
+      "url": "https://github.com/louislam/uptime-kuma",
+      "desc": "A fancy self-hosted monitoring tool",
+      "stars": 88602,
+      "lang": "JavaScript"
+    },
+    {
+      "name": "localsend/localsend",
+      "url": "https://github.com/localsend/localsend",
+      "stars": 84606,
+      "forks": 4630,
+      "lang": "Dart",
+      "desc": "An open-source cross-platform alternative to AirDrop"
+    },
+    {
+      "name": "pewdiepie-archdaemon/odysseus",
+      "url": "https://github.com/pewdiepie-archdaemon/odysseus",
+      "stars": 80731,
+      "forks": 10577,
+      "lang": "Python",
+      "desc": "Self-hosted AI workspace."
+    },
+    {
+      "name": "nomic-ai/gpt4all",
+      "url": "https://github.com/nomic-ai/gpt4all",
+      "stars": 77386,
+      "forks": 8307,
+      "lang": "CPP",
+      "desc": "GPT4All: Run Local LLMs on Any Device. Open-source and available for commercial use."
+    },
+    {
+      "name": "nektos/act",
+      "url": "https://github.com/nektos/act",
+      "desc": "Run your GitHub Actions locally 🚀",
+      "stars": 70833,
+      "lang": "Go"
+    },
+    {
+      "name": "unslothai/unsloth",
+      "url": "https://github.com/unslothai/unsloth",
+      "stars": 67806,
+      "forks": 6097,
+      "lang": "Python",
+      "desc": "Unsloth Studio is a web UI for training and running open models like Gemma 4, Qwen3.6, DeepSeek, gpt-oss locally."
+    },
+    {
+      "name": "localstack/localstack",
+      "url": "https://github.com/localstack/localstack",
+      "desc": "💻 A fully functional local AWS cloud stack. Develop and test your c...",
+      "stars": 65068,
+      "lang": "Python"
+    },
+    {
+      "name": "usememos/memos",
+      "url": "https://github.com/usememos/memos",
+      "stars": 61299,
+      "forks": 4531,
+      "lang": "Go",
+      "desc": "Open-source, self-hosted note-taking tool built for quick capture. Markdown-native, lightweight, and fully yours."
+    }
+  ],
+  "📈 Finanzas/Productividad": [
+    {
+      "name": "ngosang/trackerslist",
+      "url": "https://github.com/ngosang/trackerslist",
+      "desc": "Updated list of public BitTorrent trackers",
+      "stars": 54328,
+      "lang": "?"
+    },
+    {
+      "name": "makeplane/plane",
+      "url": "https://github.com/makeplane/plane",
+      "stars": 53849,
+      "forks": 4861,
+      "lang": "TypeScript",
+      "desc": "🔥🔥🔥 Open-source Jira, Linear, Monday, and ClickUp alternative. Plane is a modern project management platform to manage tasks, sprints, docs, and triage."
+    },
+    {
+      "name": "AdguardTeam/AdGuardHome",
+      "url": "https://github.com/AdguardTeam/AdGuardHome",
+      "desc": "Network-wide ads & trackers blocking DNS server",
+      "stars": 34967,
+      "lang": "Go"
+    },
+    {
+      "name": "chenfei-wu/TaskMatrix",
+      "url": "https://github.com/chenfei-wu/TaskMatrix",
+      "desc": "No description available",
+      "stars": 34070,
+      "lang": "Python"
+    },
+    {
+      "name": "zeromicro/go-zero",
+      "url": "https://github.com/zeromicro/go-zero",
+      "stars": 33151,
+      "forks": 4312,
+      "lang": "Go",
+      "desc": "A cloud-native Go microservices framework with cli tool for productivity."
+    },
+    {
+      "name": "XIU2/TrackersListCollection",
+      "url": "https://github.com/XIU2/TrackersListCollection",
+      "desc": "🎈 Updated daily! A list of popular BitTorrent Trackers! / 每天更新！全网热门...",
+      "stars": 31646,
+      "lang": "?"
+    },
+    {
+      "name": "xuxueli/xxl-job",
+      "url": "https://github.com/xuxueli/xxl-job",
+      "desc": "A distributed task scheduling framework.（分布式任务调度平台XXL-JOB）",
+      "stars": 30316,
+      "lang": "Java"
+    },
+    {
+      "name": "jdx/mise",
+      "url": "https://github.com/jdx/mise",
+      "desc": "dev tools, env vars, task runner",
+      "stars": 30126,
+      "lang": "Rust"
+    },
+    {
+      "name": "tastejs/todomvc",
+      "url": "https://github.com/tastejs/todomvc",
+      "desc": "Helping you select a JavaScript framework - Todo apps for React.js,...",
+      "stars": 28940,
+      "lang": "JavaScript"
+    },
+    {
+      "name": "celery/celery",
+      "url": "https://github.com/celery/celery",
+      "desc": "Distributed Task Queue (development branch)",
+      "stars": 28601,
+      "lang": "Python"
+    }
+  ]
+}
