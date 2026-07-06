@@ -435,6 +435,66 @@
         "playwright"
       ],
       "timestamp": "2026-07-06T05:39:30.761Z"
+    },
+    {
+      "id": "h_historial_laboral_001",
+      "categoria": "trabajo",
+      "hecho": "Jeiser trabajo en Coovisocial (Cooperativa de Trabajo Asociado de Bienestar Social) Sep 2019 - Oct 2021 (~2 años). Rol: Vigilante con curso de medios tecnologicos (CCTV, camaras de seguridad). Empresa de vigilancia.",
+      "fuente": "historial_porvenir_pdf",
+      "confianza": "alta",
+      "tags": [
+        "experiencia",
+        "coovisocial",
+        "vigilante",
+        "cctv",
+        "medios_tecnologicos"
+      ],
+      "timestamp": "2026-07-06T11:16:21.920Z"
+    },
+    {
+      "id": "h_historial_laboral_002",
+      "categoria": "trabajo",
+      "hecho": "Jeiser trabajo en Foundevere/Sitel (hoy Concentrix) Oct 2021 - Dic 2021 (~2 meses). Rol: Agente Nivel 1 para cliente Iberia (aerolinea). Usaba sistema Amadeus. Call center BPO.",
+      "fuente": "historial_porvenir_pdf",
+      "confianza": "alta",
+      "tags": [
+        "experiencia",
+        "foundevere",
+        "sitel",
+        "iberia",
+        "amadeus",
+        "callcenter",
+        "agente"
+      ],
+      "timestamp": "2026-07-06T11:16:21.920Z"
+    },
+    {
+      "id": "h_historial_laboral_003",
+      "categoria": "trabajo",
+      "hecho": "Historia laboral Porvenir: 113 semanas cotizadas. Empleadores: TU SEGURIDAD SOCIAL SAS (ago2019, 5 dias), Coovisocial (sep2019-oct2021, 104 semanas), Bienestar Social Activo SAS (sep2019, 1 dia), Foundevere Colombia SA (oct-dic2021, 7 semanas). Saldo pension: .207.511.",
+      "fuente": "historial_porvenir_pdf",
+      "confianza": "alta",
+      "tags": [
+        "porvenir",
+        "pension",
+        "semanas",
+        "historial_oficial"
+      ],
+      "timestamp": "2026-07-06T11:16:21.920Z"
+    },
+    {
+      "id": "h_historial_laboral_004",
+      "categoria": "perfil",
+      "hecho": "Perfil vigilante con medios tecnologicos aplica a QA: monitoreo de sistemas, atencion al detalle, reporte de incidentes, operacion de software CCTV. Transferible a testing y monitoreo de aplicaciones.",
+      "fuente": "analisis_perfil",
+      "confianza": "alta",
+      "tags": [
+        "perfil",
+        "transferable",
+        "qa",
+        "monitoreo"
+      ],
+      "timestamp": "2026-07-06T11:16:21.920Z"
     }
   ]
 }
