@@ -1,6 +1,11 @@
 {
-  "ultima_revision": "2026-07-06T04:02:16.109Z",
+  "ultima_revision": "2026-07-06T15:25:58.058Z",
   "alertas": [
+    {
+      "tipo": "cambio_total",
+      "mensaje": "Total SIMIT cambio: 1.858.915 → 1.859.432 (+517)",
+      "urgente": true
+    },
     {
       "tipo": "multa_resuelta",
       "mensaje": "✅ MULTA RESUELTA: 000083809722062026 ya no aparece en SIMIT"
