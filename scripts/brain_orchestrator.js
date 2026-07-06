@@ -269,7 +269,7 @@ async function buildContext(dayType, dateStr, importantEmails, trashCount, event
 FECHA_HOY: ${dateStr}
 TIPO_DIA: ${dayType}
 ${trashLine}
-CORREOS_URENTES:
+CORREOS_URGENTES:
 ${emailBlock}
 EVENTOS_CALENDARIO:
 ${eventsBlock}
