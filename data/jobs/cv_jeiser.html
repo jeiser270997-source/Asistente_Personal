@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--
+  Resume — Jeiser Abraham Gutierrez Torres
+  Based on: https://github.com/sb2nov/resume (MIT License, Sourabh Bajaj)
+  HTML conversion: fiel al formato original .tex
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Jeiser Abraham Gutierrez Torres — Resume</title>
+<style>
+/* ── Fiel al formato sb2nov/resume ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Latin Modern Roman', 'Computer Modern', Georgia, 'Times New Roman', serif;
+  font-size: 11pt;
+  color: #000;
+  background: #fff;
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 0.4in 0.5in;   /* fullpage equivalent */
+  line-height: 1.3;
+}
+
+/* ── HEADING ── tabular*{\textwidth}{l@fill r} */
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 6px;
+}
+.heading-left .name {
+  font-size: 18pt;
+  font-weight: bold;
+}
+.heading-left a, .heading-right a {
+  color: #000;
+  text-decoration: none;
+}
+.heading-left a:hover, .heading-right a:hover { text-decoration: underline; }
+.heading-right { text-align: right; font-size: 10pt; line-height: 1.6; }
+
+/* ── SECTION ── \scshape + \titlerule */
+.section-title {
+  font-variant: small-caps;
+  font-size: 13pt;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #000;
+  letter-spacing: 0.5px;
+}
+
+/* ── resumeSubHeadingListStart → itemize[leftmargin=*] */
+.subheading-list { list-style: none; padding-left: 0; }
+.subheading-list li { margin-bottom: 4px; }
+
+/* ── resumeSubheading ── tabular*{0.97\textwidth}{l@fill r} */
+.subheading {
+  display: table;
+  width: 100%;
+  margin-bottom: 2px;
+}
+.subheading-row {
+  display: table-row;
+}
+.subheading-cell-left {
+  display: table-cell;
+  font-weight: bold;
+  font-size: 11pt;
+}
+.subheading-cell-right {
+  display: table-cell;
+  text-align: right;
+  font-size: 11pt;
+  white-space: nowrap;
+}
+.subheading-sub-left {
+  display: table-cell;
+  font-style: italic;
+  font-size: 10pt;
+  color: #333;
+}
+.subheading-sub-right {
+  display: table-cell;
+  text-align: right;
+  font-style: italic;
+  font-size: 10pt;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* ── resumeItemListStart → itemize */
+.item-list {
+  list-style: disc;
+  padding-left: 18px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+.item-list li {
+  font-size: 10pt;
+  margin-bottom: 1px;
+}
+.item-list li b { font-weight: bold; }
+
+/* ── resumeSubItem → \item\small{\textbf{#1}{: #2}} */
+.subitem-list { list-style: disc; padding-left: 18px; }
+.subitem-list li { font-size: 10pt; margin-bottom: 2px; }
+.subitem-list li b { font-weight: bold; }
+
+/* ── Skills item → plain \item */
+.skills-item { font-size: 10.5pt; padding-left: 2px; }
+.skills-item b { font-weight: bold; }
+
+/* ── Print ── */
+@media print {
+  body { padding: 0.35in 0.45in; font-size: 10.5pt; }
+  a { color: #000 !important; text-decoration: none !important; }
+  @page { size: Letter; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADING ══════════════════════════════════════════════════ -->
+<!-- \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r} -->
+<div class="heading">
+  <div class="heading-left">
+    <div class="name">
+      <a href="https://github.com/jeiser270997">Jeiser Abraham Gutierrez Torres</a>
+    </div>
+    <div style="font-size:10pt;">
+      <a href="https://github.com/jeiser270997">github.com/jeiser270997</a>
+    </div>
+  </div>
+  <div class="heading-right">
+    Email: <a href="mailto:jeiser270997@gmail.com">jeiser270997@gmail.com</a><br>
+    Mobile: <a href="tel:+573044615613">+57-304-461-5613</a>
+  </div>
+</div>
+
+
+<!-- ══ EDUCATION ════════════════════════════════════════════════ -->
+<div class="section-title">Education</div>
+<ul class="subheading-list">
+
+  <li>
+    <div class="subheading">
+      <div class="subheading-row">
+        <div class="subheading-cell-left">CESDE</div>
+        <div class="subheading-cell-right">Medellín, Colombia</div>
+      </div>
+      <div class="subheading-row">
+        <div class="subheading-sub-left">Técnico en Análisis y Desarrollo de Software; Bootcamp QA Automation — 28 semanas</div>
+        <div class="subheading-sub-right">Ene 2026 -- Presente</div>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <div class="subheading">
+      <div class="subheading-row">
+        <div class="subheading-cell-left">SENA Virtual</div>
+        <div class="subheading-cell-right">Colombia</div>
+      </div>
+      <div class="subheading-row">
+        <div class="subheading-sub-left">Bases de Datos — Generalidades y Sistemas de Gestión</div>
+        <div class="subheading-sub-right">Jun -- Jul 2026</div>
+      </div>
+    </div>
+  </li>
+
+</ul>
+
+
+<!-- ══ EXPERIENCE ═══════════════════════════════════════════════ -->
+<div class="section-title">Experience</div>
+<ul class="subheading-list">
+
+  <li>
+    <div class="subheading">
+      <div class="subheading-row">
+        <div class="subheading-cell-left">LifeOS — Proyecto Independiente</div>
+        <div class="subheading-cell-right">Medellín, Colombia</div>
+      </div>
+      <div class="subheading-row">
+        <div class="subheading-sub-left">QA Automation Engineer (proyecto personal en producción)</div>
+        <div class="subheading-sub-right">Ene 2026 -- Presente</div>
+      </div>
+    </div>
+    <ul class="item-list">
+      <li><b>CI/CD Pipeline:</b> Diseñé e implementé 11 workflows de GitHub Actions en producción (ubuntu-22.04) con testing automatizado, deploy y notificaciones.</li>
+      <li><b>Playwright Scraping:</b> Construí scrapers E2E para SIMIT (fotomultas), SENA Moodle, DIAN MUISCA (Angular Material) y Computrabajo — incluyendo login y extracción de datos.</li>
+      <li><b>LLM Integration:</b> Integré DeepSeek API para análisis de compatibilidad laboral, generación de CVs personalizados y procesamiento de texto estructurado.</li>
+      <li><b>Database:</b> Memoria persistente con SQLite (better-sqlite3) + JSON estructurado para historial de eventos y contexto del sistema.</li>
+    </ul>
+  </li>
+
+  <li>
+    <div class="subheading">
+      <div class="subheading-row">
+        <div class="subheading-cell-left">DiDi Colombia</div>
+        <div class="subheading-cell-right">Medellín, Colombia</div>
+      </div>
+      <div class="subheading-row">
+        <div class="subheading-sub-left">Conductor Independiente</div>
+        <div class="subheading-sub-right">2024 -- Presente</div>
+      </div>
+    </div>
+    <ul class="item-list">
+      <li>Gestión autónoma de métricas de rendimiento, atención al cliente y resolución de incidentes en tiempo real.</li>
+    </ul>
+  </li>
+
+</ul>
+
+
+<!-- ══ PROJECTS ══════════════════════════════════════════════════ -->
+<div class="section-title">Projects</div>
+<ul class="subitem-list">
+  <li><b>LifeOS — Asistente Personal Autónomo: </b>Sistema de IA con arquitectura lobular, 11 automatizaciones en producción, scraping de SIMIT/SENA/DIAN/Computrabajo, auto-apply laboral con match scoring via DeepSeek. Stack: Node.js · Playwright · SQLite · GitHub Actions.</li>
+  <li><b>DIAN MUISCA Scraper: </b>Login automatizado a portal Angular Material del gobierno colombiano. Extracción de obligaciones tributarias, estado de cuenta y notificaciones electrónicas.</li>
+  <li><b>Job Hunter Pipeline: </b>Scraper + analizador de ofertas laborales con scoring 0-100, tailoring de CV por oferta y auto-postulación. 38+ ofertas procesadas diariamente.</li>
+</ul>
+
+
+<!-- ══ SKILLS ════════════════════════════════════════════════════ -->
+<div class="section-title">Skills</div>
+<ul class="subheading-list">
+  <li class="skills-item">
+    <b>Testing &amp; QA:</b> Playwright · Selenium · Postman · REST API Testing · Manual Testing · Test Case Design · Bug Reporting
+  </li>
+  <li class="skills-item">
+    <b>Languages:</b> JavaScript (ES6+) · SQL · HTML/CSS · Python (básico)
+  </li>
+  <li class="skills-item">
+    <b>Tools:</b> Git · GitHub Actions · Node.js · SQLite · Jira · VS Code · Linux/Ubuntu
+  </li>
+  <li class="skills-item">
+    <b>Frameworks &amp; Methods:</b> Agile · Scrum · CI/CD · SDLC · STLC · TDD (básico)
+  </li>
+  <li class="skills-item">
+    <b>Languages (spoken):</b> Español (nativo) · Inglés (lectura técnica B1)
+  </li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+[
+  {
+    "oferta_id": "de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405#lc=ListOffers-Score3-0",
+    "titulo": "Software QA Analyst",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:46:15.319Z",
+    "loop": 1,
+    "analisis": {
+      "score": 45,
+      "nivel_requerido": "junior",
+      "skills_match": [
+        "Playwright",
+        "JavaScript",
+        "Postman",
+        "Git"
+      ],
+      "skills_gap": [
+        "Experiencia laboral formal en QA",
+        "Diseño de casos de prueba desde UI/UX",
+        "Gestión de bugs con herramientas (no especificadas)"
+      ],
+      "salario_estimado": "$2.500.000 - $3.500.000",
+      "modalidad": "remoto",
+      "recomendar": false,
+      "razon_corta": "Candidato sin experiencia laboral formal; no cumple el requisito mínimo de 1 año como QA Analyst.",
+      "tip_postulacion": "Destacar el proyecto LifeOS como evidencia de habilidades prácticas en automatización, demostrar capacidad de aprendizaje autónomo y disposición para roles junior con mentoría."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405#lc=ListOffers-Score0-1",
+    "titulo": "Tester Funcional",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:46:27.236Z",
+    "loop": 1,
+    "analisis": {
+      "score": 35,
+      "nivel_requerido": "junior",
+      "skills_match": [
+        "Postman",
+        "SQL básico",
+        "Git",
+        "Control de versiones"
+      ],
+      "skills_gap": [
+        "Experiencia en pruebas manuales",
+        "ISTQB",
+        "Azure DevOps",
+        "Metodologías ágiles",
+        "Gestión de defectos",
+        "Residencia en Barranquilla"
+      ],
+      "salario_estimado": "$2.000.000 - $3.000.000",
+      "modalidad": "hibrido",
+      "recomendar": false,
+      "razon_corta": "El candidato no cumple con la experiencia mínima en pruebas manuales ni reside en Barranquilla.",
+      "tip_postulacion": "Enfatizar habilidades técnicas en automatización, proyectos autónomos y disposición para aprender pruebas manuales, así como flexibilidad para reubicación temporal."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-de-experiencia-de-usuario-y-calidad-de-software-en-medellin-0F67442995CB187061373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-experiencia-de-usuario-y-calidad-de-software-en-medellin-0F67442995CB187061373E686DCF3405#lc=ListOffers-Score4-0",
+    "titulo": "Analista de experiencia de usuario y calidad de Software",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:46:51.184Z",
+    "loop": 1,
+    "analisis": {
+      "score": 50,
+      "recomendar": true,
+      "razon_corta": "Análisis manual requerido",
+      "skills_match": [],
+      "skills_gap": []
+    },
+    "estado": "error_apply: dry-run",
+    "cv_path": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\cv_tailored\\cv_analista-de-experiencia-de-usuario-_loop1.md"
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-qa-ti-testing-software-sistemas-wms-en-bogota-dc-C1C887E5078C3C5F61373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-ti-testing-software-sistemas-wms-en-bogota-dc-C1C887E5078C3C5F61373E686DCF3405#lc=ListOffers-Score4-2",
+    "titulo": "Analista QA TI",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:47:24.360Z",
+    "loop": 1,
+    "analisis": {
+      "score": 15,
+      "nivel_requerido": "senior",
+      "skills_match": [
+        "QA",
+        "testing",
+        "SQL"
+      ],
+      "skills_gap": [
+        "Warehouse Management System (WMS)",
+        "Blue Yonder WMS",
+        "3 años de experiencia en WMS",
+        "procesos logísticos (recepciones, inventarios, picking, etc.)",
+        "FEFO/FIFO",
+        "indicadores de almacenaje"
+      ],
+      "salario_estimado": "$2.000.000 - $3.000.000",
+      "modalidad": "presencial",
+      "recomendar": false,
+      "razon_corta": "El candidato es un QA Automation Junior en formación sin experiencia en WMS ni en Blue Yonder, mientras la oferta exige 3 años de experiencia específica en sistemas WMS.",
+      "tip_postulacion": "No se recomienda postularse dado que la empresa solicita explícitamente no aplicar sin experiencia en Blue Yonder WMS. En caso de hacerlo, enfatizar habilidades de automatización y rápida adaptación, pero es poco probable que sea considerado."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-qa-ti-testing-software-en-bogota-dc-F3DA92B02250353661373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-ti-testing-software-en-bogota-dc-F3DA92B02250353661373E686DCF3405#lc=ListOffers-Score4-3",
+    "titulo": "Analista QA TI",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:47:39.497Z",
+    "loop": 1,
+    "analisis": {
+      "score": 25,
+      "nivel_requerido": "mid",
+      "skills_match": [
+        "Postman",
+        "SQL"
+      ],
+      "skills_gap": [
+        "Experiencia laboral en QA (3 años)",
+        "Manejo de Jira",
+        "Liderazgo",
+        "Trabajo bajo presión",
+        "Presencial en Bogotá",
+        "Educación universitaria"
+      ],
+      "salario_estimado": "$2.500.000 - $3.500.000",
+      "modalidad": "presencial",
+      "recomendar": false,
+      "razon_corta": "Sin experiencia laboral formal ni educación universitaria, y requiere presencialidad en Bogotá, lo que no coincide con el perfil del candidato.",
+      "tip_postulacion": "Si se postulara, debería enfatizar su proyecto LifeOS y habilidades en automatización con Playwright y Postman, pero la falta de experiencia y ubicación son barreras significativas."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405#lc=ListOffers-Score3-0",
+    "titulo": "Software QA Analyst",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:48:42.894Z",
+    "loop": 2,
+    "analisis": {
+      "score": 35,
+      "nivel_requerido": "junior",
+      "skills_match": [
+        "Playwright",
+        "JavaScript",
+        "Node.js",
+        "Git",
+        "GitHub Actions",
+        "Postman",
+        "SQL"
+      ],
+      "skills_gap": [
+        "Experiencia laboral en QA",
+        "Diseño de casos de prueba manual",
+        "Gestión de bugs (JIRA)",
+        "Pruebas de UI/UX",
+        "Metodologías ágiles"
+      ],
+      "salario_estimado": "$2.000.000 - $3.500.000",
+      "modalidad": "remoto",
+      "recomendar": false,
+      "razon_corta": "Sin experiencia laboral formal, pero con habilidades técnicas en automatización y un proyecto relevante.",
+      "tip_postulacion": "Enfatizar el proyecto LifeOS, las habilidades en automatización con Playwright, y la capacidad de aprendizaje rápido. Mencionar la disponibilidad para tiempo completo y remoto, y la formación activa en QA."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405#lc=ListOffers-Score0-1",
+    "titulo": "Tester Funcional",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:48:54.553Z",
+    "loop": 2,
+    "analisis": {
+      "score": 30,
+      "nivel_requerido": "junior",
+      "skills_match": [
+        "Git",
+        "Control de versiones",
+        "SQL básico"
+      ],
+      "skills_gap": [
+        "Experiencia en pruebas funcionales manuales",
+        "ISTQB",
+        "Azure DevOps",
+        "Gestión de defectos",
+        "Metodologías ágiles (Scrum)"
+      ],
+      "salario_estimado": "$2.000.000 - $3.000.000",
+      "modalidad": "hibrido",
+      "recomendar": false,
+      "razon_corta": "Sin experiencia en testing manual y ubicación fuera de Barranquilla.",
+      "tip_postulacion": "Enfatizar proyectos prácticos (LifeOS), capacidad de aprendizaje rápido en automatización, y disposición a reubicarse o cumplir con modalidad híbrida si es posible."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-de-experiencia-de-usuario-y-calidad-de-software-en-medellin-0F67442995CB187061373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-experiencia-de-usuario-y-calidad-de-software-en-medellin-0F67442995CB187061373E686DCF3405#lc=ListOffers-Score4-0",
+    "titulo": "Analista de experiencia de usuario y calidad de Software",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:49:04.800Z",
+    "loop": 2,
+    "analisis": {
+      "score": 25,
+      "nivel_requerido": "junior",
+      "skills_match": [
+        "Postman",
+        "SQL básico",
+        "Pruebas funcionales (básico)"
+      ],
+      "skills_gap": [
+        "Excel intermedio",
+        "Experiencia en software contable/financiero",
+        "Conceptos contables y financieros",
+        "Planificación de escenarios de prueba",
+        "Documentación de evidencias de pruebas",
+        "Pruebas manuales de certificación"
+      ],
+      "salario_estimado": "$2.500.000 - $3.500.000",
+      "modalidad": "remoto",
+      "recomendar": false,
+      "razon_corta": "El candidato no cumple con los requisitos de experiencia en software financiero ni conocimientos contables exigidos.",
+      "tip_postulacion": "Enfatizar su capacidad de aprendizaje rápido y habilidades en automatización, pero deberá demostrar interés y conocimientos básicos en contabilidad y pruebas funcionales manuales para este rol específico."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-qa-ti-testing-software-sistemas-wms-en-bogota-dc-C1C887E5078C3C5F61373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-ti-testing-software-sistemas-wms-en-bogota-dc-C1C887E5078C3C5F61373E686DCF3405#lc=ListOffers-Score4-2",
+    "titulo": "Analista QA TI",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:49:17.201Z",
+    "loop": 2,
+    "analisis": {
+      "score": 20,
+      "nivel_requerido": "mid",
+      "skills_match": [
+        "Postman",
+        "SQL básico",
+        "Git",
+        "GitHub Actions",
+        "JavaScript"
+      ],
+      "skills_gap": [
+        "Warehouse Management Systems (WMS)",
+        "Blue Yonder",
+        "Experiencia en pruebas manuales",
+        "Procesos de recepción, almacenaje, inventarios, picking, despachos",
+        "FEFO/FIFO",
+        "3 años de experiencia en QA"
+      ],
+      "salario_estimado": "$2.500.000 - $3.500.000",
+      "modalidad": "presencial",
+      "recomendar": false,
+      "razon_corta": "Falta experiencia laboral en QA y conocimiento especializado en WMS/Blue Yonder, requisitos excluyentes de la oferta.",
+      "tip_postulacion": "Enfatizar habilidades en automatización y capacidad de aprendizaje, pero reconocer la falta de experiencia en el dominio logístico. Sugerir aplicar a roles junior de QA Automation donde encaje mejor."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-qa-ti-testing-software-en-bogota-dc-F3DA92B02250353661373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-ti-testing-software-en-bogota-dc-F3DA92B02250353661373E686DCF3405#lc=ListOffers-Score4-3",
+    "titulo": "Analista QA TI",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:49:33.539Z",
+    "loop": 2,
+    "analisis": {
+      "score": 20,
+      "nivel_requerido": "senior",
+      "skills_match": [
+        "Postman"
+      ],
+      "skills_gap": [
+        "Experiencia de 3+ años en ciclo completo de pruebas",
+        "Manejo de Jira",
+        "SQL avanzado (JOINs)",
+        "Liderazgo",
+        "Trabajo bajo presión",
+        "Arquitectura informacional",
+        "WMS",
+        "Presencialidad en Bogotá"
+      ],
+      "salario_estimado": "$4.500.000 - $4.500.000",
+      "modalidad": "presencial",
+      "recomendar": false,
+      "razon_corta": "El candidato no tiene experiencia laboral en QA y la oferta exige 3+ años, liderazgo y presencialidad en Bogotá.",
+      "tip_postulacion": "Si se postula, enfatizar su proyecto autónomo LifeOS y habilidades en automatización con Playwright, pero la brecha de experiencia y ubicación es significativa."
+    },
+    "estado": "descartada",
+    "cv_path": null
+  },
+  {
+    "oferta_id": "de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405#lc=ListOffers-Score3-4",
+    "titulo": "QA Automation Engineer",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:52:57.195Z",
+    "score": 70,
+    "estado": "error",
+    "razon": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], inp"
+  },
+  {
+    "oferta_id": "de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405#lc=ListOffers-Score3-9",
+    "titulo": "Analista QA",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:53:46.730Z",
+    "score": 85,
+    "estado": "error",
+    "razon": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], inp"
+  },
+  {
+    "oferta_id": "de-trabajo-de-ingeniero-aseg-calidad-software-junior-pereira-en-pereira-4DA893D2D5887FBC61373E686DCF3405",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-aseg-calidad-software-junior-pereira-en-pereira-4DA893D2D5887FBC61373E686DCF3405#lc=ListOffers-Score4-0",
+    "titulo": "Ingeniero Aseg Calidad Software Junior",
+    "empresa": "",
+    "lugar": "",
+    "fecha": "2026-07-06T04:54:30.459Z",
+    "score": 85,
+    "estado": "error",
+    "razon": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"email\"], inp"
+  }
+]

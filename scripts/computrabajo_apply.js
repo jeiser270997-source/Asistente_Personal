@@ -101,7 +101,7 @@ DESCRIPCIÓN: ${(oferta.cuerpo || oferta.titulo || '').substring(0, 800)}
 PERFIL: QA Automation Junior, Playwright, JS, CESDE bootcamp (2026), sin exp formal aún, LifeOS project`;
 
   try {
-    const res = await askLLM(prompt, [], [], 0.1);
+    const res = await askLLM(prompt, [], 0.1);
     const json = (res.content || '').replace(/```json|```/g, '').trim();
     return JSON.parse(json);
   } catch {
@@ -117,14 +117,25 @@ async function aplicarOferta(browser, ofertaUrl) {
   const page = await ctx.newPage();
   
   try {
-    // Login
+    // Login — múltiples intentos de URL y selector
     log(`   Login Computrabajo...`);
     await page.goto('https://co.computrabajo.com/candidato/login', { waitUntil: 'domcontentloaded', timeout: 20000 });
-    await page.waitForTimeout(1500);
-    await page.fill('input[type="email"], input[name="username"]', CT_EMAIL, { force: true });
-    await page.fill('input[type="password"]', CT_PASS, { force: true });
-    await page.click('button[type="submit"]', { timeout: 3000 }).catch(() => {});
+    await page.waitForTimeout(2000);
+
+    // Intentar diferentes selectores de email
+    const emailSel = await page.locator('input[type="email"], input[name="email"], input[id*="email"], input[placeholder*="correo"], input[placeholder*="Email"]').first();
+    await emailSel.fill(CT_EMAIL, { timeout: 10000 });
+
+    const passSel = await page.locator('input[type="password"]').first();
+    await passSel.fill(CT_PASS, { timeout: 5000 });
+
+    // Submit
+    const submitBtn = page.locator('button[type="submit"], input[type="submit"], button:has-text("Iniciar"), button:has-text("Entrar"), button:has-text("Login")').first();
+    await submitBtn.click({ timeout: 5000 }).catch(async () => {
+      await page.keyboard.press('Enter');
+    });
     await page.waitForTimeout(3000);
+    log(`   Post-login: ${page.url()}`);
 
     // Ir a la oferta
     log(`   Navegando a oferta: ${ofertaUrl}`);

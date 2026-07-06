@@ -79,7 +79,7 @@ INSTRUCCIONES:
 
 Devuelve SOLO el CV en Markdown, sin explicaciones ni comentarios adicionales.`;
 
-  const response = await askLLM(prompt, [], [], 0.3);
+  const response = await askLLM(prompt, [], 0.3);
   return (response.content || '').trim();
 }
 
@@ -99,7 +99,7 @@ DESCRIPCIÓN: ${(oferta.descripcion || oferta.cuerpo).substring(0, 1500)}
 
 PERFIL JEISER: QA Automation Junior, Playwright, JS, CESDE bootcamp en curso, sin experiencia formal en QA aún.`;
 
-  const response = await askLLM(prompt, [], [], 0.1);
+  const response = await askLLM(prompt, [], 0.1);
   try {
     const json = (response.content || '').replace(/```json|```/g, '').trim();
     return JSON.parse(json);

@@ -19,7 +19,9 @@
 - **Herramientas activas:** SIMIT Checker (GitHub Actions diario 7am), DIAN scraper.
 
 ## 🎓 Académico / Educativo
-- **Institución principal:** CESDE (clases Lun/Mie/Vie 6-8pm Colombia)
+- **Institución principal:** CESDE, Medellín
+- **Horario actual:** Lun/Mié/Vie 6-8pm Colombia *(curso inicial — próximamente cambia)*
+- **Horario próximo:** Sábados 7am–6pm Colombia *(horario principal del bootcamp)*
 - **Plataforma secundaria:** SENA Moodle (scrapeado automático Lun-Vie 6am)
 - **Bootcamp QA:** En progreso — 28 semanas. Objetivo: QA Automation Engineer.
 - **Técnicas de estudio:** Feynman, Pomodoro, spaced repetition.

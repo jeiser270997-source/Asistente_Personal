@@ -1,387 +1,1131 @@
 {
-  "fecha": "2026-07-06T04:12:17.751Z",
-  "total": 38,
-  "nuevas": 38,
+  "fecha": "2026-07-06T04:48:33.078Z",
+  "total": 125,
   "ofertas": [
-    {
-      "titulo": "QA Automation Engineer",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,7\n                \n                \n            \n            \n            \n                Bits Americas",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405#lc=ListOffers-Score4-0",
-      "id": "de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "QA Automation Senior",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4\n                \n                \n            \n            \n            \n                SPV TRAVEL NETWORK S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-automation-senior-ti-en-bogota-dc-FCFCED45199A0EBE61373E686DCF3405#lc=ListOffers-Score4-1",
-      "id": "de-trabajo-de-qa-automation-senior-ti-en-bogota-dc-FCFCED45199A0EBE61373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Test automation Engineer QA",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "CTBJ Compañía 500",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-test-automation-engineer-qa-en-la-guadalupe-7A797577CC74F11161373E686DCF3405#lc=ListOffers-Score4-2",
-      "id": "de-trabajo-de-test-automation-engineer-qa-en-la-guadalupe-7A797577CC74F11161373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Ingeniero QA Automation",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,7\n                \n                \n            \n            \n            \n                COMFANDI",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-qa-automation-en-cali-6AC0F1386F2F723D61373E686DCF3405#lc=ListOffers-Score4-3",
-      "id": "de-trabajo-de-ingeniero-qa-automation-en-cali-6AC0F1386F2F723D61373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Ingeniero de Automatización QA / QA Automation Engineer",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "VIVA ENGAGE SOLUTIONS S.A.S.",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-de-automatizacion-qa-qa-automation-engineer-remoto-en-medellin-5E929563ECD7327861373E686DCF3405#lc=ListOffers-Score4-4",
-      "id": "de-trabajo-de-ingeniero-de-automatizacion-qa-qa-automation-engineer-remoto-en-medellin-5E929563ECD7327861373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Mobile Test automation Engineer QA",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "CTBJ Compañía 500",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-mobile-test-automation-engineer-qa-en-la-guadalupe-3CD799B76B3BBC1861373E686DCF3405#lc=ListOffers-Score4-5",
-      "id": "de-trabajo-de-mobile-test-automation-engineer-qa-en-la-guadalupe-3CD799B76B3BBC1861373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Senior Software Engineer in Test 54195",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4\n                \n                \n            \n            \n            \n                PeakU",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-senior-software-engineer-in-test-54195-remoto-en-bogota-dc-B4F26D3A29C2688361373E686DCF3405#lc=ListOffers-Score3-6",
-      "id": "de-trabajo-de-senior-software-engineer-in-test-54195-remoto-en-bogota-dc-B4F26D3A29C2688361373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Senior QA Engineer 54195",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4\n                \n                \n            \n            \n            \n                PeakU",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-senior-qa-engineer-54195-remoto-en-bogota-dc-5ACD757343F4574561373E686DCF3405#lc=ListOffers-Score3-7",
-      "id": "de-trabajo-de-senior-qa-engineer-54195-remoto-en-bogota-dc-5ACD757343F4574561373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "QA Senior",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4\n                \n                \n            \n            \n            \n                ZEMSANIA COLOMBIA SAS",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-senior-bilingue-en-bogota-dc-4E592A1A8BD1A51961373E686DCF3405#lc=ListOffers-Score3-8",
-      "id": "de-trabajo-de-qa-senior-bilingue-en-bogota-dc-4E592A1A8BD1A51961373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Technical AI Training Specialist",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "Contact Point 360 S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-technical-ai-training-specialist-smart-device-support-en-bogota-dc-50AA4DE346CF140A61373E686DCF3405#lc=ListOffers-Score3-9",
-      "id": "de-trabajo-de-technical-ai-training-specialist-smart-device-support-en-bogota-dc-50AA4DE346CF140A61373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Test automation Engineer KQ",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "CTBJ Compañía 500",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-test-automation-engineer-kq-en-la-guadalupe-79156AA5324AB1DA61373E686DCF3405#lc=ListOffers-Score0-10",
-      "id": "de-trabajo-de-test-automation-engineer-kq-en-la-guadalupe-79156AA5324AB1DA61373E686DCF3405",
-      "categoria": "QA Automation",
-      "scraped_at": "2026-07-06T04:12:01.980Z"
-    },
-    {
-      "titulo": "Digital Quality Assurance Analyst",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "Michael Page",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-digital-quality-assurance-analyst-en-bogota-dc-0B492CA4756E905561373E686DCF3405#lc=ListOffers-Score4-0",
-      "id": "de-trabajo-de-digital-quality-assurance-analyst-en-bogota-dc-0B492CA4756E905561373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "Aprendiz de Quality Assurance",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,8\n                \n                \n            \n            \n            \n                SIIGO S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-aprendiz-de-quality-assurance-carreras-tecnicas-o-tecnologicas-en-bogota-dc-8816EABD9A5795FA61373E686DCF3405#lc=ListOffers-Score4-1",
-      "id": "de-trabajo-de-aprendiz-de-quality-assurance-carreras-tecnicas-o-tecnologicas-en-bogota-dc-8816EABD9A5795FA61373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "AI Conversation Quality Specialist",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "Contact Point 360 S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ai-conversation-quality-specialist-en-bogota-dc-866C8AA64614217A61373E686DCF3405#lc=ListOffers-Score3-2",
-      "id": "de-trabajo-de-ai-conversation-quality-specialist-en-bogota-dc-866C8AA64614217A61373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "Business Services Manager",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "CBRE COLOMBIA S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-business-services-manager-en-bogota-dc-9527A7D3589A556461373E686DCF3405#lc=ListOffers-Score3-3",
-      "id": "de-trabajo-de-business-services-manager-en-bogota-dc-9527A7D3589A556461373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "Pharmaceutical Chemist",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "GLOBAL STRATEGIC NETWORK S.A.S.",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-pharmaceutical-chemist-quimico-farmaceutico-en-bogota-dc-ACFEE6B74527314C61373E686DCF3405#lc=ListOffers-Score3-4",
-      "id": "de-trabajo-de-pharmaceutical-chemist-quimico-farmaceutico-en-bogota-dc-ACFEE6B74527314C61373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "Analista QA",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                Par Servicios Integrales",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405#lc=ListOffers-Score3-5",
-      "id": "de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "Business Development Representative",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "Importante empresa del sector",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-business-development-representative-healthcare-staffing-en-envigado-5E3976036BE358F861373E686DCF3405#lc=ListOffers-Score3-7",
-      "id": "de-trabajo-de-business-development-representative-healthcare-staffing-en-envigado-5E3976036BE358F861373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "RC Analista Senior de Calidad – Customer Operations e IA",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "SMART OPERATIONS BPO SAS",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-rc-analista-senior-de-calidad-customer-operations-e-ia-turno-noche-presencial-en-medellin-A207A25BE4983A8F61373E686DCF3405#lc=ListOffers-Score3-8",
-      "id": "de-trabajo-de-rc-analista-senior-de-calidad-customer-operations-e-ia-turno-noche-presencial-en-medellin-A207A25BE4983A8F61373E686DCF3405",
-      "categoria": "Quality Assurance",
-      "scraped_at": "2026-07-06T04:12:06.719Z"
-    },
-    {
-      "titulo": "Tester de Software  Floridablanca, Santander",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4\n                \n                \n            \n            \n            \n                UNIDROGAS S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-de-software-floridablanca-santander-en-floridablanca-F2FB0737563F7C3161373E686DCF3405#lc=ListOffers-Score4-0",
-      "id": "de-trabajo-de-tester-de-software-floridablanca-santander-en-floridablanca-F2FB0737563F7C3161373E686DCF3405",
-      "categoria": "Tester Software",
-      "scraped_at": "2026-07-06T04:12:11.440Z"
-    },
-    {
-      "titulo": "QA Testerrx3",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                Especialistas de Reclutamiento",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-testerr-en-bogota-dc-F055D5C1D02DB6B861373E686DCF3405#lc=ListOffers-Score3-1",
-      "id": "de-trabajo-de-qa-testerr-en-bogota-dc-F055D5C1D02DB6B861373E686DCF3405",
-      "categoria": "Tester Software",
-      "scraped_at": "2026-07-06T04:12:11.440Z"
-    },
     {
       "titulo": "Software QA Analyst",
       "empresa": "",
       "lugar": "",
-      "fecha": "Itconsultores SAS",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405#lc=ListOffers-Score3-2",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405#lc=ListOffers-Score3-0",
       "id": "de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405",
-      "categoria": "Tester Software",
-      "scraped_at": "2026-07-06T04:12:11.440Z"
+      "categoria": "tester-manual-software",
+      "scraped_at": "2026-07-06T04:47:47.659Z"
     },
     {
       "titulo": "Tester Funcional",
       "empresa": "",
       "lugar": "",
-      "fecha": "TALYCAP GLOBAL",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405#lc=ListOffers-Score0-3",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405#lc=ListOffers-Score0-1",
       "id": "de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405",
-      "categoria": "Tester Software",
-      "scraped_at": "2026-07-06T04:12:11.440Z"
+      "categoria": "tester-manual-software",
+      "scraped_at": "2026-07-06T04:47:47.659Z"
+    },
+    {
+      "titulo": "Analista de experiencia de usuario y calidad de Software",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-experiencia-de-usuario-y-calidad-de-software-en-medellin-0F67442995CB187061373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-analista-de-experiencia-de-usuario-y-calidad-de-software-en-medellin-0F67442995CB187061373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista QA TI",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-ti-testing-software-sistemas-wms-en-bogota-dc-C1C887E5078C3C5F61373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-analista-qa-ti-testing-software-sistemas-wms-en-bogota-dc-C1C887E5078C3C5F61373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista QA TI",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-ti-testing-software-en-bogota-dc-F3DA92B02250353661373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-analista-qa-ti-testing-software-en-bogota-dc-F3DA92B02250353661373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "QA Automation Engineer",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405#lc=ListOffers-Score3-4",
+      "id": "de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista QA con experiencia en sql, scrum,",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-con-experiencia-en-sql-scrum-pruebas-automatizas-para-neiva-en-neiva-3A836F069C48101F61373E686DCF3405#lc=ListOffers-Score3-5",
+      "id": "de-trabajo-de-analista-qa-con-experiencia-en-sql-scrum-pruebas-automatizas-para-neiva-en-neiva-3A836F069C48101F61373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista Arquitectura de Software Junior",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-arquitectura-de-software-junior-deseable-experiencia-en-el-sector-salud-en-bogota-dc-E48D49FF2E95963F61373E686DCF3405#lc=ListOffers-Score3-6",
+      "id": "de-trabajo-de-analista-arquitectura-de-software-junior-deseable-experiencia-en-el-sector-salud-en-bogota-dc-E48D49FF2E95963F61373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista QA Semi Senior Experiencia en SQL y Azure DevOps",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-semi-senior-experiencia-en-sql-y-azure-devops-en-bogota-dc-E4C5927997CB4D5561373E686DCF3405#lc=ListOffers-Score3-7",
+      "id": "de-trabajo-de-analista-qa-semi-senior-experiencia-en-sql-y-azure-devops-en-bogota-dc-E4C5927997CB4D5561373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista de Proyectos y Aplicaciones TI",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-proyectos-y-aplicaciones-ti-en-envigado-2BCF9348043F7AA261373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-analista-de-proyectos-y-aplicaciones-ti-en-envigado-2BCF9348043F7AA261373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista QA",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405#lc=ListOffers-Score3-9",
+      "id": "de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Líder de proyectos",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-lider-de-proyectos-en-bogota-dc-323EE213425FBC8C61373E686DCF3405#lc=ListOffers-Score3-10",
+      "id": "de-trabajo-de-lider-de-proyectos-en-bogota-dc-323EE213425FBC8C61373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Analista Funcional o Requerimientos X 7 Meses",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-funcional-o-requerimientos-x-7-meses-en-cali-627627155946BBCD61373E686DCF3405#lc=ListOffers-Score3-11",
+      "id": "de-trabajo-de-analista-funcional-o-requerimientos-x-7-meses-en-cali-627627155946BBCD61373E686DCF3405",
+      "categoria": "analista-qa-software",
+      "scraped_at": "2026-07-06T04:47:51.368Z"
+    },
+    {
+      "titulo": "Ingeniero Aseg Calidad Software Junior",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-aseg-calidad-software-junior-pereira-en-pereira-4DA893D2D5887FBC61373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-ingeniero-aseg-calidad-software-junior-pereira-en-pereira-4DA893D2D5887FBC61373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "Analista funcional de proyectos QA",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-funcional-de-proyectos-qa-profesional-ti-junior-en-bogota-dc-8D85B3565A8582B261373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-analista-funcional-de-proyectos-qa-profesional-ti-junior-en-bogota-dc-8D85B3565A8582B261373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "Asistente de laboratorio/ Analista de laboratorio Junior/ Asistente de calidad /Fontibón",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asistente-de-laboratorio-analista-de-laboratorio-junior-asistente-de-calidad-fontibon-en-bogota-dc-65A371BB5F17C20B61373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-asistente-de-laboratorio-analista-de-laboratorio-junior-asistente-de-calidad-fontibon-en-bogota-dc-65A371BB5F17C20B61373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "Analista de Procesos Junior (calidad y mejora continua)",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-procesos-junior-calidad-y-mejora-continua-en-bogota-dc-D1751D1A544E800261373E686DCF3405#lc=ListOffers-Score4-4",
+      "id": "de-trabajo-de-analista-de-procesos-junior-calidad-y-mejora-continua-en-bogota-dc-D1751D1A544E800261373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "Multiplicador/a de calidad jr",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-7C784BF8F4FC8A2A61373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-7C784BF8F4FC8A2A61373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "Analista Jr Gestión de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-CFDB07DFE483213861373E686DCF3405#lc=ListOffers-Score4-6",
+      "id": "de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-CFDB07DFE483213861373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "multiplicadora de calidad jr",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-52C8837C3227C9D261373E686DCF3405#lc=ListOffers-Score4-7",
+      "id": "de-trabajo-de-multiplicadora-de-calidad-jr-en-villa-rica-52C8837C3227C9D261373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
+    },
+    {
+      "titulo": "Analista Jr Gestión de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-BB5857E0062F470461373E686DCF3405#lc=ListOffers-Score4-8",
+      "id": "de-trabajo-de-analista-jr-gestion-de-calidad-en-bogota-dc-BB5857E0062F470461373E686DCF3405",
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
     },
     {
       "titulo": "Auxiliar de calidad HSQ",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,3\n                \n                \n            \n            \n            \n                Alianza Temporal S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-hsq-urgente-bogota-en-bogota-dc-FE0DD767758590FF61373E686DCF3405#lc=ListOffers-Score4-0",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-hsq-urgente-bogota-en-bogota-dc-FE0DD767758590FF61373E686DCF3405#lc=ListOffers-Score0-10",
       "id": "de-trabajo-de-auxiliar-de-calidad-hsq-urgente-bogota-en-bogota-dc-FE0DD767758590FF61373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
-    },
-    {
-      "titulo": "Valorador/monitor de calidad Auxiliar de enfermería o Administración de salud",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "Importante empresa del sector Call center",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-valoradormonitor-de-calidad-auxiliar-de-enfermeria-o-administracion-de-salud-call-center-salud-en-bogota-dc-9E3236AC3766B05F61373E686DCF3405#lc=ListOffers-Score4-1",
-      "id": "de-trabajo-de-valoradormonitor-de-calidad-auxiliar-de-enfermeria-o-administracion-de-salud-call-center-salud-en-bogota-dc-9E3236AC3766B05F61373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
-    },
-    {
-      "titulo": "Supervisor/a de Calidad Zona Norte",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                Redes Humanas",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-supervisora-de-calidad-zona-norte-contratacion-inmediata-en-bogota-dc-C86FBD8E9738B2F561373E686DCF3405#lc=ListOffers-Score4-2",
-      "id": "de-trabajo-de-supervisora-de-calidad-zona-norte-contratacion-inmediata-en-bogota-dc-C86FBD8E9738B2F561373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
-    },
-    {
-      "titulo": "Gestor de calidad",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "Agencia de Empleo de Comfenalco Antioquia",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-gestor-de-calidad-en-rionegro-5406D110514D7BFC61373E686DCF3405#lc=ListOffers-Score4-3",
-      "id": "de-trabajo-de-gestor-de-calidad-en-rionegro-5406D110514D7BFC61373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
     },
     {
       "titulo": "Auxiliar de calidad sector avícola alimentos Cota",
       "empresa": "",
       "lugar": "",
-      "fecha": "SALES MARKETING OUTSOURCING HOLDING SAS",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-sector-avicola-alimentos-cota-en-cota-B43DE2144229776961373E686DCF3405#lc=ListOffers-Score4-4",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-sector-avicola-alimentos-cota-en-cota-B43DE2144229776961373E686DCF3405#lc=ListOffers-Score0-11",
       "id": "de-trabajo-de-auxiliar-de-calidad-sector-avicola-alimentos-cota-en-cota-B43DE2144229776961373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "categoria": "qa-junior",
+      "scraped_at": "2026-07-06T04:47:55.053Z"
     },
     {
-      "titulo": "Director de Calidad  y Operaciones de  Plantas de Concreto",
+      "titulo": "Analista de Pruebas Junior/Medellín",
       "empresa": "",
       "lugar": "",
-      "fecha": "ORIENTTE S.A.S.",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-director-de-calidad-y-operaciones-de-plantas-de-concreto-sabanagrande-atlantico-en-sabanagrande-2F5B208DBA58A9C561373E686DCF3405#lc=ListOffers-Score4-5",
-      "id": "de-trabajo-de-director-de-calidad-y-operaciones-de-plantas-de-concreto-sabanagrande-atlantico-en-sabanagrande-2F5B208DBA58A9C561373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-pruebas-juniormedellin-2-anos-de-experiencia-en-medellin-D2AD364D656728AF61373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-analista-de-pruebas-juniormedellin-2-anos-de-experiencia-en-medellin-D2AD364D656728AF61373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
+    },
+    {
+      "titulo": "Analista de pruebas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-pruebas-performance-en-bogota-dc-ACF1778041C4E03961373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-analista-de-pruebas-performance-en-bogota-dc-ACF1778041C4E03961373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
+    },
+    {
+      "titulo": "Analistas de requerimientos y pruebas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analistas-de-requerimientos-y-pruebas-desarrollo-software-en-bogota-dc-9E81FB5A6606B21C61373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-analistas-de-requerimientos-y-pruebas-desarrollo-software-en-bogota-dc-9E81FB5A6606B21C61373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
+    },
+    {
+      "titulo": "Analista de facturación / Tecnólogo",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-facturacion-tecnologo-urgente-en-bogota-dc-D8FA21A5757BD95361373E686DCF3405#lc=ListOffers-Score3-4",
+      "id": "de-trabajo-de-analista-de-facturacion-tecnologo-urgente-en-bogota-dc-D8FA21A5757BD95361373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
+    },
+    {
+      "titulo": "Analista de Compras Internacionales)",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-compras-internacionales-excel-intermedio-o-avanzado-en-medellin-BF241B5800B5E30661373E686DCF3405#lc=ListOffers-Score3-5",
+      "id": "de-trabajo-de-analista-de-compras-internacionales-excel-intermedio-o-avanzado-en-medellin-BF241B5800B5E30661373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
       "titulo": "Analista de Calidad en Proceso – Sector Plásticos",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                S&A  Servicios y Asesorias",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-calidad-en-proceso-sector-plasticos-puente-aranda-contratacion-inmediata-en-bogota-dc-E389E325A684813061373E686DCF3405#lc=ListOffers-Score4-6",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-calidad-en-proceso-sector-plasticos-puente-aranda-contratacion-inmediata-en-bogota-dc-E389E325A684813061373E686DCF3405#lc=ListOffers-Score3-6",
       "id": "de-trabajo-de-analista-de-calidad-en-proceso-sector-plasticos-puente-aranda-contratacion-inmediata-en-bogota-dc-E389E325A684813061373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
-      "titulo": "Lider de calidad Tecnólogo en Calidad – Sistema de Gestión",
+      "titulo": "Analista de seleccion y Bienestar",
       "empresa": "",
       "lugar": "",
-      "fecha": "Agencia de Empleo de Comfenalco Antioquia",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-lider-de-calidad-tecnologo-en-calidad-sistema-de-gestion-en-medellin-08C1A71EDE1DAA5561373E686DCF3405#lc=ListOffers-Score4-7",
-      "id": "de-trabajo-de-lider-de-calidad-tecnologo-en-calidad-sistema-de-gestion-en-medellin-08C1A71EDE1DAA5561373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-seleccion-y-bienestar-funza-en-funza-74937E07D42F9D3461373E686DCF3405#lc=ListOffers-Score3-7",
+      "id": "de-trabajo-de-analista-de-seleccion-y-bienestar-funza-en-funza-74937E07D42F9D3461373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
-      "titulo": "Quality control manager para Oriente",
+      "titulo": "analista de selección",
       "empresa": "",
       "lugar": "",
-      "fecha": "Importante empresa del sector",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-quality-control-manager-para-oriente-5-anos-de-experiencia-en-medellin-EC963044D75EDF2E61373E686DCF3405#lc=ListOffers-Score4-8",
-      "id": "de-trabajo-de-quality-control-manager-para-oriente-5-anos-de-experiencia-en-medellin-EC963044D75EDF2E61373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-seleccion-analista-de-seleccion-en-bogota-dc-ACA6C69BE979BCD961373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-analista-de-seleccion-analista-de-seleccion-en-bogota-dc-ACA6C69BE979BCD961373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
-      "titulo": "Tecnólogo Industrial, Producción, calidad, alimentos o afines",
+      "titulo": "Líder de Control Interno y Calidad",
       "empresa": "",
       "lugar": "",
-      "fecha": "Agencia de Empleo de Comfenalco Antioquia",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnologo-industrial-produccion-calidad-alimentos-o-afines-en-medellin-FEAA5561AFD725B661373E686DCF3405#lc=ListOffers-Score4-9",
-      "id": "de-trabajo-de-tecnologo-industrial-produccion-calidad-alimentos-o-afines-en-medellin-FEAA5561AFD725B661373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-lider-de-control-interno-y-calidad-en-manizales-C37F52AA653BEDB561373E686DCF3405#lc=ListOffers-Score3-9",
+      "id": "de-trabajo-de-lider-de-control-interno-y-calidad-en-manizales-C37F52AA653BEDB561373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
-      "titulo": "Jefe de Calidad Cali",
+      "titulo": "Bachilleres y Profesionales con Experiencia en Antifraude y Monitoreo transaccional Bancario",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                Proservis",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-jefe-de-calidad-cali-sector-de-alimentos-en-cali-F7F8D8AF15A89CC561373E686DCF3405#lc=ListOffers-Score4-10",
-      "id": "de-trabajo-de-jefe-de-calidad-cali-sector-de-alimentos-en-cali-F7F8D8AF15A89CC561373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-bachilleres-y-profesionales-con-experiencia-en-antifraude-y-monitoreo-transaccional-bancario-ingresan-contratados-bogota-en-bogota-dc-B6500571C6D4573361373E686DCF3405#lc=ListOffers-Score3-10",
+      "id": "de-trabajo-de-bachilleres-y-profesionales-con-experiencia-en-antifraude-y-monitoreo-transaccional-bancario-ingresan-contratados-bogota-en-bogota-dc-B6500571C6D4573361373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
-      "titulo": "Jefe De Aseguramiento de Calidad",
+      "titulo": "Coordinador(a) de Selección",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                Proservis",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-jefe-de-aseguramiento-de-calidad-calipalmirayumbo-urgente-en-palmira-FCA5EF3FE2A896FC61373E686DCF3405#lc=ListOffers-Score4-11",
-      "id": "de-trabajo-de-jefe-de-aseguramiento-de-calidad-calipalmirayumbo-urgente-en-palmira-FCA5EF3FE2A896FC61373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-coordinadora-de-seleccion-talento-humano-en-barranquilla-6CABFB4D4B5022C861373E686DCF3405#lc=ListOffers-Score3-11",
+      "id": "de-trabajo-de-coordinadora-de-seleccion-talento-humano-en-barranquilla-6CABFB4D4B5022C861373E686DCF3405",
+      "categoria": "analista-pruebas",
+      "scraped_at": "2026-07-06T04:47:58.754Z"
     },
     {
-      "titulo": "Analista de Aseguramiento de Calidad – Impresión Flexográfica",
+      "titulo": "Practicante Universitario Ingeniería de alimentos o calidad",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,5\n                \n                \n            \n            \n            \n                Proservis",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-aseguramiento-de-calidad-impresion-flexografica-palmiracaliyumbo-urgente-en-palmira-6837C09BF934113561373E686DCF3405#lc=ListOffers-Score4-12",
-      "id": "de-trabajo-de-analista-de-aseguramiento-de-calidad-impresion-flexografica-palmiracaliyumbo-urgente-en-palmira-6837C09BF934113561373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-universitario-ingenieria-de-alimentos-o-calidad-chia-cundinamarca-en-chia-492C27663A27561561373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-practicante-universitario-ingenieria-de-alimentos-o-calidad-chia-cundinamarca-en-chia-492C27663A27561561373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "practicante de calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-de-calidad-la-estrella-en-la-estrella-25B68722F172000C61373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-practicante-de-calidad-la-estrella-en-la-estrella-25B68722F172000C61373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante universitario con enfoque en el área de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-universitario-con-enfoque-en-el-area-de-calidad-en-bogota-dc-51450FCC4D89676761373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-practicante-universitario-con-enfoque-en-el-area-de-calidad-en-bogota-dc-51450FCC4D89676761373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante Profesional de Ingeniería Industrial",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-profesional-de-ingenieria-industrial-area-de-calidad-contrato-de-aprendizaje-en-medellin-762F815089ACD95861373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-practicante-profesional-de-ingenieria-industrial-area-de-calidad-contrato-de-aprendizaje-en-medellin-762F815089ACD95861373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-de-calidad-tecnolgia-no-profesional-en-envigado-C0CD7091363A8B8F61373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-practicante-de-calidad-tecnolgia-no-profesional-en-envigado-C0CD7091363A8B8F61373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante Universitario",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-universitario-area-calidad-sector-avicola-en-ibague-38BD93F5704E7F5D61373E686DCF3405#lc=ListOffers-Score4-6",
+      "id": "de-trabajo-de-practicante-universitario-area-calidad-sector-avicola-en-ibague-38BD93F5704E7F5D61373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Aprendiz/ Practicante de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-aprendiz-practicante-de-calidad-en-medellin-9833C1D6B4AA0DC061373E686DCF3405#lc=ListOffers-Score4-7",
+      "id": "de-trabajo-de-aprendiz-practicante-de-calidad-en-medellin-9833C1D6B4AA0DC061373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante Calidad Seguridad y Salud en el Trabajo",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-calidad-seguridad-y-salud-en-el-trabajo-en-bogota-dc-030C5F5B2150CBE561373E686DCF3405#lc=ListOffers-Score4-8",
+      "id": "de-trabajo-de-practicante-calidad-seguridad-y-salud-en-el-trabajo-en-bogota-dc-030C5F5B2150CBE561373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante Ingenierías Industrial, Calidad, procesos o afines",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-ingenierias-industrial-calidad-procesos-o-afines-medellin-en-medellin-C90B57F1E65454A061373E686DCF3405#lc=ListOffers-Score4-9",
+      "id": "de-trabajo-de-practicante-ingenierias-industrial-calidad-procesos-o-afines-medellin-en-medellin-C90B57F1E65454A061373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-de-calidad-en-guarne-C23CA0E2F143AEC861373E686DCF3405#lc=ListOffers-Score4-10",
+      "id": "de-trabajo-de-practicante-de-calidad-en-guarne-C23CA0E2F143AEC861373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Practicante Ingenieria en calidad y/o afines / Etapa productiva",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-ingenieria-en-calidad-yo-afines-etapa-productiva-itagui-en-medellin-259542B941C991CE61373E686DCF3405#lc=ListOffers-Score4-11",
+      "id": "de-trabajo-de-practicante-ingenieria-en-calidad-yo-afines-etapa-productiva-itagui-en-medellin-259542B941C991CE61373E686DCF3405",
+      "categoria": "practicante-qa",
+      "scraped_at": "2026-07-06T04:48:02.449Z"
+    },
+    {
+      "titulo": "Técnico en Soporte, Mantenimiento Software y Hardware con Moto Licencia A1 o A2",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-en-soporte-mantenimiento-software-y-hardware-con-moto-licencia-a1-o-a2-empresa-de-tecnologia-y-soporte-medellin-en-medellin-AA1670846D57C08461373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-tecnico-en-soporte-mantenimiento-software-y-hardware-con-moto-licencia-a1-o-a2-empresa-de-tecnologia-y-soporte-medellin-en-medellin-AA1670846D57C08461373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Analista de Soporte de Software",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-de-software-nivel-tecnico-avanzado-en-bogota-dc-DB481B2DEA299D5761373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-analista-de-soporte-de-software-nivel-tecnico-avanzado-en-bogota-dc-DB481B2DEA299D5761373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Técnico o Tecnólogo en software con experiencia en soporte y disponibilidad de viajar",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-o-tecnologo-en-software-con-experiencia-en-soporte-y-disponibilidad-de-viajar-neiva-en-neiva-A88BD6C276C15CFA61373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-tecnico-o-tecnologo-en-software-con-experiencia-en-soporte-y-disponibilidad-de-viajar-neiva-en-neiva-A88BD6C276C15CFA61373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Soporte IT / Coordinador",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-it-coordinador-pereira-en-pereira-DE5A90DF711C4EF161373E686DCF3405#lc=ListOffers-Score3-3",
+      "id": "de-trabajo-de-soporte-it-coordinador-pereira-en-pereira-DE5A90DF711C4EF161373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Soporte IT / Coordinador",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-it-coordinador-neiva-en-neiva-C2A14818BB48233B61373E686DCF3405#lc=ListOffers-Score3-4",
+      "id": "de-trabajo-de-soporte-it-coordinador-neiva-en-neiva-C2A14818BB48233B61373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Soporte IT / Coordinador",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-it-coordinador-popayan-en-popayan-8A3C069571AF1B1E61373E686DCF3405#lc=ListOffers-Score3-5",
+      "id": "de-trabajo-de-soporte-it-coordinador-popayan-en-popayan-8A3C069571AF1B1E61373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Soporte IT / Coordinador",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-it-coordinador-bogota-en-bogota-dc-70F1AB2BDD517D5F61373E686DCF3405#lc=ListOffers-Score3-6",
+      "id": "de-trabajo-de-soporte-it-coordinador-bogota-en-bogota-dc-70F1AB2BDD517D5F61373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Coordinador de Sistemas/ Bogota",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-coordinador-de-sistemas-bogota-en-bogota-dc-91204D026609ACB861373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-coordinador-de-sistemas-bogota-en-bogota-dc-91204D026609ACB861373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Analista de cartera y facturación",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-cartera-y-facturacion-cali-en-cali-99C3ABDC1902120161373E686DCF3405#lc=ListOffers-Score3-9",
+      "id": "de-trabajo-de-analista-de-cartera-y-facturacion-cali-en-cali-99C3ABDC1902120161373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "Especialista en Sistemas e Integración de Aplicaciones de Ingeniería",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-especialista-en-sistemas-e-integracion-de-aplicaciones-de-ingenieria-en-medellin-624AD3621C3E4C4761373E686DCF3405#lc=ListOffers-Score3-10",
+      "id": "de-trabajo-de-especialista-en-sistemas-e-integracion-de-aplicaciones-de-ingenieria-en-medellin-624AD3621C3E4C4761373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
+    },
+    {
+      "titulo": "aprendiz sistemas, area it tecnico o tecnologo contratacion desde etapa lectiva",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-aprendiz-sistemas-area-it-tecnico-o-tecnologo-contratacion-desde-etapa-lectiva-contratacion-inmediata-inicias-practicas-112026-en-bogota-dc-1F8569E398DD607F61373E686DCF3405#lc=ListOffers-Score3-11",
+      "id": "de-trabajo-de-aprendiz-sistemas-area-it-tecnico-o-tecnologo-contratacion-desde-etapa-lectiva-contratacion-inmediata-inicias-practicas-112026-en-bogota-dc-1F8569E398DD607F61373E686DCF3405",
+      "categoria": "soporte-tecnico-software",
+      "scraped_at": "2026-07-06T04:48:06.148Z"
     },
     {
       "titulo": "Auxiliar de calidad",
       "empresa": "",
       "lugar": "",
-      "fecha": "Agencia de Empleo de Comfenalco Antioquia",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-en-carepa-9056700AE501971361373E686DCF3405#lc=ListOffers-Score4-13",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-en-carepa-9056700AE501971361373E686DCF3405#lc=ListOffers-Score0-2",
       "id": "de-trabajo-de-auxiliar-de-calidad-en-carepa-9056700AE501971361373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
     },
     {
-      "titulo": "Inspector/a de Calidad de Alimentos en Bogotá",
+      "titulo": "Auxiliar de Calidad",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,6\n                \n                \n            \n            \n            \n                Eficacia",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-inspectora-de-calidad-de-alimentos-en-bogota-en-bogota-dc-D01307B6906FADF661373E686DCF3405#lc=ListOffers-Score4-14",
-      "id": "de-trabajo-de-inspectora-de-calidad-de-alimentos-en-bogota-en-bogota-dc-D01307B6906FADF661373E686DCF3405",
-      "categoria": "QA General",
-      "scraped_at": "2026-07-06T04:12:16.182Z"
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-en-medellin-F6DC56DC725E249561373E686DCF3405#lc=ListOffers-Score0-3",
+      "id": "de-trabajo-de-auxiliar-de-calidad-en-medellin-F6DC56DC725E249561373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "Auxiliar de calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-en-bogota-dc-AD65EDBE4687C8AD61373E686DCF3405#lc=ListOffers-Score0-4",
+      "id": "de-trabajo-de-auxiliar-de-calidad-en-bogota-dc-AD65EDBE4687C8AD61373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "Auxiliar de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-empresa-de-alimentos-tocancipa-en-tocancipa-C92F4A99D7C7C44461373E686DCF3405#lc=ListOffers-Score0-6",
+      "id": "de-trabajo-de-auxiliar-de-calidad-empresa-de-alimentos-tocancipa-en-tocancipa-C92F4A99D7C7C44461373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "auxiliar de calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-sector-de-alimentos-gastronimico-en-bogota-dc-7F720E8684968BE661373E686DCF3405#lc=ListOffers-Score0-7",
+      "id": "de-trabajo-de-auxiliar-de-calidad-sector-de-alimentos-gastronimico-en-bogota-dc-7F720E8684968BE661373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "Estudiante en Ingenieria Industrial,Procesos de Calidad y/o Seguridad y Salud en el Trabajo",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-estudiante-en-ingenieria-industrialprocesos-de-calidad-yo-seguridad-y-salud-en-el-trabajo-area-hseq-en-bogota-dc-5CAC160D10823D9861373E686DCF3405#lc=ListOffers-Score0-8",
+      "id": "de-trabajo-de-estudiante-en-ingenieria-industrialprocesos-de-calidad-yo-seguridad-y-salud-en-el-trabajo-area-hseq-en-bogota-dc-5CAC160D10823D9861373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "Auxiliar de Control de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-control-de-calidad-en-madrid-2587551FC7A05A9861373E686DCF3405#lc=ListOffers-Score0-10",
+      "id": "de-trabajo-de-auxiliar-de-control-de-calidad-en-madrid-2587551FC7A05A9861373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "Auxiliar de calidad para revisión de telas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-para-revision-de-telas-en-medellin-3BE215FDE99132E661373E686DCF3405#lc=ListOffers-Score0-11",
+      "id": "de-trabajo-de-auxiliar-de-calidad-para-revision-de-telas-en-medellin-3BE215FDE99132E661373E686DCF3405",
+      "categoria": "qa-trainee",
+      "scraped_at": "2026-07-06T04:48:09.829Z"
+    },
+    {
+      "titulo": "Senior Full Stack Developer",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-senior-full-stack-developer-bilingue-c1-en-bogota-dc-70AFD68C10E3AD6861373E686DCF3405#lc=ListOffers-Score0-8",
+      "id": "de-trabajo-de-senior-full-stack-developer-bilingue-c1-en-bogota-dc-70AFD68C10E3AD6861373E686DCF3405",
+      "categoria": "software-qa-analyst",
+      "scraped_at": "2026-07-06T04:48:13.497Z"
+    },
+    {
+      "titulo": "Consultor en Sistema de Gestión de Calidad y gestion del conocimiento",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-consultor-en-sistema-de-gestion-de-calidad-y-gestion-del-conocimiento-sector-metalmecanico-en-la-estrella-8CE46C1F30885F4E61373E686DCF3405#lc=ListOffers-Score0-9",
+      "id": "de-trabajo-de-consultor-en-sistema-de-gestion-de-calidad-y-gestion-del-conocimiento-sector-metalmecanico-en-la-estrella-8CE46C1F30885F4E61373E686DCF3405",
+      "categoria": "software-qa-analyst",
+      "scraped_at": "2026-07-06T04:48:13.497Z"
+    },
+    {
+      "titulo": "Auxiliar de SST / Sistemas de Gestión /Licencia Vigente/ Cadena de Restaurantes / Bogotá",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sst-sistemas-de-gestion-licencia-vigente-cadena-de-restaurantes-bogota-auxiliar-de-seguridad-y-salud-en-el-trabajo-en-bogota-dc-FEBD50CEDAB053FC61373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-auxiliar-de-sst-sistemas-de-gestion-licencia-vigente-cadena-de-restaurantes-bogota-auxiliar-de-seguridad-y-salud-en-el-trabajo-en-bogota-dc-FEBD50CEDAB053FC61373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de Mantenimiento de Sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-mantenimiento-de-sistemas-en-medellin-46D926700B5E3E0A61373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-auxiliar-de-mantenimiento-de-sistemas-en-medellin-46D926700B5E3E0A61373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-medellin-en-medellin-09C8ED26A561F86C61373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-medellin-en-medellin-09C8ED26A561F86C61373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-en-rionegro-27FEDBD9A41C995E61373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-en-rionegro-27FEDBD9A41C995E61373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Asistente de Inventarios Funza, Madrid, Mosquera, Cota , Calle 80",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asistente-de-inventarios-funza-madrid-mosquera-cota-calle-80-manejo-de-sap-o-sistemas-wms-en-funza-A29BD34228584FD561373E686DCF3405#lc=ListOffers-Score4-4",
+      "id": "de-trabajo-de-asistente-de-inventarios-funza-madrid-mosquera-cota-calle-80-manejo-de-sap-o-sistemas-wms-en-funza-A29BD34228584FD561373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de TI / Técnico de Sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-ti-tecnico-de-sistemas-contratacion-inmediata-en-bucaramanga-C61AD460300970AA61373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-auxiliar-de-ti-tecnico-de-sistemas-contratacion-inmediata-en-bucaramanga-C61AD460300970AA61373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar en sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-en-sistemas-pasto-narino-en-pasto-2C66029359B7E75161373E686DCF3405#lc=ListOffers-Score4-6",
+      "id": "de-trabajo-de-auxiliar-en-sistemas-pasto-narino-en-pasto-2C66029359B7E75161373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de sistemas y aplicaciones",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-y-aplicaciones-tiempo-completo-en-bogota-dc-A1FCE595ECBCCBA761373E686DCF3405#lc=ListOffers-Score4-7",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-y-aplicaciones-tiempo-completo-en-bogota-dc-A1FCE595ECBCCBA761373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de Sistemas y Tecnología – Madrid, Cundinamarca",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-y-tecnologia-madrid-cundinamarca-proceso-inmediato-en-madrid-880A62DD414C031661373E686DCF3405#lc=ListOffers-Score4-8",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-y-tecnologia-madrid-cundinamarca-proceso-inmediato-en-madrid-880A62DD414C031661373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de Sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-en-bogota-dc-EB65875F7D49DD2561373E686DCF3405#lc=ListOffers-Score4-9",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-en-bogota-dc-EB65875F7D49DD2561373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de Sistemas e Infraestructura TI",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-e-infraestructura-ti-en-cali-E1599005FEA2FA2A61373E686DCF3405#lc=ListOffers-Score4-10",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-e-infraestructura-ti-en-cali-E1599005FEA2FA2A61373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Auxiliar de sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-soporte-tecnico-en-bogota-dc-1D2E6A5DCC1149E761373E686DCF3405#lc=ListOffers-Score4-11",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-soporte-tecnico-en-bogota-dc-1D2E6A5DCC1149E761373E686DCF3405",
+      "categoria": "auxiliar-sistemas",
+      "scraped_at": "2026-07-06T04:48:17.201Z"
+    },
+    {
+      "titulo": "Líder de Mesa de ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-lider-de-mesa-de-ayuda-en-medellin-B82BA5C67CE211AF61373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-lider-de-mesa-de-ayuda-en-medellin-B82BA5C67CE211AF61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Analista de Soporte IT / Mesa de Ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-it-mesa-de-ayuda-en-bogota-dc-8222275418B45C0E61373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-analista-de-soporte-it-mesa-de-ayuda-en-bogota-dc-8222275418B45C0E61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Coordinador de Mesa de ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-coordinador-de-mesa-de-ayuda-en-bogota-dc-4E03A500A3B5627A61373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-coordinador-de-mesa-de-ayuda-en-bogota-dc-4E03A500A3B5627A61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Analista Mesa de Ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-mesa-de-ayuda-en-cali-D130E7FA630B15C461373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-analista-mesa-de-ayuda-en-cali-D130E7FA630B15C461373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Asesor/a de servicio al cliente mesa de ayuda Call Center",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesora-de-servicio-al-cliente-mesa-de-ayuda-call-center-contrato-por-3-meses-en-bogota-dc-519735330E5DE6FB61373E686DCF3405#lc=ListOffers-Score4-4",
+      "id": "de-trabajo-de-asesora-de-servicio-al-cliente-mesa-de-ayuda-call-center-contrato-por-3-meses-en-bogota-dc-519735330E5DE6FB61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Agente de mesa de ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-agente-de-mesa-de-ayuda-bogota-en-bogota-dc-031C8A4DF9A9B1AF61373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-agente-de-mesa-de-ayuda-bogota-en-bogota-dc-031C8A4DF9A9B1AF61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Técnico de Soporte en Campo",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-soporte-en-campo-vehiculo-propio-help-desk-agente-tecnico-mesa-de-ayuda-y-campo-en-medellin-B3AC73FAA324FA4161373E686DCF3405#lc=ListOffers-Score4-6",
+      "id": "de-trabajo-de-tecnico-de-soporte-en-campo-vehiculo-propio-help-desk-agente-tecnico-mesa-de-ayuda-y-campo-en-medellin-B3AC73FAA324FA4161373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Analista de soporte Técnico/ Mesa de ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-tecnico-mesa-de-ayuda-en-bogota-dc-EE9060903DA76E8461373E686DCF3405#lc=ListOffers-Score4-7",
+      "id": "de-trabajo-de-analista-de-soporte-tecnico-mesa-de-ayuda-en-bogota-dc-EE9060903DA76E8461373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Asesor comercial y servicio al cliente mesa ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-comercial-y-servicio-al-cliente-mesa-ayuda-en-bogota-dc-492EE90E6D772CF661373E686DCF3405#lc=ListOffers-Score4-8",
+      "id": "de-trabajo-de-asesor-comercial-y-servicio-al-cliente-mesa-ayuda-en-bogota-dc-492EE90E6D772CF661373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Agente Mesa de Ayuda en tecnología",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-agente-mesa-de-ayuda-en-tecnologia-bogota-en-bogota-dc-0FF74512A942140F61373E686DCF3405#lc=ListOffers-Score4-9",
+      "id": "de-trabajo-de-agente-mesa-de-ayuda-en-tecnologia-bogota-en-bogota-dc-0FF74512A942140F61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Analista de Soporte Mesa de Ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-mesa-de-ayuda-en-medellin-CBB849BE28153C3A61373E686DCF3405#lc=ListOffers-Score4-10",
+      "id": "de-trabajo-de-analista-de-soporte-mesa-de-ayuda-en-medellin-CBB849BE28153C3A61373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Analista de mesa de servicio",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-mesa-de-servicio-analista-de-mesa-de-ayuda-en-bogota-dc-CA073F7C0FBE85A661373E686DCF3405#lc=ListOffers-Score4-11",
+      "id": "de-trabajo-de-analista-de-mesa-de-servicio-analista-de-mesa-de-ayuda-en-bogota-dc-CA073F7C0FBE85A661373E686DCF3405",
+      "categoria": "mesa-de-ayuda",
+      "scraped_at": "2026-07-06T04:48:20.887Z"
+    },
+    {
+      "titulo": "Soporte Helpdesk",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-helpdesk-macbook-pro-imac-mac-studio-en-bogota-dc-DD2179E9DFF7079C61373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-soporte-helpdesk-macbook-pro-imac-mac-studio-en-bogota-dc-DD2179E9DFF7079C61373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "IT Helpdesk Technician B2",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-it-helpdesk-technician-b2-soporte-it-presencial-bogota-en-bogota-dc-DF2F4470ACB272D261373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-it-helpdesk-technician-b2-soporte-it-presencial-bogota-en-bogota-dc-DF2F4470ACB272D261373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "IT Virtual Assistant CRM and Automations",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-it-virtual-assistant-crm-and-automations-remote-est-time-en-bogota-dc-14C1DB137EC4FB1461373E686DCF3405#lc=ListOffers-Score3-2",
+      "id": "de-trabajo-de-it-virtual-assistant-crm-and-automations-remote-est-time-en-bogota-dc-14C1DB137EC4FB1461373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Técnico en sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-en-sistemas-en-medellin-0EA0EEDDC123927F61373E686DCF3405#lc=ListOffers-Score3-3",
+      "id": "de-trabajo-de-tecnico-en-sistemas-en-medellin-0EA0EEDDC123927F61373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Auxiliar de sistemas Informáticos en Floridablanca, Santander",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-informaticos-en-floridablanca-santander-en-floridablanca-E2C19246298A854461373E686DCF3405#lc=ListOffers-Score3-4",
+      "id": "de-trabajo-de-auxiliar-de-sistemas-informaticos-en-floridablanca-santander-en-floridablanca-E2C19246298A854461373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Consultor de Soporte Contable, Sector Salud",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-consultor-de-soporte-contable-sector-salud-hibrido-en-bogota-dc-E121EEABD24E030161373E686DCF3405#lc=ListOffers-Score3-5",
+      "id": "de-trabajo-de-consultor-de-soporte-contable-sector-salud-hibrido-en-bogota-dc-E121EEABD24E030161373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Asistente administrativo ejecutivo MDE",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asistente-administrativo-ejecutivo-mde-en-medellin-B1B68283791F571361373E686DCF3405#lc=ListOffers-Score3-6",
+      "id": "de-trabajo-de-asistente-administrativo-ejecutivo-mde-en-medellin-B1B68283791F571361373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Técnico de soporte en sitio",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-soporte-en-sitio-en-bogota-dc-18D8A3D39C5EA47D61373E686DCF3405#lc=ListOffers-Score3-7",
+      "id": "de-trabajo-de-tecnico-de-soporte-en-sitio-en-bogota-dc-18D8A3D39C5EA47D61373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Analista de Soporte Técnico",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-tecnico-certificado-de-discapacidad-en-bogota-dc-9BAA4511B2A4A2DD61373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-analista-de-soporte-tecnico-certificado-de-discapacidad-en-bogota-dc-9BAA4511B2A4A2DD61373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Posventa",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-posventa-servicio-de-atencion-al-cliente-en-bogota-dc-7A44D8303D2F7F4061373E686DCF3405#lc=ListOffers-Score3-9",
+      "id": "de-trabajo-de-posventa-servicio-de-atencion-al-cliente-en-bogota-dc-7A44D8303D2F7F4061373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "IT Support, Systems Administrator",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-it-support-systems-administrator-en-medellin-E2C9C6F2619571A961373E686DCF3405#lc=ListOffers-Score3-10",
+      "id": "de-trabajo-de-it-support-systems-administrator-en-medellin-E2C9C6F2619571A961373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Coordinador de informatica y tecnologia",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-coordinador-de-informatica-y-tecnologia-en-ecuador-3224C7928E4BF80561373E686DCF3405#lc=ListOffers-Score3-11",
+      "id": "de-trabajo-de-coordinador-de-informatica-y-tecnologia-en-ecuador-3224C7928E4BF80561373E686DCF3405",
+      "categoria": "helpdesk",
+      "scraped_at": "2026-07-06T04:48:24.606Z"
+    },
+    {
+      "titulo": "Soporte Técnico Nivel 1 Medellin",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-nivel-1-medellin-en-medellin-067BC3853A849D8F61373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-soporte-tecnico-nivel-1-medellin-en-medellin-067BC3853A849D8F61373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Técnico de Soporte Nivel 1",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-soporte-nivel-1-doradal-antioquia-en-puerto-triunfo-A525393715F74A2161373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-tecnico-de-soporte-nivel-1-doradal-antioquia-en-puerto-triunfo-A525393715F74A2161373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "229057 Técnico/a de soporte nivel 1 y 2 call center Turnos de madrugada",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-229057-tecnicoa-de-soporte-nivel-1-y-2-call-center-turnos-de-madrugada-call-center-bogota-aplica-yaaa-en-bogota-dc-F9596ACE6EF102FE61373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-229057-tecnicoa-de-soporte-nivel-1-y-2-call-center-turnos-de-madrugada-call-center-bogota-aplica-yaaa-en-bogota-dc-F9596ACE6EF102FE61373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Soporte Técnico Nivel 1 – Cali (Presencial)",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-nivel-1-cali-presencial-en-cali-272B9CB68F440EDA61373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-soporte-tecnico-nivel-1-cali-presencial-en-cali-272B9CB68F440EDA61373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "229057 Técnico/a de soporte nivel 1 y 2 call center Turnos de madrugada",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-229057-tecnicoa-de-soporte-nivel-1-y-2-call-center-turnos-de-madrugada-call-center-bogota-aplica-yaaa-en-bogota-dc-51DAFA12A85D360261373E686DCF3405#lc=ListOffers-Score4-4",
+      "id": "de-trabajo-de-229057-tecnicoa-de-soporte-nivel-1-y-2-call-center-turnos-de-madrugada-call-center-bogota-aplica-yaaa-en-bogota-dc-51DAFA12A85D360261373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Agente de servicio al cliente / Soporte técnico Nivel 1 DomoNow",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-agente-de-servicio-al-cliente-soporte-tecnico-nivel-1-domonow-en-medellin-97DBB2BA2342D3B061373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-agente-de-servicio-al-cliente-soporte-tecnico-nivel-1-domonow-en-medellin-97DBB2BA2342D3B061373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Soporte Técnico Nivel 1 (Mesa de Ayuda TI)",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-nivel-1-mesa-de-ayuda-ti-presencial-medellin-turnos-rotativos-en-medellin-C03CC78EBCC9964261373E686DCF3405#lc=ListOffers-Score4-6",
+      "id": "de-trabajo-de-soporte-tecnico-nivel-1-mesa-de-ayuda-ti-presencial-medellin-turnos-rotativos-en-medellin-C03CC78EBCC9964261373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Técnico sistemas soporte en sitio Nivel 1 Para Bugalagrande",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-sistemas-soporte-en-sitio-nivel-1-para-bugalagrande-en-bugalagrande-09FD40B67E7D3A9B61373E686DCF3405#lc=ListOffers-Score4-7",
+      "id": "de-trabajo-de-tecnico-sistemas-soporte-en-sitio-nivel-1-para-bugalagrande-en-bugalagrande-09FD40B67E7D3A9B61373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "soporte nivel 1 . exclusivo para personas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-nivel-1--exclusivo-para-personas-con-condicion-de-discapacidad-en-bogota-dc-F8C55F5CA016643661373E686DCF3405#lc=ListOffers-Score4-8",
+      "id": "de-trabajo-de-soporte-nivel-1--exclusivo-para-personas-con-condicion-de-discapacidad-en-bogota-dc-F8C55F5CA016643661373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Técnico en sistemas soporte en sitio",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-en-sistemas-soporte-en-sitio-nivel-1-en-bogota-dc-C539EB5177093D5761373E686DCF3405#lc=ListOffers-Score4-9",
+      "id": "de-trabajo-de-tecnico-en-sistemas-soporte-en-sitio-nivel-1-en-bogota-dc-C539EB5177093D5761373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Ingeniero / Técnico / Tecnólogo de Soporte en Sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-tecnico-tecnologo-de-soporte-en-sistemas-nivel-1-y-2-en-pasto-3827523ED87FE37C61373E686DCF3405#lc=ListOffers-Score4-10",
+      "id": "de-trabajo-de-ingeniero-tecnico-tecnologo-de-soporte-en-sistemas-nivel-1-y-2-en-pasto-3827523ED87FE37C61373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Conductor Relevos Licencia C3",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-conductor-relevos-licencia-c3-sector-logistico-y-transporte-en-bogota-dc-C110503CFB9E096A61373E686DCF3405#lc=ListOffers-Score3-11",
+      "id": "de-trabajo-de-conductor-relevos-licencia-c3-sector-logistico-y-transporte-en-bogota-dc-C110503CFB9E096A61373E686DCF3405",
+      "categoria": "soporte-nivel-1",
+      "scraped_at": "2026-07-06T04:48:28.322Z"
+    },
+    {
+      "titulo": "Asesor mesa de ayuda call center,tecnicos en adelante area sistemas/contrato indefinido",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-mesa-de-ayuda-call-centertecnicos-en-adelante-area-sistemascontrato-indefinido-6-meses-en-soporte-en-bogota-dc-6D69E3AA0D2899A461373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-asesor-mesa-de-ayuda-call-centertecnicos-en-adelante-area-sistemascontrato-indefinido-6-meses-en-soporte-en-bogota-dc-6D69E3AA0D2899A461373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Asesor mesa de ayuda call center,tecnicos en adelante area sistemas/contrato indefinido",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-mesa-de-ayuda-call-centertecnicos-en-adelante-area-sistemascontrato-indefinido-6-meses-en-soporte-en-bogota-dc-E6EB1189BE53788561373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-asesor-mesa-de-ayuda-call-centertecnicos-en-adelante-area-sistemascontrato-indefinido-6-meses-en-soporte-en-bogota-dc-E6EB1189BE53788561373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Practicante de Ingeniería de Sistemas / Mesa de Ayuda",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-de-ingenieria-de-sistemas-mesa-de-ayuda-en-bogota-dc-788AAFC3D61A528761373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-practicante-de-ingenieria-de-sistemas-mesa-de-ayuda-en-bogota-dc-788AAFC3D61A528761373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Analista de operaciones",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-operaciones-en-bogota-dc-BD7D38841335FDFD61373E686DCF3405#lc=ListOffers-Score3-3",
+      "id": "de-trabajo-de-analista-de-operaciones-en-bogota-dc-BD7D38841335FDFD61373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Analista de soporte TI por proyecto",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-ti-por-proyecto-en-la-estrella-4DCE3F0F2CCD5A4361373E686DCF3405#lc=ListOffers-Score3-4",
+      "id": "de-trabajo-de-analista-de-soporte-ti-por-proyecto-en-la-estrella-4DCE3F0F2CCD5A4361373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Analista Sr de Soporte Técnico",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-sr-de-soporte-tecnico-medellin-en-medellin-046EB46A66554FEB61373E686DCF3405#lc=ListOffers-Score3-5",
+      "id": "de-trabajo-de-analista-sr-de-soporte-tecnico-medellin-en-medellin-046EB46A66554FEB61373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Practicante IT",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-it-en-bogota-dc-756ABF24FE7E4DF561373E686DCF3405#lc=ListOffers-Score3-6",
+      "id": "de-trabajo-de-practicante-it-en-bogota-dc-756ABF24FE7E4DF561373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Soporte en sitio",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-en-sitio-en-bogota-dc-0C7ECF4FB78D55CA61373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-soporte-en-sitio-en-bogota-dc-0C7ECF4FB78D55CA61373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Tecnico de sistemas",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-sistemas-en-barranquilla-ED1CC7DE3709A67E61373E686DCF3405#lc=ListOffers-Score3-9",
+      "id": "de-trabajo-de-tecnico-de-sistemas-en-barranquilla-ED1CC7DE3709A67E61373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Ingeniero de Innovación y Desarrollo",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-de-innovacion-y-desarrollo-en-bogota-dc-9736C71DDDDD865A61373E686DCF3405#lc=ListOffers-Score3-10",
+      "id": "de-trabajo-de-ingeniero-de-innovacion-y-desarrollo-en-bogota-dc-9736C71DDDDD865A61373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
+    },
+    {
+      "titulo": "Auxiliar de Soporte e infraestructura TI",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-soporte-e-infraestructura-ti-tecnico-tecnologo-estudiante-en-funza-C9B1BF6356EC292A61373E686DCF3405#lc=ListOffers-Score3-11",
+      "id": "de-trabajo-de-auxiliar-de-soporte-e-infraestructura-ti-tecnico-tecnologo-estudiante-en-funza-C9B1BF6356EC292A61373E686DCF3405",
+      "categoria": "mesa-ayuda-sistemas",
+      "scraped_at": "2026-07-06T04:48:32.024Z"
     }
   ]
 }

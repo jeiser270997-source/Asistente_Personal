@@ -1,7 +1,7 @@
 # Jeiser Abraham Gutierrez Torres
 **QA Automation Engineer Junior | Medellín, Colombia**
 
-📧 jeiser270997@gmail.com · 📱 +57 301 XXX XXXX · 🔗 [linkedin.com/in/jeiser](https://linkedin.com/in/jeiser) · 🐙 [github.com/jeiser270997](https://github.com/jeiser270997)
+📧 jeiser270997@gmail.com · 📱 +57 304 461 5613 · 🔗 [linkedin.com/in/jeiser](https://linkedin.com/in/jeiser) · 🐙 [github.com/jeiser270997](https://github.com/jeiser270997)
 
 ---
 

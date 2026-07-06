@@ -2,9 +2,10 @@ name: Recordatorio CESDE
 
 on:
   schedule:
-    # 22:00 UTC = 5:00 PM Colombia (1h antes de clase 6-8pm)
-    # Corre Lun, Mie, Vie — el script valida fechas exactas
+    # Horario actual: Lun/Mié/Vie 6-8pm Colombia → 22:00 UTC 1h antes
     - cron: '0 22 * * 1,3,5'
+    # Horario próximo: Sábados 7am-6pm Colombia → recordatorio viernes 9pm (sábado 2am UTC)
+    - cron: '0 2 * * 6'
   workflow_dispatch:
 
 jobs:
