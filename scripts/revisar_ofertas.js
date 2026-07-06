@@ -27,15 +27,22 @@ Disponible: tiempo completo, Medellín presencial o remoto.`;
 async function loginCT(page) {
   await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
   await page.waitForTimeout(2000);
-  await page.locator('#Email, input[name="Email"]').first().fill(CT_EMAIL, { timeout: 8000 });
-  await page.locator('#password, input[name="Password"]').first().fill(CT_PASS, { timeout: 5000 });
-  // Click submit o Enter como fallback
+
+  const emailSel = page.locator('#Email, input[name="Email"]').first();
+  await emailSel.fill(CT_EMAIL, { timeout: 10000 });
+  const passSel = page.locator('#password, input[name="Password"]').first();
+  await passSel.fill(CT_PASS, { timeout: 5000 });
+
+  // Submit
+  const submitBtn = page.locator('button[type="submit"]').first();
   await page.locator('button[type="submit"]').first().click({ timeout: 5000 }).catch(async () => {
     await page.keyboard.press('Enter');
   });
-  await page.waitForTimeout(4000);
-  const ok = page.url().includes('home');
-  console.log(`  🔑 Login CT: ${ok ? '✅ OK' : '⚠️  ' + page.url().substring(0, 60)}`);
+
+  // OAuth puede tardar 6-8s — esperar hasta que salga de acceso/callback
+  await page.waitForTimeout(6000);
+  const ok = page.url().includes('candidate/home') || page.url().includes('candidato.co.computrabajo.com') && !page.url().includes('acceso');
+  console.log(`  🔑 Login CT: ${ok ? '✅ OK — ' + page.url().substring(0,55) : '⚠️  ' + page.url().substring(0,60)}`);
 }
 
 // ── Scrape lista de cards ───────────────────────────────────────
@@ -57,42 +64,49 @@ async function scrapeCards(page, q) {
   });
 }
 
-// ── Scrape descripción vía HTTP (sin browser, sin modal geo) ───
-async function scrapeDesc(url) {
+// ── Scrape descripción con Playwright — selector correcto box_detail ──
+async function scrapeDesc(page, url) {
   try {
-    const res = await fetch(url.split('#')[0], {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml',
-        'Accept-Language': 'es-CO,es;q=0.9',
-        'Referer': 'https://co.computrabajo.com/',
-      },
+    await page.goto(url.split('#')[0], { waitUntil: 'load', timeout: 20000 });
+    await page.waitForTimeout(2500);
+
+    return await page.evaluate(() => {
+      const clean = s => (s || '').replace(/\s+/g, ' ').trim();
+
+      // Empresa y ciudad desde el título
+      const title = document.title || '';
+      const empM = title.match(/ en ([^-]+) - /);
+      const empresa = empM ? empM[1].trim().substring(0, 50) : '';
+      const ciudadM = title.match(/ - (.+)$/);
+      const lugar = ciudadM ? ciudadM[1].trim().substring(0, 50) : '';
+
+      // Selector correcto confirmado por diagnóstico: div.box_detail.fl.w100_m
+      let desc = '';
+      const boxEl = document.querySelector('.box_detail.fl') ||
+                    document.querySelector('[class="box_detail fl w100_m"]') ||
+                    document.querySelector('.box_border.menu_top');
+
+      if (boxEl) {
+        const fullText = clean(boxEl.innerText);
+        // Extraer desde 'Descripción de la oferta' hasta 'Aplicar' o 'Denunciar'
+        const startMark = fullText.indexOf('Descripción de la oferta');
+        const endMark   = fullText.search(/\b(Aplicar|Denunciar|Ofertas similares|Acerca de)\b/);
+        if (startMark > -1) {
+          const end = endMark > startMark ? endMark : startMark + 3000;
+          desc = fullText.substring(startMark + 'Descripción de la oferta'.length, end).trim().substring(0, 2000);
+        } else {
+          desc = fullText.substring(0, 2000);
+        }
+      }
+
+      // Salario — buscar patrón en el body
+      const bodyText = document.body.innerText;
+      const salM = bodyText.match(/\$[\s\d.,]+(?:mensual|COP)?/i) ||
+                   bodyText.match(/A convenir/);
+      const salario = salM ? salM[0].trim().substring(0, 40) : '';
+
+      return { empresa, lugar, salario, desc };
     });
-    const html = await res.text();
-
-    // Extraer datos con regex (no necesitamos DOM completo)
-    const clean = s => s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#\d+;/g,'').trim();
-
-    // Empresa
-    const empM = html.match(/itemprop="name"[^>]*>([^<]+)<|class="[^"]*companyInfo[^"]*"[^>]*>.*?<[^>]+>([^<]+)<|"hiringOrganization"[^>]*>([^<]+)</);
-    const empresa = clean(empM?.[1] || empM?.[2] || empM?.[3] || '');
-
-    // Lugar
-    const locM = html.match(/itemprop="jobLocation"[^>]*>([^<]+)<|"addressLocality"[^>]*>([^<]+)<|class="[^"]*city[^"]*"[^>]*>([^<]+)</i);
-    const lugar = clean(locM?.[1] || locM?.[2] || locM?.[3] || '');
-
-    // Salario
-    const salM = html.match(/salario[^<]*<[^>]+>([^<]+)</i);
-    const salario = clean(salM?.[1] || '');
-
-    // Descripción: buscar el bloque principal
-    const descM = html.match(/id="[^"]*descri[^"]*"[^>]*>([\s\S]{200,5000}?)<\/(?:div|section|article)>/i)
-      || html.match(/class="[^"]*descri[^"]*"[^>]*>([\s\S]{200,5000}?)<\/(?:div|section|article)>/i)
-      || html.match(/<article[^>]*>([\s\S]{200,5000}?)<\/article>/i);
-
-    const desc = descM ? clean(descM[1]).substring(0, 2000) : '';
-
-    return { empresa: empresa.substring(0,50), lugar: lugar.substring(0,50), salario: salario.substring(0,30), desc };
   } catch (e) {
     return { empresa: '', lugar: '', salario: '', desc: '' };
   }
@@ -109,9 +123,11 @@ async function scrapeDesc(url) {
   });
   const page = await ctx.newPage();
 
-  // Login primero
+  // Login y extraer cookies de sesión
   console.log('\n🔐 Iniciando sesión en Computrabajo...');
   await loginCT(page);
+
+  // Extraer cookies ya no necesario — Playwright navega con sesión activa
 
   // Recoger candidatas Medellín
   const seen = new Set();
@@ -133,7 +149,7 @@ async function scrapeDesc(url) {
   const evaluadas = [];
   for (const oferta of candidatas.slice(0, 10)) {
     process.stdout.write(`  🔍 ${oferta.titulo.substring(0, 55).padEnd(55)}... `);
-    const det = await scrapeDesc(oferta.url);
+    const det = await scrapeDesc(page, oferta.url);
 
     const empresa = det.empresa || oferta.empresa || 'N/A';
     const lugar   = det.lugar   || oferta.lugar   || 'Medellín';
@@ -145,16 +161,28 @@ OFERTA: "${oferta.titulo}" | Empresa: ${empresa} | Ciudad: ${lugar} | Salario: $
 DESCRIPCIÓN: ${det.desc.substring(0, 1500)}
 Responde: {"score":<0-100>,"recomendacion":"APLICAR"|"REVISAR"|"DESCARTAR","razon":"<max 100 chars>","puntos_fuertes":["..."],"gaps":["..."]}`;
 
-    let ev = { score: 0, recomendacion: 'REVISAR', razon: 'Sin descripción disponible', puntos_fuertes: [], gaps: [] };
+    // Debug: ver si la descripción se extrajo
+    const descLen = det.desc?.length || 0;
+    if (descLen < 10) process.stdout.write(`[⚠️ desc vacía] `);
+
+    let ev = { score: 0, recomendacion: 'REVISAR', razon: 'Error parsing LLM response', puntos_fuertes: [], gaps: [] };
     try {
-      const raw = await askLLM(prompt, { maxTokens: 350 });
-      const m = raw.match(/\{[\s\S]*?\}/);
-      if (m) ev = JSON.parse(m[0]);
-    } catch {}
+      const sysPrompt = `Eres un evaluador de compatibilidad laboral. Responde SOLO con JSON válido, sin texto adicional.`;
+      const msg = await askLLM(sysPrompt, [{ role: 'user', content: prompt }]);
+      const raw = typeof msg === 'string' ? msg : (msg?.content || '');
+      const m = raw.match(/\{[\s\S]*\}/);
+      if (m) {
+        ev = JSON.parse(m[0]);
+      } else {
+        ev.razon = 'No JSON en respuesta: ' + raw.substring(0, 60);
+      }
+    } catch (e) {
+      ev.razon = 'Error LLM: ' + e.message.substring(0, 40);
+    }
 
     process.stdout.write(`Score: ${String(ev.score).padStart(3)} → ${ev.recomendacion}\n`);
     evaluadas.push({ ...oferta, empresa, lugar, salario, ...ev });
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(300);
   }
 
   await browser.close();
