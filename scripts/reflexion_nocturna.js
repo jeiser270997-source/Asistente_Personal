@@ -42,7 +42,7 @@ INSTRUCCIONES:
     let nuevoEstado = response.content.trim();
     
     // Limpiar formatting residual si el LLM incluye backticks
-    nuevoEstado = nuevoEstado.replace(/^```(markdown|md)?\n/, '').replace/\n```$/, '');
+    nuevoEstado = nuevoEstado.replace(/^```(markdown|md)?\n/, '').replace(/\n```$/, '');
 
     if (nuevoEstado && nuevoEstado.length > 50 && nuevoEstado !== estadoVivoActual) {
       fs.writeFileSync(ESTADO_PATH, nuevoEstado);

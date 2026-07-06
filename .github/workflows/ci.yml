@@ -1,4 +1,4 @@
-﻿name: LifeOS CI & Syntax Check
+name: LifeOS CI & Syntax Check
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     strategy:
       matrix:
@@ -28,7 +28,7 @@ jobs:
       run: npm install --legacy-peer-deps
 
     - name: Instalar dependencias de Gmail Cleaner
-      run: cd Herramientas/Gmail_Cleaner && npm install
+      run: cd Herramientas/Gmail_Cleaner && npm install --legacy-peer-deps
 
     - name: Verificación de Sintaxis (Dry Run)
       run: |
