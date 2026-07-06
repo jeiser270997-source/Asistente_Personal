@@ -1,0 +1,3 @@
+[submodule "data/resume_template"]
+	path = data/resume_template
+	url = https://github.com/sb2nov/resume.git
