@@ -119,22 +119,22 @@ async function aplicarOferta(browser, ofertaUrl) {
   try {
     // Login — múltiples intentos de URL y selector
     log(`   Login Computrabajo...`);
-    await page.goto('https://co.computrabajo.com/candidato/login', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
     await page.waitForTimeout(2000);
 
-    // Intentar diferentes selectores de email
-    const emailSel = await page.locator('input[type="email"], input[name="email"], input[id*="email"], input[placeholder*="correo"], input[placeholder*="Email"]').first();
+    // Selectores exactos verificados: #Email y #password
+    const emailSel = await page.locator('#Email, input[name="Email"]').first();
     await emailSel.fill(CT_EMAIL, { timeout: 10000 });
 
-    const passSel = await page.locator('input[type="password"]').first();
+    const passSel = await page.locator('#password, input[name="Password"]').first();
     await passSel.fill(CT_PASS, { timeout: 5000 });
 
     // Submit
-    const submitBtn = page.locator('button[type="submit"], input[type="submit"], button:has-text("Iniciar"), button:has-text("Entrar"), button:has-text("Login")').first();
+    const submitBtn = page.locator('button[type="submit"]').first();
     await submitBtn.click({ timeout: 5000 }).catch(async () => {
       await page.keyboard.press('Enter');
     });
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(4000);
     log(`   Post-login: ${page.url()}`);
 
     // Ir a la oferta

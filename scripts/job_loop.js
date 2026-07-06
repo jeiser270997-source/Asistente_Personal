@@ -204,12 +204,12 @@ async function aplicar(oferta, browser) {
   const page = await ctx.newPage();
   try {
     // Login
-    await page.goto('https://co.computrabajo.com/candidato/login', { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1000);
-    await page.fill('input[type="email"], input[name="username"]', CT_EMAIL, { force: true });
-    await page.fill('input[type="password"]', CT_PASS, { force: true });
-    await page.click('button[type="submit"]', { timeout: 3000 }).catch(() => {});
-    await page.waitForTimeout(2500);
+    await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 15000 });
+    await page.waitForTimeout(2000);
+    await page.fill('#Email, input[name="Email"]', CT_EMAIL, { force: true });
+    await page.fill('#password, input[name="Password"]', CT_PASS, { force: true });
+    await page.click('button[type="submit"]', { timeout: 5000 }).catch(() => {});
+    await page.waitForTimeout(3000);
 
     // Navegar a oferta
     await page.goto(oferta.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
