@@ -1,0 +1,23 @@
+{
+  "description": "Pesos del scorer para evaluacion de ofertas laborales",
+  "version": 1,
+  "weights": {
+    "skills": 25,
+    "seniority": 15,
+    "salary": 15,
+    "location": 10,
+    "english": 10,
+    "company": 10,
+    "growth": 5,
+    "llmAlignment": 10
+  },
+  "thresholds": {
+    "apply": 75,
+    "maybe": 50
+  },
+  "adjustments": {
+    "modalidad_remoto_bonus": 5,
+    "empresa_objetivo_bonus": 10,
+    "ingles_no_requerido_penalty": -10
+  }
+}
