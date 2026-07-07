@@ -23,6 +23,9 @@
     "start": "node lib/telegram.js",
     "brain": "node scripts/brain_orchestrator.js",
     "sensor": "node scripts/inbox_sensor.js",
-    "cleaner": "node Herramientas/Gmail_Cleaner/cli.js"
+    "cleaner": "node Herramientas/Gmail_Cleaner/cli.js",
+    "runtime:audit": "node scripts/runtime-audit.js",
+    "runtime:ci": "node scripts/runtime-audit.js --ci",
+    "migrate": "node runtime/migrate.js"
   }
 }

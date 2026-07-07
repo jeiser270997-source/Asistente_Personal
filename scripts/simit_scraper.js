@@ -3,6 +3,18 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 
+const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
+const USE_SQLITE = DB_DRIVER === 'sqlite';
+
+let CheckpointStore = null;
+let LedgerStore = null;
+let RE = null;
+if (USE_SQLITE) {
+  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  LedgerStore = require('../runtime/stores/LedgerStore');
+  RE = require('../lib/resume_engine');
+}
+
 const PLACA = 'KEW496';
 const SIMIT_URL = 'https://www.fcm.org.co/simit/#/estado-cuenta';
 
@@ -18,15 +30,18 @@ function ensureDir() {
 function log(msg) { console.log(`[${new Date().toISOString()}] ${msg}`); }
 
 function loadLast() {
+  if (USE_SQLITE) { const cp = CheckpointStore.get('simit_ultima_consulta'); if (cp) return cp; }
   try { return JSON.parse(fs.readFileSync(LAST_PATH, 'utf8')); }
   catch { return null; }
 }
 
 function saveLast(data) {
+  if (USE_SQLITE) CheckpointStore.set('simit_ultima_consulta', data);
   fs.writeFileSync(LAST_PATH, JSON.stringify(data, null, 2));
 }
 
 function saveAlertas(alertas) {
+  if (USE_SQLITE) CheckpointStore.set('simit_alertas', alertas);
   fs.writeFileSync(ALERT_PATH, JSON.stringify(alertas, null, 2));
 }
 
@@ -170,8 +185,9 @@ function detectChanges(prev, curr) {
 
 async function main() {
   ensureDir();
+  if (USE_SQLITE) RE.start('simit_scraper', { placa: PLACA });
   log('═══════════════════════════════════════');
-  log('🚗 SIMIT SCRAPER - Consulta Automatica');
+  log('SIMIT SCRAPER - Consulta Automatica');
   log('═══════════════════════════════════════');
 
   const browser = await chromium.launch({ headless: true });
@@ -199,10 +215,15 @@ async function main() {
     saveLast(registro);
     saveAlertas({ ultima_revision: new Date().toISOString(), alertas });
 
-    log(`\n📊 Alertas detectadas: ${alertas.length}`);
+    log(`\nAlertas detectadas: ${alertas.length}`);
     for (const a of alertas) {
       const icono = a.urgente ? '🔴' : '🟢';
       log(`   ${icono} ${a.mensaje}`);
+    }
+
+    if (USE_SQLITE) {
+      for (const a of alertas) LedgerStore.emit('simit_' + a.tipo, { placa: PLACA, ...a });
+      RE.finish('simit_scraper', 'success', { alertas: alertas.length, urgentes: alertas.filter(a => a.urgente).length });
     }
 
     // Output for GitHub Actions / Telegram
@@ -211,9 +232,10 @@ async function main() {
       console.log('\n__TELEGRAM_ALERT__:' + msg);
     }
 
-    log('\n✅ Consulta completada');
+    log('\nConsulta completada');
   } catch (err) {
-    log(`❌ Error: ${err.message}`);
+    if (USE_SQLITE) { LedgerStore.emit('simit_error', { error: err.message }); RE.finish('simit_scraper', 'error', { reason: err.message }); }
+    log(`Error: ${err.message}`);
     process.exit(1);
   } finally {
     await browser.close();

@@ -1,6 +1,12 @@
-const fs = require('node:fs');
-const path = require('node:path');
 const { sendTelegramMessage } = require('../lib/telegram');
+
+const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
+const USE_SQLITE = DB_DRIVER === 'sqlite';
+
+let CheckpointStore = null;
+if (USE_SQLITE) {
+  CheckpointStore = require('../runtime/stores/CheckpointStore');
+}
 
 const TEAMS_LINK = 'https://teams.microsoft.com/meet/280288227682235?p=ozE7zsdkk2B1OSSd9w';
 
@@ -14,21 +20,36 @@ const CLASSES = [
   { date: '2026-07-24', num: 9 },
 ];
 
-const DEDUP_FILE = path.join(__dirname, '..', 'data', 'recordatorios_enviados.json');
+function loadSentJson() {
+  try {
+    const path = require('path').join(__dirname, '..', 'data', 'recordatorios_enviados.json');
+    return JSON.parse(require('fs').readFileSync(path, 'utf8'));
+  } catch { return []; }
+}
+
+function saveSentJson(dates) {
+  const fs = require('fs');
+  const path = require('path').join(__dirname, '..', 'data', 'recordatorios_enviados.json');
+  fs.mkdirSync(require('path').dirname(path), { recursive: true });
+  fs.writeFileSync(path, JSON.stringify(dates, null, 2));
+}
 
 function loadSent() {
-  try {
-    return JSON.parse(fs.readFileSync(DEDUP_FILE, 'utf8'));
-  } catch {
-    return [];
+  if (USE_SQLITE) {
+    const cp = CheckpointStore.get('recordatorios_cesde');
+    return cp || [];
   }
+  return loadSentJson();
 }
 
 function markSent(date) {
   const sent = loadSent();
   sent.push(date);
-  fs.mkdirSync(path.dirname(DEDUP_FILE), { recursive: true });
-  fs.writeFileSync(DEDUP_FILE, JSON.stringify(sent, null, 2));
+  if (USE_SQLITE) {
+    CheckpointStore.set('recordatorios_cesde', sent);
+  } else {
+    saveSentJson(sent);
+  }
 }
 
 function getColombiaDate() {
@@ -48,9 +69,7 @@ function getColombiaHour() {
 async function main() {
   const today = getColombiaDate();
   const hour = parseInt(getColombiaHour(), 10);
-  const sent = loadSent();
 
-  // Sends reminder at 5 PM Colombia time (1h before class)
   if (hour < 17 || hour >= 18) {
     console.log(`Not reminder time (current: ${hour}:00 Colombia). Skipping.`);
     return;
@@ -62,24 +81,25 @@ async function main() {
     return;
   }
 
-  if (sent.includes(today)) {
+  const sent = loadSent();
+  if (Array.isArray(sent) && sent.includes(today)) {
     console.log(`Reminder for ${today} already sent. Skipping.`);
     return;
   }
 
   const label = classToday.num <= 2 ? 'Taller' : 'Clase';
-  const extra = classToday.num === 9 ? ' — Asignación del taller' : '';
+  const extra = classToday.num === 9 ? ' — Asignacion del taller' : '';
 
-  const msg = `📚 <b>Recordatorio CESDE</b>\n\n` +
+  const msg = `<b>Recordatorio CESDE</b>\n\n` +
     `<b>${label} ${classToday.num}${extra}</b>\n` +
-    `📅 ${today}\n` +
-    `⏰ 6:00 PM - 8:00 PM\n` +
-    `📍 <a href="${TEAMS_LINK}">Microsoft Teams</a>\n\n` +
-    `🕐 Empieza en 1 hora.`;
+    `${today}\n` +
+    `6:00 PM - 8:00 PM\n` +
+    `<a href="${TEAMS_LINK}">Microsoft Teams</a>\n\n` +
+    `Empieza en 1 hora.`;
 
   await sendTelegramMessage(msg);
   markSent(today);
-  console.log(`✅ Reminder sent for ${today} (Class ${classToday.num})`);
+  console.log(`Reminder sent for ${today} (Class ${classToday.num})`);
 }
 
 main().catch(err => {
