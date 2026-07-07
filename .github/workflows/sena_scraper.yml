@@ -24,7 +24,7 @@ jobs:
           SENA_MOODLE_USER: ${{ secrets.SENA_MOODLE_USER }}
           SENA_MOODLE_PASS: ${{ secrets.SENA_MOODLE_PASS }}
           SENA_MOODLE_COURSE_ID: '121953'
-        run: node scripts/moodle_sena_scraper.js
+        run: node scripts/integrations/moodle_sena_scraper.js
       - name: Commit data if changed
         env:
           GH_TOKEN: ${{ github.token }}

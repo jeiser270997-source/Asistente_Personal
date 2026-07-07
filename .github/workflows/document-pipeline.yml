@@ -33,7 +33,7 @@ jobs:
           CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-        run: node scripts/document_pipeline.js
+        run: node scripts/maintenance/document_pipeline.js
 
       - name: Guardar documentos procesados
         uses: actions/upload-artifact@v4

@@ -34,7 +34,7 @@ jobs:
       run: |
         echo "Verificando scripts principales..."
         node --check lib/telegram.js
-        node --check scripts/brain_orchestrator.js
-        node --check scripts/inbox_sensor.js
+        node --check scripts/schedulers/brain_orchestrator.js
+        node --check scripts/integrations/inbox_sensor.js
         node --check Herramientas/Gmail_Cleaner/cli.js
         echo "✅ Todo el código es válido."

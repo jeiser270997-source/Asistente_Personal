@@ -25,7 +25,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           COMPUTRABAJO_EMAIL: ${{ secrets.COMPUTRABAJO_EMAIL }}
           COMPUTRABAJO_PASS: ${{ secrets.COMPUTRABAJO_PASS }}
-        run: node scripts/computrabajo_scraper.js
+        run: node scripts/jobs/computrabajo_scraper.js
       - name: Commit nuevas ofertas
         env:
           GH_TOKEN: ${{ github.token }}
