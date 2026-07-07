@@ -1,0 +1,116 @@
+[
+  {
+    "name": "dian-oficial",
+    "match": { "from": ["*@dian.gov.co", "*@muisca.gov.co"] },
+    "actions": { "label": "Gobierno/DIAN", "archive": true, "markRead": true, "logToLedger": true },
+    "priority": "P0"
+  },
+  {
+    "name": "simit-transito",
+    "match": { "from": ["*@fcm.org.co", "*simit*"], "subjectContains": ["comparendo", "multa", "simit"] },
+    "actions": { "label": "Gobierno/SIMIT", "notify": true, "logToLedger": true },
+    "priority": "P0"
+  },
+  {
+    "name": "sena-moodle",
+    "match": { "from": ["*@sena.edu.co", "*@senavirtual.edu.co"] },
+    "actions": { "label": "Educacion/SENA", "archive": true, "markRead": true },
+    "priority": "P1"
+  },
+  {
+    "name": "cesde-bootcamp",
+    "match": { "fromContains": ["cesde"], "anyWord": ["clase", "taller", "bootcamp", "aa1", "aa2", "aa3", "aa4"] },
+    "actions": { "label": "Educacion/CESDE", "notify": true },
+    "priority": "P1"
+  },
+  {
+    "name": "computrabajo-postulacion",
+    "match": { "from": ["*@computrabajo.com", "*@computrabajo.com.co"], "subject": ["*postulaci*", "*aplicado*", "*solicitud*"] },
+    "actions": { "label": "Trabajo/Postulaciones", "archive": true, "markRead": true, "isJobApplication": true },
+    "priority": "P1"
+  },
+  {
+    "name": "linkedin-postulacion",
+    "match": { "from": ["*@linkedin.com"], "subject": ["*application*", "*solicitud*", "*postulado*", "*aplicado*"] },
+    "actions": { "label": "Trabajo/LinkedIn", "archive": true, "markRead": true, "isJobApplication": true },
+    "priority": "P1"
+  },
+  {
+    "name": "indeed-postulacion",
+    "match": { "from": ["*@indeed.com"], "subject": ["*application*", "*solicitud*"] },
+    "actions": { "label": "Trabajo/Indeed", "archive": true, "markRead": true, "isJobApplication": true },
+    "priority": "P1"
+  },
+  {
+    "name": "entrevista-detectada",
+    "match": { "anyWord": ["entrevista", "interview", "reunion", "meeting", "videollamada", "zoom", "teams"] },
+    "actions": { "label": "Trabajo/Entrevistas", "notify": true, "logToLedger": true },
+    "priority": "P0"
+  },
+  {
+    "name": "rechazo-laboral",
+    "match": { "anyWord": ["rechazado", "no seleccionado", "proceso cerrado", "no continuamos", "gracias por postularte pero", "rejected", "unfortunately", "other candidate"] },
+    "actions": { "label": "Trabajo/Rechazos", "archive": true, "markRead": true, "isRejection": true, "notify": true },
+    "priority": "P1"
+  },
+  {
+    "name": "bancolombia",
+    "match": { "from": ["*@bancolombia.com.co", "*@grupobancolombia.com"] },
+    "actions": { "label": "Finanzas/Bancolombia", "archive": true, "markRead": true },
+    "priority": "P2"
+  },
+  {
+    "name": "factura-electronica",
+    "match": { "subjectContains": ["factura", "recibo", "pago", "nomina", "salario"], "from": ["*@dian.gov.co", "*@facturaelectronica*"] },
+    "actions": { "label": "Finanzas/Facturas", "archive": true, "markRead": true },
+    "priority": "P1"
+  },
+  {
+    "name": "compras-mercadolibre",
+    "match": { "from": ["*@mercadolibre.com.co", "*@mercadolibre.com"] },
+    "actions": { "label": "Compras/MercadoLibre", "archive": true, "markRead": true },
+    "priority": "P2"
+  },
+  {
+    "name": "compras-amazon",
+    "match": { "from": ["*@amazon.com", "*@amazon.com.co"] },
+    "actions": { "label": "Compras/Amazon", "archive": true, "markRead": true },
+    "priority": "P2"
+  },
+  {
+    "name": "github-notificaciones",
+    "match": { "from": ["*@github.com", "notifications@github.com"] },
+    "actions": { "label": "Leer/GitHub", "archive": true, "markRead": true },
+    "priority": "P2"
+  },
+  {
+    "name": "newsletters",
+    "match": { "from": ["*@medium.com", "*@substack.com", "*@youtube.com", "*@openai.com"] },
+    "actions": { "label": "Leer/Newsletters", "archive": true, "markRead": true },
+    "priority": "P3"
+  },
+  {
+    "name": "claro-pagos",
+    "match": { "fromContains": ["claro.com", "claro"], "anyWord": ["paga", "factura", "recibo", "vencimiento"] },
+    "actions": { "label": "Finanzas/Claro", "archive": true, "markRead": true },
+    "priority": "P1"
+  },
+  {
+    "name": "security-alerts",
+    "match": { "anyWord": ["contraseña", "password", "restablecer", "seguridad", "acceso no autorizado", "inicio de sesion"] },
+    "actions": { "label": "Seguridad/Alerts", "notify": true, "logToLedger": true },
+    "priority": "P0"
+  },
+  {
+    "name": "spam-laboral-pandape",
+    "match": { "from": ["*@pandape.com", "*@magneto365.com", "*@peaku.co", "*@talent.com", "*@elempleo.com"] },
+    "actions": { "label": "Trabajo/Plataformas", "archive": true, "markRead": true },
+    "priority": "P2"
+  },
+  {
+    "name": "trash-vacios",
+    "match": { "fromContains": ["no-reply", "noreply", "no_reply", "notificaciones@"], "subjectContains": ["bienvenida", "welcome", "confirmacion de correo"] },
+    "actions": { "label": "Sistema", "archive": true, "markRead": true },
+    "priority": "P3"
+  }
+]

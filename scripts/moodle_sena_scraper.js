@@ -3,6 +3,16 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 
+const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
+const USE_SQLITE = DB_DRIVER === 'sqlite';
+
+let CheckpointStore = null;
+let JobStore = null;
+if (USE_SQLITE) {
+  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  JobStore = require('../runtime/stores/JobStore');
+}
+
 const BASE_URL = 'https://zajuna.sena.edu.co';
 const USER = process.env.SENA_MOODLE_USER;
 const PASS = process.env.SENA_MOODLE_PASS;
@@ -372,16 +382,16 @@ async function main() {
     // Guardar datos
     saveJSON('curso.json', course);
     if (cronograma) saveJSON('cronograma_fechas.json', cronograma);
-    saveJSON('deadlines.json', { deadlines, inlineDates, extraido: new Date().toISOString() });
+    const deadlinesData = { deadlines, inlineDates, extraido: new Date().toISOString() };
+    saveJSON('deadlines.json', deadlinesData);
+    if (USE_SQLITE) CheckpointStore.set('deadlines', deadlinesData);
     saveJSON('calificaciones.json', { grades, extraido: new Date().toISOString() });
 
     // Generar ALERTAS_SENA.md con fechas reales
     generateAlertasMD(course, deadlines, inlineDates, cronograma);
 
     // Guardar historico de ejecuciones
-    const historialPath = path.join(DATA_DIR, 'historial_ejecuciones.json');
-    const historial = fs.existsSync(historialPath) ? JSON.parse(fs.readFileSync(historialPath, 'utf8')) : [];
-    historial.push({
+    const historialEntry = {
       fecha: new Date().toISOString(),
       curso: course.nombre,
       total_evidencias: course.secciones.reduce((s, sec) =>
@@ -389,10 +399,16 @@ async function main() {
       ),
       deadlines_count: deadlines.length,
       grades_count: grades.length
-    });
-    // Keep only last 30 runs
-    if (historial.length > 30) historial.shift();
-    saveJSON('historial_ejecuciones.json', historial);
+    };
+    if (USE_SQLITE) {
+      JobStore.logRun('sena_scraper', 'success', null, historialEntry);
+    } else {
+      const historialPath = path.join(DATA_DIR, 'historial_ejecuciones.json');
+      const historial = fs.existsSync(historialPath) ? JSON.parse(fs.readFileSync(historialPath, 'utf8')) : [];
+      historial.push(historialEntry);
+      if (historial.length > 30) historial.shift();
+      saveJSON('historial_ejecuciones.json', historial);
+    }
 
     log('\n═══════════════════════════════════════');
     log('✅ SCRAPING COMPLETADO');

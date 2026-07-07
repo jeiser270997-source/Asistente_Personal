@@ -15,6 +15,18 @@ const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 
+const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
+const USE_SQLITE = DB_DRIVER === 'sqlite';
+
+let CheckpointStore = null;
+let LedgerStore = null;
+let RE = null;
+if (USE_SQLITE) {
+  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  LedgerStore = require('../runtime/stores/LedgerStore');
+  RE = require('../lib/resume_engine');
+}
+
 const DIAN_URL  = 'https://muisca.dian.gov.co/WebIdentidadLogin/?ideRequest=eyJjbGllbnRJZCI6IldvMGFLQWxCN3ZSUF8xNmZyUEkxeDlacGhCRWEiLCJyZWRpcmVjdF91cmkiOiJodHRwOi8vbXVpc2NhLmRpYW4uZ292LmNvL0lkZW50aWRhZFJlc3RfTG9naW5GaWx0cm8vYXBpL3N0cy92MS9hdXRoL2NhbGxiYWNrP3JlZGlyZWN0X3VyaT1odHRwJTNBJTJGJTJGbXVpc2NhLmRpYW4uZ292LmNvJTJGV2ViQXJxdWl0ZWN0dXJhJTJGRGVmTG9naW4uZmFjZXMiLCJyZXNwb25zZVR5cGUiOiIiLCJzY29wZSI6IiIsInN0YXRlIjoiIiwibm9uY2UiOiIiLCJwYXJhbXMiOnsidGlwb1VzdWFyaW8iOiJtdWlzY2EifX0%3D';
 const DIAN_USER = process.env.DIAN_USER || '1019156838';
 const DIAN_PASS = process.env.DIAN_PASS || 'A125%230aa';
@@ -192,8 +204,9 @@ const SECCIONES_DIAN = [
 // ─── MAIN ─────────────────────────────────────────────────────
 async function main() {
   ensureDir();
+  if (USE_SQLITE) RE.start('dian_scraper', {});
   log('═══════════════════════════════════════');
-  log('🏛 DIAN MUISCA SCRAPER — EXTRACCIÓN EXHAUSTIVA');
+  log('DIAN MUISCA SCRAPER — EXTRACCION EXHAUSTIVA');
   log('═══════════════════════════════════════');
 
   const browser = await chromium.launch({ headless: true });
@@ -216,11 +229,15 @@ async function main() {
   resultado.login_exitoso = loginOk;
 
   if (!loginOk) {
+    if (USE_SQLITE) { CheckpointStore.set('dian_ultima_consulta', resultado); LedgerStore.emit('dian_login_fallido', { fecha: resultado.fecha }); }
     saveJSON('ultima_consulta.json', resultado);
+    if (USE_SQLITE) RE.finish('dian_scraper', 'error', { reason: 'login_failed' });
     await browser.close();
-    log('❌ Login fallido. Abortando.');
+    log('Login fallido. Abortando.');
     process.exit(1);
   }
+
+  if (USE_SQLITE) LedgerStore.emit('dian_login_ok', { fecha: resultado.fecha });
 
   // Extraer links del dashboard para descubrir URLs disponibles
   const dashLinks = await extractDashboardLinks(page);
@@ -259,6 +276,7 @@ ${disponibles.map(([k, v]) => `  ✅ ${k}: ${(v.texto || '').substring(0, 80)}`)
 NO DISPONIBLES (404/error):
 ${noDisponibles.map(([k]) => `  ❌ ${k}`).join('\n')}`;
 
+  if (USE_SQLITE) { CheckpointStore.set('dian_ultima_consulta', resultado); LedgerStore.emit('dian_consulta_completada', { fecha: resultado.fecha, disponibles: disponibles.length, total: Object.keys(resultado.secciones).length }); }
   saveJSON('ultima_consulta.json', resultado);
   log('\n' + resultado.resumen);
 
@@ -273,7 +291,8 @@ ${noDisponibles.map(([k]) => `  ❌ ${k}`).join('\n')}`;
   }
 
   await browser.close();
-  log(`\n✅ Extracción DIAN completada. Datos en: ${DATA_DIR}`);
+  if (USE_SQLITE) RE.finish('dian_scraper', 'success', { secciones_ok: disponibles.length, secciones_fail: noDisponibles.length });
+  log(`\nExtraccion DIAN completada. Datos en: ${DATA_DIR}`);
   log(`   ${disponibles.length} secciones con datos, ${noDisponibles.length} no disponibles`);
 }
 
