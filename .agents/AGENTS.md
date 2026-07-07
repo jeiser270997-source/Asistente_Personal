@@ -1,5 +1,23 @@
-# Life OS - Segundo Cerebro de Jeiser v2.2
-**Última actualización:** 2026-07-06 (sesión completa: DIAN + Jobs + CV)
+# Life OS - Segundo Cerebro de Jeiser v2.3
+**Última actualización:** 2026-07-07 (milestone v1.0 motor empleo + principios de diseño + data reorganizada)
+
+## Principios de diseño (constitución del proyecto)
+
+1. **Regla antes que IA.** Si puede resolverse con reglas determinísticas, no usar LLM.
+2. **Event Bus antes que acoplamiento.** Los módulos emiten eventos; no conocen a sus consumidores.
+3. **Configuración antes que código.** Las reglas viven en JSON, no en ifs dispersos.
+4. **Medir antes de optimizar.** Toda automatización debe producir métricas.
+5. **Un origen de verdad.** No duplicar estado; usar `lib/data/paths.js` como acceso centralizado.
+6. **La IA es un amplificador, no un requisito.** El sistema debe funcionar aunque el LLM esté deshabilitado.
+
+## Arquitectura general (patrón LifeOS)
+
+```
+Fuente → Normalizer → Rule Engine → {conocido → Action | ambiguo → LLM}
+                                         → Event Bus → Persistencia → Métricas
+```
+
+Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y futuros módulos.
 
 ## Arquitectura (Julio 2026) — 87/100 seguridad, 93/100 funcionalidad
 
