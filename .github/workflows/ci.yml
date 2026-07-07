@@ -33,7 +33,7 @@ jobs:
     - name: Verificación de Sintaxis (Dry Run)
       run: |
         echo "Verificando scripts principales..."
-        node --check lib/telegram.js
+        node --check lib/integrations/telegram.js
         node --check scripts/schedulers/brain_orchestrator.js
         node --check scripts/integrations/inbox_sensor.js
         node --check Herramientas/Gmail_Cleaner/cli.js
