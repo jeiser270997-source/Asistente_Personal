@@ -11,7 +11,7 @@
  * Sin LLM, usa scoring determinístico.
  */
 const { decide } = require('../lib/ai/decision');
-const bus = require('../lib/event_bus');
+const bus = require('../lib/events/event_bus');
 
 const UBICACIONES_OK = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|work.?from.?home|teletrabajo/i;
 const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;

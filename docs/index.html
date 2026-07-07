@@ -75,10 +75,10 @@ function ago(dateStr) {
 }
 
 async function render() {
-  const simit = await loadJSON('data/simit_multas.json');
-  const simitCheck = await loadJSON('data/simit/ultima_consulta.json');
-  const sena = await loadJSON('data/sena/seguimiento.json');
-  const bootcamp = await loadJSON('data/bootcamp/curriculum.json');
+  const simit = await loadJSON('data/cache/simit_multas.json');
+  const simitCheck = await loadJSON('data/cache/simit/ultima_consulta.json');
+  const sena = await loadJSON('data/state/sena/seguimiento.json');
+  const bootcamp = await loadJSON('data/cache/bootcamp/curriculum.json');
   const memoria = await loadJSON('data/memoria/hechos.json');
   const health = await loadJSON('data/audit/health.json');
 

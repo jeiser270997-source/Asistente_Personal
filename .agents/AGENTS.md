@@ -25,7 +25,7 @@
               ┌──────────── 💾 Memoria Persistente ─────────────────┐
               │  SQLite: memoria_hipocampo.db (infinita)            │
               │  JSON: data/memoria/hechos.json (estructurada)      │
-              │  MD: data/contexto_maestro/ESTADO_VIVO.md (perfil)  │
+              │  MD: data/state/contexto_maestro/ESTADO_VIVO.md (perfil)  │
               └─────────────────────────────────────────────────────┘
                                          ↓
          ⚖ Tributaria v6  │  🚦 Transito v1  │  🎯 Bootcamp QA  │  💼 Job Hunter

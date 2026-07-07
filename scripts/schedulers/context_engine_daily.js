@@ -16,13 +16,13 @@
  */
 
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
-const { askLLM } = require('../lib/llm_service');
+const { askLLM } = require('../lib/ai/llm_service');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const bus = require('../lib/event_bus');
+const bus = require('../lib/events/event_bus');
 
 let CaseStore = null;
 let LedgerStore = null;
@@ -32,7 +32,7 @@ if (USE_SQLITE) {
   CaseStore = require('../runtime/stores/CaseStore');
   LedgerStore = require('../runtime/stores/LedgerStore');
   CheckpointStore = require('../runtime/stores/CheckpointStore');
-  RE = require('../lib/resume_engine');
+  RE = require('../lib/runtime/resume_engine');
 }
 
 function log(msg) { console.log(`[CTX] ${msg}`); }

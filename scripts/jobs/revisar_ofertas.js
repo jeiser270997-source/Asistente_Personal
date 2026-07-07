@@ -3,7 +3,7 @@
  */
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const { chromium } = require('playwright');
-const { askLLM } = require('../lib/llm_service');
+const { askLLM } = require('../lib/ai/llm_service');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
 const CT_PASS  = process.env.COMPUTRABAJO_PASS  || 'A125%230a';

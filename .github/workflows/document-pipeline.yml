@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: documentos-analizados
-          path: data/documentos/
+          path: data/sources/documentos/
           retention-days: 7

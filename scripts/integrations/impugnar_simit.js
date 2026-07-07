@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
-const { authorize } = require('../lib/google_auth');
-const { agregarHecho } = require('../lib/memory_engine');
+const { authorize } = require('../lib/integrations/google_auth');
+const { agregarHecho } = require('../lib/memory/memory_engine');
 
 const NOMBRE = 'Jeiser Abraham Gutierrez Torres';
 const CC = '1019156838';

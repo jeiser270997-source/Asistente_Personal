@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { logApplication, listApps, getStats } = require('../lib/job_tracker');
+const { logApplication, listApps, getStats } = require('../lib/runtime/job_tracker');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const JOBS_DIR = path.join(BASE_DIR, 'data', 'jobs');

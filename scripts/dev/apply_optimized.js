@@ -175,7 +175,7 @@ async function aplicar(page, oferta) {
   const cvUploaded = await uploadCV(page);
   if (!cvUploaded) {
     console.log('\n⚠️  CV no subido automáticamente.');
-    console.log('   → Sube manualmente el PDF: data/jobs/cv_jeiser_soporte_ti.pdf');
+    console.log('   → Sube manualmente el PDF: data/artifacts/jobs/cv_jeiser_soporte_ti.pdf');
     console.log('   → Aún así, aplicando con CV del perfil actual...\n');
   }
 

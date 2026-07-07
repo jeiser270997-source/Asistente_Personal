@@ -1,0 +1,98 @@
+[
+  {
+    "id": "app_1783174251568",
+    "empresa": "Solvo",
+    "cargo": "Desarrollador Junior",
+    "plataforma": "Computrabajo",
+    "fecha_aplicacion": "2026-07-04",
+    "estado": "entrevista",
+    "evaluacion": {
+      "score": 70,
+      "compatible": true,
+      "razones": [
+        "rol de desarrollo",
+        "rol para entrada/sin experiencia"
+      ]
+    },
+    "historial": [
+      {
+        "fecha": "2026-07-04T14:10:51.568Z",
+        "evento": "aplicacion_enviada"
+      },
+      {
+        "fecha": "2026-07-04T14:10:51.572Z",
+        "evento": "llamaron para entrevista"
+      }
+    ]
+  },
+  {
+    "id": "app_1783174251572",
+    "empresa": "Google",
+    "cargo": "Senior Software Engineer",
+    "plataforma": "LinkedIn",
+    "fecha_aplicacion": "2026-07-04",
+    "estado": "aplicada",
+    "evaluacion": {
+      "score": 40,
+      "compatible": false,
+      "razones": [
+        "rol senior, posiblemente no apto"
+      ]
+    },
+    "historial": [
+      {
+        "fecha": "2026-07-04T14:10:51.572Z",
+        "evento": "aplicacion_enviada"
+      }
+    ]
+  },
+  {
+    "id": "app_1783277556016",
+    "empresa": "Desconocida",
+    "cargo": "QA Automation Junior",
+    "plataforma": "JuniorJobs WhatsApp",
+    "url": "https://technova.co/careers/qa-junior",
+    "detalles": "Stack: Playwright, Cypress, JavaScript | desde Colombia | $3.500.000 COP | Score: 100",
+    "fecha_aplicacion": "2026-07-05",
+    "estado": "aplicada",
+    "evaluacion": {
+      "score": 75,
+      "compatible": true,
+      "razones": [
+        "coincide con habilidades",
+        "rol para entrada/sin experiencia"
+      ]
+    },
+    "historial": [
+      {
+        "fecha": "2026-07-05T18:52:36.016Z",
+        "evento": "aplicacion_enviada"
+      }
+    ]
+  },
+  {
+    "id": "app_1783277556016",
+    "empresa": "Desconocida",
+    "cargo": "Frontend Developer Junior",
+    "plataforma": "JuniorJobs WhatsApp",
+    "url": "https://startclic.com/careers/frontend-jr",
+    "detalles": "Stack: TypeScript, React, CSS | LATAM | $2.800.000 COP | Score: 98",
+    "fecha_aplicacion": "2026-07-05",
+    "estado": "aplicada",
+    "evaluacion": {
+      "score": 85,
+      "compatible": true,
+      "razones": [
+        "coincide con habilidades",
+        "rol de desarrollo",
+        "rol para entrada/sin experiencia"
+      ]
+    },
+    "historial": [
+      {
+        "fecha": "2026-07-05T18:52:36.016Z",
+        "evento": "aplicacion_enviada"
+      }
+    ]
+  }
+]

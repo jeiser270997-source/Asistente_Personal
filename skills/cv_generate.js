@@ -12,7 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 const { decide } = require('../lib/ai/decision');
-const bus = require('../lib/event_bus');
+const bus = require('../lib/events/event_bus');
 
 const CV_OUT_DIR = path.resolve(__dirname, '..', 'data', 'jobs', 'cv_tailored');
 

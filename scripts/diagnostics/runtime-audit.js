@@ -43,10 +43,10 @@ const ALLOWED_DIRS = [
   'node_modules',
   'tests',
   '.git',
-  'data/jobs/cv_tailored',
-  'data/sena/materiales',
+  'data/artifacts/jobs/cv_tailored',
+  'data/sources/sena/materiales',
   'data/resume_template',
-  'data/dian',          // cache: per-section .txt and _tablas.json
+  'data/cache/dian',          // cache: per-section .txt and _tablas.json
   'logs',
   'docs',
 ];

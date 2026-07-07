@@ -35,7 +35,7 @@
   - Clase 8: Mié 22 Jul
   - Clase 9: Vie 24 Jul → **Asignación del taller**
   - Clase 10: Lun 27 Jul → **Entrega del taller** (deadline real)
-  - 📅 Recordatorios en Google Calendar (`data/cesde_introductorio_julio2026.ics`)
+  - 📅 Recordatorios en Google Calendar (`data/artifacts/cesde_introductorio_julio2026.ics`)
 - **CESDE Bootcamp QA presencial:** Inicia **Sábado 25 de julio de 2026** (7am–6pm)
 - **SENA — Bases de Datos:** (ficha 3549155, Zajuna) ✅ En curso
 - **SENA — Excel:** Plataforma Zajuna — pendiente confirmar nombre exacto
@@ -46,8 +46,8 @@
 - **Aplicaciones enviadas hoy (07/07/2026):**
   - ✅ Comfenalco Antioquia — Auxiliar Soporte Técnico ($1.800.000)
   - ✅ C.I ESLOP SAS — Auxiliar TI ($2.000.000)
-- **CV base:** `data/jobs/cv_jeiser.html`
-- **CV optimizado soporte TI:** `data/jobs/cv_jeiser_soporte_ti.pdf` ← usar para roles soporte/sistemas
+- **CV base:** `data/artifacts/jobs/cv_jeiser.html`
+- **CV optimizado soporte TI:** `data/artifacts/jobs/cv_jeiser_soporte_ti.pdf` ← usar para roles soporte/sistemas
 - **Scraper:** `scripts/revisar_ofertas.js` ✅ funciona (login OAuth + scoring DeepSeek)
 - **Auto-apply:** `scripts/computrabajo_apply.js` ✅ funciona (login + preguntas selección)
 
@@ -94,7 +94,7 @@
 2. **SENA Excel** — confirmar nombre exacto del curso.
 3. **DIAN obligaciones detalle** — navegar desde Dashboard por clicks.
 4. **CESDE Taller** — se asigna Vie 24 Jul, entrega Lun 27 Jul.
-5. **Importar .ics a Google Calendar** — `data/cesde_introductorio_julio2026.ics`
+5. **Importar .ics a Google Calendar** — `data/artifacts/cesde_introductorio_julio2026.ics`
 
 ## 🔑 Credenciales (referencia)
 - **SENA Moodle:** `1019156838` / `A125230aaa.`
