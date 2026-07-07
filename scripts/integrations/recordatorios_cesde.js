@@ -5,7 +5,7 @@ const USE_SQLITE = DB_DRIVER === 'sqlite';
 
 let CheckpointStore = null;
 if (USE_SQLITE) {
-  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  CheckpointStore = require('../../runtime/stores/CheckpointStore');
 }
 
 const TEAMS_LINK = 'https://teams.microsoft.com/meet/280288227682235?p=ozE7zsdkk2B1OSSd9w';

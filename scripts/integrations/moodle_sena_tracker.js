@@ -8,7 +8,7 @@ const USE_SQLITE = DB_DRIVER === 'sqlite';
 let SeguimientoStore = null;
 let RE = null;
 if (USE_SQLITE) {
-  SeguimientoStore = require('../runtime/stores/SeguimientoStore');
+  SeguimientoStore = require('../../runtime/stores/SeguimientoStore');
   RE = require('../../lib/runtime/resume_engine');
 }
 

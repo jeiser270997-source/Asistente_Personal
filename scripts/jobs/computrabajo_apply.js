@@ -14,8 +14,8 @@ const USE_SQLITE = DB_DRIVER === 'sqlite';
 let AppStore = null;
 let LedgerStore = null;
 if (USE_SQLITE) {
-  AppStore = require('../runtime/stores/ApplicationStore');
-  LedgerStore = require('../runtime/stores/LedgerStore');
+  AppStore = require('../../runtime/stores/ApplicationStore');
+  LedgerStore = require('../../runtime/stores/LedgerStore');
 }
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;

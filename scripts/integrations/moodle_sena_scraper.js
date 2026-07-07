@@ -9,8 +9,8 @@ const USE_SQLITE = DB_DRIVER === 'sqlite';
 let CheckpointStore = null;
 let JobStore = null;
 if (USE_SQLITE) {
-  CheckpointStore = require('../runtime/stores/CheckpointStore');
-  JobStore = require('../runtime/stores/JobStore');
+  CheckpointStore = require('../../runtime/stores/CheckpointStore');
+  JobStore = require('../../runtime/stores/JobStore');
 }
 
 const BASE_URL = 'https://zajuna.sena.edu.co';

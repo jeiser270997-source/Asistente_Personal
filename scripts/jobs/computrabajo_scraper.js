@@ -12,7 +12,7 @@ const USE_SQLITE = DB_DRIVER === 'sqlite';
 
 let CheckpointStore = null;
 if (USE_SQLITE) {
-  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  CheckpointStore = require('../../runtime/stores/CheckpointStore');
 }
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;

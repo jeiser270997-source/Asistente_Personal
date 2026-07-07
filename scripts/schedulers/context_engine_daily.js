@@ -29,9 +29,9 @@ let LedgerStore = null;
 let CheckpointStore = null;
 let RE = null;
 if (USE_SQLITE) {
-  CaseStore = require('../runtime/stores/CaseStore');
-  LedgerStore = require('../runtime/stores/LedgerStore');
-  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  CaseStore = require('../../runtime/stores/CaseStore');
+  LedgerStore = require('../../runtime/stores/LedgerStore');
+  CheckpointStore = require('../../runtime/stores/CheckpointStore');
   RE = require('../../lib/runtime/resume_engine');
 }
 

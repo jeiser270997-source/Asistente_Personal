@@ -8,7 +8,7 @@ const USE_SQLITE = DB_DRIVER === 'sqlite';
 let CheckpointStore = null;
 let RE = null;
 if (USE_SQLITE) {
-  CheckpointStore = require('../runtime/stores/CheckpointStore');
+  CheckpointStore = require('../../runtime/stores/CheckpointStore');
   RE = require('../../lib/runtime/resume_engine');
 }
 
