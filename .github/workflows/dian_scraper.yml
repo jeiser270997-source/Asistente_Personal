@@ -25,7 +25,7 @@ jobs:
           DIAN_PASS: ${{ secrets.DIAN_PASS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: node scripts/dian_scraper.js
+        run: node scripts/integrations/dian_scraper.js
       - name: Commit datos DIAN
         env:
           GH_TOKEN: ${{ github.token }}

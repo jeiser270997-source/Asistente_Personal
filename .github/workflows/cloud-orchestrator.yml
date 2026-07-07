@@ -1,10 +1,10 @@
-﻿name: Jarvis Cloud Orchestrator
+name: Jarvis Cloud Orchestrator
 
 on:
   schedule:
     # Se ejecuta a las 12:00 UTC, que son las 07:00 AM en Colombia (UTC-5)
     - cron: '0 12 * * *'
-  workflow_dispatch: # Permite ejecutarlo manualmente con un botón en GitHub
+  workflow_dispatch: # Permite ejecutarlo manualmente con un bot�n en GitHub
 
 jobs:
   run-brain:
@@ -38,4 +38,4 @@ jobs:
         CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-      run: node scripts/brain_orchestrator.js
+      run: node scripts/schedulers/brain_orchestrator.js

@@ -40,4 +40,4 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           EMAIL_SCAN_HOURS: ${{ inputs.hours || '6' }}
-        run: node scripts/email_processor.js
+        run: node scripts/integrations/email_processor.js
