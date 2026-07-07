@@ -27,10 +27,10 @@ if (!USE_SQLITE) {
   process.exit(1);
 }
 
-const { getState } = require('../lib/context/state_snapshot');
-const { think, execute, getDecisionLog, needsLLM } = require('../lib/think/think');
-const bus = require('../lib/events/event_bus');
-require('../lib/events/event_registry');
+const { getState } = require('../../lib/context/state_snapshot');
+const { think, execute, getDecisionLog, needsLLM } = require('../../lib/think/think');
+const bus = require('../../lib/events/event_bus');
+require('../../lib/events/event_registry');
 
 const INTERVAL_MIN = parseInt(process.argv.find(a => a.startsWith('--interval='))?.split('=')[1] || '5', 10);
 const ONCE = process.argv.includes('--once');

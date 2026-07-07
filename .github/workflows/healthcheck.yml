@@ -27,5 +27,5 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
-          :: # audit cache no se versiona/health.json
+          echo "health.json ya no se versiona (cache)"
           git diff --cached --quiet || (git commit -m "chore(health): healthcheck diario" && git push)

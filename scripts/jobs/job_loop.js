@@ -9,7 +9,7 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.en
 const fs    = require('node:fs');
 const path  = require('node:path');
 const { execSync, spawn } = require('node:child_process');
-const { askLLM } = require('../lib/ai/llm_service');
+const { askLLM } = require('../../lib/ai/llm_service');
 const { chromium } = require('playwright');
 
 const BASE_DIR  = path.resolve(__dirname, '..');

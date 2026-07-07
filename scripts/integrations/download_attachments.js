@@ -2,7 +2,7 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.en
 const fs = require('node:fs');
 const path = require('node:path');
 const { google } = require('googleapis');
-const { authorize: googleAuthorize } = require('../lib/integrations/google_auth');
+const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const DOCS_DIR = path.join(BASE_DIR, 'data', 'documentos');

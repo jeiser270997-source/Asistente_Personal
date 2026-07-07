@@ -3,11 +3,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
 const { google } = require('googleapis');
-const { sendTelegramMessage } = require('../lib/integrations/telegram');
-const { escapeHTML, truncate } = require('../lib/runtime/sanitize');
-const pending = require('../lib/context/pending');
-const { authorize: googleAuthorize } = require('../lib/integrations/google_auth');
-const { isDeepSeekValley, getScheduleLabel } = require('../lib/scheduling/time_scheduler');
+const { sendTelegramMessage } = require('../../lib/integrations/telegram');
+const { escapeHTML, truncate } = require('../../lib/runtime/sanitize');
+const pending = require('../../lib/context/pending');
+const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
+const { isDeepSeekValley, getScheduleLabel } = require('../../lib/scheduling/time_scheduler');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
@@ -286,7 +286,7 @@ ${senaBlock}
 `.trim();
 }
 
-const { askLLM } = require('../lib/ai/llm_service');
+const { askLLM } = require('../../lib/ai/llm_service');
 
 // ─── LLM CALL ────────────────────────────────────────────────
 async function callLLM(systemPrompt, userContext) {

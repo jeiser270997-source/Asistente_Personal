@@ -1,8 +1,8 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
-const { askLLM } = require('../lib/ai/llm_service');
-const { getContextForMessage } = require('../lib/context/context_resolver');
+const { askLLM } = require('../../lib/ai/llm_service');
+const { getContextForMessage } = require('../../lib/context/context_resolver');
 
 const STATE_FILE = path.join(__dirname, '..', 'data', 'telegram_state.json');
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;

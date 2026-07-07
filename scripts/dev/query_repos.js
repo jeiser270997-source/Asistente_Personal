@@ -1,7 +1,7 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
-const { askLLM } = require('../lib/ai/llm_service');
+const { askLLM } = require('../../lib/ai/llm_service');
 
 const DB_FILE = path.join(__dirname, '..', 'data', 'repos_db.json');
 

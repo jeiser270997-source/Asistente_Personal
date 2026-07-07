@@ -1,7 +1,7 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const { main: download } = require('./download_attachments');
 const { main: analyze } = require('./analyze_documents');
-const { sendTelegramMessage } = require('../lib/integrations/telegram');
+const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 
 async function main() {
   console.log('╔══════════════════════════════════╗');

@@ -9,7 +9,7 @@ let SeguimientoStore = null;
 let RE = null;
 if (USE_SQLITE) {
   SeguimientoStore = require('../runtime/stores/SeguimientoStore');
-  RE = require('../lib/runtime/resume_engine');
+  RE = require('../../lib/runtime/resume_engine');
 }
 
 const ALERTAS_PATH = path.join(__dirname, '..', 'data', 'contexto_maestro', 'ALERTAS_SENA.md');

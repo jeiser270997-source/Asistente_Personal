@@ -1,8 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { askLLM } = require('../lib/ai/llm_service');
-const { agregarHecho } = require('../lib/memory/memory_engine');
-const { getAllHistory } = require('../lib/memory/memory');
+const { askLLM } = require('../../lib/ai/llm_service');
+const { agregarHecho } = require('../../lib/memory/memory_engine');
+const { getAllHistory } = require('../../lib/memory/memory');
 
 const CONTEXT_DIR = path.join(__dirname, '..', 'data', 'contexto_maestro');
 const ESTADO_PATH = path.join(CONTEXT_DIR, 'ESTADO_VIVO.md');

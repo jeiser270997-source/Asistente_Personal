@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
-const { authorize } = require('../lib/integrations/google_auth');
-const { sendTelegramMessage } = require('../lib/integrations/telegram');
+const { authorize } = require('../../lib/integrations/google_auth');
+const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';
@@ -9,7 +9,7 @@ let CheckpointStore = null;
 let RE = null;
 if (USE_SQLITE) {
   CheckpointStore = require('../runtime/stores/CheckpointStore');
-  RE = require('../lib/runtime/resume_engine');
+  RE = require('../../lib/runtime/resume_engine');
 }
 
 const KEYWORDS = ['DIAN', 'UGPP', 'SIMIT', 'Transito', 'Solvo', 'Concentrix', 'CESDE', 'SENA'];
