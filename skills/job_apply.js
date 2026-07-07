@@ -9,7 +9,7 @@
  *
  * Registra en ApplicationStore vía job_tracker.
  */
-const jobTracker = require('../lib/job_tracker');
+const jobTracker = require('../lib/runtime/job_tracker');
 
 const PLATFORMAS = [
   { name: 'Computrabajo', from: 'computrabajo', subjects: ['postulaci', 'aplicado', 'solicitud'] },

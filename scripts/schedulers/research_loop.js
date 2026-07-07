@@ -3,7 +3,7 @@
  * Busca: MCP servers, skills/agentes, code quality, recursos QA, LLM tools
  */
 const fs = require('fs');
-const db = JSON.parse(fs.readFileSync('data/repos_db.json', 'utf8'));
+const db = JSON.parse(fs.readFileSync('data/cache/repos_db.json', 'utf8'));
 console.log(`\n🔬 Research Loop ×5 — ${db.length} repos\n${'═'.repeat(70)}\n`);
 
 function search(keywords, minStars = 200, limit = 12) {
@@ -81,5 +81,5 @@ for (const [cat, repos] of Object.entries(results)) {
 }
 
 console.log(report);
-fs.writeFileSync('data/research_loop_results.json', JSON.stringify(results, null, 2));
-console.log('✅ Guardado en data/research_loop_results.json\n');
+fs.writeFileSync('data/cache/research/research_loop_results.json', JSON.stringify(results, null, 2));
+console.log('✅ Guardado en data/cache/research/research_loop_results.json\n');

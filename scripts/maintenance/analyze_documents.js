@@ -1,7 +1,7 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
-const { askLLM } = require('../lib/llm_service');
+const { askLLM } = require('../lib/ai/llm_service');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const DOCS_DIR = path.join(BASE_DIR, 'data', 'documentos');

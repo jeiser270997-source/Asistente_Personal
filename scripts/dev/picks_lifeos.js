@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const db = JSON.parse(fs.readFileSync('data/repos_db.json', 'utf8'));
+const db = JSON.parse(fs.readFileSync('data/cache/repos_db.json', 'utf8'));
 
 // Búsqueda quirúrgica — lo que REALMENTE puede entrar en LifeOS Node.js
 const PICKS = [
@@ -73,5 +73,5 @@ top.forEach(([l,c]) => console.log(`  ${l}: ${c}`));
 console.log(`\n  Total repos: ${db.length}`);
 console.log(`  Rango estrellas: ${db[db.length-1].stars} – ${db[0].stars.toLocaleString()}`);
 
-fs.writeFileSync('data/repos_picks.json', JSON.stringify(found, null, 2));
-console.log('\n✅ Picks guardados en data/repos_picks.json\n');
+fs.writeFileSync('data/cache/repos_picks.json', JSON.stringify(found, null, 2));
+console.log('\n✅ Picks guardados en data/cache/repos_picks.json\n');

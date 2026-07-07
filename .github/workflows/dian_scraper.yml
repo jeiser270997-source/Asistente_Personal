@@ -33,5 +33,5 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
-          git add data/dian/
+          git add data/cache/dian/
           git diff --cached --quiet || (git commit -m "chore(dian): actualizacion datos MUISCA" && git push)

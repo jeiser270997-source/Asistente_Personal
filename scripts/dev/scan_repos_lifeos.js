@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const db = JSON.parse(fs.readFileSync('data/repos_db.json', 'utf8'));
+const db = JSON.parse(fs.readFileSync('data/cache/repos_db.json', 'utf8'));
 console.log(`\n📦 DB cargada: ${db.length} repos\n`);
 
 // Keywords relevantes para el proyecto LifeOS
@@ -48,5 +48,5 @@ for (const [cat, repos] of Object.entries(results)) {
 console.log(report);
 
 // Save filtered results
-fs.writeFileSync('data/repos_lifeos_filtered.json', JSON.stringify(results, null, 2));
-console.log('✅ Guardado en data/repos_lifeos_filtered.json');
+fs.writeFileSync('data/cache/repos_lifeos_filtered.json', JSON.stringify(results, null, 2));
+console.log('✅ Guardado en data/cache/repos_lifeos_filtered.json');

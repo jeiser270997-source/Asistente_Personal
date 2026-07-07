@@ -12,7 +12,7 @@ let RE = null;
 if (USE_SQLITE) {
   CheckpointStore = require('../runtime/stores/CheckpointStore');
   LedgerStore = require('../runtime/stores/LedgerStore');
-  RE = require('../lib/resume_engine');
+  RE = require('../lib/runtime/resume_engine');
 }
 
 const PLACA = 'KEW496';

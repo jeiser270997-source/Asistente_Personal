@@ -2,12 +2,12 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.en
 const fs = require('node:fs');
 const path = require('node:path');
 const { google } = require('googleapis');
-const { authorize: googleAuthorize } = require('../lib/google_auth');
-const { sendTelegramMessage } = require('../lib/telegram');
-const { escapeHTML, truncate } = require('../lib/sanitize');
-const pending = require('../lib/pending');
-const jobTracker = require('../lib/job_tracker');
-const ruleEngine = require('../lib/rule_engine');
+const { authorize: googleAuthorize } = require('../lib/integrations/google_auth');
+const { sendTelegramMessage } = require('../lib/integrations/telegram');
+const { escapeHTML, truncate } = require('../lib/runtime/sanitize');
+const pending = require('../lib/context/pending');
+const jobTracker = require('../lib/runtime/job_tracker');
+const ruleEngine = require('../lib/runtime/rule_engine');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';
@@ -18,7 +18,7 @@ let RE = null;
 if (USE_SQLITE) {
   CheckpointStore = require('../runtime/stores/CheckpointStore');
   LedgerStore = require('../runtime/stores/LedgerStore');
-  RE = require('../lib/resume_engine');
+  RE = require('../lib/runtime/resume_engine');
 }
 
 const BASE_DIR = path.resolve(__dirname, '..');

@@ -1,4 +1,4 @@
-const { sendTelegramMessage } = require('../lib/telegram');
+const { sendTelegramMessage } = require('../lib/integrations/telegram');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';

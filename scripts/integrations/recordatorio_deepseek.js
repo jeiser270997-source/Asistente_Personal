@@ -1,4 +1,4 @@
-const { sendTelegramMessage } = require('../lib/telegram');
+const { sendTelegramMessage } = require('../lib/integrations/telegram');
 
 function getColombiaHour() {
   return parseInt(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota', hour: 'numeric', hour12: false }), 10);

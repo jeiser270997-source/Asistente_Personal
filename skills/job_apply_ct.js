@@ -14,7 +14,7 @@
  *
  * Configurar con env: APPLY_LEVEL=1|2|3
  */
-const bus = require('../lib/event_bus');
+const bus = require('../lib/events/event_bus');
 const path = require('path');
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
 const CT_PASS = process.env.COMPUTRABAJO_PASS;

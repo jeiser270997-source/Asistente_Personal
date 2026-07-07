@@ -27,7 +27,7 @@ description: Sistema de búsqueda de empleo QA/Tech en Colombia. Activa cuando J
 ## Modos de operación
 
 ### /cv — Generar/Actualizar CV
-- Leer `data/perfil.md` y `data/aplicaciones.json`
+- Leer `data/user/perfil.md` y `data/aplicaciones.json`
 - Generar CV enfocado en QA Automation
 - Formato: ATS-friendly (sin tablas, sin columnas fancy)
 - Keywords obligatorias: "Playwright", "Test Automation", "CESDE", "QA"
