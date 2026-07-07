@@ -25,13 +25,19 @@
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
 
 ## 🎓 Académico / Educativo
-- **Institución principal:** CESDE, Medellín
-- **Horario actual:** Lun/Mié/Vie 6-8pm Colombia *(curso inicial — próximamente cambia)*
-- **Horario próximo:** Sábados 7am–6pm Colombia *(horario principal del bootcamp QA)*
-- **Bootcamp QA:** 28 semanas — Objetivo: QA Automation Engineer
-- **SENA — Bases de Datos:** (ficha 3549155, plataforma Zajuna) ✅ En curso
-- **SENA — Excel:** Plataforma Zajuna (igual que Bases de Datos) — pendiente confirmar nombre exacto
-- **Recordatorios:** Workflow automático Telegram (Lun/Mié/Vie + Sábados)
+- **Institución principal:** CESDE, Medellín — Beca 70%
+- **Curso introductorio (becados):** Obligatorio · Presencial + virtual · 6–8pm
+  - Clase 3: Lun 6 Jul ✅ (hoy)
+  - Clase 4: Mié 8 Jul
+  - Clase 5: Vie 10 Jul
+  - Clase 6: Mié 15 Jul
+  - Clase 7: Vie 17 Jul
+  - Clase 8: Mié 22 Jul
+  - Clase 9: Vie 24 Jul → **Asignación del taller**
+  - Clase 10: Lun 27 Jul → **Entrega del taller** (deadline real)
+- **CESDE Bootcamp QA presencial:** Inicia **Sábado 25 de julio de 2026** (7am–6pm)
+- **SENA — Bases de Datos:** (ficha 3549155, Zajuna) ✅ En curso
+- **SENA — Excel:** Plataforma Zajuna — pendiente confirmar nombre exacto
 
 ## 💼 Laboral
 - **Estado:** Búsqueda activa QA/Tech en Medellín + remoto
@@ -81,9 +87,8 @@
 ## ⚠️ Pendientes Críticos
 1. **Experiencia laboral anterior de Jeiser** — no registrada. Preguntar al inicio.
 2. **SENA Excel** — confirmar nombre exacto del curso para el CV.
-3. **Fix login Computrabajo** — `computrabajo_apply.js` falla en selector email del login.
-4. **DIAN obligaciones detalle** — navegar desde Dashboard haciendo click (no URL directa).
-5. **SENA Actividad 2** — Cuadro Comparativo + Taller Aplicado (vence 07/07/2026 ⚠️ URGENTE).
+3. **DIAN obligaciones detalle** — navegar desde Dashboard haciendo click (no URL directa).
+4. **CESDE Taller** — se asigna el Vie 24 Jul, entrega Lun 27 Jul.
 
 ## 🔑 Credenciales (referencia)
 - **SENA Moodle:** `1019156838` / `A125230aaa.`
