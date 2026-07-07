@@ -1,0 +1,95 @@
+======================================================
+INSTRUCCIÓN PARA CLAUDE CODE
+======================================================
+
+Genera un documento PDF profesional para la Evidencia 1 de la Actividad de Aprendizaje 2 del SENA.
+
+======================================================
+DATOS PERSONALES DEL APRENDIZ
+======================================================
+- Nombre completo: Jeiser Abraham Gutiérrez Torres
+- Tipo y número de documento: C.C. 1019156838 de Sincelejo
+- Correo electrónico: jeiser270997@gmail.com
+- Teléfono: 3225972315
+- Programa de formación: Bases de Datos: Generalidades y Sistemas de Gestión
+- Código del programa: 21710088
+- Competencia: 210602003 - Alimentar base de datos de acuerdo con procedimientos establecidos y políticas institucionales
+- Resultado de aprendizaje: 210602003-02 - Conocer y distinguir los modelos de datos vigentes y sus bases conceptuales
+- Ficha: 3549155
+- Instructor: Rafael Neftalí Lizcano Reyes
+- Fecha de entrega: 7 de julio de 2026
+- Plataforma: Zajuna SENA - Curso Virtual
+
+======================================================
+ARCHIVO DE SALIDA
+======================================================
+- Nombre: Evidencia_AA2_Cuadro_Comparativo.pdf
+- Usa Python con reportlab, o genera HTML y conviértelo a PDF con weasyprint o pdfkit
+
+======================================================
+FORMATO
+======================================================
+- Tamaño carta, fuente Arial o Times New Roman 11-12pt, márgenes 2.5cm, interlineado 1.5
+- Portada profesional con:
+  * Escudo del SENA (descárgalo de internet, la imagen oficial)
+  * "SERVICIO NACIONAL DE APRENDIZAJE — SENA"
+  * "Programa: Bases de Datos: Generalidades y Sistemas de Gestión"
+  * "Actividad de Aprendizaje 2: Diferenciar los modelos de datos vigentes y sus bases conceptuales"
+  * "Evidencia 1: Cuadro Comparativo — Comprender los conceptos de bases de datos conceptuales"
+  * Nombre: Jeiser Abraham Gutiérrez Torres
+  * Documento: C.C. 1019156838 de Sincelejo
+  * Correo: jeiser270997@gmail.com
+  * Teléfono: 3225972315
+  * Ficha: 3549155
+  * Instructor: Rafael Neftalí Lizcano Reyes
+  * Fecha: 7 de julio de 2026
+- Tablas con bordes finos negros y encabezados con relleno gris claro
+- Encabezado en cada página (excepto portada): "AA2 — Evidencia 1: Cuadro Comparativo — Ficha 3549155"
+- Pie de página con número de página
+
+======================================================
+CONTENIDO
+======================================================
+
+PÁGINA 1: PORTADA
+
+PÁGINA 2 en adelante:
+
+## EVIDENCIA 1: CUADRO COMPARATIVO
+### Comprender los conceptos de bases de datos conceptuales
+
+--- SECCIÓN A: PREGUNTAS DE REFLEXIÓN ---
+
+Pregunta 1: ¿Por qué es importante organizar la información de una empresa?
+Redacta una respuesta de 1 párrafo explicando que la organización de la información permite tomar decisiones basadas en datos reales, evita duplicación y redundancia, facilita acceso rápido a la información, reduce errores operativos, y permite escalar el negocio sin perder el control de datos.
+
+Pregunta 2: Nombre tres ventajas de los sistemas de bases de datos computarizados dentro de una empresa.
+1. Acceso concurrente y control de usuarios múltiples
+2. Integridad y consistencia de los datos
+3. Seguridad y control de acceso
+(Cada una con su explicación de mínimo 2 líneas)
+
+--- SECCIÓN B: CUADRO COMPARATIVO DE TIPOS DE DATOS ---
+
+Tabla con columnas: Tipo de Dato | Descripción | Subtipos | Ejemplo Práctico | Uso en Bases de Datos
+
+Filas:
+1. ALFANUMÉRICOS (TEXTO) - CHAR, VARCHAR, TEXT - nombres, direcciones, placas
+2. NUMÉRICOS - INT, FLOAT, DECIMAL - identificadores, cantidades, precios
+3. FECHA Y HORA - DATE, TIME, DATETIME, TIMESTAMP - fechas de nacimiento, vencimientos
+4. BOOLEANOS - BOOLEAN, BIT - estados activo/inactivo, pagado/pendiente
+5. BINARIOS (BLOB) - BLOB, LONGBLOB, BYTEA - imágenes, PDFs, documentos digitalizados
+
+--- SECCIÓN C: CUADRO COMPARATIVO DE TIPOS DE BASES DE DATOS ---
+
+Tabla con columnas: Tipo de BD | Descripción | Características | Ventajas | Desventajas | Aplicaciones | Ejemplo SGBD
+
+Filas:
+1. RELACIONALES (BDR) - MySQL, PostgreSQL, Oracle
+2. NoSQL DOCUMENTALES - MongoDB, CouchDB, Firestore
+3. NoSQL CLAVE-VALOR - Redis, DynamoDB
+4. NoSQL COLUMNARES - Cassandra, ClickHouse
+5. NoSQL DE GRAFOS - Neo4j, Amazon Neptune
+
+--- SECCIÓN D: REFLEXIÓN PERSONAL ---
+Un párrafo (3-5 líneas) reflexionando sobre la importancia de conocer los diferentes tipos de datos y BD para seleccionar la tecnología adecuada según cada necesidad empresarial.

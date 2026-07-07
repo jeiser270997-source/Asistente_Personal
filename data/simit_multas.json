@@ -1,6 +1,6 @@
 {
   "placa": "KEW496",
-  "actualizado": "2026-07-05T17:30:00.000Z",
+  "actualizado": "2026-07-07T19:00:00.000Z",
   "total_deuda_activa": 1291904,
   "multas": [
     {
@@ -16,9 +16,14 @@
       "valor_principal": 633105,
       "intereses": 2755,
       "total": 635860,
-      "accion": "IMPUGNADO 05/07/2026 - Recurso de reposicion enviado a SIMIT + Itagui (5 correos, 2 rebotaron). Pendiente respuesta.",
+      "accion": "IMPUGNADO 05/07/2026. Radicado recurso reposicion AI26070618195823 (06/07). Radicado derecho peticion AI26070718196024 (07/07). Pendiente respuesta (15 dias habiles).",
       "estado": "Impugnado",
       "fecha_impugnacion": "2026-07-05",
+      "radicados": {
+        "recurso_reposicion": "AI26070618195823",
+        "derecho_peticion": "AI26070718196024",
+        "respuesta_pqrsdf": "AI26061318186333"
+      },
       "emails_enviados": ["contactosimit@fcm.org.co", "contacto@itagui.gov.co", "movilidad@itagui.gov.co", "secretariamovilidad@itagui.gov.co", "pqrs@itagui.gov.co"],
       "emails_rebotaron": ["secretariamovilidad@itagui.gov.co", "pqrs@itagui.gov.co"],
       "emails_entregados": ["contactosimit@fcm.org.co", "contacto@itagui.gov.co", "movilidad@itagui.gov.co"]
@@ -37,7 +42,7 @@
       "intereses": 111991,
       "total": 0,
       "total_original": 567011,
-      "accion": "Verificar en SIMIT si ya se refleja el pago. Solicitar paz y salvo a Itagui."
+      "accion": "Preparado Derecho de Peticion a FCM/SIMIT 07/07/2026. Pendiente envio. Adjuntar soportes de pago."
     },
     {
       "id": "0000679154",
@@ -68,7 +73,10 @@
     }
   },
   "notas_historicas": [
-    "2026-07-04: FCM respondio 'Remision por competencia' - no pueden modificar SIMIT, solo Itagui. Comparendo 0000430265 sigue en cobro coactivo."
+    "2026-07-04: FCM respondio 'Remision por competencia' - no pueden modificar SIMIT, solo Itagui. Comparendo 0000430265 sigue en cobro coactivo.",
+    "2026-07-06: Radicado recurso reposicion 0000838097: AI26070618195823",
+    "2026-07-07: Radicado derecho peticion 0000838097: AI26070718196024",
+    "2026-07-07: Preparado Derecho de Peticion descargue SIMIT 0000430265 + Recurso Reposicion formal 0000838097. Pendientes envio."
   ],
   "riesgos": {
     "embargo": "Multa 0000430265 en cobro coactivo. La Secretaria puede embargar cuentas bancarias, salario, o el vehiculo.",
