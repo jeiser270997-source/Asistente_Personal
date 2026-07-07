@@ -159,12 +159,14 @@ async function analizarOferta(oferta, cvBase) {
   const desc = oferta.descripcion || oferta.titulo;
   const prompt = `Eres un experto en reclutamiento tech en Colombia. Analiza la compatibilidad entre este candidato y la oferta.
 
-CANDIDATO — Jeiser Gutierrez:
-- QA Automation Junior en formación (CESDE bootcamp 2026, 28 semanas)
+CANDIDATO - Jeiser Gutierrez:
+- QA Automation Junior (CESDE bootcamp 2026, 28 semanas)
 - Skills: Playwright, JavaScript, Node.js, Git, GitHub Actions, Postman, SQL básico
-- Proyecto real: LifeOS (sistema autónomo con 11 workflows, scraping, LLM, SQLite)
-- Sin experiencia laboral formal en QA
+- Experiencia Práctica: Creador de LifeOS (sistema autónomo de producción con 11 workflows CI/CD, scraping, integración LLM y base de datos SQLite).
 - Disponible: tiempo completo o medio tiempo, Medellín + remoto
+
+REGLA DE EVALUACIÓN CLAVE:
+Ignora los requisitos corporativos rígidos de "1 o 2 años de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 año de experiencia real. Si la vacante es Junior/Trainee y los skills técnicos (JS, Playwright, Automation) hacen match, asígnale un score ALTO (>= 60) y evalúa su capacidad real, no los años en papel.
 
 OFERTA: ${oferta.titulo} | ${oferta.empresa} | ${oferta.lugar}
 DESCRIPCIÓN: ${desc.substring(0, 1500)}
