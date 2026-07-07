@@ -21,6 +21,28 @@
 4. ¿Qué aprendí del último mes? (métricas y feedback)
 5. ¿Qué puedo automatizar mañana para ahorrar tiempo? (rule engine + event bus)
 
+## Roadmap inmediato (próximos sprints)
+
+### Sprint 4 — Calibración
+- Dataset 50-100 ofertas reales
+- Ajuste de pesos de `scoring_weights.json`
+- Versionado de reglas (`rulesetVersion`)
+- Benchmark: precisión apply/skip vs criterio humano
+
+### Sprint 5 — Dedup + Change Detection
+- Detector de duplicados (hash de contenido + empresa/cargo/salario)
+- Detector de cambios en ofertas ya vistas (re-score automático)
+- Cola de aplicación (Top N priorizadas)
+
+### Sprint 6 — Estados + Reportes
+- Estados más ricos: NEW → SCORED → QUEUED → CV_READY → APPLIED → VIEWED → INTERVIEW → REJECTED → OFFER → HIRED
+- Dashboard semanal en Markdown
+- Reporte exportable por período
+
+### No automatizar aún
+- No aplicar automáticamente. Primero validar que el scorer prioriza bien.
+- El pipeline produce Top 10 → el usuario aprueba → se aplica.
+
 ## Principios de diseño
 
 1. Regla antes que IA.
