@@ -1,0 +1,387 @@
+{
+  "fecha": "2026-07-06T16:23:40.992Z",
+  "total": 38,
+  "nuevas": 15,
+  "ofertas": [
+    {
+      "titulo": "QA Automation Engineer",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,7 Bits Americas",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-qa-automation-engineer-semisenior-en-bogota-dc-69CEF7CA3F82887161373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "QA Automation Senior",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 SPV TRAVEL NETWORK S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-automation-senior-ti-en-bogota-dc-FCFCED45199A0EBE61373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-qa-automation-senior-ti-en-bogota-dc-FCFCED45199A0EBE61373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Test automation Engineer QA",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "CTBJ Compañía 500",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-test-automation-engineer-qa-en-la-guadalupe-7A797577CC74F11161373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-test-automation-engineer-qa-en-la-guadalupe-7A797577CC74F11161373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Ingeniero QA Automation",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,7 COMFANDI",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-qa-automation-en-cali-6AC0F1386F2F723D61373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-ingeniero-qa-automation-en-cali-6AC0F1386F2F723D61373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Ingeniero de Automatización QA / QA Automation Engineer",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "VIVA ENGAGE SOLUTIONS S.A.S.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-de-automatizacion-qa-qa-automation-engineer-remoto-en-medellin-5E929563ECD7327861373E686DCF3405#lc=ListOffers-Score4-4",
+      "id": "de-trabajo-de-ingeniero-de-automatizacion-qa-qa-automation-engineer-remoto-en-medellin-5E929563ECD7327861373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Mobile Test automation Engineer QA",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "CTBJ Compañía 500",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-mobile-test-automation-engineer-qa-en-la-guadalupe-3CD799B76B3BBC1861373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-mobile-test-automation-engineer-qa-en-la-guadalupe-3CD799B76B3BBC1861373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Technical AI Training Specialist",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Contact Point 360 S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-technical-ai-training-specialist-smart-device-support-en-bogota-dc-50AA4DE346CF140A61373E686DCF3405#lc=ListOffers-Score3-6",
+      "id": "de-trabajo-de-technical-ai-training-specialist-smart-device-support-en-bogota-dc-50AA4DE346CF140A61373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Senior Software Engineer in Test 54195",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 PeakU",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-senior-software-engineer-in-test-54195-remoto-en-bogota-dc-B4F26D3A29C2688361373E686DCF3405#lc=ListOffers-Score3-7",
+      "id": "de-trabajo-de-senior-software-engineer-in-test-54195-remoto-en-bogota-dc-B4F26D3A29C2688361373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Senior QA Engineer 54195",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 PeakU",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-senior-qa-engineer-54195-remoto-en-bogota-dc-5ACD757343F4574561373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-senior-qa-engineer-54195-remoto-en-bogota-dc-5ACD757343F4574561373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "QA Senior",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 ZEMSANIA COLOMBIA SAS",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-senior-bilingue-en-bogota-dc-4E592A1A8BD1A51961373E686DCF3405#lc=ListOffers-Score3-9",
+      "id": "de-trabajo-de-qa-senior-bilingue-en-bogota-dc-4E592A1A8BD1A51961373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Test automation Engineer KQ",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "CTBJ Compañía 500",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-test-automation-engineer-kq-en-la-guadalupe-79156AA5324AB1DA61373E686DCF3405#lc=ListOffers-Score0-10",
+      "id": "de-trabajo-de-test-automation-engineer-kq-en-la-guadalupe-79156AA5324AB1DA61373E686DCF3405",
+      "categoria": "QA Automation",
+      "scraped_at": "2026-07-06T16:23:25.385Z"
+    },
+    {
+      "titulo": "Digital Quality Assurance Analyst",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Michael Page",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-digital-quality-assurance-analyst-en-bogota-dc-0B492CA4756E905561373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-digital-quality-assurance-analyst-en-bogota-dc-0B492CA4756E905561373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "Aprendiz de Quality Assurance",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,8 SIIGO S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-aprendiz-de-quality-assurance-carreras-tecnicas-o-tecnologicas-en-bogota-dc-8816EABD9A5795FA61373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-aprendiz-de-quality-assurance-carreras-tecnicas-o-tecnologicas-en-bogota-dc-8816EABD9A5795FA61373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "RC Analista Senior de Calidad – Customer Operations e IA",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "SMART OPERATIONS BPO SAS",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-rc-analista-senior-de-calidad-customer-operations-e-ia-turno-noche-presencial-en-medellin-A207A25BE4983A8F61373E686DCF3405#lc=ListOffers-Score3-2",
+      "id": "de-trabajo-de-rc-analista-senior-de-calidad-customer-operations-e-ia-turno-noche-presencial-en-medellin-A207A25BE4983A8F61373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "AI Conversation Quality Specialist",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Contact Point 360 S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ai-conversation-quality-specialist-en-bogota-dc-866C8AA64614217A61373E686DCF3405#lc=ListOffers-Score3-3",
+      "id": "de-trabajo-de-ai-conversation-quality-specialist-en-bogota-dc-866C8AA64614217A61373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "Business Services Manager",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "CBRE COLOMBIA S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-business-services-manager-en-bogota-dc-9527A7D3589A556461373E686DCF3405#lc=ListOffers-Score3-4",
+      "id": "de-trabajo-de-business-services-manager-en-bogota-dc-9527A7D3589A556461373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "Pharmaceutical Chemist",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "GLOBAL STRATEGIC NETWORK S.A.S.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-pharmaceutical-chemist-quimico-farmaceutico-en-bogota-dc-ACFEE6B74527314C61373E686DCF3405#lc=ListOffers-Score3-5",
+      "id": "de-trabajo-de-pharmaceutical-chemist-quimico-farmaceutico-en-bogota-dc-ACFEE6B74527314C61373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "Analista QA",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,5 Par Servicios Integrales",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405#lc=ListOffers-Score3-6",
+      "id": "de-trabajo-de-analista-qa-en-bogota-dc-CB68EF55F6676B3361373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "Business Development Representative",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Importante empresa del sector",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-business-development-representative-healthcare-staffing-en-envigado-5E3976036BE358F861373E686DCF3405#lc=ListOffers-Score3-8",
+      "id": "de-trabajo-de-business-development-representative-healthcare-staffing-en-envigado-5E3976036BE358F861373E686DCF3405",
+      "categoria": "Quality Assurance",
+      "scraped_at": "2026-07-06T16:23:30.075Z"
+    },
+    {
+      "titulo": "Tester de Software Floridablanca, Santander",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 UNIDROGAS S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-de-software-floridablanca-santander-en-floridablanca-F2FB0737563F7C3161373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-tester-de-software-floridablanca-santander-en-floridablanca-F2FB0737563F7C3161373E686DCF3405",
+      "categoria": "Tester Software",
+      "scraped_at": "2026-07-06T16:23:34.722Z"
+    },
+    {
+      "titulo": "QA Testerrx3",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,5 Especialistas de Reclutamiento",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-testerr-en-bogota-dc-F055D5C1D02DB6B861373E686DCF3405#lc=ListOffers-Score3-1",
+      "id": "de-trabajo-de-qa-testerr-en-bogota-dc-F055D5C1D02DB6B861373E686DCF3405",
+      "categoria": "Tester Software",
+      "scraped_at": "2026-07-06T16:23:34.722Z"
+    },
+    {
+      "titulo": "Software QA Analyst",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Itconsultores SAS",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405#lc=ListOffers-Score3-2",
+      "id": "de-trabajo-de-software-qa-analyst-en-medellin-CCECF471AC84F32161373E686DCF3405",
+      "categoria": "Tester Software",
+      "scraped_at": "2026-07-06T16:23:34.722Z"
+    },
+    {
+      "titulo": "Tester Funcional",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "TALYCAP GLOBAL",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405#lc=ListOffers-Score0-3",
+      "id": "de-trabajo-de-tester-funcional-barranquilla-en-barranquilla-6A13FCBB3956254161373E686DCF3405",
+      "categoria": "Tester Software",
+      "scraped_at": "2026-07-06T16:23:34.722Z"
+    },
+    {
+      "titulo": "Ingeniero de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "SOLETANCHE BACHY COLOMBIA S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-de-calidad-bogota-en-bogota-dc-746E1C1257507EC661373E686DCF3405#lc=ListOffers-Score4-0",
+      "id": "de-trabajo-de-ingeniero-de-calidad-bogota-en-bogota-dc-746E1C1257507EC661373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Auxiliar de calidad y laboratorio",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,6 GENTE UTIL S.A.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-y-laboratorio-en-bucaramanga-88228BECD58DC01961373E686DCF3405#lc=ListOffers-Score4-1",
+      "id": "de-trabajo-de-auxiliar-de-calidad-y-laboratorio-en-bucaramanga-88228BECD58DC01961373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Practicante en calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,5 C.I. Creytex S.A",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-practicante-en-calidad-sector-textil-en-medellin-D1231DED583CEA8B61373E686DCF3405#lc=ListOffers-Score4-2",
+      "id": "de-trabajo-de-practicante-en-calidad-sector-textil-en-medellin-D1231DED583CEA8B61373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Analista de calidad / logistico",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Gi Group Colombia",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-calidad-logistico-contratacion-inmediata-en-funza-DA25AE99FF12FFC161373E686DCF3405#lc=ListOffers-Score4-3",
+      "id": "de-trabajo-de-analista-de-calidad-logistico-contratacion-inmediata-en-funza-DA25AE99FF12FFC161373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "auxiliar de calidad Siberia vía parcelas",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,6 Adecco Colombia S.A.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-siberia-via-parcelas-en-bogota-dc-07493638723ED38061373E686DCF3405#lc=ListOffers-Score4-4",
+      "id": "de-trabajo-de-auxiliar-de-calidad-siberia-via-parcelas-en-bogota-dc-07493638723ED38061373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Analista de Calidad / Auxiliar de laboratorio",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Activo Humano SAS",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-calidad-auxiliar-de-laboratorio-purificacion-tolima-en-purificacion-3FCB6BA4AD38654061373E686DCF3405#lc=ListOffers-Score4-5",
+      "id": "de-trabajo-de-analista-de-calidad-auxiliar-de-laboratorio-purificacion-tolima-en-purificacion-3FCB6BA4AD38654061373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Asegurador de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 GESTION Y COMPROMISO",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asegurador-de-calidad-medellin-en-medellin-5BD32993294E51C861373E686DCF3405#lc=ListOffers-Score4-6",
+      "id": "de-trabajo-de-asegurador-de-calidad-medellin-en-medellin-5BD32993294E51C861373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Auxiliar de Calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "IBLU",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-alimentos-en-rionegro-9A324C513798C9E261373E686DCF3405#lc=ListOffers-Score4-7",
+      "id": "de-trabajo-de-auxiliar-de-calidad-alimentos-en-rionegro-9A324C513798C9E261373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Analista de formación y calidad en call center / Inglés B2",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,3 BRM S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-formacion-y-calidad-en-call-center-ingles-b2-en-bogota-dc-AF724E0E93A329AB61373E686DCF3405#lc=ListOffers-Score4-8",
+      "id": "de-trabajo-de-analista-de-formacion-y-calidad-en-call-center-ingles-b2-en-bogota-dc-AF724E0E93A329AB61373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Gerente de control de Calidad Quimico Farmaceutico planta Sopo",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "VITALIS S.A. C.I.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-gerente-de-control-de-calidad-quimico-farmaceutico-planta-sopo-servicio-de-ruta-y-casino-en-bogota-dc-24F2A1CD946C47ED61373E686DCF3405#lc=ListOffers-Score4-9",
+      "id": "de-trabajo-de-gerente-de-control-de-calidad-quimico-farmaceutico-planta-sopo-servicio-de-ruta-y-casino-en-bogota-dc-24F2A1CD946C47ED61373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Analista de procesos y calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,5 EMPRESA DE TRANSPORTE INTEGRADO DE BOGOTA S.A.S (ETIB)",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-procesos-y-calidad-en-bogota-dc-686F16DA58696C1061373E686DCF3405#lc=ListOffers-Score4-10",
+      "id": "de-trabajo-de-analista-de-procesos-y-calidad-en-bogota-dc-686F16DA58696C1061373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Auxiliar de calidad textil",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Importante empresa del sector textil",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-textil-en-medellin-C1945DFC9DBF626161373E686DCF3405#lc=ListOffers-Score4-11",
+      "id": "de-trabajo-de-auxiliar-de-calidad-textil-en-medellin-C1945DFC9DBF626161373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Analista de calidad experiencia en envasadoras",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,6 Eficacia",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-calidad-experiencia-en-envasadoras-inyeccion-y-soplado-de-botellas-en-cali-067E52EA0B43799461373E686DCF3405#lc=ListOffers-Score4-12",
+      "id": "de-trabajo-de-analista-de-calidad-experiencia-en-envasadoras-inyeccion-y-soplado-de-botellas-en-cali-067E52EA0B43799461373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "Auxiliar de calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,4 EMPRESA DE SERVICIOS TEMPORALES MAXEMPLEOS S.A.S.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-calidad-sector-panadero-medellin-en-medellin-A92F449C8F539F5F61373E686DCF3405#lc=ListOffers-Score4-13",
+      "id": "de-trabajo-de-auxiliar-de-calidad-sector-panadero-medellin-en-medellin-A92F449C8F539F5F61373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    },
+    {
+      "titulo": "analista calidad",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "ORIENTTE S.A.S.",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-calidad-en-sogamoso-E35836A385BB2CE161373E686DCF3405#lc=ListOffers-Score4-14",
+      "id": "de-trabajo-de-analista-calidad-en-sogamoso-E35836A385BB2CE161373E686DCF3405",
+      "categoria": "QA General",
+      "scraped_at": "2026-07-06T16:23:39.452Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "fecha": "2026-07-06T19:15:14.539Z",
+  "total": 2,
+  "nuevas": 2,
+  "ofertas": [
+    {
+      "titulo": "Auxiliar de Soporte Tecnico",
+      "empresa": "Comfenalco Antioquia",
+      "lugar": "Medellin",
+      "fecha": "hoy",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-soporte-tecnico-en-medellin-8499E6F0A657F98161373E686DCF3405",
+      "id": "auxiliar-soporte-tecnico-comfenalco",
+      "categoria": "QA",
+      "scraped_at": "2026-07-06T19:15:14.540Z"
+    },
+    {
+      "titulo": "Auxiliar de sistemas - Auxiliar TI",
+      "empresa": "C.I ESLOP SAS",
+      "lugar": "Medellin",
+      "fecha": "hoy",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-auxiliar-ti-en-medellin-03647147C4D8660E61373E686DCF3405",
+      "id": "auxiliar-sistemas-eslop",
+      "categoria": "QA",
+      "scraped_at": "2026-07-06T19:15:14.540Z"
+    }
+  ]
+}

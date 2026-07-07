@@ -420,5 +420,29 @@
     "estado": "aplicado",
     "razon": "Postulación enviada",
     "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783341435635.png"
+  },
+  {
+    "oferta_id": "auxiliar-soporte-tecnico-comfenalco",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-soporte-tecnico-en-medellin-8499E6F0A657F98161373E686DCF3405",
+    "titulo": "Auxiliar de Soporte Tecnico",
+    "empresa": "Comfenalco Antioquia",
+    "lugar": "Medellin",
+    "fecha": "2026-07-06T19:17:03.073Z",
+    "score": 10,
+    "estado": "aplicado",
+    "razon": "Postulación enviada",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783365423017.png"
+  },
+  {
+    "oferta_id": "auxiliar-sistemas-eslop",
+    "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-auxiliar-ti-en-medellin-03647147C4D8660E61373E686DCF3405",
+    "titulo": "Auxiliar de sistemas - Auxiliar TI",
+    "empresa": "C.I ESLOP SAS",
+    "lugar": "Medellin",
+    "fecha": "2026-07-06T19:17:32.249Z",
+    "score": 15,
+    "estado": "error",
+    "razon": "No se pudo confirmar",
+    "screenshot": "E:\\PROYECTOS\\Asistente_Personal\\data\\jobs\\apply_1783365452209.png"
   }
 ]
