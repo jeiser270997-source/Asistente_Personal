@@ -89,10 +89,10 @@ async function main() {
       // Detect job listings from WhatsApp forwarding
       if (isJobListing(text)) {
         console.log('📋 Detectadas ofertas laborales. Parseando...');
-        const { parseJobMessage, matchJobs, generateReport } = require('./whatsapp_jobs_parser');
+        const { parseJobMessage, matchJobs, generateReport } = require('../jobs/whatsapp_jobs_parser');
         // We need to expose the private functions - use spawn instead
         const { spawnSync } = require('child_process');
-        const parser = spawnSync('node', ['scripts/whatsapp_jobs_parser.js', text.replace(/\n/g, '\\n')], {
+        const parser = spawnSync('node', ['scripts/jobs/whatsapp_jobs_parser.js', text.replace(/\n/g, '\\n')], {
           encoding: 'utf8', timeout: 30000
         });
         

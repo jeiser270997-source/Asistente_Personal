@@ -12,7 +12,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const BASE_DIR = path.resolve(__dirname, '..');
+const BASE_DIR = path.resolve(__dirname, '..', '..');
 const R = (p) => require(path.join(BASE_DIR, p));
 const IS_CI = process.argv.includes('--ci');
 const IS_FULL = process.argv.includes('--full') || !IS_CI;

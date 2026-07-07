@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('../../lib/runtime/bootstrap');
 const fs = require('node:fs');
 const path = require('node:path');
 const { google } = require('googleapis');
@@ -237,7 +237,7 @@ async function processEmails() {
           jobAppsRegistered.push({ ...parsed, plataforma: action.label, eval: result.evaluacion });
           log(`Postulacion registrada: ${parsed.empresa} - ${parsed.cargo} fit: ${result.evaluacion?.score || '?'}%`);
         }
-        try { await gmail.users.messages.trash({ userId: 'me', id: email.id }); log(`Correo de postulacion eliminado: ${email.subject}`); } catch {}
+        try { await gmail.users.messages.trash({ userId: 'me', id: email.id }); log(`Correo de postulacion eliminado: ${email.subject}`); } catch (e) { log(`Warning trashing email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         if (USE_SQLITE) LedgerStore.emit('email_job_application', { empresa: parsed.empresa, cargo: parsed.cargo, plataforma: action.label });
         continue;
@@ -246,7 +246,7 @@ async function processEmails() {
       if (action.isRejection) {
         log(`Rechazo detectado: ${email.subject}`);
         if (USE_SQLITE) LedgerStore.emit('email_job_rejection', { subject: email.subject, from: email.from });
-        try { await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: [action.label || 'Trabajo/Rechazos'] } }); } catch {}
+        try { await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: [action.label || 'Trabajo/Rechazos'] } }); } catch (e) { log(`Warning labeling email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         continue;
       }
@@ -283,7 +283,7 @@ async function processEmails() {
     for (const e of restEmails) {
       try {
         await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD'] } });
-      } catch {}
+      } catch (e) { log(`Warning modifying unread: ${e.message}`); }
     }
 
     let summaries = [];
@@ -330,7 +330,7 @@ async function processEmails() {
   } catch (err) {
     log(`Error: ${err.message}`);
     if (USE_SQLITE) { LedgerStore.emit('email_processor_error', { error: err.message }); RE.finish('email_processor', 'error', { reason: err.message }); }
-    try { await sendTelegramMessage(`Email Processor Error:\n<code>${escapeHTML(err.message)}</code>`); } catch {}
+    try { await sendTelegramMessage(`Email Processor Error:\n<code>${escapeHTML(err.message)}</code>`); } catch (e) { console.error('Error sending telegram alert:', e.message); }
     process.exit(1);
   }
 

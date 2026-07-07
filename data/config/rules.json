@@ -108,6 +108,36 @@
     "priority": "P2"
   },
   {
+    "name": "didi-conductor",
+    "match": { "from": ["*@didiglobal.com", "*@didimobility.com", "*@didi*"], "anyWord": ["recibo", "ganancias", "viaje", "conductor", "balance", "retiro"] },
+    "actions": { "label": "Finanzas/DiDi", "archive": true, "markRead": true, "logToLedger": true },
+    "priority": "P1"
+  },
+  {
+    "name": "uber-conductor",
+    "match": { "from": ["*@uber.com"], "anyWord": ["recibo", "ganancias", "viaje", "conductor", "balance", "pago"] },
+    "actions": { "label": "Finanzas/Uber", "archive": true, "markRead": true, "logToLedger": true },
+    "priority": "P1"
+  },
+  {
+    "name": "epm-servicios",
+    "match": { "from": ["*@epm.com.co", "*factura@epm*"], "subjectContains": ["factura", "pago", "recibo", "vencimiento"] },
+    "actions": { "label": "Finanzas/EPM", "archive": true, "notify": true },
+    "priority": "P1"
+  },
+  {
+    "name": "nequi-daviplata",
+    "match": { "fromContains": ["nequi", "daviplata"], "anyWord": ["transferencia", "pago", "recibiste", "enviaste", "movimiento"] },
+    "actions": { "label": "Finanzas/Billeteras", "archive": true, "markRead": true, "logToLedger": true },
+    "priority": "P2"
+  },
+  {
+    "name": "sena-zajuna",
+    "match": { "fromContains": ["zajuna", "sena"], "subjectContains": ["calificacion", "retroalimentacion", "actividad", "taller"] },
+    "actions": { "label": "Educacion/SENA", "notify": true },
+    "priority": "P1"
+  },
+  {
     "name": "trash-vacios",
     "match": { "fromContains": ["no-reply", "noreply", "no_reply", "notificaciones@"], "subjectContains": ["bienvenida", "welcome", "confirmacion de correo"] },
     "actions": { "label": "Sistema", "archive": true, "markRead": true },

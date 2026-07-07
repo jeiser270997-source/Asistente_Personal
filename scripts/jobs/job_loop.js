@@ -5,16 +5,16 @@
  * Uso: node scripts/job_loop.js [--loops=5] [--min-score=60] [--dry-run]
  *   --dry-run: analiza y genera CVs pero NO aplica
  */
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('../../lib/runtime/bootstrap');
 const fs    = require('node:fs');
 const path  = require('node:path');
 const { execSync, spawn } = require('node:child_process');
 const { askLLM } = require('../../lib/ai/llm_service');
 const { chromium } = require('playwright');
 
-const BASE_DIR  = path.resolve(__dirname, '..');
+const BASE_DIR  = path.resolve(__dirname, '..', '..');
 const JOBS_DIR  = path.join(BASE_DIR, 'data', 'jobs');
-const CV_BASE   = path.join(JOBS_DIR, 'cv_base.md');
+const CV_BASE   = path.join(BASE_DIR, 'data', 'sources', 'jobs', 'cv_base.md');
 const CV_OUT    = path.join(JOBS_DIR, 'cv_tailored');
 const APPLY_LOG = path.join(JOBS_DIR, 'aplicaciones.json');
 
@@ -38,7 +38,7 @@ async function sendTelegram(text) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: TELEGRAM_CHAT, text, parse_mode: 'HTML' }),
     });
-  } catch {}
+  } catch (e) { console.error(`[Telegram Error] ${e.message}`); }
 }
 
 // ─── SCRAPE LISTA DE OFERTAS ──────────────────────────────────
@@ -71,7 +71,7 @@ async function scrapeOfertasList() {
     const url = `https://co.computrabajo.com/trabajo-de-${q}?by=publicationDate`;
     try {
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
-      await page.waitForTimeout(2500);
+      await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
       const offers = await page.evaluate((lbl) => {
         const results = [];
         const clean = s => (s || '').replace(/\s+/g, ' ').trim();
@@ -121,7 +121,7 @@ async function scrapeDescripcion(url, browser) {
   const page = await ctx.newPage();
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(1500);
+    await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
     const desc = await page.evaluate(() => {
       const clean = s => (s || '').replace(/\s+/g, ' ').trim();
       const body = document.querySelector('[class*="description"], [class*="jobDescription"], #job-body, .jobDescriptionSection, main');
@@ -136,6 +136,25 @@ async function scrapeDescripcion(url, browser) {
 }
 
 // ─── ANALIZAR COMPATIBILIDAD ──────────────────────────────────
+
+/**
+ * @typedef {Object} AnalisisResult
+ * @property {number} score
+ * @property {string} nivel_requerido
+ * @property {string[]} skills_match
+ * @property {string[]} skills_gap
+ * @property {string} salario_estimado
+ * @property {string} modalidad
+ * @property {boolean} recomendar
+ * @property {string} razon_corta
+ * @property {string} tip_postulacion
+ */
+
+/**
+ * @param {Object} oferta
+ * @param {string} cvBase
+ * @returns {Promise<AnalisisResult>}
+ */
 async function analizarOferta(oferta, cvBase) {
   const desc = oferta.descripcion || oferta.titulo;
   const prompt = `Eres un experto en reclutamiento tech en Colombia. Analiza la compatibilidad entre este candidato y la oferta.
@@ -205,15 +224,15 @@ async function aplicar(oferta, browser) {
   try {
     // Login
     await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(2000);
+    await page.waitForSelector('#Email, input[name="Email"]', { timeout: 5000 }).catch(() => {});
     await page.fill('#Email, input[name="Email"]', CT_EMAIL, { force: true });
     await page.fill('#password, input[name="Password"]', CT_PASS, { force: true });
     await page.click('button[type="submit"]', { timeout: 5000 }).catch(() => {});
-    await page.waitForTimeout(3000);
+    await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
 
     // Navegar a oferta
     await page.goto(oferta.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForTimeout(2000);
+    await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
 
     // Botón postularme
     const btnSelectors = [
@@ -223,7 +242,7 @@ async function aplicar(oferta, browser) {
     ];
     let clicked = false;
     for (const sel of btnSelectors) {
-      try { await page.click(sel, { timeout: 2000 }); clicked = true; break; } catch {}
+      try { await page.click(sel, { timeout: 3000 }); clicked = true; break; } catch (e) { log(`  [debug] btn no matchea: ${sel}`); }
     }
 
     if (!clicked) {
@@ -231,7 +250,7 @@ async function aplicar(oferta, browser) {
       return { exito: false, razon: 'Botón postularme no encontrado' };
     }
 
-    await page.waitForTimeout(3000);
+    await page.waitForLoadState('networkidle', { timeout: 4000 }).catch(() => {});
     const confirmado = await page.evaluate(() =>
       /postul|envi|éxito|registrad|aplicac/i.test(document.body.innerText)
     );

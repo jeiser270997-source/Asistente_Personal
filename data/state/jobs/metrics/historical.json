@@ -1,0 +1,32 @@
+{
+  "runs": [
+    {
+      "jobId": "test-1",
+      "company": "Softtek",
+      "title": "QA Automation Engineer",
+      "totalScore": 87,
+      "breakdown": {
+        "total": 87,
+        "skills": 21,
+        "seniority": 8,
+        "salary": 15,
+        "location": 10,
+        "english": 10,
+        "company": 20,
+        "growth": 3,
+        "llmAlignment": 0,
+        "strengths": [],
+        "weaknesses": [],
+        "redFlags": [],
+        "reasoning": "Score calculado para QA Automation Engineer"
+      },
+      "decision": "apply",
+      "executionTimeMs": 1,
+      "modelUsed": "deterministico",
+      "tokensConsumed": 0,
+      "timestamp": "2026-07-07T21:39:47.622Z"
+    }
+  ],
+  "outcomes": [],
+  "lastUpdated": "2026-07-07T21:39:47.623Z"
+}
