@@ -1,0 +1,339 @@
+======================================================
+INSTRUCCIÓN PARA CLAUDE CODE
+======================================================
+
+Genera un documento PDF profesional para la Actividad de Aprendizaje 2 del SENA.
+
+======================================================
+DATOS PERSONALES DEL APRENDIZ (poner exactamente así)
+======================================================
+- Nombre completo: Jeiser Abraham Gutiérrez Torres
+- Tipo y número de documento: C.C. 1019156838 de Sincelejo
+- Correo electrónico: jeiser270997@gmail.com
+- Teléfono: 3225972315
+- Programa de formación: Bases de Datos: Generalidades y Sistemas de Gestión
+- Código del programa: 21710088
+- Competencia: 210602003 - Alimentar base de datos de acuerdo con procedimientos establecidos y políticas institucionales
+- Resultado de aprendizaje: 210602003-02 - Conocer y distinguir los modelos de datos vigentes y sus bases conceptuales
+- Ficha: 3549155
+- Instructor: Rafael Neftalí Lizcano Reyes
+- Fecha de entrega: 7 de julio de 2026
+- Plataforma: Zajuna SENA - Curso Virtual
+
+======================================================
+FORMATO DEL DOCUMENTO
+======================================================
+- Archivo de salida: Evidencia_AA2_Colegio_San_Jorge.pdf
+- Usa Python con reportlab, o genera HTML y conviértelo a PDF con weasyprint o pdfkit
+- Tamaño carta
+- Portada profesional que incluya:
+  * Escudo/logotipo del SENA (descárgalo de internet, la imagen oficial)
+  * Texto: "SERVICIO NACIONAL DE APRENDIZAJE — SENA"
+  * Texto: "Programa: Bases de Datos: Generalidades y Sistemas de Gestión"
+  * Texto: "Actividad de Aprendizaje 2: Diferenciar los modelos de datos vigentes y sus bases conceptuales"
+  * Texto: "Evidencias: Cuadro Comparativo y Taller Aplicado"
+  * Nombre completo del aprendiz: Jeiser Abraham Gutiérrez Torres
+  * Número de ficha: 3549155
+  * Nombre del instructor: Rafael Neftalí Lizcano Reyes
+  * Fecha: 7 de julio de 2026
+- Fuente: Arial o Times New Roman, tamaño 11-12pt para cuerpo, 14-16pt para títulos
+- Márgenes: 2.5cm en los 4 lados
+- Interlineado: 1.5
+- Tablas con bordes finos negros, celdas con relleno gris claro en encabezados
+- Encabezado en cada página (excepto portada): "AA2 — Bases de Datos: Generalidades y Sistemas de Gestión — Ficha 3549155"
+- Pie de página con número de página
+- Separar cada evidencia con un salto de página y un encabezado visible
+
+======================================================
+ESTRUCTURA DEL DOCUMENTO
+======================================================
+
+PÁGINA 1: PORTADA (con todos los datos anteriores)
+
+PÁGINA 2 en adelante:
+
+## EVIDENCIA 1: CUADRO COMPARATIVO
+### Comprender los conceptos de bases de datos conceptuales
+
+--- SECCIÓN A: PREGUNTAS DE REFLEXIÓN ---
+
+Pregunta 1: ¿Por qué es importante organizar la información de una empresa?
+Redacta una respuesta de mínimo 1 párrafo (80-120 palabras) explicando que la organización de la información permite tomar decisiones basadas en datos reales, evita la duplicación y redundancia, facilita el acceso rápido a la información cuando se necesita, reduce errores operativos, y permite escalar el negocio sin perder el control de la información.
+
+Pregunta 2: Nombre tres ventajas de los sistemas de bases de datos computarizados dentro de una empresa.
+Redacta 3 ventajas en formato de lista numerada con su explicación (mínimo 2 líneas cada una):
+1. Acceso concurrente y control de usuarios múltiples - Varias personas pueden consultar y modificar datos al mismo tiempo sin conflictos gracias a los mecanismos de bloqueo y transacciones que gestiona el SGBD.
+2. Integridad y consistencia de los datos - Las restricciones de llaves primarias, foráneas, check y reglas de negocio evitan datos inconsistentes como registros huérfanos o valores fuera de rango.
+3. Seguridad y control de acceso - Los SGBD permiten definir roles y permisos (lectura, escritura, modificación) por usuario, protegiendo la información sensible y auditando quién accedió a qué.
+
+--- SECCIÓN B: CUADRO COMPARATIVO DE TIPOS DE DATOS ---
+
+Crear una tabla comparativa con las siguientes columnas: Tipo de Dato, Descripción, Subtipos, Ejemplo Práctico, Uso en Bases de Datos.
+
+Filas de la tabla:
+
+1. DATOS ALFANUMÉRICOS (TEXTO)
+   Descripción: Representan cadenas de caracteres que pueden incluir letras, números y símbolos.
+   Subtipos: CHAR(n) — longitud fija, VARCHAR(n) — longitud variable, TEXT, NVARCHAR
+   Ejemplo: "Jeiser Gutiérrez", "Calle 50 #43-34", "KEW496"
+   Uso en BD: Almacenar nombres, direcciones, placas, códigos, descripciones
+
+2. DATOS NUMÉRICOS
+   Descripción: Representan valores numéricos que pueden ser enteros o decimales, permiten operaciones aritméticas.
+   Subtipos: INT, SMALLINT, BIGINT, FLOAT, DECIMAL(p,s), NUMBER
+   Ejemplo: 1019156838 (CC), 3225972315 (teléfono), 633105.00 (valor multa)
+   Uso en BD: Almacenar identificadores, cantidades, precios, edades, promedios
+
+3. DATOS DE FECHA Y HORA
+   Descripción: Representan momentos en el tiempo, permiten ordenamiento cronológico y operaciones de diferencia entre fechas.
+   Subtipos: DATE, TIME, DATETIME, TIMESTAMP, YEAR
+   Ejemplo: 2000-05-27 (fecha de nacimiento), 2026-06-22 16:30 (fecha infracción)
+   Uso en BD: Almacenar fechas de nacimiento, fechas de vencimiento, registros de auditoría, logs
+
+4. DATOS BOOLEANOS
+   Descripción: Representan valores lógicos binarios: verdadero o falso (1 o 0).
+   Subtipos: BOOLEAN, BIT, TINYINT(1)
+   Ejemplo: true (pagó), false (no pagó), 1 (activo), 0 (inactivo)
+   Uso en BD: Indicar estados binarios: activo/inactivo, pagado/pendiente, sí/no
+
+5. DATOS BINARIOS (BLOB)
+   Descripción: Almacenan datos en formato binario como imágenes, archivos PDF, audio, video.
+   Subtipos: BLOB, LONGBLOB, MEDIUMBLOB, BYTEA
+   Ejemplo: Fotografía del conductor, PDF de la factura, huella digital escaneada
+   Uso en BD: Almacenar imágenes de perfil, documentos digitalizados, archivos multimedia
+
+--- SECCIÓN C: CUADRO COMPARATIVO DE TIPOS DE BASES DE DATOS ---
+
+Crear una tabla con columnas: Tipo de Base de Datos, Descripción, Características Principales, Ventajas, Desventajas, Aplicaciones Típicas, Ejemplo de SGBD.
+
+Filas:
+
+1. BASES DE DATOS RELACIONALES (BDR)
+   Descripción: Almacenan datos en tablas relacionadas entre sí mediante claves primarias y foráneas, basándose en el modelo matemático de Edgar F. Codd (1970).
+   Características: Tablas con filas y columnas, relaciones mediante llaves, lenguaje SQL estándar, cumplen ACID (Atomicidad, Consistencia, Aislamiento, Durabilidad)
+   Ventajas: Madurez tecnológica, amplia documentación, integridad referencial, estandarización SQL, soporte multiplataforma
+   Desventajas: Dificultad para escalar horizontalmente, rigidez en el esquema, bajo rendimiento con datos no estructurados
+   Aplicaciones: Sistemas financieros, ERP, CRM, facturación, nómina, inventarios
+   Ejemplo: MySQL, PostgreSQL, Oracle, SQL Server
+
+2. BASES DE DATOS NoSQL DOCUMENTALES
+   Descripción: Almacenan datos como documentos JSON o BSON, cada documento puede tener una estructura diferente (schema-less).
+   Características: Sin esquema fijo, documentos autónomos, escalabilidad horizontal, alta velocidad de lectura/escritura, indexación sobre cualquier campo
+   Ventajas: Flexibilidad de esquema, fácil escalado, rápido desarrollo, ideal para datos semiestructurados
+   Desventajas: Sin integridad referencial automática, consultas complejas limitadas, madurez menor que relacionales
+   Aplicaciones: Catálogos de productos, sistemas de contenido, redes sociales, logs de eventos
+   Ejemplo: MongoDB, CouchDB, Firebase Firestore
+
+3. BASES DE DATOS NoSQL CLAVE-VALOR
+   Descripción: Almacenan datos como pares clave-valor, donde la clave es única y el valor puede ser cualquier tipo de dato.
+   Características: Extremadamente rápidas, modelo simple, escalabilidad horizontal casi lineal, sin esquema, alta disponibilidad
+   Ventajas: Velocidad de lectura/escritura excepcional, baja latencia, ideales para caché, fáciles de particionar
+   Desventajas: Consultas solo por clave, sin relaciones, funcionalidad limitada para búsquedas complejas
+   Aplicaciones: Caché de aplicaciones, sesiones de usuario, carritos de compra, almacenamiento de configuraciones
+   Ejemplo: Redis, DynamoDB, Riak, Memcached
+
+4. BASES DE DATOS NoSQL COLUMNARES
+   Descripción: Almacenan datos en columnas en lugar de filas, optimizadas para consultas analíticas y agregaciones sobre grandes volúmenes de datos.
+   Características: Compresión por columna, escaneo rápido de grandes datasets, particionamiento por columnas, alta escalabilidad
+   Ventajas: Excelente rendimiento en consultas analíticas (OLAP), compresión eficiente, agregaciones rápidas
+   Desventajas: No ideales para transacciones OLTP, escrituras lentas, curva de aprendizaje alta
+   Aplicaciones: Data warehouses, business intelligence, análisis de logs, series de tiempo, big data
+   Ejemplo: Apache Cassandra, HBase, ClickHouse, Google Bigtable
+
+5. BASES DE DATOS NoSQL DE GRAFOS
+   Descripción: Almacenan datos como nodos (entidades), aristas (relaciones) y propiedades, optimizadas para consultas que exploran conexiones y patrones de relación.
+   Características: Modelo basado en teoría de grafos, relaciones como ciudadanos de primera clase, recorridos eficientes, lenguaje de consulta tipo Cypher
+   Ventajas: Consultas de relaciones extremadamente rápidas, modelado natural de conexiones, ideales para datos interconectados
+   Desventajas: Escalado horizontal complejo, no ideales para consultas simples de tablas, nicho específico
+   Aplicaciones: Redes sociales, motores de recomendación, detección de fraude, análisis de rutas, grafos de conocimiento
+   Ejemplo: Neo4j, Amazon Neptune, ArangoDB, JanusGraph
+
+--- SECCIÓN D: REFLEXIÓN PERSONAL ---
+Agrega al final de la Evidencia 1 un párrafo corto (3-5 líneas) donde el aprendiz reflexiona sobre la importancia de conocer los diferentes tipos de datos y bases de datos para seleccionar la tecnología adecuada según las necesidades de cada empresa.
+
+======================================================
+EVIDENCIA 2: TALLER APLICADO
+### Desarrollar los componentes de las bases de datos conceptuales
+======================================================
+
+CASO DE ESTUDIO: COLEGIO SAN JORGE
+
+El rector del Colegio San Jorge solicita diseñar una base de datos para llevar de manera sistematizada la información del colegio.
+
+--- ENUNCIADO DEL PROBLEMA ---
+El Colegio San Jorge necesita un sistema de información que permita gestionar los datos de profesores, estudiantes, materias y cursos. Actualmente manejan toda la información en hojas de cálculo y carpetas físicas, lo que ha generado problemas de duplicación de datos, pérdida de información y dificultad para generar reportes académicos oportunos.
+
+--- LISTADO DE ENTIDADES (mínimo 5) ---
+
+1. Profesores - Almacena información de los docentes de la institución
+2. Estudiantes - Almacena información de los estudiantes del grado 11
+3. Materias - Almacena las materias ofrecidas en el grado 11
+4. Cursos - Almacena los cursos/grupos existentes
+5. Asignación_Materias_Curso - Entidad débil para manejar la relación M:M entre Materias y Cursos (qué materias se dictan en cada curso)
+
+--- TABLAS DETALLADAS CON ATRIBUTOS ---
+
+Crear las tablas en el PDF con el siguiente formato visual:
+
+[ENCABEZADO DE TABLA]
+Nombre de la Entidad: Profesores
+Descripción: Almacena la información personal y académica de los docentes.
+Clave Primaria (PK): cod_profesor
+
+En filas de tabla mostrar: | Nombre del Atributo | Tipo de Dato | Longitud | PK/FK | Descripción | Ejemplo de Valor |
+
+cod_profesor       | INT          | -       | PK      | Código único y auto-incremental del docente           | 1001
+nombres            | VARCHAR      | 50      | -       | Nombres del profesor                                   | Jeiser Abraham
+apellidos          | VARCHAR      | 50      | -       | Apellidos del profesor                                 | Gutiérrez Torres
+documento_identidad| VARCHAR      | 20      | -       | Número de documento de identidad                       | 1019156838
+genero             | CHAR         | 1       | -       | Género del docente (M/F)                               | M
+direccion          | VARCHAR      | 100     | -       | Dirección de residencia                                | Calle 50 #43-34
+telefono           | VARCHAR      | 15      | -       | Teléfono de contacto                                   | 3225972315
+correo             | VARCHAR      | 100     | -       | Correo electrónico                                     | jeiser270997@gmail.com
+fecha_nacimiento   | DATE         | -       | -       | Fecha de nacimiento                                    | 1997-05-27
+titulo_academico   | VARCHAR      | 100     | -       | Título profesional                                     | Ingeniero de Sistemas
+cod_curso_dirige   | VARCHAR      | 10      | FK      | Curso que dirige (FK → Cursos)                         | 11-A
+
+--------
+
+Entidad: Estudiantes
+Descripción: Almacena la información de los estudiantes del grado 11.
+PK: cod_estudiante
+
+| Atributo         | Tipo    | Long | PK/FK | Descripción                              | Ejemplo             |
+|------------------|---------|------|-------|------------------------------------------|---------------------|
+| cod_estudiante   | INT     | -    | PK    | Código único del estudiante              | 2001                |
+| nombres          | VARCHAR | 50   | -     | Nombres del estudiante                   | Carlos Andrés       |
+| apellidos        | VARCHAR | 50   | -     | Apellidos del estudiante                 | Martínez Pérez      |
+| documento_id     | VARCHAR | 20   | -     | Documento de identidad                   | 1020456789          |
+| genero           | CHAR    | 1    | -     | Género (M/F)                             | M                   |
+| fecha_nacimiento | DATE    | -    | -     | Fecha de nacimiento                      | 2008-03-15          |
+| edad             | INT     | -    | -     | Edad del estudiante                      | 18                  |
+| direccion        | VARCHAR | 100  | -     | Dirección de residencia                  | Carrera 45 #67-89   |
+| telefono_contacto| VARCHAR | 15   | -     | Teléfono del acudiente                   | 3001234567          |
+| correo           | VARCHAR | 100  | -     | Correo electrónico                       | carlos.martinez@email.com |
+| cod_curso        | VARCHAR | 10   | FK    | Curso donde está matriculado (FK → Cursos) | 11-A             |
+
+--------
+
+Entidad: Materias
+Descripción: Catálogo de materias ofrecidas en el grado 11.
+PK: cod_materia
+
+| Atributo         | Tipo    | Long | PK/FK | Descripción                              | Ejemplo             |
+|------------------|---------|------|-------|------------------------------------------|---------------------|
+| cod_materia      | VARCHAR | 10   | PK    | Código único de la materia               | MAT101              |
+| nombre_materia   | VARCHAR | 80   | -     | Nombre completo de la materia            | Matemáticas Básicas |
+| descripcion      | VARCHAR | 200  | -     | Breve descripción del contenido          | Álgebra y geometría |
+| intensidad_horaria| INT    | -    | -     | Horas semanales de clase                 | 5                   |
+| area_conocimiento| VARCHAR | 50   | -     | Área a la que pertenece                  | Ciencias Exactas    |
+
+--------
+
+Entidad: Cursos
+Descripción: Grupos o cursos académicos de la institución.
+PK: cod_curso
+
+| Atributo         | Tipo    | Long | PK/FK | Descripción                              | Ejemplo             |
+|------------------|---------|------|-------|------------------------------------------|---------------------|
+| cod_curso        | VARCHAR | 10   | PK    | Código del curso (ej: 11-A, 11-B)        | 11-A                |
+| nombre_curso     | VARCHAR | 50   | -     | Nombre descriptivo del curso             | Grado 11 - Grupo A  |
+| grado            | VARCHAR | 10   | -     | Grado escolar (11)                       | 11                  |
+| grupo            | CHAR    | 1    | -     | Letra del grupo (A, B, C)                | A                   |
+| jornada          | VARCHAR | 20   | -     | Jornada (Mañana, Tarde, Noche)           | Mañana              |
+| año_lectivo      | INT     | -    | -     | Año lectivo correspondiente              | 2026                |
+| capacidad_maxima | INT     | -    | -     | Número máximo de estudiantes             | 40                  |
+
+--------
+
+Entidad: Asignación_Materias_Curso (entidad débil para relación M:M)
+Descripción: Define qué materias se dictan en cada curso y qué profesor las dicta.
+PK Compuesta: (cod_curso, cod_materia, cod_profesor)
+
+| Atributo         | Tipo    | Long | PK/FK | Descripción                                   | Ejemplo        |
+|------------------|---------|------|-------|-----------------------------------------------|----------------|
+| cod_curso        | VARCHAR | 10   | PK/FK | Curso donde se dicta (FK → Cursos)            | 11-A           |
+| cod_materia      | VARCHAR | 10   | PK/FK | Materia que se dicta (FK → Materias)          | MAT101         |
+| cod_profesor     | INT     | -    | PK/FK | Profesor que la dicta (FK → Profesores)       | 1001           |
+| dia_semana       | VARCHAR | 10   | -     | Día de la semana de la clase                  | Lunes          |
+| hora_inicio      | TIME    | -    | -     | Hora de inicio de la clase                    | 07:00:00       |
+| hora_fin         | TIME    | -    | -     | Hora de finalización de la clase              | 08:30:00       |
+| salon            | VARCHAR | 10   | -     | Salón donde se dicta la clase                 | A-101          |
+
+--- REGISTROS DE EJEMPLO (mínimo 10 por entidad) ---
+
+Genera 10 registros de ejemplo para cada entidad. Usa nombres y datos realistas colombianos. Ejemplo para Estudiantes:
+
+| cod_estudiante | nombres | apellidos | documento_id | genero | fecha_nacimiento | edad | direccion | telefono_contacto | correo | cod_curso |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2001 | Carlos Andrés | Martínez Pérez | 1020456789 | M | 2008-03-15 | 18 | Carrera 45 #67-89 | 3001234567 | carlos.martinez@email.com | 11-A |
+| 2002 | María Fernanda | López Ramírez | 1020456790 | F | 2008-07-22 | 18 | Calle 32 #12-45 | 3002345678 | maria.lopez@email.com | 11-A |
+| 2003 | Santiago | Gómez Restrepo | 1020456791 | M | 2009-01-10 | 17 | Av. Siempre Viva #123 | 3003456789 | santiago.gomez@email.com | 11-A |
+| 2004 | Valentina | Torres Medina | 1020456792 | F | 2008-11-05 | 18 | Carrera 50 #23-12 | 3004567890 | valentina.torres@email.com | 11-A |
+| 2005 | Andrés Felipe | Castro Jiménez | 1020456793 | M | 2009-04-18 | 17 | Calle 80 #90-23 | 3005678901 | andres.castro@email.com | 11-B |
+| 2006 | Laura Camila | Rincón Duarte | 1020456794 | F | 2008-09-30 | 18 | Carrera 12 #34-56 | 3006789012 | laura.rincon@email.com | 11-B |
+| 2007 | Juan Pablo | Herrera Vargas | 1020456795 | M | 2009-02-14 | 17 | Calle 5 #67-89 | 3007890123 | juan.herrera@email.com | 11-B |
+| 2008 | Daniela | Ospina Ruiz | 1020456796 | F | 2008-06-08 | 18 | Av. Oriental #45-67 | 3008901234 | daniela.ospina@email.com | 11-B |
+| 2009 | Sebastián | Mora Vargas | 1020456797 | M | 2009-05-25 | 17 | Calle 20 #89-01 | 3009012345 | sebastian.mora@email.com | 11-A |
+| 2010 | Gabriela | Suárez Pineda | 1020456798 | F | 2008-12-12 | 18 | Carrera 33 #78-90 | 3010123456 | gabriela.suarez@email.com | 11-A |
+
+Genera 10 registros para Profesores, 10 para Cursos, 10 para Materias, y al menos 10 para Asignación_Materias_Curso, con datos igualmente detallados y realistas.
+
+--- ANÁLISIS DE CARDINALIDAD Y RELACIONES ---
+
+Describe cada relación entre entidades:
+
+1. Profesores (1) ──── (M) Asignación_Materias_Curso
+   Tipo: Uno a Muchos (1:M)
+   Explicación: Un profesor puede estar asignado a múltiples materias y cursos a través de la tabla de asignación. Por ejemplo, el profesor "Carlos Méndez" dicta Matemáticas en 11-A y Física en 11-B. Sin embargo, cada registro de asignación pertenece a un único profesor.
+   Implementación: La FK cod_profesor en la tabla Asignación_Materias_Curso referencia la PK cod_profesor de la tabla Profesores.
+
+2. Cursos (1) ──── (M) Estudiantes
+   Tipo: Uno a Muchos (1:M)
+   Explicación: Un curso (ej: 11-A) puede tener varios estudiantes matriculados (ej: 35 estudiantes), pero cada estudiante pertenece a un único curso. Esta es la relación más común en instituciones educativas.
+   Implementación: La FK cod_curso en la tabla Estudiantes referencia la PK cod_curso de la tabla Cursos.
+
+3. Cursos (1) ──── (M) Asignación_Materias_Curso
+   Tipo: Uno a Muchos (1:M)
+   Explicación: Un curso puede tener múltiples materias asignadas a través de la tabla de asignación. Por ejemplo, 11-A tiene Matemáticas, Español, Ciencias, etc. Cada registro de asignación pertenece a un solo curso.
+   Implementación: La FK cod_curso en Asignación_Materias_Curso referencia la PK cod_curso de Cursos.
+
+4. Materias (1) ──── (M) Asignación_Materias_Curso
+   Tipo: Uno a Muchos (1:M)
+   Explicación: Una materia puede dictarse en múltiples cursos. Por ejemplo, Matemáticas se dicta en 11-A, 11-B y 11-C. Cada registro de asignación referencia una materia específica en un curso específico.
+   Implementación: La FK cod_materia en Asignación_Materias_Curso referencia la PK cod_materia de Materias.
+
+5. Profesores (1) ──── (M) Cursos (a través de cod_curso_dirige)
+   Tipo: Uno a Muchos (1:M) — opcional
+   Explicación: Un profesor puede ser director de un curso (el director de grupo). Cada curso tiene un director, y un profesor puede ser director de máximo un curso (o ninguno).
+   Implementación: La FK cod_curso_dirige en la tabla Profesores referencia la PK cod_curso de la tabla Cursos.
+
+DIAGRAMA GENERAL DE RELACIONES (representar en el PDF):
+
+```
+Profesores ──1:M──→ Asignación_Materias_Curso ←──M:1── Materias
+    |                       ↑
+    |                       |
+    1:M                     M:1
+    |                       |
+    ↓                       |
+  Cursos ──────1:M──────────┘
+    ↑
+    |
+    1:M
+    |
+    ↓
+  Estudiantes
+```
+
+--- CONCLUSIÓN DEL TALLER ---
+Agrega un párrafo final (mínimo 5 líneas) explicando que el diseño conceptual presentado constituye la base para la posterior implementación física en un SGBD como MySQL o PostgreSQL. Destaca que el modelo Entidad-Relación (E-R) es la herramienta fundamental para entender las necesidades del negocio (en este caso, el Colegio San Jorge) antes de escribir una sola línea de código SQL.
+
+======================================================
+NOTAS FINALES
+======================================================
+
+- El PDF debe ser profesional, apto para entregar al instructor del SENA
+- Usa un script de Python ejecutable: python genera_pdf_aa2.py
+- Verifica que todas las tablas se vean bien en el PDF
+- El archivo final se debe llamar exactamente: Evidencia_AA2_Colegio_San_Jorge.pdf
