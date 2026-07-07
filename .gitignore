@@ -1,3 +1,4 @@
+# --- Estándar ---
 node_modules/
 credentials.json
 token.json
@@ -7,31 +8,72 @@ correos.md
 repomix_*.md
 .backup_*/
 
-# Datos personales no versionados
+# --- Datos personales ---
 data/chat_history.json
 data/notas.md
 data/processed_emails.json
 data/*.db
 data/tamagotchi_stats.json
 data/pending.json.migrated
-data/audit/
-data/memoria/
 data/aplicaciones.json
 data/contexto_vital.json
 data/telegram_state.json
 data/jobs/computrabajo_backup.json
 
-# Tokens y secretos OAuth
+# --- Documentos con datos sensibles (cédulas, identidad) ---
+data/cesde/documentos/
+data/documentos/
+data/sena/materiales/
+
+# --- Tokens OAuth ---
 .google_token.json
 *_token.json
 *.secret.json
 
-# Imágenes de debug (no versionar)
+# --- Caché regenerable: scrapers y APIs externas ---
+data/repos_db.json
+data/repos_db_meta.json
+data/repos_lifeos_filtered.json
+data/repos_picks.json
+data/top_repos.json
+data/research_loop_results.json
+data/research_loop_report.md
+data/research_personal_results.json
+data/research_personal_report.md
+data/repos_lifeos_report.md
+
+# --- Caché: scrapers externos ---
+data/dian/
+data/simit/ultima_consulta.json
+data/simit_multas.json
+data/sena/calificaciones.json
+data/sena/curso.json
+data/sena/cronograma_fechas.json
+data/jobs/computrabajo.json
+data/jobs/computrabajo_last.json
+data/jobs/canal_juniorjobs.json
+
+# --- Debug temporales ---
 diag_*.png
 debug_*.png
 data/jobs/*.png
 data/jobs/apply_*.png
+data/data/
 
-# Archivos generados temporales
+# --- Reportes y auditoría regenerables ---
+data/audit/
+
+# --- Memoria persistente del agente ---
+data/memoria/
+
+# --- Submódulo externo ---
+data/resume_template/
+
+# --- Archivos generados temporales ---
 data/_tmp_fetch/
 data/jobs/cv_tailored/
+
+# --- Artefactos generados (CVs, reportes) ---
+data/jobs/cv_jeiser.html
+data/jobs/cv_jeiser_soporte_ti.html
+data/jobs/cv_jeiser_soporte_ti.pdf
