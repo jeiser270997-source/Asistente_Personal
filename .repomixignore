@@ -1,0 +1,33 @@
+# .repomixignore — Archivos que NO deben incluirse en auditorías a LLM
+# Estos son datos vivos, cachés, diagnósticos y artefactos que añaden ruido.
+
+# ─── Datos de estado y cachés (JSON regenerables) ───
+data/**/*.json
+data/artifacts/
+data/cache/
+data/email_attachments/
+
+# ─── Scripts de diagnóstico y debugging ───
+scripts/diagnostics/
+tests/
+
+# ─── Datos duplicados de scripts ───
+scripts/data/
+
+# ─── Logs ───
+logs/
+*.log
+
+# ─── Plantillas HTML estáticas (para CV, no código) ───
+data/jobs/*.html
+
+# ─── Bases de datos SQLite ───
+*.db
+
+# ─── Node_modules y builds ───
+node_modules/
+dist/
+build/
+
+# ─── Backups ───
+.backup_*/
