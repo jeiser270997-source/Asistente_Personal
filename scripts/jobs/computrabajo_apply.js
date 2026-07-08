@@ -258,13 +258,22 @@ async function aplicarOferta(browser, ofertaUrl) {
 
     const btnTexts = ['Postularme', 'Postular', 'Aplicar', 'Apply'];
     let clicked = false;
+    let externalPage = null;
 
     for (const txt of btnTexts) {
       try {
-        await page.click(`button:has-text("${txt}"), a:has-text("${txt}")`, { timeout: 3000 });
-        clicked = true;
-        log(`   Click en "${txt}"`);
-        break;
+        const btn = page.locator(`button:has-text("${txt}"), a:has-text("${txt}")`).first();
+        if (await btn.isVisible({ timeout: 1000 }).catch(() => false)) {
+          // Escuchar por si abre una nueva pestaña (link externo)
+          const [newPage] = await Promise.all([
+            ctx.waitForEvent('page', { timeout: 3500 }).catch(() => null),
+            btn.click({ timeout: 3000 })
+          ]);
+          clicked = true;
+          log(`   Click en "${txt}"`);
+          if (newPage) externalPage = newPage;
+          break;
+        }
       } catch {}
     }
 
@@ -274,7 +283,23 @@ async function aplicarOferta(browser, ofertaUrl) {
       return { exito: false, razon: 'Boton no encontrado' };
     }
 
+    // Deteccion de aplicacion externa (Nueva pestaña)
+    if (externalPage) {
+      const extUrl = externalPage.url();
+      log(`   Detectada redireccion a aplicacion externa en nueva pestaña: ${extUrl}`);
+      await ctx.close();
+      return { exito: false, razon: 'Aplicacion externa', external_url: extUrl };
+    }
+
     await page.waitForTimeout(3000);
+
+    // Deteccion de aplicacion externa (Misma pestaña)
+    if (!page.url().includes('computrabajo.com')) {
+      const extUrl = page.url();
+      log(`   Detectada redireccion a aplicacion externa: ${extUrl}`);
+      await ctx.close();
+      return { exito: false, razon: 'Aplicacion externa', external_url: extUrl };
+    }
 
     const tienePreguntas = await page.evaluate(() =>
       document.body.innerText.includes('Preguntas de seleccion') ||
@@ -473,14 +498,19 @@ async function main() {
     saveAplicacion(registro);
     ledger('aplicacion_' + (resultado.exito ? 'enviada' : 'fallida'), { ...registro });
 
-    if (resultado.exito) {
+    if (resultado.external_url) {
+      log(`   EXTERNA: ${oferta.titulo} requiere aplicacion manual`);
+      await sendTelegram(`⚠️ <b>Aplicacion Externa Detectada</b>\n${oferta.titulo} — ${oferta.empresa}\nLa empresa requiere aplicar en su propio portal. Hazlo tu mismo aqui:\n<a href="${resultado.external_url}">Abrir portal externo</a>`);
+    } else if (resultado.exito) {
       log(`   APLICADO: ${oferta.titulo} en ${oferta.empresa}`);
       await sendTelegram(`✅ <b>Aplicacion enviada</b>\n${oferta.titulo} — ${oferta.empresa}\n<a href="${oferta.url}">Ver oferta</a>`);
     } else {
       log(`   Error aplicando: ${resultado.razon}`);
     }
 
-    await new Promise(r => setTimeout(r, 2000));
+    const delayMs = Math.floor(Math.random() * (30000 - 15000 + 1) + 15000);
+    log(`   Pausa de seguridad anti-bot de ${delayMs/1000}s...`);
+    await new Promise(r => setTimeout(r, delayMs));
   }
 
   await browser.close();

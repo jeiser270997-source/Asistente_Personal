@@ -18,9 +18,9 @@ async function robustLogin(page, email, pass) {
     // Esperar a que haya algún input en pantalla (no estrictamente #Email)
     await page.waitForSelector('input:visible', { timeout: 15000 });
 
-    // 1. Llenar el email (primer input que NO sea contraseña)
-    const emailInput = page.locator('input').filter({ hasNot: page.locator('[type="password"]') }).first();
-    await emailInput.click({ timeout: 5000 });
+    // 1. Llenar el email (buscar input tipo email o ID email)
+    const emailInput = page.locator('input[type="email"], input[name="email"], #Email, input[placeholder*="correo"]').first();
+    await emailInput.click({ timeout: 5000 }).catch(() => {});
     await page.waitForTimeout(500);
     await emailInput.fill(email);
     
