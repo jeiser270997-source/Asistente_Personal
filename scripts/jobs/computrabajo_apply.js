@@ -258,18 +258,6 @@ async function aplicarOferta(browser, ofertaUrl) {
     } else {
       log(`   Sesión válida, saltando login`);
     }
-      await page.waitForTimeout(4000);
-
-      // Guardar sesión para próxima vez
-      try {
-        const newState = await context.storageState();
-        require('node:fs').writeFileSync(STATE_PATH, JSON.stringify(newState, null, 2));
-        log(`   ✅ Sesión guardada para próximas ejecuciones`);
-      } catch (e) { /* noop */ }
-
-      // Ahora ir a la oferta
-      await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
-    });
 
     log(`   Navegando a oferta: ${ofertaUrl}`);
     await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });

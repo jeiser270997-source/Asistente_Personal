@@ -98,10 +98,10 @@
 4. **CESDE Taller** — se asigna Vie 24 Jul, entrega Lun 27 Jul.
 5. **Importar .ics a Google Calendar** — `data/artifacts/cesde_introductorio_julio2026.ics`
 
-## 🔑 Credenciales (referencia)
-- **SENA Moodle:** `1019156838` / `A125230aaa.`
-- **DIAN MUISCA:** `1019156838` / `A125%230aa` (CC)
-- **Computrabajo:** `jeiser270997@gmail.com` / `A125%230a`
+## 🔑 Credenciales (referencia — almacenadas en .env / gestor de contraseñas)
+- **SENA Moodle:** Usuario `1019156838` — contraseña en gestor de contraseñas
+- **DIAN MUISCA:** Usuario `1019156838` — contraseña en gestor de contraseñas
+- **Computrabajo:** `jeiser270997@gmail.com` — contraseña en gestor de contraseñas
 - **Placa:** KEW496 · CC: 1019156838
 
 ## 🏗️ Upgrade LifeOS Jul 2026 — WheelSaver Audit

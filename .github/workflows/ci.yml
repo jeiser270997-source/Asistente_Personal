@@ -36,5 +36,8 @@ jobs:
         node --check lib/integrations/telegram.js
         node --check scripts/schedulers/brain_orchestrator.js
         node --check scripts/integrations/inbox_sensor.js
+        node --check scripts/jobs/computrabajo_apply.js
+        node --check scripts/jobs/computrabajo_scraper.js
+        node --check scripts/jobs/job_loop.js
         node --check Herramientas/Gmail_Cleaner/cli.js
         echo "✅ Todo el código es válido."
