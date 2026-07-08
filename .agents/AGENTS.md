@@ -1,5 +1,5 @@
-# Life OS - Segundo Cerebro de Jeiser v2.3
-**Última actualización:** 2026-07-07 (milestone v1.0 motor empleo + principios de diseño + data reorganizada)
+# Life OS - Segundo Cerebro de Jeiser v2.4
+**Última actualización:** 2026-07-08 (milestone v1.1 Migración TS + Backups GDrive + Fixes Core)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -121,9 +121,12 @@ node scripts/cv_tailorer.js <url_oferta>
 
 # DIAN extracción exhaustiva
 node scripts/dian_scraper.js
+
+# Backup DBs a Google Drive
+npm run backup
 ```
 
-## Comandos Rápidos (SSH)
+## Comandos Rápidos (SSH / Local)
 
 ```bash
 # Correos
@@ -143,16 +146,19 @@ node scripts/audit.js
 
 # Reflexión nocturna (manual)
 node scripts/reflexion_nocturna.js
+
+# Briefing Matutino (Local - Requiere USB)
+npm run briefing
 ```
 
-## Auditoría (06/07/2026)
+## Auditoría (08/07/2026)
 
-- **Sintaxis**: ✅ 0 errores
-- **Workflows**: ✅ 12 activos, todos ubuntu-22.04
-- **DIAN Login**: ✅ Angular mat-select fix funcional
-- **Computrabajo Scraper**: ✅ 38-43 ofertas/día
-- **CV**: ✅ sb2nov/resume HTML · Escritorio de Jeiser
-- **Job Loop**: ✅ Scrape + DeepSeek análisis + tailoring funcional
+- **Sintaxis**: ✅ 0 errores. CI/CD reforzado con `npx tsc --noEmit` para archivos TS.
+- **TypeScript**: ✅ `morning_briefing.ts` y `set_alarms.ts` refactorizados corriendo vía `tsx`.
+- **Workflows**: ✅ 12 activos, todos ubuntu-22.04. Auditados y testeados en local.
+- **SIMIT Scraper**: ✅ Bug de variable vacía (`curr.multas` vs `curr.detalle.multas`) corregido. Cero falsas "Multas Resueltas".
+- **Brain Orchestrator**: ✅ Rutas absolutas (`BASE_DIR`) corregidas, ya logra procesar correos del SIMIT exitosamente.
+- **Backups**: ✅ Tarea automatizada para comprimir `.db` y `.json` y moverlos a Google Drive (`G:\My Drive\LifeOS_Backups\`).
 - **Fix pendiente**: ❌ Login CT en `computrabajo_apply.js` (timeout selector email)
 
 ## Reglas de Comportamiento
