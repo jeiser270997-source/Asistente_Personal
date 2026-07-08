@@ -39,7 +39,7 @@
   - Clase 10: Lun 27 Jul → **Entrega del taller** (deadline real)
   - 📅 Recordatorios en Google Calendar (`data/artifacts/cesde_introductorio_julio2026.ics`)
 - **CESDE Bootcamp QA presencial:** Inicia **Sábado 25 de julio de 2026** (7am–6pm)
-- **SENA — Bases de Datos:** (ficha 3549155, Zajuna) ✅ En curso
+- **SENA — Bases de Datos:** (ficha 3549155, Zajuna) ✅ AA1 + AA2 entregadas. AA3 en curso (08-20 Jul)
 - **SENA — Excel:** Plataforma Zajuna — pendiente confirmar nombre exacto
 
 ## 💼 Laboral
