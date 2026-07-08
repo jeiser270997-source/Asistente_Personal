@@ -127,8 +127,25 @@ function getIsoTime(hoursStr) {
   return d.toISOString();
 }
 
+// ================= FESTIVOS (NAGER.DATE API) =================
+async function checkFestivo(dateIso) {
+  try {
+    const year = dateIso.split('-')[0];
+    const res = await fetch(`https://date.nager.at/api/v3/publicholidays/${year}/CO`);
+    if (!res.ok) return { es_festivo: false, nombre: "" };
+    const festivos = await res.json();
+    const festivoHoy = festivos.find(f => f.date === dateIso);
+    if (festivoHoy) {
+      return { es_festivo: true, nombre: festivoHoy.localName };
+    }
+  } catch (err) {
+    console.log(`[Holiday API Error]: ${err.message}`);
+  }
+  return { es_festivo: false, nombre: "" };
+}
+
 // ================= IA GENERATOR =================
-async function generateStrategy(clima, pypInfo, redditInfo, diaSemana) {
+async function generateStrategy(clima, pypInfo, redditInfo, diaSemana, festivoInfo) {
   const meta_bruta = config.finanzas.meta_diaria_bruta;
   const gasto_gas = config.finanzas.gasto_gasolina_estimado;
   const meta_neta = meta_bruta - gasto_gas;
@@ -138,27 +155,37 @@ async function generateStrategy(clima, pypInfo, redditInfo, diaSemana) {
   const todayIso = new Date().toISOString().split('T')[0];
   let extraRules = "";
   
-  // Natacion (Miercoles)
-  if (diaSemana === 3 && todayIso <= config.extracurriculares_dominick.natacion.fin_iso) {
+  // Regla Festivo (Overrides Todo lo Demás)
+  if (festivoInfo.es_festivo) {
     extraRules = `
+[REGLA DE ORO - HOY ES FESTIVO: ${festivoInfo.nombre}]:
+- El Pico y Placa NO APLICA hoy.
+- El colegio de Dominick ESTÁ CERRADO hoy. Cancela todas las alarmas y eventos relacionados al colegio, y no agendes horas de recogerlo.
+- Prioriza enrutamientos hacia zonas de ocio, centros comerciales, restaurantes o pueblos cercanos (ej. Sabaneta, Envigado, o fuera de la ciudad si es rentable).
+`;
+  } else {
+    // Reglas Normales si NO es festivo
+    if (diaSemana === 3 && todayIso <= config.extracurriculares_dominick.natacion.fin_iso) {
+      extraRules += `
 [REGLA ESPECIAL MIÉRCOLES - NATACIÓN DOMINICK]:
 - A las 12:00 PM (Mediodía) DEBES agendar un evento "Prepararse para Natación de Dominick". Jeiser debe pedir Uber/Metro hacia La Estrella (Parque Comfama).
 - A las 2:00 PM agendar el evento de clase de Natación.
 - Esto anula la jornada de la tarde de DiDi.
 `;
-  }
-  
-  // Futbol (Domingo)
-  if (diaSemana === 0 && todayIso <= config.extracurriculares_dominick.futbol.fin_iso) {
-    extraRules = `
+    }
+    
+    if (diaSemana === 0 && todayIso <= config.extracurriculares_dominick.futbol.fin_iso) {
+      extraRules += `
 [REGLA ESPECIAL DOMINGO - FÚTBOL DOMINICK]:
 - Agendar evento a las 9:30 AM: "⚽ Partido de Dominick (Comfama La Estrella)".
 - Angelina lo lleva, pero ponlo en el calendario para que Jeiser sepa dónde están.
 `;
+    }
   }
 
   const prompt = `Eres el Despachador Logístico de Jeiser (Conductor DiDi en Medellín). 
 DATOS OPERATIVOS DE HOY:
+- Festivo: ${festivoInfo.es_festivo ? 'SÍ (' + festivoInfo.nombre + ')' : 'NO'}.
 - Clima: ${clima.estado} (${clima.probLluvia}% prob. lluvia). UV Máximo: ${clima.uvMax}.
 - Pico y Placa: Placas ${pypInfo.restringidas_hoy}. ¿Restricción hoy?: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'}.
 - Meta: $${meta_bruta} brutos (Aprox $${meta_neta} netos). Horas necesarias: ~${horas_necesarias}.
@@ -168,12 +195,12 @@ ITINERARIO ESTRATÉGICO DINÁMICO:
 1. Inicio:
    - Despertar: 05:00 AM.
    - Inicio de jornada: 06:00 AM.
-2. Mitad de Jornada (Colegio):
-   - 11:15 AM: Iniciar enrutamiento ("Viaje con destino") hacia el colegio ${config.zonas.colegio_dominick}.
-   - 11:45 AM: Recoger a Dominick.
+2. Mitad de Jornada:
+   - SI NO ES FESTIVO: 11:15 AM Iniciar enrutamiento al colegio ${config.zonas.colegio_dominick}. 11:45 AM Recoger a Dominick.
+   - SI ES FESTIVO: Ignorar colegio por completo. Seguir facturando.
 3. Bifurcación Climática (El Escudo Solar):
    - SI EL UV ES >= 7 (Día de Horno): Oblígalo a descansar de 12:00 PM a 3:00 PM. No puede manejar a esa hora. La jornada de la tarde inicia a las 3:00 PM.
-   - SI EL UV ES < 7 (Día de Sombra): Anula el descanso largo. Dale solo 1 hora para almorzar con Dominick (hasta la 1:00 PM) y mándalo a manejar desde la 1:00 PM de corrido para aprovechar el clima fresco y facturar más.
+   - SI EL UV ES < 7 (Día de Sombra): Anula el descanso largo. Dale solo 1 hora libre (si no es festivo, para almorzar con Dominick) y mándalo a manejar de corrido para aprovechar el clima fresco y facturar más.
    - IMPORTANTE: Si hay REGLA ESPECIAL MIÉRCOLES o DOMINGO, esa regla tiene prioridad sobre la tarde.
 4. Cierre Nocturno (Si aplica):
    - 10:00 PM (22:00): Activar "Viaje con destino" hacia ${config.zonas.base_operaciones}.
@@ -193,8 +220,8 @@ El JSON debe tener esta estructura:
     }
   ]
 }
-Nota: Genera todos los eventos relevantes (Despertar, Jornadas, Clases Dominick, Enrutamientos, Descansos, y Retorno a Villa Eloisa). Asegúrate de aplicar bien la regla del UV y las Reglas Especiales. Usa formato ISO 8601.`;
-
+Nota: Genera todos los eventos relevantes (Despertar, Jornadas, Clases Dominick, Enrutamientos, Descansos, y Retorno a Villa Eloisa). Asegúrate de aplicar bien la regla del UV, las Reglas Especiales, y las REGLAS DE FESTIVO si aplican. Usa formato ISO 8601.`;
+  
   try {
     const response = await fetch('https://api.deepseek.com/beta/chat/completions', {
       method: 'POST',
@@ -224,20 +251,26 @@ Nota: Genera todos los eventos relevantes (Despertar, Jornadas, Clases Dominick,
 
 async function main() {
   console.log("Iniciando DiDi Orchestrator Avanzado...");
-  const diaSemana = new Date().getDay();
+  const clima = await getMedellinWeather();
+  const todayIso = new Date().toISOString().split('T')[0];
+  const festivoInfo = await checkFestivo(todayIso);
   
-  const [clima, redditInfo] = await Promise.all([
-    getMedellinWeather(),
-    getRedditInsights()
-  ]);
+  const diaSemana = new Date().getDay();
+  let pypInfo = getPicoYPlacaInfo(diaSemana, config.placa_vehiculo);
+  
+  // Si es festivo, el Pico y Placa se anula en Medellín
+  if (festivoInfo.es_festivo) {
+    console.log(`[FESTIVO DETECTADO]: ${festivoInfo.nombre} - Anulando Pico y Placa.`);
+    pypInfo.tiene_restriccion = false;
+  }
 
-  const pypInfo = getPicoYPlacaInfo(diaSemana, config.placa_vehiculo);
   const maintenanceAlerts = checkMaintenance();
 
+  const redditInfo = await getRedditInsights();
   console.log(`Clima: UV ${clima.uvMax} | Reddit: ${redditInfo.substring(0,30)}...`);
   console.log("Generando reporte con DeepSeek (JSON)...");
   
-  const aiPayload = await generateStrategy(clima, pypInfo, redditInfo, diaSemana);
+  const aiPayload = await generateStrategy(clima, pypInfo, redditInfo, diaSemana, festivoInfo);
 
   let finalMessage = `<b>🚕 DiDi Master Shift - Reporte Diario</b>\n\n${aiPayload.mensaje_telegram}`;
   if (maintenanceAlerts) {
