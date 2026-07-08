@@ -60,10 +60,15 @@ Medellín, Colombia · jeiser270997@gmail.com · Conductor DiDi → busca trabaj
 **CESDE:** Sábados 7am-6pm (próximo horario) · actual Lun/Mié/Vie 6-8pm
 **SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
 
+**Perfil Psicológico y Operativo (SRE Mindset):**
+- **Nivel real:** Falso Junior (Aplica a QA Automation Junior pero diseña arquitectura Cloud/SRE).
+- **Mindset:** Hustler pragmático. Trabaja en DiDi, estudia CESDE/SENA y programa infraestructura compleja. Odia el trabajo manual.
+- **Trato requerido:** Comunicación técnica directa, cero explicaciones básicas. Fomentar su marketing personal para potenciar su transición laboral.
+
 **⚠️ PENDIENTES ACTIVOS:**
 1. Experiencia laboral anterior de Jeiser — NO registrada. Preguntar.
 2. SENA Excel — confirmar nombre exacto del curso para el CV.
-3. Fix login Computrabajo — `computrabajo_apply.js` falla selector email.
+3. ✅ Fix login Computrabajo — Resuelto (Flujo 2 pasos implementado).
 4. DIAN obligaciones detalle — navegar Dashboard por clicks (no URL directa).
 5. SENA Actividad 2 — Cuadro Comparativo + Taller (vence 07/07/2026 ⚠️ HOY).
 
@@ -159,7 +164,7 @@ npm run briefing
 - **SIMIT Scraper**: ✅ Bug de variable vacía (`curr.multas` vs `curr.detalle.multas`) corregido. Cero falsas "Multas Resueltas".
 - **Brain Orchestrator**: ✅ Rutas absolutas (`BASE_DIR`) corregidas, ya logra procesar correos del SIMIT exitosamente.
 - **Backups**: ✅ Tarea automatizada para comprimir `.db` y `.json` y moverlos a Google Drive (`G:\My Drive\LifeOS_Backups\`).
-- **Fix pendiente**: ❌ Login CT en `computrabajo_apply.js` (timeout selector email)
+- **Fixes**: ✅ Login Computrabajo arreglado (flujo 2 pasos y detección anti-trampas implementada).
 
 ## Reglas de Comportamiento
 
