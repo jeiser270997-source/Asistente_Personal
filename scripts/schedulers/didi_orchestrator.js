@@ -56,17 +56,46 @@ async function getMedellinWeather() {
   }
 }
 
-// ================= REDDIT SCRAPER =================
+const { chromium } = require('playwright');
+
+// ================= REDDIT SCRAPER (PLAYWRIGHT) =================
 async function getRedditInsights() {
+  let browser = null;
   try {
-    const res = await fetch('https://www.reddit.com/r/medellin/search.json?q=didi OR transito OR uber OR reten&restrict_sr=1&t=week&sort=new', {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
+    // Modo "Infiltración": Lanzamos un navegador invisible (headless) simulando ser un humano
+    browser = await chromium.launch({ headless: true });
+    const context = await browser.newContext({
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     });
-    const data = await res.json();
-    const posts = data.data.children.slice(0, 3).map(p => p.data.title);
-    return posts.length > 0 ? posts.join(" | ") : "Todo tranquilo en redes.";
-  } catch {
-    return "No se pudo conectar a Reddit.";
+    const page = await context.newPage();
+    
+    // Entramos a Reddit /r/medellin ordenado por nuevos
+    await page.goto('https://www.reddit.com/r/medellin/new/', { waitUntil: 'domcontentloaded', timeout: 30000 });
+    
+    // Esperamos a que Reddit deje de redirigir y estabilice el DOM
+    await page.waitForTimeout(4000);
+    
+    // Extraemos todo el texto visible del body
+    const pageText = await page.evaluate(() => document.body.innerText);
+    const posts = pageText.split('\n').map(l => l.trim()).filter(l => l.length > 10);
+    
+    // Filtramos los que hablan de tránsito, didi o uber (ignorando mayúsculas)
+    const keywords = ['didi', 'uber', 'transito', 'tránsito', 'reten', 'retén', 'taco', 'bloqueo'];
+    const relevantes = posts.filter(title => {
+      const t = title.toLowerCase();
+      return keywords.some(k => t.includes(k));
+    });
+
+    if (relevantes.length > 0) {
+      return relevantes.slice(0, 3).join(" | ");
+    } else {
+      return "Todo tranquilo en redes (Reddit limpio hoy).";
+    }
+  } catch (err) {
+    console.log(`[Reddit Scraper Error]: ${err.message}`);
+    return "No se pudo extraer Reddit con Playwright.";
+  } finally {
+    if (browser) await browser.close();
   }
 }
 
