@@ -1,0 +1,51 @@
+{
+  "placa_vehiculo": "6",
+  "vehiculo": {
+    "modelo": "Toyota Corolla XLi 2010",
+    "consumo_km_l": 8
+  },
+  "finanzas": {
+    "meta_diaria_bruta": 260000,
+    "gasto_gasolina_estimado": 60000,
+    "rendimiento_promedio_hora": 30000
+  },
+  "zonas": {
+    "inicio_manana": "Medellín",
+    "colegio_dominick": "El Chigua BarberShop",
+    "inicio_tarde": "Medellín",
+    "base_operaciones": "Villa Eloisa"
+  },
+  "horarios": {
+    "jornada_1_inicio": "06:00",
+    "alerta_enrutamiento_dominick": "11:15",
+    "recoger_dominick": "11:45",
+    "limite_jornada_noche": "22:00",
+    "cierre_absoluto": "23:00"
+  },
+  "pico_y_placa_medellin": {
+    "lunes": ["5", "8"],
+    "martes": ["1", "4"],
+    "miercoles": ["2", "0"],
+    "jueves": ["3", "6"],
+    "viernes": ["7", "9"]
+  },
+  "extracurriculares_dominick": {
+    "futbol": {
+      "lugar": "Parque Comfama La Estrella",
+      "dia": "Domingo",
+      "inicio_iso": "2026-06-21",
+      "fin_iso": "2026-08-23",
+      "hora_inicio": "09:30",
+      "hora_fin": "10:29"
+    },
+    "natacion": {
+      "lugar": "Parque Comfama La Estrella",
+      "dia": "Miercoles",
+      "inicio_iso": "2026-06-17",
+      "fin_iso": "2026-08-19",
+      "hora_inicio": "14:00",
+      "hora_fin": "14:59",
+      "hora_preparacion": "12:00"
+    }
+  }
+}
