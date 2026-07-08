@@ -1,4 +1,4 @@
-const { sendTelegramMessage } = require('../../lib/integrations/telegram');
+const { sendNotification } = require('../../lib/integrations/notifications');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';
@@ -97,7 +97,7 @@ async function main() {
     `<a href="${TEAMS_LINK}">Microsoft Teams</a>\n\n` +
     `Empieza en 1 hora.`;
 
-  await sendTelegramMessage(msg);
+  await sendNotification('Recordatorio CESDE', msg.replace(/<\/?b>/g, '*'));
   markSent(today);
   console.log(`Reminder sent for ${today} (Class ${classToday.num})`);
 }

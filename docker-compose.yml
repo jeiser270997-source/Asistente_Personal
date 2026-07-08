@@ -52,6 +52,36 @@ services:
     # Replica memoria_hipocampo.db localmente a data/backups/
     # Para activar: crear litestream.yml con la config abajo
 
+  # ── Alertas unificadas multi-canal (Apprise) ─────────────────
+  apprise:
+    image: caronc/apprise:latest
+    container_name: lifeos-apprise
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/apprise:/config
+    environment:
+      - APPRISE_CONFIG_DIR=/config
+    # API: POST http://localhost:8000/notify/apprise
+    # Body: { "title": "...", "body": "...", "tag": "info" }
+
+  # ── Ruteador de LLMs con failback automático (LiteLLM) ──────
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: lifeos-litellm
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./data/litellm:/app/config
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    command: [ "--config", "/app/config/config.yaml" ]
+    # Proxy OpenAI-compatible: http://localhost:4000/v1/chat/completions
+    # Fallback automático: DeepSeek → Gemini si hay timeout/rate-limit
+
   # ── Crawler LLM-optimizado (opcional, requiere Python) ───────
   # crawl4ai:
   #   image: unclecode/crawl4ai:latest
