@@ -9,7 +9,7 @@ const path = require('node:path');
 const fs   = require('node:fs');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const CT_PASS  = process.env.COMPUTRABAJO_PASS  || 'A125%230a';
+const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 
 const CV_HTML = path.join(__dirname, '..', 'data', 'jobs', 'cv_jeiser_soporte_ti.html');
 const CV_PDF  = path.join(__dirname, '..', 'data', 'jobs', 'cv_jeiser_soporte_ti.pdf');

@@ -5,7 +5,7 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.en
 const { chromium } = require('playwright');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const CT_PASS  = process.env.COMPUTRABAJO_PASS  || 'A125%230a';
+const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 const OFERTA   = 'https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-sistemas-auxiliar-ti-en-medellin-03647147C4D8660E61373E686DCF3405';
 
 (async () => {

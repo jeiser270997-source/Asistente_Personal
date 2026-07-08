@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const { askLLM } = require('../../lib/ai/llm_service');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const CT_PASS  = process.env.COMPUTRABAJO_PASS  || 'A125%230a';
+const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 
 const SEARCHES = [
   'auxiliar-sistemas', 'soporte-tecnico-software', 'mesa-de-ayuda',

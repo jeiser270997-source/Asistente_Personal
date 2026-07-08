@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const path = require('node:path');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const CT_PASS  = process.env.COMPUTRABAJO_PASS  || 'A125%230a';
+const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 
 (async () => {
   const browser = await chromium.launch({ headless: true });

@@ -23,7 +23,7 @@ const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score='))
 const DRY_RUN   = process.argv.includes('--dry-run');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const CT_PASS  = process.env.COMPUTRABAJO_PASS  || 'A125%230a';
+const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
 
