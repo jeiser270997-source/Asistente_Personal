@@ -9,6 +9,7 @@
 4. **Medir antes de optimizar.** Toda automatización debe producir métricas.
 5. **Un origen de verdad.** No duplicar estado; usar `lib/data/paths.js` como acceso centralizado.
 6. **La IA es un amplificador, no un requisito.** El sistema debe funcionar aunque el LLM esté deshabilitado.
+7. **Single-Tenant Absoluto (NO SaaS).** Este sistema es personal y exclusivo para Jeiser. Prohibido sobre-ingeniar para escalabilidad multi-usuario. Las mejoras deben enfocarse únicamente en utilidad práctica y pragmatismo, no en arquitecturas complejas innecesarias (ej. evitar clústeres, colas complejas o microservicios que añadan deuda técnica sin aportar valor directo al usuario único).
 
 ## Arquitectura general (patrón LifeOS)
 
