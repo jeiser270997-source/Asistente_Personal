@@ -290,7 +290,7 @@ const { askLLM } = require('../../lib/ai/llm_service');
 
 // ─── LLM CALL ────────────────────────────────────────────────
 async function callLLM(systemPrompt, userContext) {
-  const response = await askLLM(systemPrompt, [{ role: 'user', content: userContext }], [], 0.3);
+  const response = await askLLM(systemPrompt, [{ role: 'user', content: userContext }], 0.3);
   return response.content;
 }
 
