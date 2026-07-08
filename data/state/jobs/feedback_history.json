@@ -1,0 +1,21 @@
+{
+  "events": [
+    {
+      "type": "job.applied",
+      "empresa": "Test",
+      "cargo": "QA",
+      "plataforma": "CT",
+      "score": 80,
+      "status": "applied",
+      "timestamp": "2026-07-08T13:53:59.317Z"
+    }
+  ],
+  "adjustments": [],
+  "stats": {
+    "applied": 1,
+    "interviews": 0,
+    "offers": 0,
+    "rejections": 0,
+    "ghosted": 0
+  }
+}

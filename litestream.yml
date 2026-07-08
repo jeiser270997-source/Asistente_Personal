@@ -3,8 +3,24 @@ dbs:
     replicas:
       - type: file
         path: /data/backups/memoria_hipocampo
-        # Para S3 en el futuro, reemplazar con:
-        # - type: s3
-        #   bucket: lifeos-backups
-        #   path: memoria_hipocampo
-        #   region: us-east-1
+        retention: 24h
+      # Para S3/Cloudflare R2 (descomentar y configurar):
+      # - type: s3
+      #   bucket: lifeos-backups
+      #   path: memoria_hipocampo
+      #   region: auto
+      #   endpoint: https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+      #   access-key-id: ${LITESTREAM_ACCESS_KEY_ID}
+      #   secret-access-key: ${LITESTREAM_SECRET_ACCESS_KEY}
+
+  - path: /data/lifeos.db
+    replicas:
+      - type: file
+        path: /data/backups/lifeos
+        retention: 24h
+
+  - path: /data/estado_vivo.md
+    replicas:
+      - type: file
+        path: /data/backups/estado_vivo
+        retention: 72h

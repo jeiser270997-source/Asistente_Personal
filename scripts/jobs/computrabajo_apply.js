@@ -203,29 +203,73 @@ RESPUESTA:`;
 }
 
 // ─── PLAYWRIGHT ────────────────────────────────────────────────
+const STATE_PATH = require('node:path').join(__dirname, '..', '..', 'data', 'state', 'computrabajo_state.json');
+
 async function aplicarOferta(browser, ofertaUrl) {
-  const ctx  = await browser.newContext({
+  const ctxOpts = {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36',
-  });
+  };
+
+  // Cargar sesión guardada si existe (login_ct.js)
+  if (require('node:fs').existsSync(STATE_PATH)) {
+    try {
+      const state = JSON.parse(require('node:fs').readFileSync(STATE_PATH, 'utf8'));
+      ctxOpts.storageState = state;
+      log(`   Sesión cargada desde ${STATE_PATH}`);
+    } catch (e) {
+      log(`   ⚠ No se pudo cargar sesión: ${e.message}. Haciendo login completo...`);
+    }
+  }
+
+  const ctx  = await browser.newContext(ctxOpts);
   const page = await ctx.newPage();
 
   try {
-    log(`   Login Computrabajo...`);
-    await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
-    await page.waitForTimeout(2000);
+    // Intentar ir directo a la oferta (si hay sesión guardada, no necesita login)
+    let loginOk = true;
+    try {
+      await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    } catch {
+      loginOk = false;
+    }
 
-    const emailSel = await page.locator('#Email, input[name="Email"]').first();
-    await emailSel.fill(CT_EMAIL, { timeout: 10000 });
+    // Si la sesión no sirve o no había, hacer login
+    if (!loginOk || page.url().includes('acceso') || page.url().includes('Login')) {
+      log(`   Haciendo login en Computrabajo...`);
+      await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+      await page.waitForTimeout(2000);
 
-    const passSel = await page.locator('#password, input[name="Password"]').first();
-    await passSel.fill(CT_PASS, { timeout: 5000 });
+      await page.locator('#Email, input[name="Email"]').first().fill(CT_EMAIL, { timeout: 10000 });
+      await page.locator('#password, input[name="Password"]').first().fill(CT_PASS, { timeout: 5000 });
 
-    const submitBtn = page.locator('button[type="submit"]').first();
-    await submitBtn.click({ timeout: 5000 }).catch(async () => {
-      await page.keyboard.press('Enter');
+      await page.locator('button[type="submit"]').first().click({ timeout: 5000 })
+        .catch(() => page.keyboard.press('Enter'));
+      await page.waitForTimeout(4000);
+
+      // Guardar sesión para próxima vez
+      try {
+        const ns = await ctx.storageState();
+        require('node:fs').writeFileSync(STATE_PATH, JSON.stringify(ns, null, 2));
+        log(`   ✅ Sesión guardada`);
+      } catch {}
+
+      // Ir a la oferta post-login
+      await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    } else {
+      log(`   Sesión válida, saltando login`);
+    }
+      await page.waitForTimeout(4000);
+
+      // Guardar sesión para próxima vez
+      try {
+        const newState = await context.storageState();
+        require('node:fs').writeFileSync(STATE_PATH, JSON.stringify(newState, null, 2));
+        log(`   ✅ Sesión guardada para próximas ejecuciones`);
+      } catch (e) { /* noop */ }
+
+      // Ahora ir a la oferta
+      await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
     });
-    await page.waitForTimeout(4000);
-    log(`   Post-login: ${page.url()}`);
 
     log(`   Navegando a oferta: ${ofertaUrl}`);
     await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
