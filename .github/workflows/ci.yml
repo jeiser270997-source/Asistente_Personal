@@ -40,4 +40,10 @@ jobs:
         node --check scripts/jobs/computrabajo_scraper.js
         node --check scripts/jobs/job_loop.js
         node --check Herramientas/Gmail_Cleaner/cli.js
-        echo "✅ Todo el código es válido."
+        echo "✅ Código JavaScript válido."
+
+    - name: Verificación de TypeScript
+      run: |
+        echo "Compilando TypeScript..."
+        npx tsc --noEmit
+        echo "✅ Código TypeScript válido."

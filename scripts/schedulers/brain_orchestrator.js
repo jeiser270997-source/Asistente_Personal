@@ -9,8 +9,8 @@ const pending = require('../../lib/context/pending');
 const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
 const { isDeepSeekValley, getScheduleLabel } = require('../../lib/scheduling/time_scheduler');
 
-const BASE_DIR = path.resolve(__dirname, '..');
-const LOG_DIR = path.join(BASE_DIR, 'logs');
+const BASE_DIR = path.resolve(__dirname, '..', '..');
+const LOG_DIR = path.join(BASE_DIR, 'data', 'logs');
 const CONTEXTO_DIR = path.join(BASE_DIR, 'data', 'contexto_maestro');
 const SKILL_PATH = path.join(BASE_DIR, 'skills', 'cerebro.md');
 const ESTADO_VIVO_PATH = path.join(CONTEXTO_DIR, 'ESTADO_VIVO.md');

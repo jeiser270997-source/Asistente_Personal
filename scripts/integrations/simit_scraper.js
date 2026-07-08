@@ -149,7 +149,7 @@ function detectChanges(prev, curr) {
 
   // Check new multas
   const prevIds = new Set((prev.detalle?.multas || []).map(m => m.id));
-  const currMultas = curr.multas || [];
+  const currMultas = curr.detalle?.multas || [];
   const nuevas = currMultas.filter(m => !prevIds.has(m.id));
   const resueltas = (prev.detalle?.multas || []).filter(m => !currMultas.find(cm => cm.id === m.id));
 
