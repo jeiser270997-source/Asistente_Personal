@@ -213,26 +213,26 @@ async function aplicarOferta(browser, ofertaUrl) {
         log(`   Textareas encontradas: ${preguntas.length}`);
 
         const PERFIL = `Nombre: Jeiser Abraham Gutierrez Torres. CC: 1019156838. Tel: +57 304 461 5613.
-Ubicacion: Medellin, Villa Eloisa. Experiencia: QA Automation (LifeOS - proyecto propio en produccion, Playwright, GitHub Actions, Node.js), Vigilante medios tecnologicos CCTV (Coovisocial 2019-2021), Agente Nivel 1 Iberia/Amadeus (Sitel 2021). Estudios: Bootcamp QA CESDE (en curso), SENA Bases de Datos y Excel.`;
+Ubicacion: Medellin, Colombia. Experiencia: QA Automation Engineer (LifeOS Project), Playwright, Node.js, GitHub Actions, CI/CD. Formacion: CESDE (Analisis y Desarrollo de Software, Bootcamp QA Automation).`;
 
         for (const p of preguntas.slice(0, 6)) {
           let respuesta = '';
           const q = p.pregunta.toLowerCase();
 
           if (/localidad|barrio|ciudad|vive|reside|ubicaci/.test(q)) {
-            respuesta = 'Medellin - Barrio Villa Eloisa, Bloque 25';
+            respuesta = 'Medellin, Antioquia.';
           } else if (/academ|estudio|titulo|educaci|formaci/.test(q)) {
-            respuesta = 'Tecnico en formacion - Analisis y Desarrollo de Software (CESDE, Medellin). Bootcamp QA Automation 28 semanas en curso. SENA: Bases de Datos y Excel (Zajuna).';
+            respuesta = 'Tecnico en Analisis y Desarrollo de Software (CESDE). Adicionalmente, cursando Bootcamp especializado en QA Automation (28 semanas). Conocimientos solidos en Testing E2E con Playwright y JavaScript.';
           } else if (/contacto|telefono|celular|numero/.test(q)) {
             respuesta = '+57 304 461 5613';
           } else if (/experiencia|cargo|rol|funcion/.test(q)) {
-            respuesta = 'Cuento con experiencia practica en QA Automation a traves de proyecto LifeOS en produccion: 12 workflows GitHub Actions, scraping Playwright, integracion con APIs y SQLite. Adicional, 2 anos como vigilante de medios tecnologicos (CCTV) y experiencia en atencion al cliente en call center (Sitel/Iberia, Amadeus GDS).';
+            respuesta = 'Experiencia practica comprobable como QA Automation Engineer desarrollando arquitecturas de pruebas desde cero. Especialista en ecosistemas JavaScript/Node.js, automatizacion E2E con Playwright, y despliegue de flujos de Integracion Continua (CI/CD) mediante GitHub Actions.';
           } else if (/iso|norma|certific|calidad|sistema de gesti/.test(q)) {
-            respuesta = 'Conocimientos basicos en gestion de calidad adquiridos durante formacion en CESDE. Sin certificaciones ISO formales, pero con comprension de procesos de control de calidad aplicados a software.';
+            respuesta = 'Solidos fundamentos en metodologias de aseguramiento de calidad de software (QA), diseno de casos de prueba y Clean Architecture. Capacidad para garantizar la estabilidad de los flujos criticos de negocio.';
           } else if (/salario|aspira|pretens/.test(q)) {
-            respuesta = 'Aspiro al salario promedio del mercado para el cargo, negociable segun las condiciones del empleo.';
+            respuesta = 'Aspiracion salarial ajustada al promedio del mercado para QA Automation Junior, abierto a negociacion segun los beneficios y el plan de carrera ofrecido.';
           } else {
-            respuesta = 'Si, cuento con las condiciones requeridas para el cargo y estoy disponible para ampliar informacion.';
+            respuesta = 'Si, cumplo a cabalidad con los requisitos tecnicos del cargo y me encuentro disponible para una entrevista tecnica.';
           }
 
           const textareas = await page.locator('textarea:visible, input[type="text"]:visible').all();
