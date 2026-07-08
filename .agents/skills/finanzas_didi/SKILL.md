@@ -9,14 +9,14 @@ description: Control financiero personalizado para Jeiser como conductor Didi + 
 
 - **Ingreso principal:** Didi (variable, depende de horas trabajadas)
 - **Gastos fijos conocidos:**
-  - SOAT KEW496: vence 31 Dic 2026 ✅
+  - SOAT Vehículo Principal (ver placa en ESTADO_VIVO.md): vence 31 Dic 2026 ✅
   - API DeepSeek: ~$4 USD/mes (usar horario valle)
   - Internet/Telefonía (estimar)
 - **Deudas activas:**
   - DIAN AG2023: ~0.8M COP — prescripción ~09/2029
   - DIAN AG2024: en mora, recibo 91900450122623
   - Comparendo C29 Itagüí: impugnación enviada 05/07/2026
-- **Vehículo:** KEW496 Toyota Corolla 2010
+- **Vehículo:** Vehículo Principal Toyota Corolla 2010 (ver placa en ESTADO_VIVO.md)
 
 ## Reglas de hierro (NO negociables)
 

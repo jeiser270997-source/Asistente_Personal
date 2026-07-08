@@ -11,6 +11,7 @@ const path  = require('node:path');
 const { execSync, spawn } = require('node:child_process');
 const { askLLM } = require('../../lib/ai/llm_service');
 const { chromium } = require('playwright');
+const { robustLogin } = require('./ct_login_helper');
 
 const BASE_DIR  = path.resolve(__dirname, '..', '..');
 const JOBS_DIR  = path.join(BASE_DIR, 'data', 'jobs');
@@ -226,10 +227,7 @@ async function aplicar(oferta, browser) {
   try {
     // Login
     await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForSelector('#Email, input[name="Email"]', { timeout: 5000 }).catch(() => {});
-    await page.fill('#Email, input[name="Email"]', CT_EMAIL, { force: true });
-    await page.fill('#password, input[name="Password"]', CT_PASS, { force: true });
-    await page.click('button[type="submit"]', { timeout: 5000 }).catch(() => {});
+    await robustLogin(page, CT_EMAIL, CT_PASS);
     await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
 
     // Navegar a oferta

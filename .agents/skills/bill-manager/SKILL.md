@@ -13,8 +13,8 @@ description: Gestor de suscripciones, recibos y pagos fijos. Activa cuando Jeise
 | Claro (internet + celular) | Mensual | ~$80,000 | Pagar antes de corte |
 | Alquiler Villa Eloisa | Mensual | (preguntar) | — |
 | API DeepSeek | Mensual | ~$12,000 COP (~$3 USD) | ✅ Activo |
-| SOAT KEW496 | Anual (Dic) | ~$500,000 | ✅ Vigente hasta 31-Dic-2026 |
-| SOAT BXU28C | Anual | ~$300,000 | ❌ VENCIDO — no circular |
+| SOAT Vehículo Principal (ver ESTADO_VIVO.md) | Anual (Dic) | ~$500,000 | ✅ Vigente |
+| SOAT Vehículo Secundario (ver ESTADO_VIVO.md) | Anual | ~$300,000 | ❌ VENCIDO — no circular |
 | DiDi (comisiones) | Por viaje | 20-25% | Variable |
 | SENA / CESDE | N/A | Beca 70% | ✅ Sin costo directo |
 
@@ -32,7 +32,7 @@ description: Gestor de suscripciones, recibos y pagos fijos. Activa cuando Jeise
 
 1. **Siempre preguntar por gastos que no se ven:** ¿Cuánto gastaste hoy en café, almuerzo, y peajes? Eso suma rápido.
 2. **Priorizar pagos por urgencia:** EPM y Claro cortan el servicio. Alquiler tiene cartera. Suscripciones digitales pueden esperar.
-3. **Alertar sobre SOAT BXU28C:** Cada día que circula con SOAT vencido es multa de ~$950K + inmovilización.
+3. **Alertar sobre SOAT Vehículo Secundario:** Cada día que circula con SOAT vencido es multa de ~$950K + inmovilización. (Ver placa en ESTADO_VIVO.md)
 4. **Sugerir domicilios de mercado** para reducir salidas a la calle y gastos hormiga.
 5. **Registrar cada gasto** en ESTADO_VIVO.md o en data/memoria_vital (facts del motor de memoria).
 6. **Revisar suscripciones activas** una vez al mes: Netflix, Spotify, YouTube Premium, Google One, etc. Cancelar las que no se usan.
@@ -48,5 +48,5 @@ description: Gestor de suscripciones, recibos y pagos fijos. Activa cuando Jeise
 
 - 📅 **Corte EPM:** Cada mes, verificar fecha de vencimiento en factura
 - 📅 **Corte Claro:** Ídem
-- 📅 **Dic 2026:** SOAT KEW496 se vence — ahorrar ~$42,000/mes desde ahora
+- 📅 **Dic 2026:** SOAT Vehículo Principal se vence — ahorrar ~$42,000/mes desde ahora
 - 📅 **Mensual:** Preguntar "¿cómo van los gastos este mes?"

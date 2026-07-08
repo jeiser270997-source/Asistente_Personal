@@ -1,6 +1,6 @@
 ---
 name: vehicle-manager
-description: Tracking de mantenimiento y documentación para flota personal (KEW496 + BXU28C). Activa cuando Jeiser habla de carro, moto, SOAT, tecnomecánica, mantenimiento, gasolina, aceite, llantas, o impuestos vehiculares.
+description: Tracking de mantenimiento y documentación para flota personal (Vehículo Principal + Vehículo Secundario). Activa cuando Jeiser habla de carro, moto, SOAT, tecnomecánica, mantenimiento, gasolina, aceite, llantas, o impuestos vehiculares.
 ---
 
 # Vehicle Manager — Flota Personal Jeiser
@@ -11,15 +11,15 @@ Jeiser trabaja como conductor Didi 8-12 horas/día en Medellín. Su ingreso depe
 
 ## Flota actual
 
-### 🚗 KEW496 — Toyota Corolla 2010
-- **Placa:** KEW496
+### 🚗 Vehículo Principal (ver placa en ESTADO_VIVO.md) — Toyota Corolla 2010
+- **Placa:** (ver en ESTADO_VIVO.md)
 - **SOAT:** Vigente hasta **31-Dic-2026** ✅
 - **RTM (Revisión Técnico-Mecánica):** Vigente hasta **26-Dic-2026** ✅
 - **Uso:** Diario (Didi, 8-12h/día en Medellín)
 - **Estado:** Operativo
 
-### 🏍️ BXU28C — Moto
-- **Placa:** BXU28C
+### 🏍️ Vehículo Secundario (ver placa en ESTADO_VIVO.md) — Moto
+- **Placa:** (ver en ESTADO_VIVO.md)
 - **SOAT:** ❌ **VENCIDO** — NO CIRCULAR
 - **RTM:** ❌ **VENCIDA** — NO CIRCULAR
 - **Denuncia:** NUNC 110016102535202609577 (abuso de confianza, Fiscalía 11, 20/05/2026)
@@ -31,11 +31,11 @@ Jeiser trabaja como conductor Didi 8-12 horas/día en Medellín. Su ingreso depe
 2. **Mantenimiento preventivo:** Aceite cada 5,000 km, llantas cada 50,000 km, frenos cada 20,000 km.
 3. **Registro de gastos:** Cada peso gastado en los vehículos se registra. Gasolina, peajes, parqueaderos, reparaciones.
 4. **Fondo de emergencia vehicular:** Meta: $1,500,000 COP reservados para reparaciones imprevistas.
-5. **BXU28C:** NO circular hasta que SOAT y RTM estén al día. Evaluar si vale la pena renovar documentos o venderla.
+5. **Vehículo Secundario:** NO circular hasta que SOAT y RTM estén al día. Evaluar si vale la pena renovar documentos o venderla.
 
 ## Tracking sugerido
 
-| Concepto | KEW496 | BXU28C |
+| Concepto | Vehículo Principal | Vehículo Secundario |
 |----------|--------|--------|
 | Próximo cambio de aceite | Cada 5,000km (registrar último) | N/A (fuera de servicio) |
 | Próximo SOAT | Antes 31-Dic-2026 | **URGENTE — VENCIDO** |
@@ -62,7 +62,7 @@ Jeiser trabaja como conductor Didi 8-12 horas/día en Medellín. Su ingreso depe
 
 ## Cálculo rápido Didi
 
-- **Rendimiento esperado KEW496:** ~35-40 km/galón en ciudad
+- **Rendimiento esperado Vehículo Principal:** ~35-40 km/galón en ciudad
 - **Costo gasolina Medellín (Jul 2026):** ~$14,500/galón
 - **Costo por km:** ~$360-415 COP
 - **Meta diaria sugerida:** Registrar km inicial y final para calcular ganancia neta

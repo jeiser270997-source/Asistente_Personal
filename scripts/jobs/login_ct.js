@@ -14,6 +14,7 @@ require('dotenv').config();
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
+const { robustLogin } = require('./ct_login_helper');
 
 const STATE_PATH = path.resolve(__dirname, '..', '..', 'data', 'state', 'computrabajo_state.json');
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL;
@@ -39,42 +40,11 @@ async function login() {
       timeout: 30000,
     });
 
-    // Esperar a que cargue el formulario
-    await page.waitForSelector('input[type="email"], input[name="Email"], #Email', {
-      timeout: 10000,
-    }).catch(() => console.log('[login_ct] Selector email no encontrado, probando fallback...'));
-
-    // Llenar email - probar múltiples selectores
-    const emailSelector = 'input[type="email"], input[name="Email"], #Email';
-    if (await page.$(emailSelector)) {
-      await page.fill(emailSelector, CT_EMAIL);
-    } else {
-      // Fallback: llenar el primer input visible
-      const inputs = await page.$$('input:not([type="hidden"])');
-      if (inputs.length > 0) await inputs[0].fill(CT_EMAIL);
-    }
-
-    // Click en siguiente/continuar
-    await page.click('button[type="submit"], input[type="submit"], [class*="btn"][class*="next"], [class*="continuar"]')
-      .catch(() => page.click('button:has-text("Continuar"), button:has-text("Siguiente"), a:has-text("Continuar")'))
-      .catch(() => console.log('[login_ct] No se encontró botón continuar, puede ser login de 1 paso'));
-
+    // Esperar a que cargue la página inicial
     await page.waitForTimeout(2000);
 
-    // Llenar password
-    const passSelector = 'input[type="password"], #Password, input[name="Password"]';
-    if (await page.$(passSelector)) {
-      await page.fill(passSelector, CT_PASS);
-    }
-
-    // Click en login
-    await page.click('button[type="submit"], input[type="submit"], [class*="btn"][class*="login"], [class*="ingresar"]')
-      .catch(() => page.click('button:has-text("Ingresar"), button:has-text("Iniciar"), a:has-text("Ingresar")'))
-      .catch(() => console.log('[login_ct] No se encontró botón login'));
-
-    // Esperar a que la navegación se complete
-    await page.waitForTimeout(5000);
-    await page.waitForLoadState('networkidle').catch(() => {});
+    // Ejecutar login centralizado
+    await robustLogin(page, CT_EMAIL, CT_PASS);
 
     // Verificar si el login fue exitoso
     const currentUrl = page.url();

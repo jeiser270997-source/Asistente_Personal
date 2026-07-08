@@ -109,12 +109,10 @@ async function main() {
         continue;
       }
 
-      // Normal conversation - load full context
-      const context = getContextForMessage(text);
-      const response = await askLLM(context, [{ role: 'user', content: text }]);
-      const reply = response?.content || 'Lo siento, no pude procesar tu mensaje.';
-      const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-      console.log(`🤖 Respuesta (${elapsed}s): ${reply.substring(0, 100)}...`);
+      // MODO PROACTIVO (Morning Briefing): Ya no responde al chat
+      // Simplemente actúa como un buzón de entrada.
+      const reply = `📥 Nota recibida y guardada para tu próximo Morning Briefing.`;
+      console.log(`📥 [Buzón]: Guardado.`);
 
       await apiCall('sendMessage', {
         chat_id: CHAT_ID,

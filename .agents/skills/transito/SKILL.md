@@ -26,8 +26,8 @@ Jeiser trabaja como conductor en plataforma Didi. Esto es RELEVANTE porque:
 | **Salario Minimo Mensual 2026** | $1,623,500 COP |
 | **Salario Minimo Diario 2026** | $54,117 COP |
 | **UVT 2026** | $52,374 COP |
-| **SOAT KEW496 (Toyota Corolla 2010)** | Vence 31/12/2026 |
-| **RTM KEW496** | Vence 26/12/2026 |
+| **SOAT Vehículo Principal (ver placa en ESTADO_VIVO.md)** | Vence 31/12/2026 |
+| **RTM Vehículo Principal** | Vence 26/12/2026 |
 
 ## Infracciones Mas Comunes y Sus Defensas
 

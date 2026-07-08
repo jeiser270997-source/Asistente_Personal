@@ -11,15 +11,16 @@ const fs = require('node:fs');
 const path = require('node:path');
 const readline = require('node:readline');
 
-const CREDENTIALS_PATH = path.join(__dirname, '..', 'credentials.json');
-const TOKEN_PATH = path.join(__dirname, '..', 'token.json');
+const CREDENTIALS_PATH = path.join(__dirname, '..', '..', 'credentials.json');
+const TOKEN_PATH = path.join(__dirname, '..', '..', '.google_token.json');
 
-// Scopes combinados: Gmail + Calendar + Calendar Events
+// Scopes combinados: Gmail + Calendar + Calendar Events + Tasks
 const SCOPES = [
   'https://www.googleapis.com/auth/gmail.modify',
   'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/calendar',
   'https://www.googleapis.com/auth/calendar.events',
+  'https://www.googleapis.com/auth/tasks',
 ];
 
 async function main() {

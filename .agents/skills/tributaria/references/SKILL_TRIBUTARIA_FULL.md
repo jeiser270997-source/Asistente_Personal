@@ -1281,7 +1281,7 @@ DECLARACIONES DE RENTA: TODAS PRESENTADAS SEGÚN OBLIGACIÓN (verificado en disc
 - AG2025: NO OBLIGADO (flujo bancario bajo tope según extractos). NO declarar.
 
 OTROS FRENTES:
-- AG2023 ($9.8M deuda): ZARIGÜEYA QUIETA. Declaración activa 2118633856828 (09/09/2024).
+- AG2023 (Deuda (ver monto en ESTADO_VIVO.md)): ZARIGÜEYA QUIETA. Declaración activa 2118633856828 (09/09/2024).
   Corrección 2118744089816 = NO VÁLIDA. DIAN (oficio 10/06, Diana M. Rodríguez Castaño)
   invita al Art. 814 = TRAMPA, NO firmar (reconoce deuda, reinicia prescripción).
   DIAN amenaza coactivo + medidas cautelares (embargo).
@@ -1291,7 +1291,7 @@ OTROS FRENTES:
   ⚠️ PERO bajo vigilancia: fiscalización si detecta ingresos no reportados como independiente.
   Coherencia de ingresos entre DIAN/UGPP ahora CRÍTICA.
 - Convalidación bachiller: APROBADA (Res. MinEdu 016066 del 12/06). Matrícula CESDE formalizada.
-- REGLA HIERRO: NO firmar 814, NO pagar, NO abonar, NO contactar Cobranzas para la deuda $9.8M.
+- REGLA HIERRO: NO firmar 814, NO pagar, NO abonar, NO contactar Cobranzas para la deuda (ver monto en ESTADO_VIVO.md).
 
 ═══════════════════════════════════════════════════════════════════
 FIN — SKILL TRIBUTARIA COLOMBIA v6.0

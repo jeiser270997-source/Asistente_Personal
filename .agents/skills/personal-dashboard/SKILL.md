@@ -16,7 +16,7 @@ Cuando Jeiser diga `/status`, "cómo voy", "resumen", o "dashboard", responde co
 🚗 DIDI
    • Horas hoy: [preguntar si no se sabe]
    • Meta semanal: 40h
-   • KEW496: SOAT 31-Dic ✅ | RTM 26-Dic ✅
+   • Vehículo Principal (ver ESTADO_VIVO.md): SOAT 31-Dic ✅ | RTM 26-Dic ✅
    • Fondo emergencia vehículos: $1,500,000
 
 📚 ESTUDIO
@@ -43,7 +43,7 @@ Cuando Jeiser diga `/status`, "cómo voy", "resumen", o "dashboard", responde co
    • Dom 12 Jul: La Ceja vs Envigado B 4:00pm
 
 💰 FINANZAS
-   • Deuda DIAN activa: ~$9.8M
+   • Deuda DIAN activa: (ver monto en ESTADO_VIVO.md)
    • SIMIT pendiente real: $1,291,904
    • Ingreso: Didi (variable)
    • Regla #1: NO firmar 814

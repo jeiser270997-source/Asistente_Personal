@@ -89,7 +89,7 @@ THEN prioridad = "finanzas" | acción = "alerta de gastos excesivos"
       "condiciones": { "km_desde_ultimo_cambio_gt": 4000 },
       "prioridad": "vehiculo",
       "accion": "recordar cambio de aceite",
-      "mensaje": "El KEW496 lleva más de 4,000 km sin cambio de aceite. Programa taller."
+      "mensaje": "El Vehículo Principal lleva más de 4,000 km sin cambio de aceite. Programa taller."
     }
   ]
 }

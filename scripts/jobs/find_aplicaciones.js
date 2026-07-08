@@ -4,6 +4,7 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const { chromium } = require('playwright');
 const path = require('node:path');
+const { robustLogin } = require('./ct_login_helper');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
 const CT_PASS  = process.env.COMPUTRABAJO_PASS;
@@ -20,11 +21,8 @@ const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 
   // Login
   await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+  await robustLogin(page, CT_EMAIL, CT_PASS);
   await page.waitForTimeout(2000);
-  await page.locator('#Email, input[name="Email"]').first().fill(CT_EMAIL, { timeout: 10000 });
-  await page.locator('#password, input[name="Password"]').first().fill(CT_PASS, { timeout: 5000 });
-  await page.locator('button[type="submit"]').first().click().catch(() => page.keyboard.press('Enter'));
-  await page.waitForTimeout(6000);
 
   // Desde el home, buscar todos los links del menú
   const links = await page.evaluate(() => {

@@ -20,7 +20,7 @@ const CREDENTIALS = {
   redirect_uri:  'urn:ietf:wg:oauth:2.0:oob',
 };
 
-const TOKEN_FILE = path.join(__dirname, '..', '.google_token.json');
+const TOKEN_FILE = path.join(__dirname, '..', '..', '.google_token.json');
 const SCOPES     = ['https://www.googleapis.com/auth/calendar.events'];
 
 function getOAuth2Client() {

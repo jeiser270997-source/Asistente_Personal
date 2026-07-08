@@ -8,6 +8,12 @@ const { escapeHTML, truncate } = require('../../lib/runtime/sanitize');
 const pending = require('../../lib/context/pending');
 const jobTracker = require('../../lib/runtime/job_tracker');
 const ruleEngine = require('../../lib/runtime/rule_engine');
+const { agregarHecho } = require('../../lib/memory/memory_engine');
+const fsPromises = require('node:fs/promises');
+
+// LLM
+const { createLLM, getLLMContextSize, isDeepSeekValley } = require('../../lib/ai/llm_service');
+const { ChatPromptTemplate } = require('@langchain/core/prompts');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';
@@ -61,18 +67,36 @@ function saveProcessed(ids) {
   fs.writeFileSync(p, JSON.stringify(ids, null, 2), 'utf8');
 }
 
-// ── Existing classification helpers (kept for compatibility) ──
+// ── Clasificación Inteligente con DeepSeek ──
 
-function isImportant(from, subject) {
-  const text = `${from} ${subject}`.toLowerCase();
-  const IMPORTANT_KEYWORDS = [
-    'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
-    'multa', 'comparendo', 'tarea', 'urgente',
-    'notificacion judicial', 'embargo', 'mandamiento',
-    'citacion', 'requerimiento', 'entrevista',
-    'factura', 'contrato', 'nomina', 'salario',
-  ];
-  return IMPORTANT_KEYWORDS.some(kw => text.includes(kw));
+async function isImportant(from, subject, body = "") {
+  try {
+    const llm = await createLLM({ temperature: 0.1 });
+    if (!llm) throw new Error("No LLM available");
+    
+    const prompt = ChatPromptTemplate.fromMessages([
+      ["system", "Eres el guardián de la bandeja de entrada de Jeiser. Responde SOLO con la palabra 'KEEP' si el correo es importante (alertas de multas, fotomultas, tránsito, DIAN, SIMIT, juzgados, bancos, nómina, facturas, ofertas laborales, entrevistas, SENA, CESDE). Responde SOLO con 'DELETE' si es spam, publicidad, promociones, boletines o notificaciones de redes sociales."],
+      ["user", `Remitente: ${from}\nAsunto: ${subject}\n\n${body.substring(0, 300)}`]
+    ]);
+    
+    const chain = prompt.pipe(llm);
+    const result = await chain.invoke({});
+    const answer = result.content.trim().toUpperCase();
+    
+    return answer.includes('KEEP');
+  } catch (e) {
+    log(`[DeepSeek Fallback] Error clasificando: ${e.message}`);
+    // Fallback a lógica de regex si falla la API
+    const text = `${from} ${subject}`.toLowerCase();
+    const IMPORTANT_KEYWORDS = [
+      'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
+      'multa', 'comparendo', 'tarea', 'urgente',
+      'notificacion judicial', 'embargo', 'mandamiento',
+      'citacion', 'requerimiento', 'entrevista',
+      'factura', 'contrato', 'nomina', 'salario',
+    ];
+    return IMPORTANT_KEYWORDS.some(kw => text.includes(kw));
+  }
 }
 
 function parseJobFromEmail(subject, body) {
@@ -220,8 +244,44 @@ async function processEmails() {
     for (const email of rawEmails) {
       const body = await getEmailBody(gmail, email.id);
       email.body = body;
+      
+      const esImportante = await isImportant(email.from, email.subject, body);
 
-      // Rule Engine
+      if (esImportante) {
+        log(`🟢 KEEP: ${email.subject.substring(0, 40)}`);
+        importantEmails.push(email);
+        
+        // ── Lógica de Adjuntos y Memoria ──
+        try {
+          const detail = await gmail.users.messages.get({ userId: 'me', id: email.id, format: 'full' });
+          const parts = [];
+          function walk(p) {
+            if (p.parts) p.parts.forEach(walk);
+            else if (p.filename && p.body?.attachmentId) parts.push(p);
+          }
+          walk(detail.data.payload);
+
+          for (const part of parts) {
+            const att = await gmail.users.messages.attachments.get({
+              userId: 'me', messageId: email.id, id: part.body.attachmentId
+            });
+            const data = Buffer.from(att.data.data, 'base64');
+            const safeName = part.filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+            
+            // Inyectar a memoria
+            const docText = `Documento Adjunto (${safeName}) recibido de ${email.from} el ${email.date}. Asunto: ${email.subject}.`;
+            agregarHecho(docText, 'documentos', ['email', 'adjunto', safeName]);
+            log(`💾 Adjunto Inyectado a Memoria: ${safeName}`);
+          }
+        } catch (e) {
+          log(`❌ Error procesando adjunto: ${e.message}`);
+        }
+      } else {
+        log(`🔴 DELETE: ${email.subject.substring(0, 40)}`);
+        trashCandidates.push(email.id);
+      }
+
+      // Rule Engine (para registrar postulaciones a empleos o automatizaciones extra)
       const matches = ruleEngine.matchAll(email);
       const action = ruleEngine.highestPriority(matches);
 

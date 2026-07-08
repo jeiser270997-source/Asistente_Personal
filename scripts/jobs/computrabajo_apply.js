@@ -3,6 +3,7 @@ const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 const { askLLM }   = require('../../lib/ai/llm_service');
+const { robustLogin } = require('./ct_login_helper');
 
 const BASE_DIR   = path.resolve(__dirname, '..');
 const JOBS_DIR   = path.join(BASE_DIR, 'data', 'jobs');
@@ -237,14 +238,8 @@ async function aplicarOferta(browser, ofertaUrl) {
     if (!loginOk || page.url().includes('acceso') || page.url().includes('Login')) {
       log(`   Haciendo login en Computrabajo...`);
       await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
-      await page.waitForTimeout(2000);
-
-      await page.locator('#Email, input[name="Email"]').first().fill(CT_EMAIL, { timeout: 10000 });
-      await page.locator('#password, input[name="Password"]').first().fill(CT_PASS, { timeout: 5000 });
-
-      await page.locator('button[type="submit"]').first().click({ timeout: 5000 })
-        .catch(() => page.keyboard.press('Enter'));
-      await page.waitForTimeout(4000);
+      
+      await robustLogin(page, CT_EMAIL, CT_PASS);
 
       // Guardar sesión para próxima vez
       try {
@@ -253,8 +248,6 @@ async function aplicarOferta(browser, ofertaUrl) {
         log(`   ✅ Sesión guardada`);
       } catch {}
 
-      // Ir a la oferta post-login
-      await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
     } else {
       log(`   Sesión válida, saltando login`);
     }

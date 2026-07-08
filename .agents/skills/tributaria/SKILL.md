@@ -35,7 +35,7 @@ Usala SIEMPRE que el usuario suba documentos DIAN o pida analizar un caso tribut
 
 ## Casos Activos de Jeiser (Julio 2026)
 
-- **AG2023**: Deuda $9.8M. Prescripcion ~09/2029. REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.
+- **AG2023**: Deuda (ver monto en ESTADO_VIVO.md). Prescripcion ~09/2029. REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.
 - **UGPP 2023**: Cerrado favorable (12/06/2026). Bajo vigilancia de coherencia DIAN/UGPP.
 - **AG2024**: Radicada. Sancion $524K en mora.
 - **AG2025**: NO OBLIGADO. No declarar.

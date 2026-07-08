@@ -11,7 +11,7 @@ const Database = require('better-sqlite3');
 const fs = require('fs');
 const path = require('path');
 
-const dbPath = 'E:/PROYECTOS/Mis_Proyectos/TOP_REPOS/data/top_repos.db';
+const dbPath = 'E:/PROYECTOS/Mis_Proyectos/WHEELSAVER/data/top_repos.db';
 const db = new Database(dbPath, { readonly: true });
 
 function search(terms, limit = 5) {

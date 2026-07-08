@@ -18,10 +18,10 @@ Esta skill complementa `cerebro` (conocimiento) y `psicologo` (salud mental) añ
 - **Estudio:** CESDE (Lun/Mie/Vie 6-8pm) + SENA (virtual)
 - **Deporte:** Softball (partidos jueves/viernes/domingos)
 - **Estresores conocidos:**
-  - Deuda DIAN ~$9.8M (prescripción ~2029)
+  - Deuda DIAN (ver monto en ESTADO_VIVO.md) (prescripción ~2029)
   - Búsqueda de empleo activa
   - Balance Didi + estudio + softball
-  - Moto BXU28C fuera de servicio (denuncia activa)
+  - Moto Vehículo Secundario (ver placa en ESTADO_VIVO.md) fuera de servicio (denuncia activa)
 
 ## Pilares de salud a monitorear
 
