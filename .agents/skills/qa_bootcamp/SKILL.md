@@ -81,17 +81,27 @@ SEMANA 33-36:   Preparar entrevistas técnicas (code review en vivo)
 - **Git/GitHub** — ya dominado ✅
 - **Conceptos QA:** Unit, Integration, E2E, Regression, Smoke
 - **Herramienta:** Jest (unit testing JS)
+- **WheelSaver repos:**
+  - ⭐ 105,401 — `goldbergyoni/nodebestpractices` — Cómo escribir Node.js que no apeste
+  - ⭐ 45,454 — `jestjs/jest` — El framework de unit testing que usa el bootcamp
 
 ### Fase 2 — E2E Testing (semanas 9-16)
 - **Playwright** — ya instalado en tu proyecto ✅
 - Page Object Model (POM) — patrón de diseño para tests mantenibles
 - Data-driven testing — tests con múltiples sets de datos
 - CI/CD con GitHub Actions — ya tienes 10 workflows ✅
+- **WheelSaver repos:**
+  - ⭐ 92,403 — `microsoft/playwright` — El rey del E2E testing. Domínalo.
+  - ⭐ 50,441 — `cypress-io/cypress` — Alternativa a Playwright (conocerla suma)
+  - ⭐ 24,609 — `goldbergyoni/javascript-testing-best-practices` — Best practices de testing
 
 ### Fase 3 — API Testing (semanas 17-22)
 - **Bruno** (alternativa local a Postman) — instalar ahora
 - REST API concepts: métodos, status codes, headers
 - **Supertest** — API testing con Node.js
+- **WheelSaver repos:**
+  - ⭐ 14,386 — `forwardemail/supertest` — API testing para Node.js
+  - ⭐ 6,985 — `atinfo/awesome-test-automation` — Catálogo completo de herramientas QA
 - Contract testing básico
 
 ### Fase 4 — Avanzado (semanas 23-28)
@@ -99,6 +109,23 @@ SEMANA 33-36:   Preparar entrevistas técnicas (code review en vivo)
 - Accessibility testing con **axe-core**
 - Visual regression con **Percy** o **Playwright visual**
 - Reporte de bugs efectivo (JIRA simulation)
+
+### 📚 Repositorios de referencia (WheelSaver DB — 25,363 repos)
+
+| Tecnología | Repo | ⭐ | Lenguaje |
+|-----------|------|----|----------|
+| **E2E Testing** | microsoft/playwright | 92,403 | TypeScript |
+| **E2E Testing** | cypress-io/cypress | 50,441 | TypeScript |
+| **E2E Testing** | puppeteer/puppeteer | 95,303 | TypeScript |
+| **E2E Mobile** | wix/Detox | 11,978 | JavaScript |
+| **Unit Testing** | jestjs/jest | 45,454 | TypeScript |
+| **Unit Testing** | vitest-dev/vitest | 16,815 | TypeScript |
+| **Unit Testing** | mochajs/mocha | 22,956 | JavaScript |
+| **API Testing** | forwardemail/supertest | 14,386 | JavaScript |
+| **Performance** | grafana/k6 | 30,953 | Go |
+| **Node practices** | goldbergyoni/nodebestpractices | 105,401 | Dockerfile |
+| **Testing practices** | goldbergyoni/javascript-testing-best-practices | 24,609 | JavaScript |
+| **Herramientas QA** | atinfo/awesome-test-automation | 6,985 | Markdown |
 
 ## Técnica Feynman aplicada a QA
 

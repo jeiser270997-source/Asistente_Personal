@@ -71,6 +71,38 @@
       "version": "1.0",
       "keywords": ["decision", "politica", "regla", "prioridad", "think", "planificar", "que hacer hoy", "jarvis", "automatizar"],
       "prioridad": 10
+    },
+    {
+      "id": "typescript_tutor_md",
+      "nombre": "TypeScript Tutor para QA",
+      "ruta": ".agents/skills/typescript-tutor/SKILL.md",
+      "version": "1.0",
+      "keywords": ["typescript", "types", "interfaces", "ts", "tipado", "javascript", "playwright typescript"],
+      "prioridad": 9
+    },
+    {
+      "id": "docker_qa_md",
+      "nombre": "Docker para QA Automation",
+      "ruta": ".agents/skills/docker-qa/SKILL.md",
+      "version": "1.0",
+      "keywords": ["docker", "contenedor", "docker-compose", "devops", "ci cd", "contenedores tests"],
+      "prioridad": 7
+    },
+    {
+      "id": "sql_testing_md",
+      "nombre": "SQL para Testing de Bases de Datos",
+      "ruta": ".agents/skills/sql-testing/SKILL.md",
+      "version": "1.0",
+      "keywords": ["sql", "base de datos", "query", "select", "join", "database testing", "postgresql", "sqlite"],
+      "prioridad": 8
+    },
+    {
+      "id": "career_qa_md",
+      "nombre": "Mentor de Carrera QA",
+      "ruta": ".agents/skills/career-qa/SKILL.md",
+      "version": "1.0",
+      "keywords": ["linkedin", "cv", "entrevista", "trabajo", "salario", "empleo qa", "postulacion", "carrera", "curriculum"],
+      "prioridad": 10
     }
   ]
 }
