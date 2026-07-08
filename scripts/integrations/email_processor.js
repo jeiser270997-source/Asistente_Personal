@@ -249,7 +249,7 @@ async function processEmails() {
 
       if (esImportante) {
         log(`🟢 KEEP: ${email.subject.substring(0, 40)}`);
-        importantEmails.push(email);
+        // importantEmails se maneja mas abajo
         
         // ── Lógica de Adjuntos y Memoria ──
         try {
@@ -279,6 +279,7 @@ async function processEmails() {
       } else {
         log(`🔴 DELETE: ${email.subject.substring(0, 40)}`);
         trashCandidates.push(email.id);
+        try { await gmail.users.messages.trash({ userId: 'me', id: email.id }); } catch (e) { log(`Warning trashing email: ${e.message}`); }
       }
 
       // Rule Engine (para registrar postulaciones a empleos o automatizaciones extra)
@@ -332,7 +333,7 @@ async function processEmails() {
       }
 
       // No rule matched — check importance
-      if (isImportant(email.from, email.subject)) {
+      if (esImportante) {
         importantEmails.push({ ...email, body });
       } else {
         restEmails.push(email);
@@ -340,9 +341,16 @@ async function processEmails() {
       if (!processedIds.includes(email.id)) processedIds.push(email.id);
     }
 
+    // Inbox Zero: Procesar correos restantes (sacar de bandeja)
+    for (const e of importantEmails) {
+      try {
+        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: ['STARRED'] } });
+      } catch (e) { log(`Warning modifying important unread: ${e.message}`); }
+    }
+
     for (const e of restEmails) {
       try {
-        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD'] } });
+        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'] } });
       } catch (e) { log(`Warning modifying unread: ${e.message}`); }
     }
 
