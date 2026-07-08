@@ -1,0 +1,23 @@
+# LiteLLM Config — LifeOS AI Router
+# Proxy OpenAI-compatible en http://localhost:4000
+
+model_list:
+  - model_name: smart-router
+    litellm_params:
+      model: deepseek/deepseek-v4-flash
+      api_key: os.environ/DEEPSEEK_API_KEY
+      rpm: 60
+  - model_name: smart-router
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+      rpm: 30
+    # Fallback: si DeepSeek falla (timeout/rate-limit), LiteLLM enruta a Gemini
+
+router_settings:
+  routing_strategy: failover
+  enable_caching: true
+  cache_params:
+    type: semantic
+  allowed_fails: 3
+  cooldown: 30

@@ -1,0 +1,14 @@
+# Apprise Configuration — LifeOS Notifications
+# Format: YAML (soportado por Apprise API)
+
+tags: lifeos
+
+# Canal: Telegram
+# Usa las mismas vars de entorno que el bot existente
+urls:
+  - tgram://${TELEGRAM_BOT_TOKEN}/${TELEGRAM_CHAT_ID}?format=html
+
+# Canales futuros (descomentar cuando se configuren):
+#  - mailto://usuario:password@smtp.gmail.com?from=lifeos@example.com
+#  - slack://token_aqui/TXXXXXXX/XXXXXXXXX
+#  - discord://webhook_id/webhook_token
