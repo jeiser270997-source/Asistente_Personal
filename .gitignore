@@ -7,16 +7,17 @@ logs/
 correos.md
 repomix_*.md
 .backup_*/
+backups/
 
 # --- Datos personales no versionados ---
-data/state/contexto_maestro/ESTADO_VIVO.md
+# [PERMITIDO GITHUB] data/state/contexto_maestro/ESTADO_VIVO.md
 data/chat_history.json
 data/notas.md
 data/processed_emails.json
 data/*.db
-data/tamagotchi_stats.json
+# [PERMITIDO GITHUB] data/tamagotchi_stats.json
 data/pending.json.migrated
-data/contexto_vital.json
+# [PERMITIDO GITHUB] data/contexto_vital.json
 data/telegram_state.json
 
 # --- Tokens OAuth ---
@@ -36,7 +37,7 @@ debug_*.png
 data/data/
 
 # --- Memoria persistente del agente ---
-data/memoria/
+# [PERMITIDO GITHUB] data/memoria/
 lib/data/memoria_hipocampo.db
 
 # --- Runtime DB (regenerable) ---

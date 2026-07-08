@@ -1,22 +1,33 @@
 /**
- * scripts/schedulers/morning_briefing.js
+ * scripts/schedulers/morning_briefing.ts
  * 
  * Orquestador proactivo que se ejecuta a las 6:00 AM.
  * Reemplaza al bot conversacional enviando un informe ejecutivo
  * y estructurando directamente el calendario vacío.
  */
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
-const fs = require('node:fs');
-const path = require('node:path');
-const { createEvent } = require('../integrations/gworkspace_manager');
-const { askLLM } = require('../../lib/ai/llm_service');
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { createEvent } from '../integrations/gworkspace_manager';
+import { askLLM } from '../../lib/ai/llm_service';
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-const ESTADO_VIVO_PATH = path.join(__dirname, '..', '..', 'data', 'state', 'contexto_maestro', 'ESTADO_VIVO.md');
+interface Task {
+  title: string;
+  duration: number;
+  priority: number;
+  type: string;
+}
 
-async function sendTelegramMessage(text) {
+interface WeatherData {
+  probLluvia: number;
+  estado: string;
+  uvMax: number;
+}
+
+async function sendTelegramMessage(text: string): Promise<void> {
   if (!TELEGRAM_TOKEN || !CHAT_ID) {
     console.log('⚠️ No hay token de Telegram, pero el mensaje sería:\n', text);
     return;
@@ -33,10 +44,10 @@ async function sendTelegramMessage(text) {
 }
 
 // ================= CLIMA =================
-async function getMedellinWeather() {
+async function getMedellinWeather(): Promise<WeatherData> {
   try {
     const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=6.2518&longitude=-75.5636&daily=weathercode,precipitation_probability_max,uv_index_max&timezone=America%2FBogota');
-    const data = await res.json();
+    const data: any = await res.json();
     const probLluvia = data.daily.precipitation_probability_max[0];
     const uvMax = data.daily.uv_index_max[0];
     const codigo = data.daily.weathercode[0];
@@ -52,7 +63,7 @@ async function getMedellinWeather() {
 }
 
 // ================= SIMIT =================
-function getSimitStatus() {
+function getSimitStatus(): string {
   try {
     const p = path.join(__dirname, '..', '..', 'data', 'simit.json');
     if (fs.existsSync(p)) {
@@ -66,48 +77,16 @@ function getSimitStatus() {
   return "ℹ️ *SIMIT:* No se encontró información actual.";
 }
 
-function getTodayTasks() {
-  const day = new Date().getDay(); // 0 = Dom, 1 = Lun, 2 = Mar...
-  let didiTask = null;
-
-  if (day === 1 || day === 5) {
-    // Lunes y Viernes
-    didiTask = [
-      { title: '🚕 DiDi AM (Fresco)', duration: 5.5, priority: 1, type: 'Ingresos' },
-      { title: '🚗 Recoger a Dominick', duration: 0.5, priority: 1, type: 'Familiar' },
-      { title: '🚕 DiDi PM (Corto pre-clase)', duration: 2, priority: 1, type: 'Ingresos' },
-      { title: '💻 Clase CESDE (Virtual)', duration: 2, priority: 1, type: 'Estudio' }
-    ];
-  } else if (day === 2 || day === 4) {
-    // Martes y Jueves
-    didiTask = [
-      { title: '🚗 Llevar a Dominick a la escuela', duration: 0.5, priority: 1, type: 'Familiar' },
-      { title: '🚕 DiDi AM (Corto post-escuela)', duration: 3, priority: 1, type: 'Ingresos' },
-      { title: '🚗 Recoger a Dominick', duration: 0.5, priority: 1, type: 'Familiar' },
-      { title: '🚕 DiDi PM (Extendido para meta)', duration: 6.5, priority: 1, type: 'Ingresos' }
-    ];
-  } else if (day === 6) {
-    // Sábado
-    didiTask = [
-      { title: '🚀 Técnico CESDE (Presencial)', duration: 11, priority: 1, type: 'Estudio' },
-      { title: '🚕 DiDi Noche', duration: 5, priority: 1, type: 'Ingresos' }
-    ];
-  } else if (day === 0) {
-    // Domingo
-    didiTask = [
-      { title: '⚽ Chiquifútbol Dominick', duration: 1, priority: 1, type: 'Familiar' },
-      { title: '🚕 DiDi Jornada Larga', duration: 9, priority: 1, type: 'Ingresos' }
-    ];
-  } else if (day === 3) {
-    // Miércoles (Pico y Placa)
-    didiTask = [
-      { title: '🚗 Recoger a Dominick', duration: 0.5, priority: 1, type: 'Familiar' },
-      { title: '🏊 Natación Dominick', duration: 1, priority: 1, type: 'Familiar' },
-      { title: '💈 Corte de Cabello (Verificar si toca)', duration: 1, priority: 2, type: 'Cuidado Personal' },
-      { title: '💻 Clase CESDE (Virtual)', duration: 2, priority: 1, type: 'Estudio' },
-      { title: '🚗 Lavar el Carro (DLavar $4k)', duration: 1, priority: 2, type: 'Mantenimiento' },
-      { title: '🛑 Día libre de conducción (Pico y Placa)', duration: 0, priority: 2, type: 'Descanso' }
-    ];
+function getTodayTasks(): Task[] {
+  const day = new Date().getDay().toString(); // "0" = Dom, "1" = Lun...
+  const schedulePath = path.join(__dirname, '..', '..', 'config', 'schedule.json');
+  
+  let didiTask: Task[] = [];
+  if (fs.existsSync(schedulePath)) {
+    const scheduleConfig = JSON.parse(fs.readFileSync(schedulePath, 'utf8'));
+    if (scheduleConfig[day]) {
+      didiTask = scheduleConfig[day];
+    }
   }
 
   // Agregamos siempre la constante de Job Hunter
@@ -116,7 +95,7 @@ function getTodayTasks() {
   return didiTask;
 }
 
-async function runMorningBriefing() {
+export async function runMorningBriefing(): Promise<void> {
   console.log('🌅 Iniciando Morning Briefing...');
   const tasks = getTodayTasks();
   const clima = await getMedellinWeather();
@@ -132,7 +111,7 @@ async function runMorningBriefing() {
   const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
   const dayName = days[today.getDay()];
   
-  let picoPlacaData = {
+  let picoPlacaData: Record<string, string[]> = {
     Lunes: ["1", "7"], Martes: ["0", "3"], Miercoles: ["4", "6"], Jueves: ["5", "9"], Viernes: ["2", "8"]
   };
   const PICO_FILE = path.join(__dirname, '..', '..', 'data', 'pico_placa.json');
@@ -159,6 +138,10 @@ async function runMorningBriefing() {
   p1.forEach(t => report += `🔴 [Alta] ${t.title} (${t.duration}h)\n`);
   p2.forEach(t => report += `🟡 [Media] ${t.title} (${t.duration}h)\n`);
   
+  if (today.getDay() === 0) {
+    report += '\n⚠️ *MANTENIMIENTO:* Recuerda conectar el S23 Ultra por cable USB (Depuración) hoy para verificar y sincronizar las alarmas maestras de la semana.\n';
+  }
+  
   report += '\n_Tu calendario ha sido estructurado automáticamente con estos bloques._';
 
   // --- SARGENTO FINANCIERO (Rewrite con DeepSeek) ---
@@ -173,11 +156,11 @@ NO uses etiquetas markdown de código al devolver tu respuesta.
 REPORTE CRUDO:
 ${report}`;
 
-    const llmRes = await askLLM(sargentoPrompt, [], [], 0.3);
+    const llmRes = await askLLM(sargentoPrompt, [], 0.3);
     if (llmRes && llmRes.content) {
-      report = llmRes.content.trim().replace(/^```(markdown|md)?\n/, '').replace(/\n```$/, '');
+      report = (llmRes.content as string).trim().replace(/^```(markdown|md)?\n/, '').replace(/\n```$/, '');
     }
-  } catch (e) {
+  } catch (e: any) {
     console.error('❌ Error con el Sargento Financiero (fallback a crudo):', e.message);
   }
 
@@ -188,19 +171,19 @@ ${report}`;
   // Agendar en Google Calendar
   console.log('🗓️  Agendando en Google Calendar (recién purgado)...');
   
-  const today = new Date();
-  today.setHours(9, 0, 0, 0); // Empezamos a agendar desde las 9 AM
+  const todayDate = new Date();
+  todayDate.setHours(9, 0, 0, 0); // Empezamos a agendar desde las 9 AM
   
   for (const t of tasks) {
-    const startISO = today.toISOString();
+    const startISO = todayDate.toISOString();
     try {
       await createEvent(t.title, startISO, t.duration, `Prioridad: ${t.priority} | Tipo: ${t.type}`);
-      console.log(`  ➕ Evento creado: ${t.title} a las ${today.getHours()}:00`);
-    } catch (e) {
+      console.log(`  ➕ Evento creado: ${t.title} a las ${todayDate.getHours()}:00`);
+    } catch (e: any) {
       console.error(`  ❌ Error agendando ${t.title}:`, e.message);
     }
     // Añadir tiempo del bloque + 30 min descanso
-    today.setHours(today.getHours() + t.duration, 30);
+    todayDate.setHours(todayDate.getHours() + t.duration, 30);
   }
   
   console.log('🎉 Morning Briefing Finalizado con éxito.');
@@ -209,5 +192,3 @@ ${report}`;
 if (require.main === module) {
   runMorningBriefing().catch(e => console.error(e));
 }
-
-module.exports = { runMorningBriefing };

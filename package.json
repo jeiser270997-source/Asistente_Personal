@@ -29,6 +29,15 @@
     "cleaner": "node Herramientas/Gmail_Cleaner/cli.js",
     "runtime:audit": "node scripts/diagnostics/runtime-audit.js",
     "runtime:ci": "node scripts/diagnostics/runtime-audit.js --ci",
-    "migrate": "node runtime/migrate.js"
+    "migrate": "node runtime/migrate.js",
+    "briefing": "tsx scripts/schedulers/morning_briefing.ts",
+    "alarms": "tsx scripts/set_alarms.ts",
+    "backup": "tsx scripts/maintenance/backup_dbs.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
   }
 }

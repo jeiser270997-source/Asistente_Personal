@@ -1,0 +1,41 @@
+{
+  "0": [
+    { "title": "⚽ Fútbol Dominick", "duration": 2, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi Domingo Largo", "duration": 8.5, "priority": 1, "type": "Ingresos" }
+  ],
+  "1": [
+    { "title": "🚕 DiDi AM (Fresco)", "duration": 5.5, "priority": 1, "type": "Ingresos" },
+    { "title": "🚗 Recoger a Dominick", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi PM (Corto pre-clase)", "duration": 2, "priority": 1, "type": "Ingresos" },
+    { "title": "💻 Clase CESDE (Virtual)", "duration": 2, "priority": 1, "type": "Estudio" }
+  ],
+  "2": [
+    { "title": "🚗 Llevar a Dominick a la escuela", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi AM (Corto post-escuela)", "duration": 3, "priority": 1, "type": "Ingresos" },
+    { "title": "🚗 Recoger a Dominick", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi PM (Extendido para meta)", "duration": 6.5, "priority": 1, "type": "Ingresos" }
+  ],
+  "3": [
+    { "title": "🚗 Recoger a Dominick", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🏊 Natación Dominick", "duration": 1, "priority": 1, "type": "Familiar" },
+    { "title": "💈 Corte de Cabello (Verificar si toca)", "duration": 1, "priority": 2, "type": "Cuidado Personal" },
+    { "title": "💻 Clase CESDE (Virtual)", "duration": 2, "priority": 1, "type": "Estudio" },
+    { "title": "🚗 Lavar el Carro (DLavar $4k)", "duration": 1, "priority": 2, "type": "Mantenimiento" },
+    { "title": "🛑 Día libre de conducción (Pico y Placa)", "duration": 0, "priority": 2, "type": "Descanso" }
+  ],
+  "4": [
+    { "title": "🚗 Llevar a Dominick a la escuela", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi AM (Corto post-escuela)", "duration": 3, "priority": 1, "type": "Ingresos" },
+    { "title": "🚗 Recoger a Dominick", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi PM (Extendido para meta)", "duration": 6.5, "priority": 1, "type": "Ingresos" }
+  ],
+  "5": [
+    { "title": "🚕 DiDi AM (Fresco)", "duration": 5.5, "priority": 1, "type": "Ingresos" },
+    { "title": "🚗 Recoger a Dominick", "duration": 0.5, "priority": 1, "type": "Familiar" },
+    { "title": "🚕 DiDi PM (Corto pre-clase)", "duration": 2, "priority": 1, "type": "Ingresos" },
+    { "title": "💻 Clase CESDE (Virtual)", "duration": 2, "priority": 1, "type": "Estudio" }
+  ],
+  "6": [
+    { "title": "🚕 DiDi Sábado Jornada Fuerte", "duration": 10, "priority": 1, "type": "Ingresos" }
+  ]
+}

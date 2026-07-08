@@ -1,0 +1,12 @@
+[
+  { "h": 5, "m": 0, "days": "2,6,7", "msg": "DIDI_AM_META_260K" },
+  { "h": 6, "m": 0, "days": "3,5", "msg": "DESPERTAR_LLEVAR_DOMINICK" },
+  { "h": 8, "m": 0, "days": "3,5", "msg": "SALIR_HACIA_ESCUELA" },
+  { "h": 10, "m": 30, "days": "2,3,4,5,6", "msg": "BUSCAR_DOMINICK_ESCUELA" },
+  { "h": 13, "m": 0, "days": "4", "msg": "NATACION_DOMINICK" },
+  { "h": 15, "m": 15, "days": "2,3,5,6", "msg": "DIDI_PM_META_260K" },
+  { "h": 17, "m": 0, "days": "2,4,6", "msg": "ENRUTAR_A_CASA_CESDE_VIRTUAL" },
+  { "h": 5, "m": 0, "days": "7", "msg": "CESDE_PRESENCIAL_BOOTCAMP" },
+  { "h": 9, "m": 0, "days": "1", "msg": "FUTBOL_DOMINICK" },
+  { "h": 10, "m": 30, "days": "1", "msg": "DIDI_DOMINGO_LARGO" }
+]
