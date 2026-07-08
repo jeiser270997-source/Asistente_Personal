@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -292,6 +292,31 @@ async function aplicarOferta(browser, ofertaUrl) {
     }
 
     await page.waitForTimeout(3000);
+
+    // Interceptar si nos mando a login DESPUES de hacer clic en aplicar
+    if (page.url().includes('acceso') || page.url().includes('Login')) {
+      log('   Se requirio login al intentar aplicar. Iniciando sesion...');
+      await robustLogin(page, CT_EMAIL, CT_PASS);
+      try {
+        const ns = await ctx.storageState();
+        require('node:fs').writeFileSync(STATE_PATH, JSON.stringify(ns, null, 2));
+      } catch {}
+      log('   Volviendo a la oferta para re-intentar...');
+      await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      await page.waitForTimeout(2000);
+      
+      for (const txt of btnTexts) {
+        try {
+          const btn = page.locator(`button:has-text("${txt}"), a:has-text("${txt}")`).first();
+          if (await btn.isVisible({ timeout: 1000 }).catch(() => false)) {
+            await btn.click({ timeout: 3000 });
+            log(`   Re-Click en "${txt}"`);
+            break;
+          }
+        } catch {}
+      }
+      await page.waitForTimeout(3000);
+    }
 
     // Deteccion de aplicacion externa (Misma pestaña)
     if (!page.url().includes('computrabajo.com')) {
