@@ -15,7 +15,7 @@
     {
       "id": "legal",
       "nombre": "Legal Colombia",
-      "keywords": ["simit", "comparendo", "multa de transito", "fiscalia", "denuncia", "nuc", "citacion", "juzgado", "abogado", "tutela", "contrato", "policia"],
+      "keywords": ["fiscalia", "denuncia", "nuc", "citacion", "juzgado", "abogado", "tutela", "contrato"],
       "prioridad": 9
     },
     {

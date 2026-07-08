@@ -5,7 +5,7 @@
  * Uso: node scripts/job_loop.js [--loops=5] [--min-score=60] [--dry-run]
  *   --dry-run: analiza y genera CVs pero NO aplica
  */
-require('../../lib/runtime/bootstrap');
+require('dotenv').config();
 const fs    = require('node:fs');
 const path  = require('node:path');
 const { execSync, spawn } = require('node:child_process');

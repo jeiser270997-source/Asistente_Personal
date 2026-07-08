@@ -1,3 +1,8 @@
+---
+name: extractor
+description: Extractor de contexto v9. Comprime conversaciones completas en bloques estructurados MD preservando estado, decisiones y contexto crítico entre IAs. Activa cuando se necesita resumir, extraer, o comprimir contexto de sesiones largas.
+---
+
 # SKILL: EXTRACTOR DE CONTEXTO v9.0
 
 ## PROPÓSITO

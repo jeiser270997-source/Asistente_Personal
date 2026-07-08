@@ -1,5 +1,5 @@
 # ESTADO VIVO (Perfil Maestro de Jeiser)
-**Última actualización:** 2026-07-07 (sesión completa: scraper CT + CV optimizado + aplicaciones + CESDE calendario)
+**Última actualización:** 2026-07-08 (upgrade masivo LifeOS: 8 fases + 10 nuevas skills WheelSaver + 30 skills locales 100%)
 
 ## 👤 Identidad
 - **Nombre:** Jeiser Abraham Gutierrez Torres
@@ -23,6 +23,8 @@
 - **UGPP 2023:** Cerrado favorable 12/06/2026.
 - **SIMIT comparendo:** 0000838097 (C29 Itagüí) — Recurso de reposición enviado 05/07/2026. En espera.
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
+- **Denuncia Moto BXU28C:** NUNC 110016102535202609577 (abuso de confianza) — Fiscalía 11, radicada 20/05/2026. Consultar estado: https://www.fiscalia.gov.co/colombia/servicios-de-informacion-al-ciudadano/consultas/
+- **Denuncia NUNC 110016102838202604358:** Caso separado — Fiscalía 68 U. Intervención Temprana Bogotá. 21/05/2026: sin avances sustanciales. Contacto: fis68loctempranabog@fiscalia.gov.co
 
 ## 🎓 Académico / Educativo
 - **Institución principal:** CESDE, Medellín — **Beca 70%**
@@ -59,7 +61,7 @@
 
 ## 🏗️ Sistema LifeOS
 - **Arquitectura:** Node.js + Lóbulos (Frontal, Temporal, Parietal, Occipital, Hipotálamo)
-- **Memoria:** SQLite persistente (`memoria_hipocampo.db`) + `data/memoria/hechos.json`
+- **Memoria:** SQLite persistente (`memoria_hipocampo.db`) — hechos.json migrado a SQLite (Jul 2026)
 - **LLM:** DeepSeek V4 Flash (horario valle 11pm-8am Colombia)
 - **Fallback:** Gemini Flash / OpenRouter Free
 - **Workflows activos:** 12 (todos ubuntu-22.04) — ver tabla abajo
@@ -101,3 +103,40 @@
 - **DIAN MUISCA:** `1019156838` / `A125%230aa` (CC)
 - **Computrabajo:** `jeiser270997@gmail.com` / `A125%230a`
 - **Placa:** KEW496 · CC: 1019156838
+
+## 🏗️ Upgrade LifeOS Jul 2026 — WheelSaver Audit
+
+### Cambios arquitectónicos
+| Componente | Antes | Después |
+|-----------|-------|---------|
+| Event Bus | Custom 335 líneas | EventEmitter nativo (234 líneas) + DLQ wrapper |
+| Motor de reglas | matchPattern custom 109 líneas | json-rules-engine v7.3.1 + 3 operadores custom |
+| LLM Service | fetch() nativo a DeepSeek | LangChain ChatOpenAI + baseURL DeepSeek + valley/pico |
+| Memoria hechos | JSON file (hechos.json) | SQLite (memoria_hipocampo.db) |
+| Bootstrap | bootstrap.js custom 40 líneas | dotenv.config() directo |
+| Skills duplicadas | 3 skills cargadas 2x | 0 duplicadas |
+| Skills externas | 6 rutas a Documents | 100% local (30 skills) |
+
+### Librerías nuevas
+`json-rules-engine` · `valibot` · `pino` · `date-fns`
+
+### Dependencias eliminadas
+`lowdb` (código muerto — 0 referencias en runtime)
+
+### Skills nuevas (8 desde WheelSaver audit)
+| Skill | Inspiración |
+|-------|------------|
+| `vehicle-manager` 🚗 | LubeLogger 2,668⭐ |
+| `personal-dashboard` 🖥️ | Dashy 25,756⭐ + OpenClaw 382K⭐ |
+| `content-pipeline` 🎥 | ViMax 11,013⭐ |
+| `skill-auditor` 🔐 | NVIDIA SkillSpector 9,325⭐ |
+| `second-brain-health` 🧠 | My-Brain-Is-Full-Crew 3,226⭐ |
+| `bill-manager` 🛒 | Wallos 8,094⭐ |
+| `backup-automator` 📁 | Duplicati 14,320⭐ |
+| `think-opa` 📊 | Open Policy Agent 11,951⭐ |
+
+### Skills importadas a local (desde Documents)
+`extractor` · `job-filter` · `softball`
+
+### Skills eliminadas por duplicación
+`psicologo.md` · `tutor.md` · `cerebro.md` · `tutor_qa.md` · `financiero/`

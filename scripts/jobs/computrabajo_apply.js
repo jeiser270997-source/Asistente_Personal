@@ -122,22 +122,83 @@ async function waitForApproval(timeoutMs) {
   return null;
 }
 
-// ─── SCORE ─────────────────────────────────────────────────────
-async function calcularScore(oferta) {
-  const cvBase = fs.existsSync(CV_BASE) ? fs.readFileSync(CV_BASE, 'utf8').substring(0, 1000) : '';
-  const prompt = `Puntua del 0-100 que tan bien encaja este perfil QA junior con la oferta. Responde SOLO JSON:
-{"score":N,"recomendar":true/false,"razon":"una frase corta"}
+// ─── PERFIL MAESTRO DEL CANDIDATO ──────────────────────────────
+const PERFIL_JEISER = `
+NOMBRE: Jeiser Abraham Gutierrez Torres
+CC: 1019156838 | Telefono: +57 304 461 5613 | Email: jeiser270997@gmail.com
+UBICACION: Medellin, Antioquia (Barrio Villa Eloisa)
+VEHICULO: Tiene vehiculo propio (carro), por lo que no tiene restricciones de movilidad en Medellin y su area metropolitana.
+DISPONIBILIDAD HORARIA: Lunes a Viernes (estudia los sabados en CESDE, no puede trabajar los sabados).
+ASPIRACION SALARIAL: Salario minimo legal vigente o segun promedio del mercado para el cargo, negociable.
+FORMACION:
+  - Tecnico en Analisis y Desarrollo de Software (CESDE, Medellin) - En curso 2026
+  - Bootcamp QA Automation 28 semanas (Playwright, GitHub Actions, Node.js) - CESDE
+  - Bases de Datos y Excel Avanzado - SENA (Zajuna)
+EXPERIENCIA:
+  1. QA Automation Engineer - Proyecto LifeOS (propio, en produccion): Playwright, Node.js, GitHub Actions, SQLite, integracion APIs REST, CI/CD.
+  2. Agente Soporte Nivel 1 (Mesa de Ayuda) - Sitel/Iberia/Amadeus GDS (2021): atencion al usuario, tickets, SLA, sistema GDS.
+  3. Auxiliar de Sistemas / Operador CCTV - Coovisocial (2019-2021): monitoreo sistemas de seguridad, diagnostico de fallas, informes de incidentes.
+SKILLS TECNICOS: Playwright, Node.js, JavaScript, GitHub Actions, SQLite, APIs REST, Git, Microsoft Office (Excel Avanzado), Windows 10/11, Redes basicas TCP/IP, GDS Amadeus.
+IDIOMAS: Espanol nativo, Ingles B1-B2 (lectura tecnica fluida).
+`;
 
-OFERTA: ${oferta.titulo} | ${oferta.empresa} | ${oferta.lugar}
-DESCRIPCION: ${(oferta.cuerpo || oferta.titulo || '').substring(0, 800)}
-PERFIL: QA Automation Junior, Playwright, JS, CESDE bootcamp (2026), sin exp formal aun, LifeOS project`;
+// ─── SCORE + DETECTOR DE FIN DE SEMANA (IA) ─────────────────────
+async function calcularScore(oferta) {
+  const cvBase = fs.existsSync(CV_BASE) ? fs.readFileSync(CV_BASE, 'utf8').substring(0, 800) : '';
+  const prompt = `Eres un evaluador de ofertas de trabajo para Colombia. Analiza la siguiente oferta y responde EXCLUSIVAMENTE con un JSON valido.
+
+OFERTA:
+Titulo: ${oferta.titulo}
+Empresa: ${oferta.empresa}
+Lugar: ${oferta.lugar}
+Descripcion completa: ${(oferta.cuerpo || oferta.titulo || '').substring(0, 1200)}
+
+PERFIL DEL CANDIDATO:
+${PERFIL_JEISER}
+
+EVALUA:
+1. Que tan bien encaja el candidato (0-100).
+2. Si la oferta menciona horario de sabados, domingos, fines de semana, turnos rotativos o disponibilidad de 6 dias. Si la descripcion no especifica horario, asume que es Lunes-Viernes.
+
+Responde SOLO con este JSON:
+{"score":N,"recomendar":true/false,"requiere_finde":false,"razon":"una frase corta"}`;
 
   try {
     const res = await askLLM(prompt, [], 0.1);
     const json = (res.content || '').replace(/```json|```/g, '').trim();
-    return JSON.parse(json);
+    const parsed = JSON.parse(json);
+    if (parsed.requiere_finde) {
+      log(`   ⛔ IA detectó horario fin de semana: ${oferta.titulo}`);
+      return { score: 0, recomendar: false, razon: 'Requiere trabajo en fin de semana (estudia sabados)' };
+    }
+    return parsed;
   } catch {
     return { score: 55, recomendar: true, razon: 'Score estimado' };
+  }
+}
+
+// ─── RESPONDER PREGUNTAS CON IA (CONTEXTUAL) ────────────────────
+async function responderPreguntaConIA(pregunta, descripcionOferta) {
+  const prompt = `Eres el asistente de Jeiser, un candidato aplicando a una oferta de trabajo en Colombia. 
+Responde la siguiente pregunta del formulario de postulacion de forma profesional, concisa y coherente con el perfil del candidato y la descripcion de la oferta. 
+Maximo 2 oraciones. Sin saludos. Sin presentaciones. Solo la respuesta directa.
+
+DESCRIPCION DE LA OFERTA:
+${(descripcionOferta || '').substring(0, 600)}
+
+PERFIL DEL CANDIDATO:
+${PERFIL_JEISER}
+
+PREGUNTA DEL RECLUTADOR:
+${pregunta}
+
+RESPUESTA:`;
+
+  try {
+    const res = await askLLM(prompt, [], 0.3);
+    return (res.content || '').trim().replace(/^["']|["']$/g, '');
+  } catch {
+    return 'Si, cumplo con los requisitos del cargo y me encuentro disponible para una entrevista.';
   }
 }
 
@@ -212,28 +273,15 @@ async function aplicarOferta(browser, ofertaUrl) {
         });
         log(`   Textareas encontradas: ${preguntas.length}`);
 
-        const PERFIL = `Nombre: Jeiser Abraham Gutierrez Torres. CC: 1019156838. Tel: +57 304 461 5613.
-Ubicacion: Medellin, Colombia. Experiencia: QA Automation Engineer (LifeOS Project), Playwright, Node.js, GitHub Actions, CI/CD. Formacion: CESDE (Analisis y Desarrollo de Software, Bootcamp QA Automation).`;
+        // Obtener descripción de la oferta para contexto de la IA
+        const descripcionOferta = await page.evaluate(() => document.body.innerText.substring(0, 1500));
 
         for (const p of preguntas.slice(0, 6)) {
-          let respuesta = '';
-          const q = p.pregunta.toLowerCase();
+          log(`   Pregunta detectada: "${p.pregunta.substring(0, 80)}..."`);
 
-          if (/localidad|barrio|ciudad|vive|reside|ubicaci/.test(q)) {
-            respuesta = 'Medellin, Antioquia.';
-          } else if (/academ|estudio|titulo|educaci|formaci/.test(q)) {
-            respuesta = 'Tecnico en Analisis y Desarrollo de Software (CESDE). Adicionalmente, cursando Bootcamp especializado en QA Automation (28 semanas). Conocimientos solidos en Testing E2E con Playwright y JavaScript.';
-          } else if (/contacto|telefono|celular|numero/.test(q)) {
-            respuesta = '+57 304 461 5613';
-          } else if (/experiencia|cargo|rol|funcion/.test(q)) {
-            respuesta = 'Experiencia practica comprobable como QA Automation Engineer desarrollando arquitecturas de pruebas desde cero. Especialista en ecosistemas JavaScript/Node.js, automatizacion E2E con Playwright, y despliegue de flujos de Integracion Continua (CI/CD) mediante GitHub Actions.';
-          } else if (/iso|norma|certific|calidad|sistema de gesti/.test(q)) {
-            respuesta = 'Solidos fundamentos en metodologias de aseguramiento de calidad de software (QA), diseno de casos de prueba y Clean Architecture. Capacidad para garantizar la estabilidad de los flujos criticos de negocio.';
-          } else if (/salario|aspira|pretens/.test(q)) {
-            respuesta = 'Aspiracion salarial ajustada al promedio del mercado para QA Automation Junior, abierto a negociacion segun los beneficios y el plan de carrera ofrecido.';
-          } else {
-            respuesta = 'Si, cumplo a cabalidad con los requisitos tecnicos del cargo y me encuentro disponible para una entrevista tecnica.';
-          }
+          // La IA lee la pregunta + descripcion de la oferta + perfil de Jeiser → responde coherentemente
+          const respuesta = await responderPreguntaConIA(p.pregunta, descripcionOferta);
+          log(`   Respuesta IA: "${respuesta.substring(0, 80)}..."`);
 
           const textareas = await page.locator('textarea:visible, input[type="text"]:visible').all();
           for (const ta of textareas) {
@@ -244,7 +292,7 @@ Ubicacion: Medellin, Colombia. Experiencia: QA Automation Engineer (LifeOS Proje
               break;
             }
           }
-          await page.waitForTimeout(300);
+          await page.waitForTimeout(400);
         }
 
         const siLabels = await page.locator('label:has-text("Si"), label:has-text("Si")').all();

@@ -24,6 +24,8 @@ description: Control financiero personalizado para Jeiser como conductor Didi + 
 2. **Gastos hormiga:** Identificar y eliminar los de <$5K COP/semana que se acumulan
 3. **Didi:** No trabajar más horas para ganar más — optimizar horarios pico
 4. **Emergency fund:** Meta: 1 mes de gastos en efectivo antes de cualquier inversión
+5. **Educación como inversión:** CESDE (beca 70%) y SENA son inversiones con ROI directo. Priorizar estudio sobre horas extra de Didi cuando hay deadlines.
+6. **Anti-pánico:** Si Jeiser está preocupado por dinero, desglosar el problema en pasos accionables. Nada de alarmismo.
 
 ## Horarios pico Didi Medellín (referencia)
 

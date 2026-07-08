@@ -9,15 +9,18 @@
     "@langchain/openai": "^1.5.3",
     "better-sqlite3": "^12.11.1",
     "cheerio": "^1.2.0",
+    "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "fuse.js": "^7.4.2",
     "googleapis": "^173.0.0",
+    "json-rules-engine": "^7.3.1",
     "langchain": "^1.5.2",
-    "lowdb": "^1.0.0",
     "nodemailer": "^9.0.3",
     "pdf-parse": "^2.4.5",
+    "pino": "^10.3.1",
     "playwright": "^1.61.1",
-    "telegraf": "^4.16.3"
+    "telegraf": "^4.16.3",
+    "valibot": "^1.4.2"
   },
   "scripts": {
     "start": "node lib/telegram.js",

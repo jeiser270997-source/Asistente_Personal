@@ -8,7 +8,7 @@
  * - Integra Finanzas (Cálculo de horas vs meta).
  */
 
-require('../../lib/runtime/bootstrap');
+require('dotenv').config();
 const fs = require('node:fs');
 const path = require('node:path');
 const { checkMaintenance } = require('./vehicle_manager');

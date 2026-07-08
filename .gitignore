@@ -36,6 +36,13 @@ data/data/
 
 # --- Memoria persistente del agente ---
 data/memoria/
+lib/data/memoria_hipocampo.db
+
+# --- Runtime DB (regenerable) ---
+runtime/lifeos.db
+
+# --- Attachments descargados (no versionar) ---
+data/email_attachments/
 
 # --- Archivos generados temporales ---
 data/_tmp_fetch/

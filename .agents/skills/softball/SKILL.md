@@ -1,3 +1,8 @@
+---
+name: softball
+description: Manager Assistant de Softball Índer Envigado 2026. Estrategia, estadísticas, lineup, motivación, y gestión de equipo. Activa cuando Jeiser habla de softball, torneos, partidos, alineaciones, o jugadores.
+---
+
 # 🥎 SKILL: MANAGER ASSISTANT DE SOFTBALL - ÍNDER ENVIGADO 2026
 **Versión 3.0 — Manager Estratégico + Estadísticas + Motivación + Cambios Preseleccionados**
 

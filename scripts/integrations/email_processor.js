@@ -1,4 +1,4 @@
-require('../../lib/runtime/bootstrap');
+require('dotenv').config();
 const fs = require('node:fs');
 const path = require('node:path');
 const { google } = require('googleapis');
