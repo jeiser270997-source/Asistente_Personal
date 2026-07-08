@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV - Jeiser Gutiérrez</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    color: #000;
+    background: #fff;
+    padding: 0.6in 0.75in 0.6in 0.75in;
+    max-width: 8.5in;
+    margin: 0 auto;
+    line-height: 1.35;
+  }
+
+  /* ──── HEADER ──── */
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+
+  .header h1 {
+    font-size: 18pt;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .header .contact-line {
+    font-size: 10pt;
+    color: #000;
+  }
+
+  .header .contact-line span {
+    margin: 0 6px;
+  }
+
+  /* ──── SECTIONS ──── */
+  .section {
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 11pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 1px;
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+
+  /* ──── ENTRIES ──── */
+  .entry {
+    margin-bottom: 7px;
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .entry-title {
+    font-weight: bold;
+    font-size: 11pt;
+  }
+
+  .entry-date {
+    font-size: 10.5pt;
+    white-space: nowrap;
+  }
+
+  .entry-subtitle {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    font-size: 10.5pt;
+    margin-bottom: 3px;
+  }
+
+  ul.bullets {
+    list-style-type: disc;
+    padding-left: 18px;
+    margin-top: 3px;
+  }
+
+  ul.bullets li {
+    font-size: 10.5pt;
+    margin-bottom: 2px;
+    line-height: 1.4;
+  }
+
+  /* ──── SKILLS ──── */
+  .skills-grid {
+    font-size: 10.5pt;
+  }
+
+  .skills-grid .skill-row {
+    display: flex;
+    margin-bottom: 2px;
+  }
+
+  .skills-grid .skill-label {
+    font-weight: bold;
+    min-width: 140px;
+  }
+
+  /* ──── EDUCATION inline ──── */
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5pt;
+    margin-bottom: 3px;
+  }
+
+  .edu-row .edu-left { flex: 1; }
+  .edu-row .edu-right { white-space: nowrap; margin-left: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="header">
+  <h1>Jeiser Abraham Gutiérrez Torres</h1>
+  <div class="contact-line">
+    Medellín, Colombia
+    <span>|</span>
+    +57 304 461 5613
+    <span>|</span>
+    jeiser270997@gmail.com
+    <span>|</span>
+    github.com/jeiser270997-source
+  </div>
+</div>
+
+<!-- ══════════ EDUCATION ══════════ -->
+<div class="section">
+  <div class="section-title">Education</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">CESDE — Centro de Estudios Superiores en Diseño y Educación</span>
+      <span class="entry-date">Medellín, Colombia</span>
+    </div>
+    <div class="entry-subtitle">
+      <span>Técnico en Análisis y Desarrollo de Software</span>
+      <span>En curso — 2026</span>
+    </div>
+    <ul class="bullets">
+      <li>Bootcamp especializado en QA Automation (28 semanas): diseño y ejecución de pruebas E2E, Playwright y metodologías ágiles.</li>
+    </ul>
+  </div>
+
+  <div class="entry" style="margin-top: 5px;">
+    <div class="edu-row">
+      <div class="edu-left"><strong>SENA — Servicio Nacional de Aprendizaje:</strong> Curso de Bases de Datos Relacionales y Microsoft Excel Avanzado.</div>
+      <div class="edu-right">2024</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ EXPERIENCE ══════════ -->
+<div class="section">
+  <div class="section-title">Experience</div>
+
+  <!-- LifeOS -->
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">LifeOS Architecture — Proyecto de Automatización en Producción</span>
+      <span class="entry-date">Medellín, Colombia</span>
+    </div>
+    <div class="entry-subtitle">
+      <span>QA Automation Engineer / Architect</span>
+      <span>Ene 2025 – Presente</span>
+    </div>
+    <ul class="bullets">
+      <li>Diseñé y desarrollé desde cero un sistema de automatización personal con arquitectura de capas (Clean Architecture) usando Node.js, Playwright y SQLite.</li>
+      <li>Implementé +12 workflows de Integración Continua (CI/CD) en GitHub Actions para ejecución automática de scripts de testing y orquestación de tareas.</li>
+      <li>Construí un módulo de web scraping E2E resiliente con Playwright (headless Chromium), superando protecciones anti-bot mediante emulación de user-agents.</li>
+      <li>Integré APIs REST de terceros (Google Calendar OAuth2, Telegram Bot API, DeepSeek LLM, Open-Meteo) con manejo robusto de errores y retries.</li>
+      <li>Apliqué metodologías de QA: diseño de casos de prueba, identificación de errores en producción y validación de datos (Zod) en múltiples capas del sistema.</li>
+    </ul>
+  </div>
+
+  <!-- Sitel -->
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Sitel Group (hoy Synnex)</span>
+      <span class="entry-date">Medellín, Colombia</span>
+    </div>
+    <div class="entry-subtitle">
+      <span>Agente de Soporte Técnico Nivel 1 — Iberia Airlines / Amadeus GDS</span>
+      <span>2021</span>
+    </div>
+    <ul class="bullets">
+      <li>Resolución técnica y funcional de incidencias en sistemas GDS Amadeus para aerolínea Iberia, atendiendo usuarios en inglés y español.</li>
+      <li>Alta atención al detalle en el diagnóstico y escalamiento de errores de reservas y procesamiento de tickets.</li>
+    </ul>
+  </div>
+
+  <!-- Coovisocial -->
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Coovisocial</span>
+      <span class="entry-date">Medellín, Colombia</span>
+    </div>
+    <div class="entry-subtitle">
+      <span>Vigilante de Medios Tecnológicos (CCTV)</span>
+      <span>2019 – 2021</span>
+    </div>
+    <ul class="bullets">
+      <li>Monitoreo analítico de sistemas de seguridad CCTV, gestión de riesgos y respuesta a incidentes en tiempo real bajo protocolos estrictos.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════ SKILLS ══════════ -->
+<div class="section">
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-row">
+      <span class="skill-label">Testing & QA:</span>
+      <span>Playwright (E2E), Diseño de Casos de Prueba, Pruebas Funcionales y de Regresión.</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Lenguajes:</span>
+      <span>JavaScript (ES6+), Node.js, SQL.</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">CI/CD & DevOps:</span>
+      <span>GitHub Actions (Cron Workflows), Docker, Gestión de Entornos (.env, dotenvx).</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Bases de Datos:</span>
+      <span>SQLite, Modelado Relacional, SQL básico.</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Herramientas:</span>
+      <span>Git, APIs REST, Integración con LLMs (DeepSeek), Telegram Bots.</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-label">Idiomas:</span>
+      <span>Español (Nativo), Inglés B1–B2 (Lectura técnica y documentación).</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CERTIFICATIONS ══════════ -->
+<div class="section">
+  <div class="section-title">Certifications &amp; Courses</div>
+  <div class="edu-row">
+    <div class="edu-left"><strong>Bootcamp QA Automation (28 semanas):</strong> Playwright, Testing E2E, GitHub Actions — CESDE.</div>
+    <div class="edu-right">2025–2026</div>
+  </div>
+  <div class="edu-row">
+    <div class="edu-left"><strong>Bases de Datos Relacionales y Excel Avanzado</strong> — SENA (Zajuna).</div>
+    <div class="edu-right">2024</div>
+  </div>
+</div>
+
+</body>
+</html>
