@@ -9,6 +9,7 @@ repomix_*.md
 .backup_*/
 
 # --- Datos personales no versionados ---
+data/state/contexto_maestro/ESTADO_VIVO.md
 data/chat_history.json
 data/notas.md
 data/processed_emails.json
