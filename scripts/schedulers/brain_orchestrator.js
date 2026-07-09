@@ -297,6 +297,18 @@ async function callLLM(systemPrompt, userContext) {
 async function run() {
   log('🚀 Iniciando Brain Orchestrator...');
   const now = getColombiaDate();
+
+  // Health check: Google Calendar token
+  try {
+    const { getProximosEventos } = require('../../lib/integrations/calendar_client');
+    const calCheck = await getProximosEventos(1);
+    if (calCheck?.error?.includes('Token expirado') || calCheck?.error?.includes('invalid_grant')) {
+      await sendTelegramMessage('⚠️ ALERTA: Token de Google Calendar expirado. Corre: node scripts/setup_google_calendar.js');
+      log('⚠️ Token de Calendar expirado — notificación enviada');
+    }
+  } catch (e) {
+    log(`⚠️ Calendar health check: ${e.message}`);
+  }
   const dateStr = formatDateColombia(now);
   const dayType = determineDayType(now);
 

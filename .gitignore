@@ -55,6 +55,13 @@ data/email_attachments/
 # --- Archivos generados temporales ---
 data/_tmp_fetch/
 
+# --- WheelSaver Python sub-project ---
+wheel-saver/venv/
+wheel-saver/__pycache__/
+wheel-saver/**/*.pyc
+wheel-saver/.coverage
+wheel-saver/data/typesense/
+
 # --- Submódulo externo ---
 data/resume_template/
 

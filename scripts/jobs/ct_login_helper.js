@@ -48,7 +48,18 @@ async function robustLogin(page, email, pass) {
 
     // Esperar a que pase el login final
     await page.waitForTimeout(4000);
-    
+
+    // Verificar login exitoso: buscar elementos del dashboard post-login
+    const loginOk = await page.waitForSelector(
+      '.dashboard-header, .mi-cuenta, a[href*="postulaciones"], [class*="perfil"], a[href*="/dashboard"]',
+      { timeout: 8000 }
+    ).then(() => true).catch(() => false);
+
+    if (!loginOk) {
+      console.error('  [ct_login_helper] ⚠️ Login aparentemente fallido — no se detectó dashboard post-login');
+      return false;
+    }
+
     return true;
   } catch (error) {
     console.error('   [ct_login_helper] Error crítico durante el login:', error.message);

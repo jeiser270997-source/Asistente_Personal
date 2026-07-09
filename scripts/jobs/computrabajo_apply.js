@@ -5,7 +5,7 @@ const { chromium } = require('playwright');
 const { askLLM }   = require('../../lib/ai/llm_service');
 const { robustLogin } = require('./ct_login_helper');
 
-const BASE_DIR   = path.resolve(__dirname, '..');
+const BASE_DIR   = path.resolve(__dirname, '..', '..');
 const JOBS_DIR   = path.join(BASE_DIR, 'data', 'jobs');
 const CV_BASE    = path.join(JOBS_DIR, 'cv_base.md');
 
@@ -27,6 +27,31 @@ const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 const AUTO_MODE = process.argv.includes('--auto');
 const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=60').split('=')[1]);
 const APPROVAL_TIMEOUT_MS = 120_000;
+
+// ─── Login retry guard ──────────────────────────────────────────────
+const MAX_LOGIN_FAILS = 3;
+let _loginFailCount = 0;
+
+async function loginWithRetry(page, email, pass) {
+  for (let attempt = 1; attempt <= MAX_LOGIN_FAILS; attempt++) {
+    const ok = await robustLogin(page, email, pass);
+    if (ok) {
+      _loginFailCount = 0;
+      return true;
+    }
+    _loginFailCount++;
+    log(`⚠️ Intento ${attempt}/${MAX_LOGIN_FAILS} de login fallido`);
+    if (attempt < MAX_LOGIN_FAILS) {
+      await page.waitForTimeout(3000);
+    }
+  }
+  // 3 fallos consecutivos → notificar
+  log('❌ 3 intentos de login fallidos. Notificando...');
+  try {
+    await sendTelegram(`⚠️ <b>Computrabajo: Login fallido</b>\n3 intentos consecutivos de login fallaron.\nPosible causa: selectores desactualizados o credenciales inválidas.\nRevisa y ejecuta: node scripts/jobs/login_ct.js --debug`);
+  } catch {}
+  throw new Error('Login failed after 3 attempts');
+}
 
 function log(msg) { console.log(`[${new Date().toISOString()}] ${msg}`); }
 
@@ -239,7 +264,7 @@ async function aplicarOferta(browser, ofertaUrl) {
       log(`   Haciendo login en Computrabajo...`);
       await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
       
-      await robustLogin(page, CT_EMAIL, CT_PASS);
+      await loginWithRetry(page, CT_EMAIL, CT_PASS);
 
       // Guardar sesión para próxima vez
       try {
@@ -296,7 +321,7 @@ async function aplicarOferta(browser, ofertaUrl) {
     // Interceptar si nos mando a login DESPUES de hacer clic en aplicar
     if (page.url().includes('acceso') || page.url().includes('Login')) {
       log('   Se requirio login al intentar aplicar. Iniciando sesion...');
-      await robustLogin(page, CT_EMAIL, CT_PASS);
+      await loginWithRetry(page, CT_EMAIL, CT_PASS);
       try {
         const ns = await ctx.storageState();
         require('node:fs').writeFileSync(STATE_PATH, JSON.stringify(ns, null, 2));

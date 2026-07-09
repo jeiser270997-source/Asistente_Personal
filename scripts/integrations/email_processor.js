@@ -11,9 +11,8 @@ const ruleEngine = require('../../lib/runtime/rule_engine');
 const { agregarHecho } = require('../../lib/memory/memory_engine');
 const fsPromises = require('node:fs/promises');
 
-// LLM
+// LLM (OpenAI SDK nativo)
 const { createLLM } = require('../../lib/ai/litellm_client');
-const { ChatPromptTemplate } = require('@langchain/core/prompts');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
 const USE_SQLITE = DB_DRIVER === 'sqlite';
@@ -71,17 +70,19 @@ function saveProcessed(ids) {
 
 async function isImportant(from, subject, body = "") {
   try {
-    const llm = await createLLM({ temperature: 0.1 });
+    const llm = await createLLM();
     if (!llm) throw new Error("No LLM available");
-    
-    const prompt = ChatPromptTemplate.fromMessages([
-      ["system", "Eres el guardián de la bandeja de entrada de Jeiser. Responde SOLO con la palabra 'KEEP' si el correo es importante (alertas de multas, fotomultas, tránsito, DIAN, SIMIT, juzgados, bancos, nómina, facturas, ofertas laborales, entrevistas, SENA, CESDE). Responde SOLO con 'DELETE' si es spam, publicidad, promociones, boletines o notificaciones de redes sociales."],
-      ["user", `Remitente: ${from}\nAsunto: ${subject}\n\n${body.substring(0, 300)}`]
-    ]);
-    
-    const chain = prompt.pipe(llm);
-    const result = await chain.invoke({});
-    const answer = result.content.trim().toUpperCase();
+
+    const result = await llm.chat.completions.create({
+      model: llm._model || 'google/gemini-2.5-flash',
+      messages: [
+        { role: 'system', content: "Eres el guardián de la bandeja de entrada de Jeiser. Responde SOLO con la palabra 'KEEP' si el correo es importante (alertas de multas, fotomultas, tránsito, DIAN, SIMIT, juzgados, bancos, nómina, facturas, ofertas laborales, entrevistas, SENA, CESDE). Responde SOLO con 'DELETE' si es spam, publicidad, promociones, boletines o notificaciones de redes sociales." },
+        { role: 'user', content: `Remitente: ${from}\nAsunto: ${subject}\n\n${body.substring(0, 300)}` }
+      ],
+      temperature: 0.1,
+      max_tokens: 10,
+    });
+    const answer = (result.choices[0]?.message?.content || '').trim().toUpperCase();
     
     return answer.includes('KEEP');
   } catch (e) {

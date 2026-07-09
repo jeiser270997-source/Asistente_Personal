@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const crypto = require('node:crypto');
 const betterSqlite3 = require('better-sqlite3');
 
-const DB_PATH = path.resolve(__dirname, '..', '..', 'runtime', 'lifeos.db');
+const DB_PATH = process.env.LIFEOS_DB_PATH || path.resolve(__dirname, '..', '..', 'runtime', 'lifeos.db');
 const MIGRATIONS_DIR = path.resolve(__dirname, '..', 'migrations');
 
 let db = null;
@@ -45,6 +45,18 @@ function runMigrations() {
     const version = parseInt(match[1], 10);
     if (applied.has(version)) continue;
 
+    // Backup antes de migrar (solo si la DB es real, no en tests)
+    const backupPath = DB_PATH + '.bak';
+    const isTestDb = DB_PATH.includes('lifeos-test-');
+    if (!isTestDb && fs.existsSync(DB_PATH) && !fs.existsSync(backupPath)) {
+      try {
+        fs.copyFileSync(DB_PATH, backupPath);
+        console.log(`[DB] Backup creado: ${backupPath}`);
+      } catch (e) {
+        console.warn(`[DB] No se pudo crear backup: ${e.message}`);
+      }
+    }
+
     const sql = fs.readFileSync(path.join(MIGRATIONS_DIR, file), 'utf8');
     const csum = checksum(sql);
 
@@ -53,8 +65,13 @@ function runMigrations() {
       db.exec(sql);
       db.prepare("INSERT OR IGNORE INTO schema_migrations (version, name, checksum) VALUES (?, ?, ?)").run(version, file, csum);
       db.exec('COMMIT');
+      // Backup exitoso → eliminar respaldo
+      if (!isTestDb && fs.existsSync(backupPath)) {
+        try { fs.unlinkSync(backupPath); } catch {}
+      }
     } catch (e) {
       db.exec('ROLLBACK');
+      console.error(`[DB] Migración ${file} FALLÓ. Backup disponible en: ${backupPath}`);
       throw e;
     }
   }

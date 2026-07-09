@@ -31,7 +31,25 @@ function getAuthClient() {
 }
 
 /**
- * Crea un evento en el calendario principal.
+ * Busca si ya existe un evento con este título en esta ventana de tiempo.
+ */
+async function findExistingEvent(calendar, summary, startTimeISO, endTimeISO) {
+  try {
+    const res = await calendar.events.list({
+      calendarId: 'primary',
+      q: summary.substring(0, 40),
+      timeMin: new Date(startTimeISO).toISOString(),
+      timeMax: new Date(endTimeISO).toISOString(),
+      singleEvents: true,
+    });
+    return (res.data.items || []).length > 0;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Crea un evento en el calendario principal (con dedup automático).
  */
 async function createEvent(summary, startTimeISO, durationHours = 1, description = '', recurrenceRule = null, reminderMinutes = 60) {
   const auth = getAuthClient();
@@ -39,6 +57,12 @@ async function createEvent(summary, startTimeISO, durationHours = 1, description
 
   const start = new Date(startTimeISO);
   const end = new Date(start.getTime() + durationHours * 60 * 60 * 1000);
+
+  // Dedup: verificar si ya existe
+  if (await findExistingEvent(calendar, summary, startTimeISO, end.toISOString())) {
+    console.log(`[Calendar] ⏭️ Ya existe: ${summary}`);
+    return { id: 'skipped', skipped: true, summary };
+  }
 
   const event = {
     summary: summary,

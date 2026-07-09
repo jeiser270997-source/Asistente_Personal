@@ -24,6 +24,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
+    - name: Instalar dependencias del sistema (compilación native addons)
+      run: sudo apt-get update && sudo apt-get install -y python3 make g++
+
     - name: Instalar dependencias principales
       run: npm install --legacy-peer-deps
 
@@ -47,3 +50,6 @@ jobs:
         echo "Compilando TypeScript..."
         npx tsc --noEmit
         echo "✅ Código TypeScript válido."
+
+    - name: Ejecutar tests
+      run: npx vitest run
