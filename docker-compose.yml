@@ -1,96 +1,18 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  # ── Monitor de salud del sistema ─────────────────────────────
-  uptime-kuma:
-    image: louislam/uptime-kuma:1
-    container_name: lifeos-uptime
-    restart: unless-stopped
+  lifeos-dashboard:
+    build: 
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: lifeos-dashboard
     ports:
-      - "3001:3001"
-    volumes:
-      - uptime-kuma-data:/app/data
-    # Acceder via Tailscale: http://<tailscale-ip>:3001
-
-  # ── App de notas Markdown ────────────────────────────────────
-  memos:
-    image: neosmemo/memos:stable
-    container_name: lifeos-memos
-    restart: unless-stopped
-    ports:
-      - "5230:5230"
-    volumes:
-      - ./data/memos:/var/opt/memos
+      - "3000:3000"
     environment:
-      - MEMOS_MODE=prod
-      - MEMOS_PORT=5230
-    # Token: Settings > Access Tokens → copiar a .env como MEMOS_TOKEN
-
-  # ── Presupuesto personal local-first (Actual Budget) ─────────
-  actual:
-    image: actualbudget/actual-server:latest
-    container_name: lifeos-actual
-    restart: unless-stopped
-    ports:
-      - "5006:5006"
+      - IS_DOCKER=true
     volumes:
-      - ./data/actual:/data
-    environment:
-      - ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB=20
-    # Acceder: http://localhost:5006
-    # Usar para tracking gastos Didi + deudas DIAN + ahorro
-
-  # ── Backup streaming de SQLite (Litestream) ───────────────────
-  litestream:
-    image: litestream/litestream:latest
-    container_name: lifeos-litestream
+      # Montamos las carpetas de datos del host como solo-lectura para seguridad
+      - ./data:/app/data:ro
+      - ./runtime:/app/runtime:ro
+      - ./scripts:/app/scripts:ro
     restart: unless-stopped
-    volumes:
-      - ./data:/data
-      - ./litestream.yml:/etc/litestream.yml
-    command: replicate
-    # Replica memoria_hipocampo.db localmente a data/backups/
-    # Para activar: crear litestream.yml con la config abajo
-
-  # ── Alertas unificadas multi-canal (Apprise) ─────────────────
-  apprise:
-    image: caronc/apprise:latest
-    container_name: lifeos-apprise
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./data/apprise:/config
-    environment:
-      - APPRISE_CONFIG_DIR=/config
-    # API: POST http://localhost:8000/notify/apprise
-    # Body: { "title": "...", "body": "...", "tag": "info" }
-
-  # ── Ruteador de LLMs con failback automático (LiteLLM) ──────
-  litellm:
-    image: ghcr.io/berriai/litellm:main-latest
-    container_name: lifeos-litellm
-    restart: unless-stopped
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./data/litellm:/app/config
-    environment:
-      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-    command: [ "--config", "/app/config/config.yaml" ]
-    # Proxy OpenAI-compatible: http://localhost:4000/v1/chat/completions
-    # Fallback automático: DeepSeek → Gemini si hay timeout/rate-limit
-
-  # ── Crawler LLM-optimizado (opcional, requiere Python) ───────
-  # crawl4ai:
-  #   image: unclecode/crawl4ai:latest
-  #   container_name: lifeos-crawl4ai
-  #   restart: unless-stopped
-  #   ports:
-  #     - "11235:11235"
-  #   environment:
-  #     - CRAWL4AI_API_TOKEN=lifeos-local
-
-volumes:
-  uptime-kuma-data:
