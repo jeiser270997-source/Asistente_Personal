@@ -42,6 +42,12 @@ lib/data/memoria_hipocampo.db
 
 # --- Runtime DB (regenerable) ---
 runtime/lifeos.db
+runtime/lifeos.db-wal
+runtime/lifeos.db-shm
+data/*.db-wal
+data/*.db-shm
+*.db-wal
+*.db-shm
 
 # --- Attachments descargados (no versionar) ---
 data/email_attachments/
