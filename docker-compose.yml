@@ -12,7 +12,5 @@ services:
       - IS_DOCKER=true
     volumes:
       # Montamos las carpetas de datos del host como solo-lectura para seguridad
-      - ./data:/app/data:ro
-      - ./runtime:/app/runtime:ro
-      - ./scripts:/app/scripts:ro
+      - ./:/host_data:ro
     restart: unless-stopped
