@@ -9,7 +9,7 @@ const scripts = [
   'scripts/integrations/moodle_sena_scraper.js',
   'scripts/integrations/simit_scraper.js',
   'scripts/diagnostics/healthcheck.js',
-  'scripts/integrations/recordatorio_deepseek.js',
+  // 'scripts/integrations/recordatorio_deepseek.js',  // DEPRECATED — reemplazado por multi-proveedor
   'scripts/integrations/inbox_sensor.js',
   'scripts/integrations/dian_scraper.js',
   'lib/memory/memory.js',

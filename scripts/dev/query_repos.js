@@ -79,7 +79,7 @@ if (require.main === module) {
     console.log('\n' + '═'.repeat(60));
     console.log(result.recommendations);
     console.log('\n═'.repeat(60));
-    console.log(`\n📦 DB: ${require(DB_FILE).length.toLocaleString()} repos | ⚡ DeepSeek V4 Flash\n`);
+    console.log(`\n📦 DB: ${require(DB_FILE).length.toLocaleString()} repos | ⚡ OpenRouter + Groq\n`);
   }).catch(e => { console.error(e); process.exit(1); });
 }
 

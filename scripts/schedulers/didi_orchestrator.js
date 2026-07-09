@@ -22,7 +22,7 @@ if (fs.existsSync(configPath)) {
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT = process.env.TELEGRAM_CHAT_ID;
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 async function sendTelegram(text) {
   if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT) return console.log("[Telegram] Faltan credenciales.");
@@ -179,14 +179,16 @@ El JSON debe tener esta estructura:
 Nota: Genera todos los eventos relevantes (Despertar, Jornadas, Clases Dominick, Enrutamientos, Descansos, y Retorno a Villa Eloisa). Asegúrate de aplicar bien la regla del UV, las Reglas Especiales, y las REGLAS DE FESTIVO si aplican. Usa formato ISO 8601.`;
   
   try {
-    const response = await fetch('https://api.deepseek.com/beta/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+        'HTTP-Referer': 'https://github.com/jeiser-dev/lifeos',
+        'X-Title': 'LifeOS',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'google/gemini-2.5-flash',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1,
         response_format: { type: 'json_object' }
@@ -223,7 +225,7 @@ async function main() {
   const maintenanceAlerts = checkMaintenance();
 
   console.log(`Clima: UV ${clima.uvMax}...`);
-  console.log("Generando reporte con DeepSeek (JSON)...");
+  console.log("Generando reporte con LLM (OpenRouter)...");
   
   const aiPayload = await generateStrategy(clima, pypInfo, diaSemana, festivoInfo);
 

@@ -144,8 +144,8 @@ export async function runMorningBriefing(): Promise<void> {
   
   report += '\n_Tu calendario ha sido estructurado automáticamente con estos bloques._';
 
-  // --- SARGENTO FINANCIERO (Rewrite con DeepSeek) ---
-  console.log('🧠 Solicitando reescritura al Sargento Financiero (DeepSeek)...');
+  // --- SARGENTO FINANCIERO (Rewrite con LLM) ---
+  console.log('🧠 Solicitando reescritura al Sargento Financiero...');
   try {
     const sargentoPrompt = `Eres el 'Sargento Financiero', el alter ego estricto, implacable y motivador de LifeOS para Jeiser.
 Jeiser tiene gastos fijos de $1.6M mensuales (Arriendo + Servicios), debe el semestre del CESDE y gana su dinero manejando DiDi con una meta de $260,000 diarios en Medellín bajo un fuerte calor. Su meta de vida es conseguir un trabajo estable en QA Automation.

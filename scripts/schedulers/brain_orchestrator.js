@@ -7,7 +7,7 @@ const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 const { escapeHTML, truncate } = require('../../lib/runtime/sanitize');
 const pending = require('../../lib/context/pending');
 const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
-const { isDeepSeekValley, getScheduleLabel } = require('../../lib/scheduling/time_scheduler');
+// time_scheduler import removido — ya no usamos DeepSeek valley scheduling
 
 const BASE_DIR = path.resolve(__dirname, '..', '..');
 const LOG_DIR = path.join(BASE_DIR, 'data', 'logs');

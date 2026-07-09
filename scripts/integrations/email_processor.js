@@ -12,7 +12,7 @@ const { agregarHecho } = require('../../lib/memory/memory_engine');
 const fsPromises = require('node:fs/promises');
 
 // LLM
-const { createLLM, getLLMContextSize, isDeepSeekValley } = require('../../lib/ai/llm_service');
+const { createLLM } = require('../../lib/ai/litellm_client');
 const { ChatPromptTemplate } = require('@langchain/core/prompts');
 
 const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
@@ -67,7 +67,7 @@ function saveProcessed(ids) {
   fs.writeFileSync(p, JSON.stringify(ids, null, 2), 'utf8');
 }
 
-// ── Clasificación Inteligente con DeepSeek ──
+// ── Clasificación Inteligente con LLM ──
 
 async function isImportant(from, subject, body = "") {
   try {
@@ -85,7 +85,7 @@ async function isImportant(from, subject, body = "") {
     
     return answer.includes('KEEP');
   } catch (e) {
-    log(`[DeepSeek Fallback] Error clasificando: ${e.message}`);
+    log(`[LLM Fallback] Error clasificando: ${e.message}`);
     // Fallback a lógica de regex si falla la API
     const text = `${from} ${subject}`.toLowerCase();
     const IMPORTANT_KEYWORDS = [
@@ -181,34 +181,47 @@ async function summarizeEmails(emails) {
 Correos:
 ${emails.map(e => `- De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
 
-  const provider = {
-    name: 'DeepSeek V4 Flash',
-    url: 'https://api.deepseek.com/v1/chat/completions',
-    key: process.env.DEEPSEEK_API_KEY,
-    model: 'deepseek-v4-flash'
-  };
+  const openRouterKey = process.env.OPENROUTER_API_KEY;
+  const groqKey = process.env.GROQ_API_KEY;
+  const providerKey = openRouterKey || groqKey;
 
-  if (!provider.key) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(DeepSeek no configurado)' }));
+  if (!providerKey) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(API no configurada)' }));
+
+  const baseURL = openRouterKey
+    ? 'https://openrouter.ai/api/v1'
+    : 'https://api.groq.com/openai/v1';
+  const model = openRouterKey
+    ? 'google/gemini-2.5-flash'
+    : 'llama-3.3-70b-versatile';
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${providerKey}`,
+  };
+  if (openRouterKey) {
+    headers['HTTP-Referer'] = 'https://github.com/jeiser-dev/lifeos';
+    headers['X-Title'] = 'LifeOS';
+  }
 
   try {
-    const res = await fetch(provider.url, {
+    const res = await fetch(`${baseURL}/chat/completions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provider.key}` },
+      headers,
       body: JSON.stringify({
-        model: provider.model,
+        model,
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.1, max_tokens: 1000
       }),
       signal: AbortSignal.timeout(30000),
     });
-    if (!res.ok) { log(`DeepSeek: HTTP ${res.status}`); return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(error API)' })); }
+    if (!res.ok) { log(`LLM: HTTP ${res.status}`); return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(error API)' })); }
     const data = await res.json();
     const content = data.choices?.[0]?.message?.content;
     if (!content) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(resp vacia)' }));
     const parsed = JSON.parse(content.replace(/```json|```/g, '').trim());
     if (Array.isArray(parsed)) return parsed;
   } catch (err) {
-    log(`DeepSeek error: ${err.message.substring(0, 60)}`);
+    log(`LLM error: ${err.message.substring(0, 60)}`);
   }
   return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(resumen no disponible)' }));
 }

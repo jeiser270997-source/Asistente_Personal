@@ -31,7 +31,8 @@ Límites del cache gratuito:
 
 | Secret | Origen |
 |--------|--------|
-| `DEEPSEEK_API_KEY` | platform.deepseek.com |
+| `OPENROUTER_API_KEY` | openrouter.ai/keys |
+| `GROQ_API_KEY` | console.groq.com |
 | `TELEGRAM_BOT_TOKEN` | @BotFather |
 | `TELEGRAM_CHAT_ID` | @userinfobot |
 
@@ -74,7 +75,8 @@ npm install @libsql/client
 rclone copy runtime/lifeos.db r2:lifeos-data/lifeos.db
 
 # 2. Configurar secrets en GitHub
-gh secret set DEEPSEEK_API_KEY < .env
+gh secret set OPENROUTER_API_KEY < .env
+gh secret set GROQ_API_KEY < .env
 
 # 3. Activar workflow
 gh workflow run jarvis.yml
