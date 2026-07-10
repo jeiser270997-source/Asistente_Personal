@@ -8,6 +8,14 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Helper para formatear snake_case de base de datos a texto limpio y elegante
+  const formatTitle = (text: string) => {
+    if (!text) return '';
+    return text
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   useEffect(() => {
     fetch('/api/status')
       .then((res) => {
@@ -85,15 +93,17 @@ export default function Dashboard() {
         <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-red-500/10 rounded-lg">
-              <ShieldAlert className="w-5 h-5 text-red-500" />
+              <ShieldAlert className="w-5 h-5 text-red-400" />
             </div>
             <h2 className="text-lg font-semibold text-slate-900">Legal & Tránsito</h2>
           </div>
           <div className="space-y-4">
             {data?.ledger?.casos_legales?.slice(0,4).map((caso: any, i: number) => (
-              <div key={i} className="flex justify-between items-center text-sm border-b border-slate-100 pb-3 last:border-0">
-                <span className="text-slate-700 font-medium truncate pr-4">{caso.id || caso.entidad}</span>
-                <span className={`font-mono text-[10px] px-2.5 py-1 rounded-full border font-bold ${caso.estado?.toLowerCase().includes('cerrado') || caso.estado?.toLowerCase().includes('favorable') ? 'bg-emerald-50 text-emerald-700 border-emerald-200/50' : 'bg-amber-50 text-amber-700 border-amber-200/50'}`}>
+              <div key={i} className="flex justify-between items-start gap-4 text-sm border-b border-slate-100 pb-3 last:border-0">
+                <span className="text-slate-700 font-semibold break-words leading-tight">
+                  {formatTitle(caso.id || caso.entidad)}
+                </span>
+                <span className={`font-mono text-[10px] px-2.5 py-1 rounded-full border font-bold shrink-0 ${caso.estado?.toLowerCase().includes('cerrado') || caso.estado?.toLowerCase().includes('favorable') ? 'bg-emerald-50 text-emerald-700 border-emerald-200/50' : 'bg-amber-50 text-amber-700 border-amber-200/50'}`}>
                   {caso.estado}
                 </span>
               </div>
