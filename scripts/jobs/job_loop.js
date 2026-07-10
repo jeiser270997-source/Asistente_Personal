@@ -1,6 +1,6 @@
-/**
- * job_loop.js — Pipeline completo de Job Hunter
- * Loop x5: Scrape → Analyze → Tailor CV → Apply
+﻿/**
+ * job_loop.js â€” Pipeline completo de Job Hunter
+ * Loop x5: Scrape â†’ Analyze â†’ Tailor CV â†’ Apply
  * 
  * Uso: node scripts/job_loop.js [--loops=5] [--min-score=60] [--dry-run]
  *   --dry-run: analiza y genera CVs pero NO aplica
@@ -42,7 +42,7 @@ async function sendTelegram(text) {
   } catch (e) { console.error(`[Telegram Error] ${e.message}`); }
 }
 
-// ─── SCRAPE LISTA DE OFERTAS ──────────────────────────────────
+// â”€â”€â”€ SCRAPE LISTA DE OFERTAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function scrapeOfertasList() {
   const SEARCHES = [
     'tester-manual-software',
@@ -76,8 +76,8 @@ async function scrapeOfertasList() {
       const offers = await page.evaluate((lbl) => {
         const results = [];
         const clean = s => (s || '').replace(/\s+/g, ' ').trim();
-        // Palabras que indican que NO es tech (calidad industrial/construcción)
-        const NON_TECH = /andamio|ensamblador|eléctric|construcci|andamier|soldad|mecáni|operari|producción|manufactura|planta|textil|costura|bodega/i;
+        // Palabras que indican que NO es tech (calidad industrial/construcciÃ³n)
+        const NON_TECH = /andamio|ensamblador|elÃ©ctric|construcci|andamier|soldad|mecÃ¡ni|operari|producciÃ³n|manufactura|planta|textil|costura|bodega/i;
         const cards = document.querySelectorAll('article, [class*="offerItem"]');
         if (cards.length > 0) {
           Array.from(cards).slice(0, 12).forEach(card => {
@@ -105,7 +105,7 @@ async function scrapeOfertasList() {
       allOffers.push(...offers.map(o => ({ ...o, categoria: q, scraped_at: new Date().toISOString() })));
       log(`  [scrape] ${q}: ${offers.length} ofertas`);
     } catch (e) {
-      log(`  [scrape] ⚠ ${q}: ${e.message.substring(0, 50)}`);
+      log(`  [scrape] âš  ${q}: ${e.message.substring(0, 50)}`);
     }
     await page.waitForTimeout(1000);
   }
@@ -116,7 +116,7 @@ async function scrapeOfertasList() {
   return allOffers.filter(o => { if (seen.has(o.id)) return false; seen.add(o.id); return true; });
 }
 
-// ─── SCRAPE DESCRIPCIÓN COMPLETA ──────────────────────────────
+// â”€â”€â”€ SCRAPE DESCRIPCIÃ“N COMPLETA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function scrapeDescripcion(url, browser) {
   const ctx  = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' });
   const page = await ctx.newPage();
@@ -136,7 +136,7 @@ async function scrapeDescripcion(url, browser) {
   }
 }
 
-// ─── ANALIZAR COMPATIBILIDAD ──────────────────────────────────
+// â”€â”€â”€ ANALIZAR COMPATIBILIDAD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * @typedef {Object} AnalisisResult
@@ -162,18 +162,18 @@ async function analizarOferta(oferta, cvBase) {
 
 CANDIDATO - Jeiser Gutierrez:
 - QA Automation Junior (CESDE bootcamp 2026, 28 semanas)
-- Skills: Playwright, JavaScript, Node.js, Git, GitHub Actions, Postman, SQL básico
-- Experiencia Práctica: Creador de LifeOS (sistema autónomo de producción con 11 workflows CI/CD, scraping, integración LLM y base de datos SQLite).
-- Disponible: tiempo completo o medio tiempo, Medellín + remoto
+- Skills: Playwright, JavaScript, Node.js, Git, GitHub Actions, Postman, SQL bÃ¡sico
+- Experiencia PrÃ¡ctica: Creador de LifeOS (sistema autÃ³nomo de producciÃ³n con 11 workflows CI/CD, scraping, integraciÃ³n LLM y base de datos SQLite).
+- Disponible: tiempo completo o medio tiempo, MedellÃ­n + remoto
 
-REGLA DE EVALUACIÓN CLAVE:
-Ignora los requisitos corporativos rígidos de "1 o 2 años de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 año de experiencia real. Si la vacante es Junior/Trainee y los skills técnicos (JS, Playwright, Automation) hacen match, asígnale un score ALTO (>= 60) y evalúa su capacidad real, no los años en papel.
+REGLA DE EVALUACIÃ“N CLAVE:
+Ignora los requisitos corporativos rÃ­gidos de "1 o 2 aÃ±os de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 aÃ±o de experiencia real. Si la vacante es Junior/Trainee y los skills tÃ©cnicos (JS, Playwright, Automation) hacen match, asÃ­gnale un score ALTO (>= 60) y evalÃºa su capacidad real, no los aÃ±os en papel.
 
-n	REGLAS ESTRICTAS: NO asignar score > 30 a roles de: Analista de Oxígeno, SST, Químico, Fisicoquímico, Calidad industrial (alimentos, laboratorio, procesos). Solo si la descripción menciona herramientas de software explícitamente.
+n	REGLAS ESTRICTAS: NO asignar score > 30 a roles de: Analista de OxÃ­geno, SST, QuÃ­mico, FisicoquÃ­mico, Calidad industrial (alimentos, laboratorio, procesos). Solo si la descripciÃ³n menciona herramientas de software explÃ­citamente.
 OFERTA: ${oferta.titulo} | ${oferta.empresa} | ${oferta.lugar}
-DESCRIPCIÓN: ${desc.substring(0, 1500)}
+DESCRIPCIÃ“N: ${desc.substring(0, 1500)}
 
-Responde SOLO en JSON válido:
+Responde SOLO en JSON vÃ¡lido:
 {
   "score": <0-100>,
   "nivel_requerido": "junior|mid|senior",
@@ -183,7 +183,7 @@ Responde SOLO en JSON válido:
   "modalidad": "remoto|presencial|hibrido",
   "recomendar": true/false,
   "razon_corta": "una frase",
-  "tip_postulacion": "qué enfatizar en la carta"
+  "tip_postulacion": "quÃ© enfatizar en la carta"
 }`;
 
   try {
@@ -191,37 +191,37 @@ Responde SOLO en JSON válido:
     const raw = (res.content || '').replace(/```json|```/g, '').trim();
     return JSON.parse(raw);
   } catch {
-    return { score: 50, recomendar: true, razon_corta: 'Análisis manual requerido', skills_match: [], skills_gap: [] };
+    return { score: 50, recomendar: true, razon_corta: 'AnÃ¡lisis manual requerido', skills_match: [], skills_gap: [] };
   }
 }
 
-// ─── TAILORING CV ─────────────────────────────────────────────
+// â”€â”€â”€ TAILORING CV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function tailorCV(oferta, analisis, cvBase) {
-  const prompt = `Personaliza este CV para la oferta específica. Usa el análisis previo para saber qué enfatizar.
+  const prompt = `Personaliza este CV para la oferta especÃ­fica. Usa el anÃ¡lisis previo para saber quÃ© enfatizar.
 
-OFERTA: ${oferta.titulo} — ${oferta.empresa}
+OFERTA: ${oferta.titulo} â€” ${oferta.empresa}
 SKILLS A DESTACAR: ${(analisis.skills_match || []).join(', ')}
 TIP: ${analisis.tip_postulacion || ''}
-DESCRIPCIÓN: ${(oferta.descripcion || oferta.titulo).substring(0, 1000)}
+DESCRIPCIÃ“N: ${(oferta.descripcion || oferta.titulo).substring(0, 1000)}
 
 CV BASE:
 ${cvBase}
 
 INSTRUCCIONES:
-1. Añade un RESUMEN PROFESIONAL de 2-3 líneas específico para esta oferta
-2. Reordena skills: primero las que piden, luego las demás
+1. AÃ±ade un RESUMEN PROFESIONAL de 2-3 lÃ­neas especÃ­fico para esta oferta
+2. Reordena skills: primero las que piden, luego las demÃ¡s
 3. Ajusta LifeOS project para enfatizar lo relevante para esta oferta
-4. Mantén TODO verídico — no inventes nada
-5. Formato Markdown limpio Harvard — máx 1 página al imprimir
+4. MantÃ©n TODO verÃ­dico â€” no inventes nada
+5. Formato Markdown limpio Harvard â€” mÃ¡x 1 pÃ¡gina al imprimir
 6. Devuelve SOLO el CV en Markdown`;
 
   const res = await askLLM(prompt, [], 0.3);
   return (res.content || '').replace(/```markdown|```/g, '').trim();
 }
 
-// ─── APLICAR OFERTA ───────────────────────────────────────────
+// â”€â”€â”€ APLICAR OFERTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function aplicar(oferta, browser) {
-  if (DRY_RUN) { log('  [dry-run] Saltando aplicación'); return { exito: false, razon: 'dry-run' }; }
+  if (DRY_RUN) { log('  [dry-run] Saltando aplicaciÃ³n'); return { exito: false, razon: 'dry-run' }; }
 
   const ctx  = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36' });
   const page = await ctx.newPage();
@@ -235,7 +235,7 @@ async function aplicar(oferta, browser) {
     await page.goto(oferta.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
     await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
 
-    // Botón postularme
+    // BotÃ³n postularme
     const btnSelectors = [
       'a:has-text("Aplicar")', 'button:has-text("Aplicar")',
       'button:has-text("Postularme")', 'button:has-text("Postular")',
@@ -249,34 +249,34 @@ async function aplicar(oferta, browser) {
 
     if (!clicked) {
       await ctx.close();
-      return { exito: false, razon: 'Botón postularme no encontrado' };
+      return { exito: false, razon: 'BotÃ³n postularme no encontrado' };
     }
 
     await page.waitForLoadState('networkidle', { timeout: 4000 }).catch(() => {});
     const confirmado = await page.evaluate(() =>
-      /postul|envi|éxito|registrad|aplicac/i.test(document.body.innerText)
+      /postul|envi|Ã©xito|registrad|aplicac/i.test(document.body.innerText)
     );
 
     const shot = path.join(JOBS_DIR, `apply_${oferta.id}_${Date.now()}.png`);
     await page.screenshot({ path: shot });
     await ctx.close();
-    return { exito: confirmado, razon: confirmado ? 'Postulación enviada' : 'No confirmado', screenshot: shot };
+    return { exito: confirmado, razon: confirmado ? 'PostulaciÃ³n enviada' : 'No confirmado', screenshot: shot };
   } catch (e) {
     await ctx.close();
     return { exito: false, razon: e.message.substring(0, 80) };
   }
 }
 
-// ─── MAIN LOOP ────────────────────────────────────────────────
+// â”€â”€â”€ MAIN LOOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function main() {
   ensureDir(CV_OUT);
   const cvBase = fs.readFileSync(CV_BASE, 'utf8');
   const aplicaciones = fs.existsSync(APPLY_LOG) ? JSON.parse(fs.readFileSync(APPLY_LOG, 'utf8')) : [];
   const yaAplicadas = new Set(aplicaciones.map(a => a.oferta_id || a.url));
 
-  log('═══════════════════════════════════════════════════');
-  log(`🚀 JOB LOOP x${LOOPS} | min-score: ${MIN_SCORE} | ${DRY_RUN ? 'DRY-RUN' : 'LIVE'}`);
-  log('═══════════════════════════════════════════════════');
+  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+  log(`ðŸš€ JOB LOOP x${LOOPS} | min-score: ${MIN_SCORE} | ${DRY_RUN ? 'DRY-RUN' : 'LIVE'}`);
+  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
 
   const resultados = [];
   const browser = await chromium.launch({
@@ -285,13 +285,13 @@ async function main() {
   });
 
   for (let loop = 1; loop <= LOOPS; loop++) {
-    log(`\n━━━ LOOP ${loop}/${LOOPS} ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+    log(`\nâ”â”â” LOOP ${loop}/${LOOPS} â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”`);
 
     // PASO 1: Scrape
-    log('📡 [1/4] Scraping Computrabajo...');
+    log('ðŸ“¡ [1/4] Scraping Computrabajo...');
     const ofertas = await scrapeOfertasList();
-    const UBICACIONES_OK  = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo/i;
-    const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;
+    const UBICACIONES_OK  = /medell[iÃ­]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo/i;
+    const UBICACIONES_NOK = /bogot[aÃ¡]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eÃ©]|santa marta/i;
 
     const nuevas = ofertas.filter(o => {
       if (yaAplicadas.has(o.id)) return false;
@@ -299,10 +299,10 @@ async function main() {
       if (UBICACIONES_NOK.test(texto) && !UBICACIONES_OK.test(texto)) return false;
       return true;
     });
-    log(`  Total: ${ofertas.length} | Nuevas (Medellín/Remoto): ${nuevas.length}`);
+    log(`  Total: ${ofertas.length} | Nuevas (MedellÃ­n/Remoto): ${nuevas.length}`);
 
     if (nuevas.length === 0) {
-      log('  Sin ofertas nuevas en Medellín/Remoto este loop.');
+      log('  Sin ofertas nuevas en MedellÃ­n/Remoto este loop.');
       await new Promise(r => setTimeout(r, 3000));
       continue;
     }
@@ -316,14 +316,14 @@ async function main() {
     log(`  Procesando ${toProcess.length} ofertas...`);
 
     for (const oferta of toProcess) {
-      log(`\n  📋 "${oferta.titulo}" — ${oferta.empresa}`);
+      log(`\n  ðŸ“‹ "${oferta.titulo}" â€” ${oferta.empresa}`);
 
-      // PASO 2: Scrape descripción completa
-      log('  🔍 [2/4] Scrapeando descripción...');
+      // PASO 2: Scrape descripciÃ³n completa
+      log('  ðŸ” [2/4] Scrapeando descripciÃ³n...');
       oferta.descripcion = await scrapeDescripcion(oferta.url, browser);
 
       // PASO 3: Analizar
-      log('  🧠 [3/4] Analizando compatibilidad...');
+      log('  ðŸ§  [3/4] Analizando compatibilidad...');
       const analisis = await analizarOferta(oferta, cvBase);
       log(`       Score: ${analisis.score}/100 | ${analisis.nivel_requerido} | ${analisis.razon_corta}`);
       log(`       Match: [${(analisis.skills_match||[]).join(', ')}]`);
@@ -344,7 +344,7 @@ async function main() {
 
       // PASO 4: Tailoring + Apply si score >= MIN_SCORE
       if (analisis.score >= MIN_SCORE && analisis.recomendar) {
-        log(`  ✂️  [4/4] Tailoring CV (score ${analisis.score} ≥ ${MIN_SCORE})...`);
+        log(`  âœ‚ï¸  [4/4] Tailoring CV (score ${analisis.score} â‰¥ ${MIN_SCORE})...`);
         try {
           const cvTailored = await tailorCV(oferta, analisis, cvBase);
           const slug = oferta.titulo.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').substring(0, 35);
@@ -354,24 +354,24 @@ async function main() {
           log(`       CV guardado: ${path.basename(cvPath)}`);
 
           // Aplicar
-          log('  🚀  Aplicando...');
+          log('  ðŸš€  Aplicando...');
           const resultado = await aplicar(oferta, browser);
           registro.estado = resultado.exito ? 'aplicado' : `error_apply: ${resultado.razon}`;
           registro.screenshot = resultado.screenshot;
 
           if (resultado.exito) {
             yaAplicadas.add(oferta.id);
-            log(`       ✅ APLICADO`);
-            await sendTelegram(`✅ <b>Aplicación enviada</b>\n${oferta.titulo} — ${oferta.empresa}\nScore: ${analisis.score}/100\n<a href="${oferta.url}">Ver oferta</a>`);
+            log(`       âœ… APLICADO`);
+            await sendTelegram(`âœ… <b>AplicaciÃ³n enviada</b>\n${oferta.titulo} â€” ${oferta.empresa}\nScore: ${analisis.score}/100\n<a href="${oferta.url}">Ver oferta</a>`);
           } else {
-            log(`       ⚠ No confirmado: ${resultado.razon}`);
+            log(`       âš  No confirmado: ${resultado.razon}`);
           }
         } catch (e) {
-          log(`  ⚠ Error tailoring/apply: ${e.message.substring(0, 80)}`);
+          log(`  âš  Error tailoring/apply: ${e.message.substring(0, 80)}`);
           registro.estado = 'error: ' + e.message.substring(0, 60);
         }
       } else {
-        log(`  ⏭  Descartada (score ${analisis.score} < ${MIN_SCORE} o recomendar=${analisis.recomendar})`);
+        log(`  â­  Descartada (score ${analisis.score} < ${MIN_SCORE} o recomendar=${analisis.recomendar})`);
         registro.estado = 'descartada';
       }
 
@@ -382,7 +382,7 @@ async function main() {
 
     // Pausa entre loops
     if (loop < LOOPS) {
-      log(`\n  ⏸ Pausa 5s entre loops...`);
+      log(`\n  â¸ Pausa 5s entre loops...`);
       await new Promise(r => setTimeout(r, 5000));
     }
   }
@@ -394,28 +394,29 @@ async function main() {
   const analizadas = resultados.filter(r => r.analisis);
   const descartadas = resultados.filter(r => r.estado === 'descartada');
 
-  log('\n═══════════════════════════════════════════════════');
-  log('📊 RESUMEN FINAL');
-  log('═══════════════════════════════════════════════════');
+  log('\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+  log('ðŸ“Š RESUMEN FINAL');
+  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
   log(`Total analizadas: ${analizadas.length}`);
-  log(`✅ Aplicadas:     ${aplicadas.length}`);
-  log(`⏭ Descartadas:   ${descartadas.length}`);
+  log(`âœ… Aplicadas:     ${aplicadas.length}`);
+  log(`â­ Descartadas:   ${descartadas.length}`);
   log('\nTop ofertas por score:');
   resultados
     .filter(r => r.analisis)
     .sort((a, b) => (b.analisis.score||0) - (a.analisis.score||0))
     .slice(0, 8)
     .forEach(r => {
-      const icon = r.estado === 'aplicado' ? '✅' : r.estado === 'descartada' ? '⏭' : '📋';
-      log(`  ${icon} [${r.analisis.score}] ${r.titulo} — ${r.empresa} | ${r.analisis.razon_corta}`);
+      const icon = r.estado === 'aplicado' ? 'âœ…' : r.estado === 'descartada' ? 'â­' : 'ðŸ“‹';
+      log(`  ${icon} [${r.analisis.score}] ${r.titulo} â€” ${r.empresa} | ${r.analisis.razon_corta}`);
     });
 
-  const msg = `🎯 <b>Job Loop x${LOOPS} completado</b>
+  const msg = `ðŸŽ¯ <b>Job Loop x${LOOPS} completado</b>
 Analizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length}
-${aplicadas.map(r => `✅ ${r.titulo} — ${r.empresa}`).join('\n')}`;
+${aplicadas.map(r => `âœ… ${r.titulo} â€” ${r.empresa}`).join('\n')}`;
   await sendTelegram(msg);
 
-  log('\n✅ Datos en: ' + JOBS_DIR);
+  log('\nâœ… Datos en: ' + JOBS_DIR);
 }
 
-main().catch(e => { console.error('❌ Error:', e.message); process.exit(1); });
+main().catch(e => { console.error('âŒ Error:', e.message); process.exit(1); });
+

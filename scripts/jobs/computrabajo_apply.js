@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
+﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -28,7 +28,7 @@ const AUTO_MODE = process.argv.includes('--auto');
 const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=60').split('=')[1]);
 const APPROVAL_TIMEOUT_MS = 120_000;
 
-// ─── Login retry guard ──────────────────────────────────────────────
+// â”€â”€â”€ Login retry guard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const MAX_LOGIN_FAILS = 3;
 let _loginFailCount = 0;
 
@@ -40,15 +40,15 @@ async function loginWithRetry(page, email, pass) {
       return true;
     }
     _loginFailCount++;
-    log(`⚠️ Intento ${attempt}/${MAX_LOGIN_FAILS} de login fallido`);
+    log(`âš ï¸ Intento ${attempt}/${MAX_LOGIN_FAILS} de login fallido`);
     if (attempt < MAX_LOGIN_FAILS) {
       await page.waitForTimeout(3000);
     }
   }
-  // 3 fallos consecutivos → notificar
-  log('❌ 3 intentos de login fallidos. Notificando...');
+  // 3 fallos consecutivos â†’ notificar
+  log('âŒ 3 intentos de login fallidos. Notificando...');
   try {
-    await sendTelegram(`⚠️ <b>Computrabajo: Login fallido</b>\n3 intentos consecutivos de login fallaron.\nPosible causa: selectores desactualizados o credenciales inválidas.\nRevisa y ejecuta: node scripts/jobs/login_ct.js --debug`);
+    await sendTelegram(`âš ï¸ <b>Computrabajo: Login fallido</b>\n3 intentos consecutivos de login fallaron.\nPosible causa: selectores desactualizados o credenciales invÃ¡lidas.\nRevisa y ejecuta: node scripts/jobs/login_ct.js --debug`);
   } catch {}
   throw new Error('Login failed after 3 attempts');
 }
@@ -59,7 +59,7 @@ function ledger(tipo, data) {
   if (USE_SQLITE) LedgerStore.emit(tipo, data);
 }
 
-// ─── JSON fallback ─────────────────────────────────────────────
+// â”€â”€â”€ JSON fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function loadLogJson() {
   try { return JSON.parse(fs.readFileSync(path.join(JOBS_DIR, 'aplicaciones.json'), 'utf8')); }
   catch { return []; }
@@ -109,7 +109,7 @@ function saveAplicacion(registro) {
   saveLogJson(apps);
 }
 
-// ─── TELEGRAM ─────────────────────────────────────────────────
+// â”€â”€â”€ TELEGRAM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function sendTelegram(text, keyboard = null) {
   if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT) return null;
   const body = { chat_id: TELEGRAM_CHAT, text, parse_mode: 'HTML' };
@@ -148,27 +148,10 @@ async function waitForApproval(timeoutMs) {
   return null;
 }
 
-// ─── PERFIL MAESTRO DEL CANDIDATO ──────────────────────────────
-const PERFIL_JEISER = `
-NOMBRE: Jeiser Abraham Gutierrez Torres
-CC: 1019156838 | Telefono: +57 304 461 5613 | Email: jeiser270997@gmail.com
-UBICACION: Medellin, Antioquia (Barrio Villa Eloisa)
-VEHICULO: Tiene vehiculo propio (carro), por lo que no tiene restricciones de movilidad en Medellin y su area metropolitana.
-DISPONIBILIDAD HORARIA: Lunes a Viernes (estudia los sabados en CESDE, no puede trabajar los sabados).
-ASPIRACION SALARIAL: Salario minimo legal vigente o segun promedio del mercado para el cargo, negociable.
-FORMACION:
-  - Tecnico en Analisis y Desarrollo de Software (CESDE, Medellin) - En curso 2026
-  - Bootcamp QA Automation 28 semanas (Playwright, GitHub Actions, Node.js) - CESDE
-  - Bases de Datos y Excel Avanzado - SENA (Zajuna)
-EXPERIENCIA:
-  1. QA Automation Engineer - Proyecto LifeOS (propio, en produccion): Playwright, Node.js, GitHub Actions, SQLite, integracion APIs REST, CI/CD.
-  2. Agente Soporte Nivel 1 (Mesa de Ayuda) - Sitel/Iberia/Amadeus GDS (2021): atencion al usuario, tickets, SLA, sistema GDS.
-  3. Auxiliar de Sistemas / Operador CCTV - Coovisocial (2019-2021): monitoreo sistemas de seguridad, diagnostico de fallas, informes de incidentes.
-SKILLS TECNICOS: Playwright, Node.js, JavaScript, GitHub Actions, SQLite, APIs REST, Git, Microsoft Office (Excel Avanzado), Windows 10/11, Redes basicas TCP/IP, GDS Amadeus.
-IDIOMAS: Espanol nativo, Ingles B1-B2 (lectura tecnica fluida).
-`;
+// â”€â”€â”€ PERFIL MAESTRO DEL CANDIDATO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+const PERFIL_JEISER = fs.readFileSync(path.join(path.resolve(__dirname, '..', '..'), 'data', 'user', 'perfil_candidato.txt'), 'utf8');
 
-// ─── SCORE + DETECTOR DE FIN DE SEMANA (IA) ─────────────────────
+// â”€â”€â”€ SCORE + DETECTOR DE FIN DE SEMANA (IA) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function calcularScore(oferta) {
   const cvBase = fs.existsSync(CV_BASE) ? fs.readFileSync(CV_BASE, 'utf8').substring(0, 800) : '';
   const prompt = `Eres un evaluador de ofertas de trabajo para Colombia. Analiza la siguiente oferta y responde EXCLUSIVAMENTE con un JSON valido.
@@ -194,7 +177,7 @@ Responde SOLO con este JSON:
     const json = (res.content || '').replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(json);
     if (parsed.requiere_finde) {
-      log(`   ⛔ IA detectó horario fin de semana: ${oferta.titulo}`);
+      log(`   â›” IA detectÃ³ horario fin de semana: ${oferta.titulo}`);
       return { score: 0, recomendar: false, razon: 'Requiere trabajo en fin de semana (estudia sabados)' };
     }
     return parsed;
@@ -203,7 +186,7 @@ Responde SOLO con este JSON:
   }
 }
 
-// ─── RESPONDER PREGUNTAS CON IA (CONTEXTUAL) ────────────────────
+// â”€â”€â”€ RESPONDER PREGUNTAS CON IA (CONTEXTUAL) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function responderPreguntaConIA(pregunta, descripcionOferta) {
   const prompt = `Eres el asistente de Jeiser, un candidato aplicando a una oferta de trabajo en Colombia. 
 Responde la siguiente pregunta del formulario de postulacion de forma profesional, concisa y coherente con el perfil del candidato y la descripcion de la oferta. 
@@ -228,7 +211,7 @@ RESPUESTA:`;
   }
 }
 
-// ─── PLAYWRIGHT ────────────────────────────────────────────────
+// â”€â”€â”€ PLAYWRIGHT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const STATE_PATH = require('node:path').join(__dirname, '..', '..', 'data', 'state', 'computrabajo_state.json');
 
 async function aplicarOferta(browser, ofertaUrl) {
@@ -236,14 +219,14 @@ async function aplicarOferta(browser, ofertaUrl) {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36',
   };
 
-  // Cargar sesión guardada si existe (login_ct.js)
+  // Cargar sesiÃ³n guardada si existe (login_ct.js)
   if (require('node:fs').existsSync(STATE_PATH)) {
     try {
       const state = JSON.parse(require('node:fs').readFileSync(STATE_PATH, 'utf8'));
       ctxOpts.storageState = state;
-      log(`   Sesión cargada desde ${STATE_PATH}`);
+      log(`   SesiÃ³n cargada desde ${STATE_PATH}`);
     } catch (e) {
-      log(`   ⚠ No se pudo cargar sesión: ${e.message}. Haciendo login completo...`);
+      log(`   âš  No se pudo cargar sesiÃ³n: ${e.message}. Haciendo login completo...`);
     }
   }
 
@@ -251,7 +234,7 @@ async function aplicarOferta(browser, ofertaUrl) {
   const page = await ctx.newPage();
 
   try {
-    // Intentar ir directo a la oferta (si hay sesión guardada, no necesita login)
+    // Intentar ir directo a la oferta (si hay sesiÃ³n guardada, no necesita login)
     let loginOk = true;
     try {
       await page.goto(ofertaUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
@@ -259,22 +242,22 @@ async function aplicarOferta(browser, ofertaUrl) {
       loginOk = false;
     }
 
-    // Si la sesión no sirve o no había, hacer login
+    // Si la sesiÃ³n no sirve o no habÃ­a, hacer login
     if (!loginOk || page.url().includes('acceso') || page.url().includes('Login')) {
       log(`   Haciendo login en Computrabajo...`);
       await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 20000 });
       
       await loginWithRetry(page, CT_EMAIL, CT_PASS);
 
-      // Guardar sesión para próxima vez
+      // Guardar sesiÃ³n para prÃ³xima vez
       try {
         const ns = await ctx.storageState();
         require('node:fs').writeFileSync(STATE_PATH, JSON.stringify(ns, null, 2));
-        log(`   ✅ Sesión guardada`);
+        log(`   âœ… SesiÃ³n guardada`);
       } catch {}
 
     } else {
-      log(`   Sesión válida, saltando login`);
+      log(`   SesiÃ³n vÃ¡lida, saltando login`);
     }
 
     log(`   Navegando a oferta: ${ofertaUrl}`);
@@ -289,7 +272,7 @@ async function aplicarOferta(browser, ofertaUrl) {
       try {
         const btn = page.locator(`button:has-text("${txt}"), a:has-text("${txt}")`).first();
         if (await btn.isVisible({ timeout: 1000 }).catch(() => false)) {
-          // Escuchar por si abre una nueva pestaña (link externo)
+          // Escuchar por si abre una nueva pestaÃ±a (link externo)
           const [newPage] = await Promise.all([
             ctx.waitForEvent('page', { timeout: 3500 }).catch(() => null),
             btn.click({ timeout: 3000 })
@@ -308,10 +291,10 @@ async function aplicarOferta(browser, ofertaUrl) {
       return { exito: false, razon: 'Boton no encontrado' };
     }
 
-    // Deteccion de aplicacion externa (Nueva pestaña)
+    // Deteccion de aplicacion externa (Nueva pestaÃ±a)
     if (externalPage) {
       const extUrl = externalPage.url();
-      log(`   Detectada redireccion a aplicacion externa en nueva pestaña: ${extUrl}`);
+      log(`   Detectada redireccion a aplicacion externa en nueva pestaÃ±a: ${extUrl}`);
       await ctx.close();
       return { exito: false, razon: 'Aplicacion externa', external_url: extUrl };
     }
@@ -343,7 +326,7 @@ async function aplicarOferta(browser, ofertaUrl) {
       await page.waitForTimeout(3000);
     }
 
-    // Deteccion de aplicacion externa (Misma pestaña)
+    // Deteccion de aplicacion externa (Misma pestaÃ±a)
     if (!page.url().includes('computrabajo.com')) {
       const extUrl = page.url();
       log(`   Detectada redireccion a aplicacion externa: ${extUrl}`);
@@ -357,7 +340,7 @@ async function aplicarOferta(browser, ofertaUrl) {
     );
 
     if (tienePreguntas) {
-      log('   Detectadas preguntas de seleccion — respondiendo con IA...');
+      log('   Detectadas preguntas de seleccion â€” respondiendo con IA...');
       try {
         await page.locator('label:has-text("Cedula de Ciudadania")').first().click({ timeout: 3000 }).catch(() => {});
 
@@ -373,13 +356,13 @@ async function aplicarOferta(browser, ofertaUrl) {
         });
         log(`   Textareas encontradas: ${preguntas.length}`);
 
-        // Obtener descripción de la oferta para contexto de la IA
+        // Obtener descripciÃ³n de la oferta para contexto de la IA
         const descripcionOferta = await page.evaluate(() => document.body.innerText.substring(0, 1500));
 
         for (const p of preguntas.slice(0, 6)) {
           log(`   Pregunta detectada: "${p.pregunta.substring(0, 80)}..."`);
 
-          // La IA lee la pregunta + descripcion de la oferta + perfil de Jeiser → responde coherentemente
+          // La IA lee la pregunta + descripcion de la oferta + perfil de Jeiser â†’ responde coherentemente
           const respuesta = await responderPreguntaConIA(p.pregunta, descripcionOferta);
           log(`   Respuesta IA: "${respuesta.substring(0, 80)}..."`);
 
@@ -455,7 +438,7 @@ async function aplicarOferta(browser, ofertaUrl) {
   }
 }
 
-// ─── MAIN ──────────────────────────────────────────────────────
+// â”€â”€â”€ MAIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function main() {
   log(`COMPUTRABAJO AUTO-APPLY (min-score: ${MIN_SCORE}, modo: ${AUTO_MODE ? 'AUTO' : 'SEMI-AUTO'})`);
 
@@ -468,8 +451,8 @@ async function main() {
   let aplicaciones = loadAplicaciones();
   const yaAplicadas = new Set(aplicaciones.map(a => a.url || a.oferta_id));
 
-  const UBICACIONES_OK = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|work.?from.?home|teletrabajo/i;
-  const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;
+  const UBICACIONES_OK = /medell[iÃ­]n|antioquia|remoto|remote|virtual|home.?office|work.?from.?home|teletrabajo/i;
+  const UBICACIONES_NOK = /bogot[aÃ¡]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eÃ©]|santa marta/i;
 
   const candidatas = ofertas.filter(o => {
     if (!o.url || yaAplicadas.has(o.id || o.url)) return false;
@@ -484,7 +467,7 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
 
   for (const oferta of candidatas.slice(0, 10)) {
-    log(`\nEvaluando: "${oferta.titulo}" — ${oferta.empresa}`);
+    log(`\nEvaluando: "${oferta.titulo}" â€” ${oferta.empresa}`);
 
     const match = await calcularScore(oferta);
     log(`   Score: ${match.score} | ${match.razon}`);
@@ -497,7 +480,7 @@ async function main() {
     let aprobado = AUTO_MODE;
 
     if (!AUTO_MODE && TELEGRAM_TOKEN) {
-      const msg = `🎯 <b>Oferta QA detectada</b> (score: ${match.score}/100)\n\n<b>${oferta.titulo}</b>\n🏢 ${oferta.empresa || 'Empresa'}\n📍 ${oferta.lugar || 'Colombia'}\n\n<i>${match.razon}</i>\n\nAplicar automaticamente?`;
+      const msg = `ðŸŽ¯ <b>Oferta QA detectada</b> (score: ${match.score}/100)\n\n<b>${oferta.titulo}</b>\nðŸ¢ ${oferta.empresa || 'Empresa'}\nðŸ“ ${oferta.lugar || 'Colombia'}\n\n<i>${match.razon}</i>\n\nAplicar automaticamente?`;
 
       await sendTelegram(msg, [
         [{ text: 'Si, aplicar', callback_data: 'si' }, { text: 'Saltar', callback_data: 'no' }]
@@ -507,7 +490,7 @@ async function main() {
       const resp = await waitForApproval(APPROVAL_TIMEOUT_MS);
 
       if (resp === null) {
-        log('   Timeout — saltando');
+        log('   Timeout â€” saltando');
         continue;
       }
       aprobado = resp;
@@ -550,10 +533,10 @@ async function main() {
 
     if (resultado.external_url) {
       log(`   EXTERNA: ${oferta.titulo} requiere aplicacion manual`);
-      await sendTelegram(`⚠️ <b>Aplicacion Externa Detectada</b>\n${oferta.titulo} — ${oferta.empresa}\nLa empresa requiere aplicar en su propio portal. Hazlo tu mismo aqui:\n<a href="${resultado.external_url}">Abrir portal externo</a>`);
+      await sendTelegram(`âš ï¸ <b>Aplicacion Externa Detectada</b>\n${oferta.titulo} â€” ${oferta.empresa}\nLa empresa requiere aplicar en su propio portal. Hazlo tu mismo aqui:\n<a href="${resultado.external_url}">Abrir portal externo</a>`);
     } else if (resultado.exito) {
       log(`   APLICADO: ${oferta.titulo} en ${oferta.empresa}`);
-      await sendTelegram(`✅ <b>Aplicacion enviada</b>\n${oferta.titulo} — ${oferta.empresa}\n<a href="${oferta.url}">Ver oferta</a>`);
+      await sendTelegram(`âœ… <b>Aplicacion enviada</b>\n${oferta.titulo} â€” ${oferta.empresa}\n<a href="${oferta.url}">Ver oferta</a>`);
     } else {
       log(`   Error aplicando: ${resultado.razon}`);
     }
@@ -571,9 +554,10 @@ async function main() {
   log(`Sesion completada. Total aplicaciones: ${nuevasAplicadas.length}`);
   if (nuevasAplicadas.length > 0) {
     await sendTelegram(
-      `📊 <b>Resumen Auto-Apply</b>\n${nuevasAplicadas.slice(-5).map(a => `✅ ${a.titulo} — ${a.empresa}`).join('\n')}`
+      `ðŸ“Š <b>Resumen Auto-Apply</b>\n${nuevasAplicadas.slice(-5).map(a => `âœ… ${a.titulo} â€” ${a.empresa}`).join('\n')}`
     );
   }
 }
 
 main().catch(e => { console.error('Error:', e.message); process.exit(1); });
+

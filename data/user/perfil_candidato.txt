@@ -1,0 +1,16 @@
+﻿NOMBRE: Jeiser Abraham Gutierrez Torres
+CC: 1019156838 | Telefono: +57 304 461 5613 | Email: jeiser270997@gmail.com
+UBICACION: Medellin, Antioquia (Barrio Villa Eloisa)
+VEHICULO: Tiene vehiculo propio (carro), por lo que no tiene restricciones de movilidad en Medellin y su area metropolitana.
+DISPONIBILIDAD HORARIA: Lunes a Viernes (estudia los sabados en CESDE, no puede trabajar los sabados).
+ASPIRACION SALARIAL: Salario minimo legal vigente o segun promedio del mercado para el cargo, negociable.
+FORMACION:
+  - Tecnico en Analisis y Desarrollo de Software (CESDE, Medellin) - En curso 2026
+  - Bootcamp QA Automation 28 semanas (Playwright, GitHub Actions, Node.js) - CESDE
+  - Bases de Datos y Excel Avanzado - SENA (Zajuna)
+EXPERIENCIA:
+  1. QA Automation Engineer - Proyecto LifeOS (propio, en produccion): Playwright, Node.js, GitHub Actions, SQLite, integracion APIs REST, CI/CD.
+  2. Agente Soporte Nivel 1 (Mesa de Ayuda) - Sitel/Iberia/Amadeus GDS (2021): atencion al usuario, tickets, SLA, sistema GDS.
+  3. Auxiliar de Sistemas / Operador CCTV - Coovisocial (2019-2021): monitoreo sistemas de seguridad, diagnostico de fallas, informes de incidentes.
+SKILLS TECNICOS: Playwright, Node.js, JavaScript, GitHub Actions, SQLite, APIs REST, Git, Microsoft Office (Excel Avanzado), Windows 10/11, Redes basicas TCP/IP, GDS Amadeus.
+IDIOMAS: Espanol nativo, Ingles B1-B2 (lectura tecnica fluida).

@@ -49,20 +49,7 @@ const KEYWORDS = [
 ];
 
 // â”€â”€â”€ PERFIL MAESTRO (mismo que en apply.js) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const PERFIL_JEISER = `
-NOMBRE: Jeiser Abraham Gutierrez Torres
-UBICACION: Medellin, Antioquia
-VEHICULO: Tiene vehiculo propio (carro), sin restricciones de movilidad.
-DISPONIBILIDAD: Lunes a Viernes (estudia los sabados en CESDE, NO puede trabajar sabados ni domingos).
-ASPIRACION SALARIAL: SMLV o promedio del mercado, negociable.
-FORMACION: Tecnico Analisis y Desarrollo de Software (CESDE, en curso). Bootcamp QA Automation 28 semanas (Playwright, GitHub Actions). SENA: Bases de Datos y Excel.
-EXPERIENCIA:
-  - QA Automation Engineer: Proyecto LifeOS propio en produccion (Playwright, Node.js, GitHub Actions, SQLite, APIs REST, CI/CD).
-  - Mesa de Ayuda Nivel 1: Sitel/Iberia/Amadeus GDS (2021). Tickets, SLA, soporte remoto.
-  - Auxiliar Sistemas/CCTV: Coovisocial (2019-2021). Monitoreo, diagnostico de fallas, informes.
-SKILLS: Playwright, Node.js, JavaScript, GitHub Actions, SQLite, Git, Excel Avanzado, Windows 10/11, TCP/IP basico, GDS Amadeus.
-IDIOMAS: Espanol nativo, Ingles B1-B2.
-`;
+const PERFIL_JEISER = fs.readFileSync(path.join(path.resolve(__dirname, '..', '..'), 'data', 'user', 'perfil_candidato.txt'), 'utf8');
 
 function log(msg) { console.log(`[${new Date().toISOString()}] ${msg}`); }
 
@@ -329,4 +316,5 @@ async function main() {
 }
 
 main().catch(e => { console.error('[FATAL]', e.message); process.exit(1); });
+
 
