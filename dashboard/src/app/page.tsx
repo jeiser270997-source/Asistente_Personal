@@ -69,7 +69,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-700 p-4 md:p-8 font-sans selection:bg-emerald-200/50">
-      <header className="max-w-6xl mx-auto mb-10 flex items-center justify-between border-b border-slate-200 pb-6">
+      <header className="max-w-6xl mx-auto mb-10 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-6">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-emerald-500/10 rounded-xl">
             <LayoutDashboard className="w-6 h-6 text-emerald-600" />
@@ -89,25 +89,32 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* SIMIT & Legal Card */}
+        {/* SIMIT & Legal Card - Rediseño apilado con Callout Box */}
         <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 bg-red-500/10 rounded-lg">
-              <ShieldAlert className="w-5 h-5 text-red-400" />
+              <ShieldAlert className="w-5 h-5 text-red-500" />
             </div>
             <h2 className="text-lg font-semibold text-slate-900">Legal & Tránsito</h2>
           </div>
-          <div className="space-y-4">
-            {data?.ledger?.casos_legales?.slice(0,4).map((caso: any, i: number) => (
-              <div key={i} className="flex justify-between items-start gap-4 text-sm border-b border-slate-100 pb-3 last:border-0">
-                <span className="text-slate-700 font-semibold break-words leading-tight">
-                  {formatTitle(caso.id || caso.entidad)}
-                </span>
-                <span className={`font-mono text-[10px] px-2.5 py-1 rounded-full border font-bold shrink-0 ${caso.estado?.toLowerCase().includes('cerrado') || caso.estado?.toLowerCase().includes('favorable') ? 'bg-emerald-50 text-emerald-700 border-emerald-200/50' : 'bg-amber-50 text-amber-700 border-amber-200/50'}`}>
-                  {caso.estado}
-                </span>
-              </div>
-            )) || <p className="text-sm text-slate-500">No hay datos legales.</p>}
+          <div className="space-y-5">
+            {data?.ledger?.casos_legales?.slice(0,4).map((caso: any, i: number) => {
+              const isFavorable = caso.estado?.toLowerCase().includes('cerrado') || caso.estado?.toLowerCase().includes('favorable');
+              return (
+                <div key={i} className="flex flex-col gap-2 border-b border-slate-100 pb-4 last:border-0 last:pb-0">
+                  <span className="text-slate-800 font-bold text-sm leading-tight">
+                    {formatTitle(caso.id || caso.entidad)}
+                  </span>
+                  <div className={`text-xs px-3.5 py-2.5 rounded-xl border leading-relaxed ${
+                    isFavorable 
+                      ? 'bg-emerald-50/70 text-emerald-800 border-emerald-200/40' 
+                      : 'bg-amber-50/70 text-amber-800 border-amber-200/40'
+                  }`}>
+                    {caso.estado}
+                  </div>
+                </div>
+              );
+            }) || <p className="text-sm text-slate-500">No hay datos legales.</p>}
           </div>
         </div>
 
