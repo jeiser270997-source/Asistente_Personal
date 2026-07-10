@@ -169,6 +169,7 @@ CANDIDATO - Jeiser Gutierrez:
 REGLA DE EVALUACIÓN CLAVE:
 Ignora los requisitos corporativos rígidos de "1 o 2 años de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 año de experiencia real. Si la vacante es Junior/Trainee y los skills técnicos (JS, Playwright, Automation) hacen match, asígnale un score ALTO (>= 60) y evalúa su capacidad real, no los años en papel.
 
+n	REGLAS ESTRICTAS: NO asignar score > 30 a roles de: Analista de Oxígeno, SST, Químico, Fisicoquímico, Calidad industrial (alimentos, laboratorio, procesos). Solo si la descripción menciona herramientas de software explícitamente.
 OFERTA: ${oferta.titulo} | ${oferta.empresa} | ${oferta.lugar}
 DESCRIPCIÓN: ${desc.substring(0, 1500)}
 

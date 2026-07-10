@@ -135,6 +135,8 @@ CANDIDATO - Jeiser Gutierrez:
 
 IMPORTANTE: Ignora requisitos rígidos de experiencia formal. El proyecto LifeOS demuestra habilidades prácticas reales. Si el rol es entry-level y hay MATCH en skills técnicas (soporte TI, helpdesk, QA), asigna score >= 55.
 
+REGLAS ESTRICTAS: NO asignar score > 30 a roles de: Analista de Oxígeno, SST, Químico, Fisicoquímico, Calidad industrial (alimentos/laboratorio/procesos), Auxiliar de Calidad industrial, Practicante de Calidad industrial. Estos NO son roles tech. Solo si la descripción menciona herramientas de software explícitamente.
+
 OFERTA: ${o.titulo} | ${o.empresa || '?'} | ${o.lugar || '?'}
 DESCRIPCIÓN: ${desc.substring(0, 1500)}
 
