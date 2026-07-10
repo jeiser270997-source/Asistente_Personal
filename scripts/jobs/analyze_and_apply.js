@@ -104,8 +104,15 @@ async function main() {
     let desc = o.descripcion || '';
     if (!desc && o.url) {
       try {
-        const browser = await chromium.launch({ headless: true });
+        const browser = await chromium.launch({
+          headless: true,
+          args: ['--no-sandbox', '--disable-blink-features=AutomationControlled'],
+        });
         const page = await browser.newPage();
+        // Anti-detección
+        await page.addInitScript(() => {
+          Object.defineProperty(navigator, 'webdriver', { get: () => false });
+        });
         await page.goto(o.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
         await page.waitForTimeout(2000);
         desc = (await page.evaluate(() => {
@@ -161,11 +168,17 @@ Responde SOLO JSON:
 
         // 3. Aplicar con Playwright
         try {
-          const browser = await chromium.launch({ headless: true });
+          const browser = await chromium.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-blink-features=AutomationControlled'],
+          });
           const ctx = await browser.newContext({
             userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36',
           });
           const page = await ctx.newPage();
+          await page.addInitScript(() => {
+            Object.defineProperty(navigator, 'webdriver', { get: () => false });
+          });
 
           // Login
           log(`   🔑 Iniciando sesión...`);
@@ -178,9 +191,10 @@ Responde SOLO JSON:
 
           // Click botón postular
           const btnSelectors = [
+            'a:has-text("Aplicar")', 'button:has-text("Aplicar")',
             'button:has-text("Postularme")', 'button:has-text("Postular")',
             'a:has-text("Postularme")', 'a:has-text("Postular")',
-            '.js-apply-btn', '[data-qa="applyButton"]',
+            '.js-apply-btn', '[data-qa="applyButton"]', '.b_primary.tiny',
           ];
           let clicked = false;
           for (const sel of btnSelectors) {

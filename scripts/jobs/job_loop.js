@@ -236,9 +236,10 @@ async function aplicar(oferta, browser) {
 
     // Botón postularme
     const btnSelectors = [
+      'a:has-text("Aplicar")', 'button:has-text("Aplicar")',
       'button:has-text("Postularme")', 'button:has-text("Postular")',
       'a:has-text("Postularme")', 'a:has-text("Postular")',
-      '.js-apply-btn', '[data-qa="applyButton"]',
+      '.js-apply-btn', '[data-qa="applyButton"]', '.b_primary.tiny',
     ];
     let clicked = false;
     for (const sel of btnSelectors) {
@@ -277,7 +278,10 @@ async function main() {
   log('═══════════════════════════════════════════════════');
 
   const resultados = [];
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-blink-features=AutomationControlled'],
+  });
 
   for (let loop = 1; loop <= LOOPS; loop++) {
     log(`\n━━━ LOOP ${loop}/${LOOPS} ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
