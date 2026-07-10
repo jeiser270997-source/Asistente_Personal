@@ -1,33 +1,66 @@
-# .repomixignore — Archivos que NO deben incluirse en auditorías a LLM
-# Estos son datos vivos, cachés, diagnósticos y artefactos que añaden ruido.
+﻿# ─── Dependencias y Entornos ───
+**/node_modules/
+**/venv/
+**/.venv/
+**/env/
 
-# ─── Datos de estado y cachés (JSON regenerables) ───
-data/**/*.json
-data/artifacts/
+# ─── Builds y Cachés ───
+**/.next/
+**/dist/
+**/build/
+**/.cache/
+**/__pycache__/
+**/*.pyc
+
+# ─── Lockfiles (Inútiles para el LLM, consumen miles de tokens) ───
+**/package-lock.json
+**/yarn.lock
+**/pnpm-lock.yaml
+**/poetry.lock
+
+# ─── Bases de datos y binarios ───
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.db-wal
+**/*.db-shm
+
+# ─── Logs y Auditorías ───
+**/*.log
+*audit*.txt
+AUDITORIA*.txt
+
+# ─── Archivos de Repomix anteriores ───
+repomix_*.md
+
+# ─── Datos crudos y multimedia ───
 data/cache/
+data/artifacts/
 data/email_attachments/
+**/*.pdf
+**/*.png
+**/*.jpg
+**/*.mp4
+**/*.ico
+**/*.svg
 
-# ─── Scripts de diagnóstico y debugging ───
-scripts/diagnostics/
-tests/
-
-# ─── Datos duplicados de scripts ───
+# ─── Datos Scrapeados y JSONs Gigantes (Dieta para IA Local) ───
 scripts/data/
+data/jobs/*.json
+data/state/**/*.json
+data/cache/**/*.json
+data/simit_multas.json
+data/aplicaciones.json
+data/contexto_vital.json
+data/masterledger.json
+data/tamagotchi_stats.json
 
-# ─── Logs ───
-logs/
-*.log
+# ─── Manuales y Referencias Pesadas ───
+.agents/skills/tributaria/references/SKILL_TRIBUTARIA_FULL.md
+docs/REPOSITORIOS_DISPONIBLES.md
 
-# ─── Plantillas HTML estáticas (para CV, no código) ───
-data/jobs/*.html
-
-# ─── Bases de datos SQLite ───
-*.db
-
-# ─── Node_modules y builds ───
-node_modules/
-dist/
-build/
-
-# ─── Backups ───
-.backup_*/
+# ─── Subproyectos que no necesitas auditar todo el tiempo ───
+# (Descomenta estas líneas si solo quieres auditar el core de LifeOS)
+# dashboard/
+# wheel-saver/
+# Herramientas/

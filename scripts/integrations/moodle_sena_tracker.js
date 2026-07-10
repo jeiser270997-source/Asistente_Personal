@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -74,14 +74,14 @@ function generateAlertasMD(data) {
   for (const [key, act] of Object.entries(data.actividades)) {
     const completadas = (act.evidencias || []).filter(e => e.completado).length;
     const total = (act.evidencias || []).length;
-    const progressBar = '█'.repeat(completadas) + '░'.repeat(total - completadas);
+    const progressBar = 'â–ˆ'.repeat(completadas) + 'â–‘'.repeat(total - completadas);
 
     let icono;
-    if (completadas === total) icono = '✅';
-    else if (act.estado === 'urgente') icono = '🔴';
-    else if (act.estado === 'vencida') icono = '⬛';
-    else if (act.estado === 'activa') icono = '🟡';
-    else icono = '🟢';
+    if (completadas === total) icono = 'âœ…';
+    else if (act.estado === 'urgente') icono = 'ðŸ”´';
+    else if (act.estado === 'vencida') icono = 'â¬›';
+    else if (act.estado === 'activa') icono = 'ðŸŸ¡';
+    else icono = 'ðŸŸ¢';
 
     lines.push(`### ${icono} ${act.nombre}`);
     lines.push(`\`${progressBar}\` ${completadas}/${total} | ${act.fecha_limite} | ${act.estado.toUpperCase()}`);
@@ -97,7 +97,7 @@ function generateAlertasMD(data) {
   const s = data.estadisticas;
   lines.push('---');
   lines.push(`**Progreso**: ${s.completadas}/${s.total} completadas | ${s.pendientes} pendientes`);
-  if (s.vencidas_sin_completar > 0) lines.push(`⚠ **${s.vencidas_sin_completar} evidencias vencidas sin entregar**`);
+  if (s.vencidas_sin_completar > 0) lines.push(`âš  **${s.vencidas_sin_completar} evidencias vencidas sin entregar**`);
 
   fs.writeFileSync(ALERTAS_PATH, lines.join('\n'), 'utf8');
 }
@@ -145,7 +145,7 @@ function run() {
     for (const [key, act] of Object.entries(data.actividades)) {
       const completadas = (act.evidencias || []).filter(e => e.completado).length;
       const total = (act.evidencias || []).length;
-      const icono = act.estado === 'urgente' ? '🔴' : act.estado === 'vencida' ? '⬛' : completadas === total ? '✅' : '🟡';
+      const icono = act.estado === 'urgente' ? 'ðŸ”´' : act.estado === 'vencida' ? 'â¬›' : completadas === total ? 'âœ…' : 'ðŸŸ¡';
 
       log(`${icono} ${act.nombre}`);
       log(`   ${completadas}/${total} | Vence: ${act.fecha_limite} | ${act.dias_restantes} dias restantes`);
@@ -170,7 +170,7 @@ function run() {
       const total = (act.evidencias || []).length;
       if (completadas === total) continue;
 
-      const icono = act.estado === 'urgente' ? '🔴' : '🟡';
+      const icono = act.estado === 'urgente' ? 'ðŸ”´' : 'ðŸŸ¡';
       resumen += `${icono} ${act.nombre.split(' - ')[0]}: ${completadas}/${total} (vence ${act.fecha_limite})\n`;
     }
 
@@ -186,3 +186,4 @@ function run() {
 }
 
 run();
+

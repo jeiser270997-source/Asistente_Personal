@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
@@ -7,11 +7,11 @@ const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 const { escapeHTML, truncate } = require('../../lib/runtime/sanitize');
 const pending = require('../../lib/context/pending');
 const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
-// time_scheduler import removido — ya no usamos DeepSeek valley scheduling
+// time_scheduler import removido â€” ya no usamos DeepSeek valley scheduling
 
 const BASE_DIR = path.resolve(__dirname, '..', '..');
 const LOG_DIR = path.join(BASE_DIR, 'data', 'logs');
-const CONTEXTO_DIR = path.join(BASE_DIR, 'data', 'contexto_maestro');
+const CONTEXTO_DIR = path.join(BASE_DIR, 'data', 'state', 'contexto_maestro');
 const SKILL_PATH = path.join(BASE_DIR, 'skills', 'cerebro.md');
 const ESTADO_VIVO_PATH = path.join(CONTEXTO_DIR, 'ESTADO_VIVO.md');
 const REGISTRO_ESTUDIO_PATH = path.join(CONTEXTO_DIR, 'REGISTRO_DE_ESTUDIO.md');
@@ -63,14 +63,14 @@ function determineDayType(date) {
 
   if (COL_HOLIDAYS_2026.includes(dateStr)) return 'DomingoFestivo';
   if (dow === 0) return 'DomingoFestivo';
-  if (dow === 6) return 'Sábado';
-  if (dow === 3) return 'Miércoles-PicoPlaca';
+  if (dow === 6) return 'SÃ¡bado';
+  if (dow === 3) return 'MiÃ©rcoles-PicoPlaca';
   return 'Normal';
 }
 
 function formatDateColombia(date) {
   const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const days = ['domingo','lunes','martes','miÃ©rcoles','jueves','viernes','sÃ¡bado'];
   return `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
@@ -82,7 +82,7 @@ function readFileSafe(p) {
   try {
     return fs.readFileSync(p, 'utf8');
   } catch {
-    log(`⚠️ No se pudo leer: ${p}`);
+    log(`âš ï¸ No se pudo leer: ${p}`);
     return '';
   }
 }
@@ -98,7 +98,7 @@ async function fetchRecentEmails(auth) {
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const query = `in:inbox is:unread after:${Math.floor(oneDayAgo.getTime() / 1000)}`;
 
-  log(`[DEBUG GMAIL] Consultando correos no leídos con query: '${query}'`);
+  log(`[DEBUG GMAIL] Consultando correos no leÃ­dos con query: '${query}'`);
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
@@ -133,10 +133,10 @@ async function fetchRecentEmails(auth) {
     return emails;
   } catch (err) {
     if (err.name === 'AbortError') {
-      log('⚠️ [GMAIL] Timeout de 15s alcanzado en la consulta de Gmail.');
+      log('âš ï¸ [GMAIL] Timeout de 15s alcanzado en la consulta de Gmail.');
       return [];
     }
-    log(`⚠️ [GMAIL] Error en API: ${err.message}`);
+    log(`âš ï¸ [GMAIL] Error en API: ${err.message}`);
     return [];
   } finally {
     clearTimeout(timeout);
@@ -157,7 +157,7 @@ async function fetchCalendarEvents(auth) {
     maxResults: 20
   });
   return (res.data.items || []).map(e => ({
-    summary: e.summary || 'Sin título',
+    summary: e.summary || 'Sin tÃ­tulo',
     start: e.start?.dateTime || e.start?.date || '?',
     end: e.end?.dateTime || e.end?.date || '?'
   }));
@@ -178,16 +178,16 @@ function extractBodyText(msg) {
 
 const TRASH_PATTERNS = [
   /descuento/i, /oferta/i, /unsubscribe/i, /newsletter/i,
-  /promoción/i, /publicidad/i, /BIG School/i,
-  /no\s+responda/i, /notificación\s+de\s+envío/i,
-  /código\s+de\s+descuento/i, /black\s+friday/i, /cyber\s+day/i,
+  /promociÃ³n/i, /publicidad/i, /BIG School/i,
+  /no\s+responda/i, /notificaciÃ³n\s+de\s+envÃ­o/i,
+  /cÃ³digo\s+de\s+descuento/i, /black\s+friday/i, /cyber\s+day/i,
 ];
 
 const IMPORTANT_KEYWORDS = [
   'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
   'multa', 'comparendo', 'tarea', 'urgente',
-  'notificación judicial', 'embargo', 'mandamiento',
-  'citación', 'requerimiento',
+  'notificaciÃ³n judicial', 'embargo', 'mandamiento',
+  'citaciÃ³n', 'requerimiento',
 ];
 
 async function processInbox(auth, emails) {
@@ -202,9 +202,9 @@ async function processInbox(auth, emails) {
       try {
         await gmail.users.messages.delete({ userId: 'me', id: msg.id });
         trashCount++;
-        log(`🗑️ Eliminado permanentemente: ${msg.subject}`);
+        log(`ðŸ—‘ï¸ Eliminado permanentemente: ${msg.subject}`);
       } catch (err) {
-        log(`⚠️ Error al eliminar basura: ${err.message}`);
+        log(`âš ï¸ Error al eliminar basura: ${err.message}`);
       }
       continue;
     }
@@ -215,7 +215,7 @@ async function processInbox(auth, emails) {
         resource: { removeLabelIds: ['UNREAD'] }
       });
     } catch (err) {
-      log(`⚠️ Error al marcar como leído: ${err.message}`);
+      log(`âš ï¸ Error al marcar como leÃ­do: ${err.message}`);
     }
 
     if (IMPORTANT_KEYWORDS.some(kw => textToCheck.toLowerCase().includes(kw))) {
@@ -229,16 +229,16 @@ async function processInbox(auth, emails) {
           subject: msg.subject,
           snippet: body.substring(0, 800),
         });
-        log(`📌 Importante: ${msg.subject}`);
+        log(`ðŸ“Œ Importante: ${msg.subject}`);
       } catch (err) {
-        log(`⚠️ Error extrayendo importante: ${err.message}`);
+        log(`âš ï¸ Error extrayendo importante: ${err.message}`);
         importantEmails.push({
           from: msg.from, subject: msg.subject,
           snippet: '(error al extraer contenido)'
         });
       }
     } else {
-      log(`📖 Marcado como leído: ${msg.subject}`);
+      log(`ðŸ“– Marcado como leÃ­do: ${msg.subject}`);
     }
   }
 
@@ -246,16 +246,16 @@ async function processInbox(auth, emails) {
 }
 
 async function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria) {
-  const trashLine = trashCount > 0 ? `🗑️ [Gmail] ${trashCount} correos basura eliminados automáticamente.` : '[Gmail] Sin basura detectada.';
+  const trashLine = trashCount > 0 ? `ðŸ—‘ï¸ [Gmail] ${trashCount} correos basura eliminados automÃ¡ticamente.` : '[Gmail] Sin basura detectada.';
   const emailBlock = importantEmails.length === 0
-    ? '[Gmail] Sin correos importantes en las últimas 24h.'
+    ? '[Gmail] Sin correos importantes en las Ãºltimas 24h.'
     : importantEmails.map(e =>
-        `📩 ${e.from}\n   Asunto: ${e.subject}\n   Extracto: ${e.snippet.substring(0, 200)}`
+        `ðŸ“© ${e.from}\n   Asunto: ${e.subject}\n   Extracto: ${e.snippet.substring(0, 200)}`
       ).join('\n\n');
 
   const eventsBlock = events.length === 0
     ? 'Sin eventos programados para hoy.'
-    : events.map(e => `- ${e.summary} (${e.start} → ${e.end})`).join('\n');
+    : events.map(e => `- ${e.summary} (${e.start} â†’ ${e.end})`).join('\n');
 
   const estudioBlock = registroEstudio
     ? registroEstudio
@@ -288,14 +288,14 @@ ${senaBlock}
 
 const { askLLM } = require('../../lib/ai/llm_service');
 
-// ─── LLM CALL ────────────────────────────────────────────────
+// â”€â”€â”€ LLM CALL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function callLLM(systemPrompt, userContext) {
   const response = await askLLM(systemPrompt, [{ role: 'user', content: userContext }], 0.3);
   return response.content;
 }
 
 async function run() {
-  log('🚀 Iniciando Brain Orchestrator...');
+  log('ðŸš€ Iniciando Brain Orchestrator...');
   const now = getColombiaDate();
 
   // Health check: Google Calendar token
@@ -303,11 +303,11 @@ async function run() {
     const { getProximosEventos } = require('../../lib/integrations/calendar_client');
     const calCheck = await getProximosEventos(1);
     if (calCheck?.error?.includes('Token expirado') || calCheck?.error?.includes('invalid_grant')) {
-      await sendTelegramMessage('⚠️ ALERTA: Token de Google Calendar expirado. Corre: node scripts/setup_google_calendar.js');
-      log('⚠️ Token de Calendar expirado — notificación enviada');
+      await sendTelegramMessage('âš ï¸ ALERTA: Token de Google Calendar expirado. Corre: node scripts/setup_google_calendar.js');
+      log('âš ï¸ Token de Calendar expirado â€” notificaciÃ³n enviada');
     }
   } catch (e) {
-    log(`⚠️ Calendar health check: ${e.message}`);
+    log(`âš ï¸ Calendar health check: ${e.message}`);
   }
   const dateStr = formatDateColombia(now);
   const dayType = determineDayType(now);
@@ -321,7 +321,7 @@ async function run() {
     const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena, notasMemoria] = await Promise.all([
       fetchRecentEmails(auth),
       fetchCalendarEvents(auth).catch(e => {
-        log(`⚠️ [Calendar] ${e.message}`);
+        log(`âš ï¸ [Calendar] ${e.message}`);
         return [];
       }),
       Promise.resolve(readFileSafe(SKILL_PATH)),
@@ -333,13 +333,13 @@ async function run() {
 
     const { importantEmails, trashCount } = await processInbox(auth, rawEmails);
 
-    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.') + '\n\nIMPORTANTE: Debes responder SIEMPRE con un objeto JSON válido en español con esta estructura exacta (sin markdown, solo JSON plano):\n{\n  "mensaje_telegram": "El reporte detallado para enviar a Telegram...",\n  "nuevas_tareas": ["Descripción tarea 1", "Descripción tarea 2"]\n}';
+    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.') + '\n\nIMPORTANTE: Debes responder SIEMPRE con un objeto JSON vÃ¡lido en espaÃ±ol con esta estructura exacta (sin markdown, solo JSON plano):\n{\n  "mensaje_telegram": "El reporte detallado para enviar a Telegram...",\n  "nuevas_tareas": ["DescripciÃ³n tarea 1", "DescripciÃ³n tarea 2"]\n}';
     const userContext = await buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria);
 
-    log(`📋 Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);
+    log(`ðŸ“‹ Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);
 
     const briefing = await callLLM(systemPrompt, userContext);
-    log('✅ Briefing recibido del LLM.');
+    log('âœ… Briefing recibido del LLM.');
 
     let telegramText, nuevasTareas;
     try {
@@ -347,24 +347,24 @@ async function run() {
       telegramText = parsed.mensaje_telegram || briefing;
       nuevasTareas = Array.isArray(parsed.nuevas_tareas) ? parsed.nuevas_tareas : [];
     } catch (parseErr) {
-      log(`⚠️ No se pudo parsear JSON, usando respuesta cruda: ${parseErr.message}`);
+      log(`âš ï¸ No se pudo parsear JSON, usando respuesta cruda: ${parseErr.message}`);
       telegramText = briefing;
       nuevasTareas = [];
     }
 
     await sendTelegramMessage(truncate(telegramText, 3500));
-    log('✅ Briefing enviado por Telegram.');
+    log('âœ… Briefing enviado por Telegram.');
 
     for (const tarea of nuevasTareas) {
       await pending.add(tarea, 'auto');
-      log(`📌 Tarea añadida: ${tarea}`);
+      log(`ðŸ“Œ Tarea aÃ±adida: ${tarea}`);
     }
-    if (nuevasTareas.length > 0) log(`✅ ${nuevasTareas.length} tarea(s) persistida(s) en pending.json`);
+    if (nuevasTareas.length > 0) log(`âœ… ${nuevasTareas.length} tarea(s) persistida(s) en pending.json`);
 
   } catch (err) {
-    log(`❌ Error: ${err.message}`);
+    log(`âŒ Error: ${err.message}`);
     try {
-      const fallback = `📅 <b>BRIEFING MATUTINO: ${dateStr}</b>\n\n⚠️ <b>Error generando briefing automático:</b>\n<code>${escapeHTML(err.message)}</code>\n\n🔧 Revisa logs en <code>logs/brain_orchestrator.log</code>`;
+      const fallback = `ðŸ“… <b>BRIEFING MATUTINO: ${dateStr}</b>\n\nâš ï¸ <b>Error generando briefing automÃ¡tico:</b>\n<code>${escapeHTML(err.message)}</code>\n\nðŸ”§ Revisa logs en <code>logs/brain_orchestrator.log</code>`;
       await sendTelegramMessage(fallback);
     } catch {}
     process.exit(1);
@@ -372,6 +372,8 @@ async function run() {
 }
 
 run();
+
+
 
 
 

@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -36,9 +36,9 @@ function saveJSON(filename, data) {
   fs.writeFileSync(path.join(DATA_DIR, filename), JSON.stringify(data, null, 2), 'utf8');
 }
 
-// ─── LOGIN ────────────────────────────────────────────────────
+// â”€â”€â”€ LOGIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function login(page) {
-  log('🔐 Login en ZAJUNA SENA...');
+  log('ðŸ” Login en ZAJUNA SENA...');
   await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
 
   await page.selectOption('select[name="typeDocument"]', 'CC');
@@ -53,16 +53,16 @@ async function login(page) {
   await page.waitForTimeout(2000);
 
   if (page.url().includes('my/courses')) {
-    log('✅ Login exitoso');
+    log('âœ… Login exitoso');
     return true;
   }
-  log('❌ Login fallido');
+  log('âŒ Login fallido');
   return false;
 }
 
-// ─── CURSO ────────────────────────────────────────────────────
+// â”€â”€â”€ CURSO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function extractCourse(page) {
-  log('📚 Extrayendo curso...');
+  log('ðŸ“š Extrayendo curso...');
   await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
   await page.waitForTimeout(3000);
 
@@ -131,9 +131,9 @@ async function extractCourse(page) {
   return course;
 }
 
-// ─── CALENDARIO / FECHAS ─────────────────────────────────────
+// â”€â”€â”€ CALENDARIO / FECHAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function extractDeadlines(page) {
-  log('📅 Extrayendo fechas limite...');
+  log('ðŸ“… Extrayendo fechas limite...');
 
   // Try the upcoming page first
   await page.goto(`${BASE_URL}/zajuna/calendar/view.php?view=upcoming`, { waitUntil: 'domcontentloaded', timeout: 15000 });
@@ -193,9 +193,9 @@ async function extractDeadlines(page) {
   return { deadlines, inlineDates };
 }
 
-// ─── CALIFICACIONES ──────────────────────────────────────────
+// â”€â”€â”€ CALIFICACIONES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function extractGrades(page) {
-  log('📊 Extrayendo calificaciones...');
+  log('ðŸ“Š Extrayendo calificaciones...');
   await page.goto(`${BASE_URL}/zajuna/grade/report/user/index.php?id=${COURSE_ID}`, { waitUntil: 'domcontentloaded', timeout: 15000 });
   await page.waitForTimeout(3000);
 
@@ -212,9 +212,9 @@ async function extractGrades(page) {
   return grades;
 }
 
-// ─── EXTRAER CRONOGRAMA Y FECHAS ──────────────────────────────
+// â”€â”€â”€ EXTRAER CRONOGRAMA Y FECHAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function extractCronograma(page) {
-  log('📅 Extrayendo cronograma...');
+  log('ðŸ“… Extrayendo cronograma...');
 
   // Buscar pagina del cronograma en el curso
   await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -239,7 +239,7 @@ async function extractCronograma(page) {
   const fullText = await page.evaluate(() => document.body.innerText);
 
   const inicioMatch = fullText.match(/FECHA DE INICIO:\s*(\d{2}\/\d{2}\/\d{4})/);
-  const limiteMatch = fullText.match(/FECHA LÍMITE ENVÍO DE EVIDENCIAS:\s*(\d{2}\/\d{2}\/\d{4})/);
+  const limiteMatch = fullText.match(/FECHA LÃMITE ENVÃO DE EVIDENCIAS:\s*(\d{2}\/\d{2}\/\d{4})/);
   const cierreMatch = fullText.match(/FECHA DE CIERRE:\s*(\d{2}\/\d{2}\/\d{4})/);
 
   const cronograma = {
@@ -279,7 +279,7 @@ async function extractCronograma(page) {
   return cronograma;
 }
 
-// ─── GENERAR ALERTAS_SENA.md ──────────────────────────────────
+// â”€â”€â”€ GENERAR ALERTAS_SENA.md â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function generateAlertasMD(course, deadlines, inlineDates, cronograma) {
   const lines = [];
   lines.push(`# Alertas SENA - ${course.nombre || 'Curso ' + COURSE_ID}`);
@@ -303,10 +303,10 @@ function generateAlertasMD(course, deadlines, inlineDates, cronograma) {
           const fechaFin = new Date(a, m - 1, d);
           const diasRestantes = Math.ceil((fechaFin - hoy) / (1000 * 60 * 60 * 24));
           const urgente = diasRestantes <= 3;
-          const icono = urgente ? '🔴' : diasRestantes <= 7 ? '🟡' : '🟢';
-          lines.push(`- ${icono} **${ev.nombre}** → ${ev.inicio} al ${ev.fin} (${diasRestantes} dias)`);
+          const icono = urgente ? 'ðŸ”´' : diasRestantes <= 7 ? 'ðŸŸ¡' : 'ðŸŸ¢';
+          lines.push(`- ${icono} **${ev.nombre}** â†’ ${ev.inicio} al ${ev.fin} (${diasRestantes} dias)`);
         } catch {
-          lines.push(`- **${ev.nombre}** → ${ev.inicio} al ${ev.fin}`);
+          lines.push(`- **${ev.nombre}** â†’ ${ev.inicio} al ${ev.fin}`);
         }
       }
       lines.push('');
@@ -331,11 +331,11 @@ function generateAlertasMD(course, deadlines, inlineDates, cronograma) {
     lines.push('## Vencimientos proximos');
     lines.push('');
     for (const d of deadlines) {
-      lines.push(`- ⚠ ${d.nombre.replace(/\s+/g, ' ').trim()}${d.fecha_texto ? ' - ' + d.fecha_texto : ''}`);
+      lines.push(`- âš  ${d.nombre.replace(/\s+/g, ' ').trim()}${d.fecha_texto ? ' - ' + d.fecha_texto : ''}`);
     }
     if (inlineDates && inlineDates.length > 0) {
       for (const d of inlineDates.slice(0, 5)) {
-        lines.push(`- ${d.actividad} → ${d.fecha}`);
+        lines.push(`- ${d.actividad} â†’ ${d.fecha}`);
       }
     }
     lines.push('');
@@ -347,15 +347,15 @@ function generateAlertasMD(course, deadlines, inlineDates, cronograma) {
   log('   ALERTAS_SENA.md generado');
 }
 
-// ─── MAIN ─────────────────────────────────────────────────────
+// â”€â”€â”€ MAIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function main() {
   ensureDir(DATA_DIR);
-  log('═══════════════════════════════════════');
-  log('🎓 SENA MOODLE SCRAPER');
-  log('═══════════════════════════════════════');
+  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+  log('ðŸŽ“ SENA MOODLE SCRAPER');
+  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
 
   if (!USER || !PASS) {
-    log('❌ Credenciales no configuradas en .env');
+    log('âŒ Credenciales no configuradas en .env');
     process.exit(1);
   }
 
@@ -410,20 +410,21 @@ async function main() {
       saveJSON('historial_ejecuciones.json', historial);
     }
 
-    log('\n═══════════════════════════════════════');
-    log('✅ SCRAPING COMPLETADO');
+    log('\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+    log('âœ… SCRAPING COMPLETADO');
     log(`   Curso: ${course.nombre}`);
     log(`   Ficha: ${course.ficha}`);
     log(`   Secciones: ${course.secciones.length}`);
     log(`   Vencimientos proximos: ${deadlines.length}`);
     log(`   Datos en: ${DATA_DIR}`);
-    log('═══════════════════════════════════════');
+    log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
   } catch (err) {
-    log(`❌ Error: ${err.message}`);
+    log(`âŒ Error: ${err.message}`);
     process.exit(1);
   } finally {
     await browser.close();
   }
 }
 
-main().catch(err => { log(`❌ Fatal: ${err.message}`); process.exit(1); });
+main().catch(err => { log(`âŒ Fatal: ${err.message}`); process.exit(1); });
+
