@@ -1,9 +1,9 @@
 {
-  "ultima_revision": "2026-07-11T13:11:44.792Z",
+  "ultima_revision": "2026-07-12T13:13:46.506Z",
   "alertas": [
     {
       "tipo": "cambio_total",
-      "mensaje": "Total SIMIT cambio: 1.861.499 → 1.862.017 (+518)",
+      "mensaje": "Total SIMIT cambio: 1.862.017 → 1.862.535 (+518)",
       "urgente": true
     }
   ]
