@@ -1,4 +1,4 @@
-{
+﻿{
     "name": "estudio-lifeos",
     "version": "1.0.0",
     "private": true,
@@ -40,7 +40,8 @@
         "wheel:health": "node scripts/integrations/wheel_saver.js health",
         "test": "vitest run",
         "test:watch": "vitest",
-        "pack": "npx repomix --output repomix_active.md"
+        "pack": "npx repomix --output repomix_active.md",
+        "jobs:process": "node scripts/jobs/process_juniorjobs.js"
     },
     "devDependencies": {
         "@types/node": "^26.1.1",
