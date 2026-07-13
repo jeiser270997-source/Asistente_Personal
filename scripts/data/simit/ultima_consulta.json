@@ -1,7 +1,7 @@
 {
-  "fecha": "2026-07-10T14:16:18.848Z",
+  "fecha": "2026-07-12T13:13:46.504Z",
   "placa": "KEW496",
-  "total": "1.861.499",
+  "total": "1.862.535",
   "numMultas": 3,
   "numComparendos": 0,
   "detalle": {
@@ -11,9 +11,9 @@
         "tipo": "No aplica",
         "fecha": "KEW496",
         "secretaria": "Itaguí",
-        "infraccion": "C29...  Fotodetección Proyección pago  Número de identificación:  1019******   . Generación de la resolución jun. 22/2026$ 636.845 Fecha actual jul. 10/2026$ 705.380 Cobro coactivo jun. 22/2027",
+        "infraccion": "C29...  Fotodetección Proyección pago  Número de identificación:  1019******   . Generación de la resolución jun. 22/2026$ 637.240 Fecha actual jul. 12/2026$ 705.380 Cobro coactivo jun. 22/2027",
         "estado": "Pendiente de pago",
-        "valor": "$ 633.105\n                                                         Interés $ 3.740"
+        "valor": "$ 633.105\n                                                         Interés $ 4.135"
       },
       {
         "id": "000043026508052024",
@@ -22,7 +22,7 @@
         "secretaria": "Itaguí",
         "infraccion": "C14...  Fotodetección",
         "estado": "Cobro coactivo",
-        "valor": "$ 455.020\n                                                         Interés $ 112.699"
+        "valor": "$ 455.020\n                                                         Interés $ 112.983"
       },
       {
         "id": "000067915426032025",
@@ -31,7 +31,7 @@
         "secretaria": "Medellin",
         "infraccion": "C29...  Fotodetección",
         "estado": "Pendiente de pago",
-        "valor": "$ 572.628\n                                                         Interés $ 84.307"
+        "valor": "$ 572.628\n                                                         Interés $ 84.664"
       }
     ]
   }
