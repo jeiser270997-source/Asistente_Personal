@@ -41,6 +41,11 @@ jobs:
         node --check scripts/jobs/job_loop.js
         echo "✅ Código JavaScript válido."
 
+    - name: Validar workflows YAML (actionlint)
+      uses: rhysd/actionlint@v1.3.7
+      with:
+        args: -color
+
     - name: Verificación de TypeScript
       run: |
         echo "Compilando TypeScript..."
