@@ -18,6 +18,25 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm install --legacy-peer-deps
+
+      - name: Setup Litestream
+        run: |
+          curl -sL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz | tar -xz
+          sudo mv litestream /usr/local/bin/
+
+      - name: Restore Databases from Cloudflare R2
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          mkdir -p data runtime
+          litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
+          litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
+
       - run: npx playwright install chromium --with-deps
       - name: Scrape Computrabajo QA
         env:
@@ -25,7 +44,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           COMPUTRABAJO_EMAIL: ${{ secrets.COMPUTRABAJO_EMAIL }}
           COMPUTRABAJO_PASS: ${{ secrets.COMPUTRABAJO_PASS }}
-        run: node scripts/jobs/computrabajo_scraper.js
+        run: litestream replicate -config litestream.yml -exec "node scripts/jobs/computrabajo_scraper.js"
       - name: Commit nuevas ofertas
         env:
           GH_TOKEN: ${{ github.token }}

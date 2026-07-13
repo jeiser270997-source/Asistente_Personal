@@ -20,11 +20,30 @@ jobs:
     - name: Instalar dependencias
       run: npm install --legacy-peer-deps
 
+      - name: Setup Litestream
+        run: |
+          curl -sL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz | tar -xz
+          sudo mv litestream /usr/local/bin/
+
+      - name: Restore Databases from Cloudflare R2
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          mkdir -p data runtime
+          litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
+          litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
+
+
     - name: Inyectar Credenciales de Google (Desde Secrets)
       env:
         CREDS: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
         TOKEN: ${{ secrets.GOOGLE_TOKEN_JSON }}
-      run: node -e "const fs=require('fs');fs.writeFileSync('credentials.json',process.env.CREDS||'');fs.writeFileSync('token.json',process.env.TOKEN||'');console.log('credentials.json y token.json creados');"
+      run: litestream replicate -config litestream.yml -exec "node -e "const fs=require('fs');fs.writeFileSync('credentials.json',process.env.CREDS||'');fs.writeFileSync('token.json',process.env.TOKEN||'');console.log('credentials.json y token.json creados');""
 
     - name: Ejecutar Brain Orchestrator
       env:
@@ -40,10 +59,13 @@ jobs:
         CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
         HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
         MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
-      run: node scripts/schedulers/brain_orchestrator.js
+      run: litestream replicate -config litestream.yml -exec "node scripts/schedulers/brain_orchestrator.js"
 
       - name: Commit y push de base de datos actualizada
         env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           GH_TOKEN: ${{ github.token \}}
         run: |
           git config user.name "jarvis-bot"
