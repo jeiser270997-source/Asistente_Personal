@@ -164,7 +164,7 @@ CANDIDATO - Jeiser Gutierrez:
 - QA Automation Junior (CESDE bootcamp 2026, 28 semanas)
 - Skills: Playwright, JavaScript, Node.js, Git, GitHub Actions, Postman, SQL bÃ¡sico
 - Experiencia PrÃ¡ctica: Creador de LifeOS (sistema autÃ³nomo de producciÃ³n con 11 workflows CI/CD, scraping, integraciÃ³n LLM y base de datos SQLite).
-- Disponible: tiempo completo o medio tiempo, MedellÃ­n + remoto
+- Disponible: tiempo completo o medio tiempo, Medellín + remoto
 
 REGLA DE EVALUACIÃ“N CLAVE:
 Ignora los requisitos corporativos rÃ­gidos de "1 o 2 aÃ±os de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 aÃ±o de experiencia real. Si la vacante es Junior/Trainee y los skills tÃ©cnicos (JS, Playwright, Automation) hacen match, asÃ­gnale un score ALTO (>= 60) y evalÃºa su capacidad real, no los aÃ±os en papel.
@@ -254,7 +254,7 @@ async function aplicar(oferta, browser) {
 
     await page.waitForLoadState('networkidle', { timeout: 4000 }).catch(() => {});
     const confirmado = await page.evaluate(() =>
-      /postul|envi|Ã©xito|registrad|aplicac/i.test(document.body.innerText)
+      /postul|envi|éxito|registrad|aplicac/i.test(document.body.innerText)
     );
 
     const shot = path.join(JOBS_DIR, `apply_${oferta.id}_${Date.now()}.png`);
@@ -299,10 +299,10 @@ async function main() {
       if (UBICACIONES_NOK.test(texto) && !UBICACIONES_OK.test(texto)) return false;
       return true;
     });
-    log(`  Total: ${ofertas.length} | Nuevas (MedellÃ­n/Remoto): ${nuevas.length}`);
+    log(`  Total: ${ofertas.length} | Nuevas (Medellín/Remoto): ${nuevas.length}`);
 
     if (nuevas.length === 0) {
-      log('  Sin ofertas nuevas en MedellÃ­n/Remoto este loop.');
+      log('  Sin ofertas nuevas en Medellín/Remoto este loop.');
       await new Promise(r => setTimeout(r, 3000));
       continue;
     }

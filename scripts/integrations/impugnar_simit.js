@@ -49,7 +49,7 @@ Itagui, Antioquia</p>
 
 <p><strong>ASUNTO:</strong> Recurso de Reposicion contra Comparendo No. ${COMPARENDO.id} - Placa ${PLACA}</p>
 
-<p><strong>${NOMBRE}</strong>, mayor de edad, identificado con cedula de ciudadania No. <strong>${CC}</strong>, con domicilio en la direccion registrada en el RUNT, por medio del presente escrito presento <strong>RECURSO DE REPOSICION</strong> contra el comparendo de la referencia, con base en los siguientes:</p>
+<p><strong>${NOMBRE}</strong>, mayor de edad, identificado con cédula de ciudadania No. <strong>${CC}</strong>, con domicilio en la direccion registrada en el RUNT, por medio del presente escrito presento <strong>RECURSO DE REPOSICION</strong> contra el comparendo de la referencia, con base en los siguientes:</p>
 
 <h3>HECHOS</h3>
 
@@ -82,7 +82,7 @@ Itagui, Antioquia</p>
 
 <h3>PRUEBAS</h3>
 <ul>
-  <li>Copia de la cedula de ciudadania.</li>
+  <li>Copia de la cédula de ciudadania.</li>
   <li>Certificado de tradicion del vehiculo ${PLACA} (si se requiere).</li>
   <li>Estado de cuenta SIMIT donde consta la multa.</li>
   <li>Las que se allegaran en el termino probatorio.</li>

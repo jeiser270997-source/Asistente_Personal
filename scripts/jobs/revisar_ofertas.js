@@ -1,6 +1,6 @@
 ﻿const { robustLogin } = require('./ct_login_helper');
 /**
- * revisar_ofertas.js â€” Scrape y evalÃºa top 10 ofertas MedellÃ­n (sesiÃ³n CT)
+ * revisar_ofertas.js â€” Scrape y evalÃºa top 10 ofertas Medellín (sesiÃ³n CT)
  */
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require('playwright');
@@ -17,12 +17,12 @@ const SEARCHES = [
 const ES_MEDELLIN  = /medellin|antioquia|envigado|bello|itagui|sabaneta|rionegro/i;
 const NO_MEDELLIN  = /bogota|bogot|cali|barranquilla|cartagena|bucaramanga|manizales|cucuta|pereira|funza|pasto|neiva|mosquera/i;
 
-const PERFIL = `Jeiser Abraham Gutierrez Torres, QA Automation Junior (MedellÃ­n).
+const PERFIL = `Jeiser Abraham Gutierrez Torres, QA Automation Junior (Medellín).
 Skills: Playwright, JavaScript, Node.js, Git, GitHub Actions, Postman, SQL bÃ¡sico, SQLite, Linux.
 Proyecto real: LifeOS (12 workflows GitHub Actions, scraping Playwright, APIs, Telegram bot, producciÃ³n).
 Experiencia previa: Vigilante CCTV/medios tecnolÃ³gicos 2 aÃ±os (Coovisocial 2019-2021), Agente soporte Iberia/Amadeus-GDS (Sitel 2021).
 Estudios: Bootcamp QA Automation 28 semanas CESDE (en curso), SENA Bases de Datos + Excel.
-Disponible: tiempo completo, MedellÃ­n presencial o remoto.`;
+Disponible: tiempo completo, Medellín presencial o remoto.`;
 
 // â”€â”€ Login â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function loginCT(page) {
@@ -120,7 +120,7 @@ async function scrapeDesc(page, url) {
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36',
     locale: 'es-CO',
     permissions: ['geolocation'],
-    geolocation: { latitude: 6.2442, longitude: -75.5812 }, // MedellÃ­n
+    geolocation: { latitude: 6.2442, longitude: -75.5812 }, // Medellín
   });
   const page = await ctx.newPage();
 
@@ -130,7 +130,7 @@ async function scrapeDesc(page, url) {
 
   // Extraer cookies ya no necesario â€” Playwright navega con sesiÃ³n activa
 
-  // Recoger candidatas MedellÃ­n
+  // Recoger candidatas Medellín
   const seen = new Set();
   const candidatas = [];
 
@@ -145,7 +145,7 @@ async function scrapeDesc(page, url) {
     if (candidatas.length >= 30) break;
   }
 
-  console.log(`\nâœ… ${candidatas.length} candidatas en MedellÃ­n/Ãrea. Evaluando las primeras 10...\n`);
+  console.log(`\nâœ… ${candidatas.length} candidatas en Medellín/Ãrea. Evaluando las primeras 10...\n`);
 
   const evaluadas = [];
   for (const oferta of candidatas.slice(0, 10)) {
@@ -153,7 +153,7 @@ async function scrapeDesc(page, url) {
     const det = await scrapeDesc(page, oferta.url);
 
     const empresa = det.empresa || oferta.empresa || 'N/A';
-    const lugar   = det.lugar   || oferta.lugar   || 'MedellÃ­n';
+    const lugar   = det.lugar   || oferta.lugar   || 'Medellín';
     const salario = det.salario || 'N/A';
 
     const prompt = `EvalÃºa compatibilidad candidato-oferta (0-100). Solo JSON vÃ¡lido, sin texto extra.
@@ -192,7 +192,7 @@ Responde: {"score":<0-100>,"recomendacion":"APLICAR"|"REVISAR"|"DESCARTAR","razo
   evaluadas.sort((a, b) => b.score - a.score);
 
   console.log('\n' + 'â•'.repeat(72));
-  console.log('  RANKING DE OFERTAS â€” MedellÃ­n / Ãrea Metro');
+  console.log('  RANKING DE OFERTAS â€” Medellín / Ãrea Metro');
   console.log('â•'.repeat(72));
 
   evaluadas.forEach((o, i) => {

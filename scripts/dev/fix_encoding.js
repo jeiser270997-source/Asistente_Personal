@@ -3,6 +3,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 
+// Diccionario de traducción utilizando secuencias de escape hexadecimales
 const map = {
   '\xe2\x9c\x85': '\u2705', // ✅
   '\xf0\x9f\x8f\xa2': '\xf0\x9f\x8f\xa2', // 🏢
@@ -48,43 +49,54 @@ const map = {
   'excluy\xc3\xa9ndolo': 'excluyéndolo',
   'imposici\xc3\xb3n': 'imposición',
   'Se\xc3\xb1ores': 'Señores',
-  'cedula': 'cédula',
+  'cédula': 'cédula',
   'c\xc3\xa9dula': 'cédula'
 };
 
-const files = [
-  'lib/integrations/telegram.js',
-  'scripts/schedulers/brain_orchestrator.js',
-  'scripts/integrations/moodle_sena_scraper.js',
-  'scripts/integrations/moodle_sena_tracker.js',
-  'scripts/integrations/simit_scraper.js',
-  'scripts/jobs/computrabajo_scraper.js',
-  'scripts/jobs/process_juniorjobs.js',
-  'lib/runtime/job_tracker.js'
-];
-
-for (const f of files) {
-  const fp = path.join(ROOT, f);
-  if (!fs.existsSync(fp)) continue;
-
-  let content = fs.readFileSync(fp, 'utf8');
+function fixFile(filePath) {
+  let content = fs.readFileSync(filePath, 'utf8');
   let orig = content;
 
-  // Reemplazar mojibake
+  // 1. Reemplazar mojibake
   for (const [bad, good] of Object.entries(map)) {
     content = content.split(bad).join(good);
   }
 
-  // Corregir bug de ?? en process_juniorjobs.js
-  if (f === 'scripts/jobs/process_juniorjobs.js') {
-    content = content.replace(/\?\?\s*<b>/g, '\u00f0\u009f\u009f\u00a2 <b>');
+  // 2. Parche de Sintaxis GHA Token (Corregir $\{{ o \}})
+  if (filePath.endsWith('.yml')) {
+    content = content.split('$\{{').join('${{');
+    content = content.split('\}}').join('}}');
+    content = content.split('$\\{{').join('${{');
+  }
+
+  // 3. Corregir bug de ?? en process_juniorjobs.js
+  if (filePath.endsWith('process_juniorjobs.js')) {
+    content = content.replace(/\?\?\s*<b>/g, '🟢 <b>');
     content = content.replace(/\?\?\s*Guardadas/g, '💾 Guardadas');
   }
 
   if (content !== orig) {
-    fs.writeFileSync(fp, content, 'utf8');
-    console.log(`✅ Codificación reparada en: ${f}`);
+    fs.writeFileSync(filePath, content, 'utf8');
+    console.log(`✅ Reparado: ${path.relative(ROOT, filePath)}`);
   }
 }
 
-console.log("🎉 ¡Handshake de codificación completo! Emojis y acentos restaurados.");
+function walk(dir) {
+  const list = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of list) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (['node_modules', '.git', 'dist', 'build', '.next', 'backups', 'attachments'].includes(entry.name)) continue;
+      walk(full);
+    } else if (entry.isFile()) {
+      const ext = path.extname(entry.name).toLowerCase();
+      if (['.js', '.json', '.yml', '.yaml', '.md', '.ts'].includes(ext)) {
+        fixFile(full);
+      }
+    }
+  }
+}
+
+console.log("🛠️ Iniciando escaneo recursivo global...");
+walk(ROOT);
+console.log("🎉 ¡Handshake de codificación y sintaxis completado!");
