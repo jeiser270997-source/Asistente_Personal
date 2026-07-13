@@ -1,9 +1,6 @@
 ﻿name: Jarvis Cloud Orchestrator
 
 on:
-  schedule:
-    # Se ejecuta a las 12:00 UTC, que son las 07:00 AM en Colombia (UTC-5)
-    - cron: '0 12 * * *'
   workflow_dispatch: # Permite ejecutarlo manualmente con un botï¿½n en GitHub
 
 jobs:
@@ -54,3 +51,4 @@ jobs:
           git remote set-url origin https://x-access-token:$\{{ github.token \}}@github.com/$\{{ github.repository \}}.git
           git add runtime/lifeos.db data/memoria_hipocampo.db
           git diff --cached --quiet || (git commit -m "chore(brain): actualizar base de datos tras ciclo de pensamiento matutino" && git push)
+

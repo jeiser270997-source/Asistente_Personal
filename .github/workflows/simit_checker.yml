@@ -2,7 +2,7 @@
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '30 9 * * *'
   workflow_dispatch:
 
 permissions:
@@ -30,4 +30,5 @@ jobs:
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
           git add -A runtime/lifeos.db data/memoria_hipocampo.db
           git diff --cached --quiet || (git commit -m "chore(simit): actualizacion automatica" && git push)
+
 
