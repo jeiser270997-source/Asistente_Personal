@@ -33,6 +33,6 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
-          git add data/artifacts/jobs/ data/sources/jobs/ runtime/lifeos.db data/memoria_hipocampo.db
+          git add data/artifacts/jobs/ data/sources/jobs/
           git diff --cached --quiet || (git commit -m "chore(jobs): actualizacion ofertas QA Computrabajo" && git push)
 

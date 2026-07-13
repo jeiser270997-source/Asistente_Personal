@@ -55,5 +55,5 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin https://x-access-token:${{ github.token \}}@github.com/${{ github.repository \}}.git
-          git add runtime/lifeos.db data/memoria_hipocampo.db
+          git add
           git diff --cached --quiet || (git commit -m "chore(email): actualizar base de datos tras limpieza de correo" && git push)

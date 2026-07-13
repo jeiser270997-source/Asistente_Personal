@@ -90,5 +90,3 @@ scripts/one_shots/*.html
 data/sources/sena/prompts/
 
 # Excepciones para mantener la memoria viva en GitHub
-!data/memoria_hipocampo.db
-!runtime/lifeos.db
