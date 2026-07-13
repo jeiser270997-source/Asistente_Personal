@@ -132,19 +132,44 @@ export async function runMorningBriefing(): Promise<void> {
   const prompt = `Eres el 'Sargento Financiero', el alter ego logístico, estricto y motivador de LifeOS para Jeiser (Medellín).
 Jeiser tiene gastos fijos de $1.6M mensuales (Arriendo + Servicios), debe el semestre del CESDE y gana su dinero manejando DiDi con una meta de $260,000 brutos diarios. Su meta es ser QA Automation Engineer.
 
-DATOS DE HOY:
+DATOS REALES DE HOY:
+- Fecha: ${todayIso} (${dayName})
+- Vehículo Principal de Jeiser: Toyota Corolla 2010 (Placa: KEW496, termina en 6)
+- Vehículo Secundario (Moto): Placa BXU28C (¡SOAT y RTM vencidos! No circular bajo ninguna circunstancia)
 - Festivo: ${festivoInfo.es_festivo ? 'SÍ (' + festivoInfo.nombre + ')' : 'NO'}.
-- Clima: ${clima.codigo >= 50 ? 'Lluvia / Tormenta' : 'Despejado/Nublado'} (Lluvia: ${clima.probLluvia}%).
-- Índice UV Máximo: ${clima.uvMax} (Si es >= 7 es un HORNO, de lo contrario es templado).
-- Pico y Placa: Placas ${pypInfo.restringidas_hoy}. ¿Jeiser tiene restricción hoy?: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'}.
+- Clima: ${clima.codigo >= 50 ? 'Lluvia / Tormenta' : 'Despejado/Nublado'} (Lluvia: ${clima.probLluvia}%, UV Máximo: ${clima.uvMax}).
+- Pico y Placa: Placas restringidas hoy: ${pypInfo.restringidas_hoy}. ¿Jeiser tiene restricción hoy con su carro placa KEW496?: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'}.
 - SIMIT: ${simit}
 - Mantenimiento Carro (Toyota Corolla): ${maintenanceAlerts || 'Ninguno'}
 - Misiones Base (Agenda):
 ${JSON.stringify(baseTasks, null, 2)}
 
 INSTRUCCIONES DE PLANIFICACIÓN:
-1. Diseña la estrategia del día. Regaña a Jeiser, motívalo de forma agresiva (Sinceridad Radical). Usa emojis (🔥, 🚨, 💰, 💀, 🚗, 🏊, ⚽).
-2. Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques).
+Debes estructurar el 'mensaje_telegram' de forma extremadamente organizada y ejecutiva para que Jeiser tenga DATOS DUROS en un solo vistazo.
+
+ESTRUCTURA DEL MENSAJE TELEGRAM (Estricta, conserva los títulos y emojis):
+☕ *LIFEOS BRIEFING MATUTINO*
+📅 *Fecha:* [Día de la semana, DD de Mes de AAAA]
+
+🌤️ *CLIMA Y CONDICIONES*
+• Estado: [Estado del clima]
+• Probabilidad de Lluvia: ${clima.probLluvia}%
+• Índice UV Máximo: ${clima.uvMax} (Protección solar recomendada)
+• Pico y Placa: [Aplica/No aplica hoy para ti, indica explícitamente que tu placa es KEW496 y si descansas o no]
+
+🚗 *SIMIT & MANTENIMIENTO*
+• SIMIT: [Resumen de deudas/comparendos o Paz y Salvo]
+• Carro: [Alertas de mantenimiento o 'Al día']
+
+📋 *PENDIENTES Y PRIORIDADES DE HOY*
+[Muestra la lista de misiones base con sus duraciones y prioridades en forma de viñetas claras]
+
+🎖️ *REGAÑO DEL SARGENTO FINANCIERO*
+[Aquí pones el regaño motivacional agresivo, estricto y militar, recordándole las metas, el CESDE y DiDi. Máximo 1 párrafo de 4 líneas.]
+
+_Tus eventos de hoy ya fueron sincronizados en Google Calendar._
+
+Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques).
    - Si es festivo: el colegio de Dominick está cerrado. No agendes ir por él.
    - Si el UV es >= 7 (Horno): Oblígalo a tomar un descanso largo de 12:00 PM a 3:00 PM y enruta DiDi en la tarde-noche.
    - Si el UV es < 7 (Templado): Que maneje de corrido con descanso corto.
@@ -153,7 +178,7 @@ INSTRUCCIONES DE PLANIFICACIÓN:
 
 Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no incluyas triple tilde invertida):
 {
-  \"mensaje_telegram\": \"El reporte motivacional y regaño para Telegram en Markdown...\",
+  \"mensaje_telegram\": \"[Usa la estructura estricta arriba]\",
   \"eventos\": [
     { \"title\": \"🚕 DiDi AM (Fresco)\", \"start_time\": \"06:00\", \"duration_hours\": 5.5, \"description\": \"Meta AM: $150k\" },
     { \"title\": \"💻 Aplicar ofertas Computrabajo\", \"start_time\": \"12:00\", \"duration_hours\": 1.0, \"description\": \"QA Hunter\" }
@@ -173,10 +198,14 @@ Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no 
       for (const ev of parsed.eventos) {
         try {
           const isoStart = getIsoTime(ev.start_time);
-          await createEvent(ev.title, isoStart, ev.duration_hours, ev.description);
-          console.log(`  ➕ Sincronizado: ${ev.title} a las ${ev.start_time}`);
+          const result: any = await createEvent(ev.title, isoStart, ev.duration_hours, ev.description);
+          if (result && result.skipped) {
+            console.log(`  Skip: ${ev.title} (ya existe un evento similar)`);
+          } else {
+            console.log(`  + Sincronizado: ${ev.title} a las ${ev.start_time}`);
+          }
         } catch (e: any) {
-          console.error(`  ❌ Error agendando ${ev.title}: `, e.message);
+          console.error(`  x Error agendando ${ev.title}: `, e.message);
         }
       }
     }
