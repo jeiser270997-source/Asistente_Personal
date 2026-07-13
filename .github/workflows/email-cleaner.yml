@@ -34,20 +34,16 @@ jobs:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           mkdir -p data runtime
           litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
 
-
       - name: Inyectar credenciales Google
         env:
           CREDS: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
           TOKEN: ${{ secrets.GOOGLE_TOKEN_JSON }}
-        run: litestream replicate -config litestream.yml -exec "node -e "const fs=require('fs');fs.writeFileSync('credentials.json',process.env.CREDS||'');fs.writeFileSync('.google_token.json',process.env.TOKEN||'');console.log('credentials.json y token.json creados');""
+        run: node -e "const fs=require('fs');fs.writeFileSync('credentials.json',process.env.CREDS||'');fs.writeFileSync('.google_token.json',process.env.TOKEN||'');console.log('ok');"
 
       - name: Ejecutar Email Processor
         env:
@@ -64,18 +60,15 @@ jobs:
           HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           EMAIL_SCAN_HOURS: ${{ inputs.hours || '6' }}
-        run: litestream replicate -config litestream.yml -exec "node scripts/integrations/email_processor.js"
-
+        run: |
+          litestream replicate -config litestream.yml -exec "node scripts/integrations/email_processor.js"
 
       - name: Commit y push de base de datos actualizada
         env:
-          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          GH_TOKEN: ${{ github.token \}}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
-          git remote set-url origin https://x-access-token:${{ github.token \}}@github.com/${{ github.repository \}}.git
-          git add
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          git add -A
           git diff --cached --quiet || (git commit -m "chore(email): actualizar base de datos tras limpieza de correo" && git push)

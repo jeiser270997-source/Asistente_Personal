@@ -1,4 +1,4 @@
-﻿name: SENA Moodle Scraper
+name: SENA Moodle Scraper
 
 on:
   schedule:
@@ -29,21 +29,18 @@ jobs:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           mkdir -p data runtime
           litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
-
       - run: npx playwright install chromium --with-deps
       - name: Scrape SENA Moodle
         env:
           SENA_MOODLE_USER: ${{ secrets.SENA_MOODLE_USER }}
           SENA_MOODLE_PASS: ${{ secrets.SENA_MOODLE_PASS }}
           SENA_MOODLE_COURSE_ID: '121953'
-        run: litestream replicate -config litestream.yml -exec "node scripts/integrations/moodle_sena_scraper.js"
+        run: |
+          litestream replicate -config litestream.yml -exec "node scripts/integrations/moodle_sena_scraper.js"
       - name: Commit data if changed
         env:
           GH_TOKEN: ${{ github.token }}
@@ -53,5 +50,3 @@ jobs:
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
           git add data/state/sena/ data/state/contexto_maestro/ALERTAS_SENA.md
           git diff --cached --quiet || (git commit -m "chore(sena): actualizacion automatica de datos Moodle" && git push)
-
-
