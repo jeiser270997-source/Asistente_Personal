@@ -32,6 +32,10 @@ data/cache/
 data/artifacts/
 
 # --- Debug temporales ---
+# Windows device names (artifact from commands)
+nul
+NUL
+nul.*
 diag_*.png
 debug_*.png
 data/data/
