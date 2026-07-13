@@ -315,15 +315,15 @@ async function main() {
   // NotificaciÃ³n Telegram
   if (nuevasEnCola.length > 0) {
     const lines = nuevasEnCola.slice(0, 6).map(o =>
-      `âœ… <b>${o.titulo}</b>\n  ðŸ¢ ${o.empresa} | ðŸ“ ${o.lugar}\n  ðŸŽ¯ Score: ${o.auditoria.score} | ${o.auditoria.categoria}\n  ðŸ’¬ ${o.auditoria.razon}\n  <a href="${o.url}">Ver oferta</a>`
+      `\u2705 <b>${o.titulo}</b>\n  \u{1F3E2} ${o.empresa} | \u{1F4CD} ${o.lugar}\n  \u{1F3AF} Score: ${o.auditoria.score} | ${o.auditoria.categoria}\n  \u{1F4AC} ${o.auditoria.razon}\n  <a href="${o.url}">Ver oferta</a>`
     );
     await sendTelegram(
-      `ðŸ’¼ <b>${nuevasEnCola.length} ofertas Tech aprobadas por IA</b> (L-V Â· Medellín)\n\n${lines.join('\n\n')}`
+      `\u{1F4BC} <b>${nuevasEnCola.length} ofertas Tech aprobadas por IA</b> (L-V \u00B7 Medell\u00EDn)\n\n${lines.join('\n\n')}`
     );
-    log('NotificaciÃ³n Telegram enviada.');
+    log('Notificaci\u00F3n Telegram enviada.');
   } else {
     log('Sin nuevas ofertas aprobadas hoy.');
-    await sendTelegram(`ðŸ’¼ <b>Computrabajo Pipeline</b>\nSe auditaron ${candidatas.length} ofertas. Ninguna nueva aprobada hoy.`);
+    await sendTelegram(`\u{1F4BC} <b>Computrabajo Pipeline</b>\nSe auditaron ${candidatas.length} ofertas. Ninguna nueva aprobada hoy.`);
   }
 
   log(`Cola actual: ${queue.length + nuevasEnCola.length} ofertas pendientes de aplicar.`);

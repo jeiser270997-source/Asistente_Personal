@@ -362,7 +362,7 @@ async function main() {
           if (resultado.exito) {
             yaAplicadas.add(oferta.id);
             log(`       âœ… APLICADO`);
-            await sendTelegram(`âœ… <b>AplicaciÃ³n enviada</b>\n${oferta.titulo} â€” ${oferta.empresa}\nScore: ${analisis.score}/100\n<a href="${oferta.url}">Ver oferta</a>`);
+            await sendTelegram(`\u2705 <b>Aplicaci\u00F3n enviada</b>\n${oferta.titulo} \u2014 ${oferta.empresa}\nScore: ${analisis.score}/100\n<a href="${oferta.url}">Ver oferta</a>`);
           } else {
             log(`       âš  No confirmado: ${resultado.razon}`);
           }
@@ -410,9 +410,7 @@ async function main() {
       log(`  ${icon} [${r.analisis.score}] ${r.titulo} â€” ${r.empresa} | ${r.analisis.razon_corta}`);
     });
 
-  const msg = `ðŸŽ¯ <b>Job Loop x${LOOPS} completado</b>
-Analizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length}
-${aplicadas.map(r => `âœ… ${r.titulo} â€” ${r.empresa}`).join('\n')}`;
+  const msg = `\u{1F3AF} <b>Job Loop x${LOOPS} completado</b>\nAnalizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length}\n${aplicadas.map(r => `\u2705 ${r.titulo} \u2014 ${r.empresa}`).join('\n')}`;
   await sendTelegram(msg);
 
   log('\nâœ… Datos en: ' + JOBS_DIR);
