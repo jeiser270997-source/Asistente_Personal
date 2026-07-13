@@ -27,7 +27,10 @@
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
 - **DIAN AG2025:** NO OBLIGADO. No declarar.
 - **UGPP 2023:** Cerrado favorable 12/06/2026.
-- **SIMIT comparendo:** 0000838097 (C29 Itagüí) — Recurso de reposición enviado 05/07/2026. En espera.
+- **SIMIT — Total deuda:** ~$1.862.535 (3 multas activas en sistema)
+  - 🔵 **C29 Medellín** (000067915426032025) — $657.292 — Pendiente pago. Lleva mucho tiempo, NO ha pasado a cobro coactivo. Sin riesgo inmediato.
+  - 🟠 **C29 Itagüí** (000083809722062026) — $705.380 — ✅ **YA PAGADA.** Se pagó vía embargo Bancolombia (cuenta bancaria) + pago directo del resto. Sigue apareciendo en SIMIT por demora en actualización.
+  - ⛔ **C14 Itagüí** (000043026508052024) — $568.003 — **COBRO COACTIVO.** Riesgo de nuevo embargo. Se envió recurso de reposición/impugnación por correo a contactosimit@fcm.org.co. En espera de respuesta.
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
 - **Denuncia Moto BXU28C:** NUNC 110016102535202609577 (abuso de confianza) — Fiscalía 11, radicada 20/05/2026. Consultar estado: https://www.fiscalia.gov.co/colombia/servicios-de-informacion-al-ciudadano/consultas/
 - **Denuncia NUNC 110016102838202604358:** Caso separado — Fiscalía 68 U. Intervención Temprana Bogotá. 21/05/2026: sin avances sustanciales. Contacto: fis68loctempranabog@fiscalia.gov.co
