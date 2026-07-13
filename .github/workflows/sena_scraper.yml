@@ -47,6 +47,6 @@ jobs:
         run: |
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
           git add data/state/sena/ data/state/contexto_maestro/ALERTAS_SENA.md
           git diff --cached --quiet || (git commit -m "chore(sena): actualizacion automatica de datos Moodle" && git push)
