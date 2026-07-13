@@ -251,7 +251,21 @@ async function main() {
   const aprobadas = [];
   const rechazadas = [];
 
-  for (const oferta of candidatas) {
+  // Pre-filtro determinístico (GRATIS) para no quemar el LLM
+  const candidatasFiltradas = candidatas.filter(oferta => {
+    const txt = `${oferta.titulo} ${oferta.empresa} ${oferta.lugar}`.toLowerCase();
+    if (/(ventas|comercial|asesor|call center|bilingue|callcenter|servicio al cliente|guardia|operario)/.test(txt) && !/(qa|tester|sistemas|ti|soporte)/.test(txt)) {
+      rechazadas.push({ ...oferta, auditoria: { razon: 'Filtro Regex: Rol no tech/QA' } });
+      seenIds.add(oferta.offer_id);
+      return false;
+    }
+    return true;
+  });
+
+  log(`  [PRE-FILTRO] Pasaron a evaluación IA: ${candidatasFiltradas.length} ofertas de ${candidatas.length}`);
+  const candidatasIA = candidatasFiltradas.slice(0, 5);
+
+  for (const oferta of candidatasIA) {
     const auditoria = await auditarOferta(page, oferta);
     seenIds.add(oferta.offer_id); // marcar como vista pase lo que pase
 

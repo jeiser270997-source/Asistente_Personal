@@ -69,35 +69,22 @@ function saveProcessed(ids) {
 // ── Clasificación Inteligente con LLM ──
 
 async function isImportant(from, subject, body = "") {
-  try {
-    const llm = await createLLM();
-    if (!llm) throw new Error("No LLM available");
+  const text = `${from} ${subject} ${body}`.toLowerCase();
+  
+  // 1. REGLA DE BASURA (Gratis y rápida)
+  const JUNK_KEYWORDS = ['newsletter', 'oferta', 'promocion', 'descuento', 'suscripcion', 'noreply', 'no-reply', 'publicidad'];
+  if (JUNK_KEYWORDS.some(kw => text.includes(kw))) return false;
 
-    const result = await llm.chat.completions.create({
-      model: llm._model || 'google/gemini-2.5-flash',
-      messages: [
-        { role: 'system', content: "Eres el guardián de la bandeja de entrada de Jeiser. Responde SOLO con la palabra 'KEEP' si el correo es importante (alertas de multas, fotomultas, tránsito, DIAN, SIMIT, juzgados, bancos, nómina, facturas, ofertas laborales, entrevistas, SENA, CESDE). Responde SOLO con 'DELETE' si es spam, publicidad, promociones, boletines o notificaciones de redes sociales." },
-        { role: 'user', content: `Remitente: ${from}\nAsunto: ${subject}\n\n${body.substring(0, 300)}` }
-      ],
-      temperature: 0.1,
-      max_tokens: 10,
-    });
-    const answer = (result.choices[0]?.message?.content || '').trim().toUpperCase();
-    
-    return answer.includes('KEEP');
-  } catch (e) {
-    log(`[LLM Fallback] Error clasificando: ${e.message}`);
-    // Fallback a lógica de regex si falla la API
-    const text = `${from} ${subject}`.toLowerCase();
-    const IMPORTANT_KEYWORDS = [
-      'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
-      'multa', 'comparendo', 'tarea', 'urgente',
-      'notificacion judicial', 'embargo', 'mandamiento',
-      'citacion', 'requerimiento', 'entrevista',
-      'factura', 'contrato', 'nomina', 'salario',
-    ];
-    return IMPORTANT_KEYWORDS.some(kw => text.includes(kw));
-  }
+  // 2. REGLA DE ORO (Importante)
+  const IMPORTANT_KEYWORDS = [
+    'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
+    'multa', 'comparendo', 'tarea', 'urgente',
+    'notificacion judicial', 'embargo', 'mandamiento',
+    'citacion', 'requerimiento', 'entrevista',
+    'factura', 'contrato', 'nomina', 'salario', 'postulacion'
+  ];
+  
+  return IMPORTANT_KEYWORDS.some(kw => text.includes(kw));
 }
 
 function parseJobFromEmail(subject, body) {
