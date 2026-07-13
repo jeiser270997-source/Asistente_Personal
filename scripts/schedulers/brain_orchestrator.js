@@ -63,8 +63,8 @@ function determineDayType(date) {
 
   if (COL_HOLIDAYS_2026.includes(dateStr)) return 'DomingoFestivo';
   if (dow === 0) return 'DomingoFestivo';
-  if (dow === 6) return 'SÃ¡bado';
-  if (dow === 3) return 'MiÃ©rcoles-PicoPlaca';
+  if (dow === 6) return 'Sábado';
+  if (dow === 3) return 'Miércoles-PicoPlaca';
   return 'Normal';
 }
 
@@ -179,15 +179,15 @@ function extractBodyText(msg) {
 const TRASH_PATTERNS = [
   /descuento/i, /oferta/i, /unsubscribe/i, /newsletter/i,
   /promociÃ³n/i, /publicidad/i, /BIG School/i,
-  /no\s+responda/i, /notificaciÃ³n\s+de\s+envÃ­o/i,
+  /no\s+responda/i, /notificación\s+de\s+envÃ­o/i,
   /cÃ³digo\s+de\s+descuento/i, /black\s+friday/i, /cyber\s+day/i,
 ];
 
 const IMPORTANT_KEYWORDS = [
   'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
   'multa', 'comparendo', 'tarea', 'urgente',
-  'notificaciÃ³n judicial', 'embargo', 'mandamiento',
-  'citaciÃ³n', 'requerimiento',
+  'notificación judicial', 'embargo', 'mandamiento',
+  'citación', 'requerimiento',
 ];
 
 async function processInbox(auth, emails) {
@@ -304,7 +304,7 @@ async function run() {
     const calCheck = await getProximosEventos(1);
     if (calCheck?.error?.includes('Token expirado') || calCheck?.error?.includes('invalid_grant')) {
       await sendTelegramMessage('âš ï¸ ALERTA: Token de Google Calendar expirado. Corre: node scripts/setup_google_calendar.js');
-      log('âš ï¸ Token de Calendar expirado â€” notificaciÃ³n enviada');
+      log('âš ï¸ Token de Calendar expirado â€” notificación enviada');
     }
   } catch (e) {
     log(`âš ï¸ Calendar health check: ${e.message}`);

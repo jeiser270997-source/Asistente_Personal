@@ -2,7 +2,7 @@
 /**
  * revisar_ofertas.js â€” Scrape y evalÃºa top 10 ofertas MedellÃ­n (sesiÃ³n CT)
  */
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require('playwright');
 const { askLLM } = require('../../lib/ai/llm_service');
 

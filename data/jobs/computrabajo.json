@@ -1,6 +1,6 @@
 {
-  "fecha": "2026-07-10T14:45:13.481Z",
-  "total": 119,
+  "fecha": "2026-07-13T14:01:52.318Z",
+  "total": 128,
   "ofertas": [
     {
       "titulo": "Software QA Analyst",
@@ -1072,6 +1072,78 @@
       "id": "de-trabajo-de-analista-de-soporte-tecnico-respuesta-inmediata-en-bogota-dc-A23DBBB915EDBED061373E686DCF3405",
       "categoria": "mesa-ayuda-sistemas",
       "scraped_at": "2026-07-10T14:45:12.449Z"
+    },
+    {
+      "titulo": "Auxiliar de soporte tecnico /Juegos localizados y Ruta",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-soporte-tecnico-juegos-localizados-y-ruta-en-medellin-143B2E903BC8F8C961373E686DCF3405#lc=ListOffers-Score6-0",
+      "fecha": "4,7 RÉDITOS EMPRESARIALES S.A",
+      "scraped_at": "2026-07-13T13:58:01.782Z"
+    },
+    {
+      "titulo": "Auxiliar de servicio al cliente y soporte técnico",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-servicio-al-cliente-y-soporte-tecnico-auxiliar-de-soporte-tecnico-en-campo-en-medellin-536ED5D6FF2D890E61373E686DCF3405#lc=ListOffers-Score6-3",
+      "fecha": "Agencia de Empleo de Comfenalco Antioquia",
+      "scraped_at": "2026-07-13T13:58:09.276Z"
+    },
+    {
+      "titulo": "Auxiliar de soporte tecnico /Juegos localizados y Ruta",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-soporte-tecnico-juegos-localizados-y-ruta-en-medellin-5BFBC47A8D0BECFB61373E686DCF3405#lc=ListOffers-Score6-4",
+      "fecha": "4,7 RÉDITOS EMPRESARIALES S.A",
+      "scraped_at": "2026-07-13T13:58:13.432Z"
+    },
+    {
+      "titulo": "Técnico en sistemas con experiencia en soporte ZO",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-en-sistemas-con-experiencia-en-soporte-zo-en-medellin-983CAE91B35FF2B361373E686DCF3405#lc=ListOffers-Score6-5",
+      "fecha": "4,5 TP",
+      "scraped_at": "2026-07-13T13:58:17.157Z"
+    },
+    {
+      "titulo": "Operario de Producción",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-operario-de-produccion-revisador-de-calidad-medellin-en-medellin-0830BA6C043A5C1A61373E686DCF3405#lc=ListOffers-Score6-4",
+      "fecha": "4,4 Vinculamos S.A.S",
+      "scraped_at": "2026-07-13T14:01:52.319Z"
+    },
+    {
+      "titulo": "Analista de datos junior Bilingue",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-datos-junior-bilingue-en-medellin-5AC4C3474BFB55EE61373E686DCF3405#lc=ListOffers-Score6-2",
+      "fecha": "4,4 AMERICAS BUSINESS PROCESS SERVICES S.A",
+      "scraped_at": "2026-07-13T14:01:52.319Z"
+    },
+    {
+      "titulo": "Analista de datos junior Bilingue",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-datos-junior-bilingue-en-medellin-9113903B8C2CD39E61373E686DCF3405#lc=ListOffers-Score6-12",
+      "fecha": "4,4 AMERICAS BUSINESS PROCESS SERVICES S.A",
+      "scraped_at": "2026-07-13T14:01:52.319Z"
+    },
+    {
+      "titulo": "Asesor Junior Tecnología, Telecomunicaciones y Financiamiento",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-junior-tecnologia-telecomunicaciones-y-financiamiento-en-medellin-2CA36E283A81669061373E686DCF3405#lc=ListOffers-Score6-19",
+      "fecha": "4,6 Eficacia",
+      "scraped_at": "2026-07-13T14:01:52.319Z"
+    },
+    {
+      "titulo": "Asesor de Soporte Técnico",
+      "empresa": "",
+      "lugar": "",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-de-soporte-tecnico-call-center-en-medellin-104BBCFB37D2711B61373E686DCF3405#lc=ListOffers-Score6-2",
+      "fecha": "ALARMAR LIMITADA",
+      "scraped_at": "2026-07-13T14:01:52.319Z"
     }
   ]
 }

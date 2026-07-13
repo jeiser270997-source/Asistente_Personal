@@ -2,9 +2,9 @@
  * scripts/jobs/computrabajo_scraper.js
  *
  * Pipeline 3 Etapas:
- *   1. RASTREO   â†’ Palabras clave genÃ©ricas, newest-first, MedellÃ­n, dedup por offer_id.
+ *   1. RASTREO   â†’ Palabras clave genÃ©ricas, newest-first, Medellín, dedup por offer_id.
  *   2. AUDITORÃA â†’ Para cada oferta nueva: visitar pÃ¡gina completa â†’ IA evalÃºa descripciÃ³n.
- *   3. COLA      â†’ Ofertas aprobadas van a la cola de postulaciÃ³n + notificaciÃ³n Telegram.
+ *   3. COLA      â†’ Ofertas aprobadas van a la cola de postulación + notificación Telegram.
  */
 
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
@@ -13,7 +13,7 @@ const path = require('node:path');
 const { chromium } = require('playwright');
 const { askLLM }   = require('../../lib/ai/llm_service');
 
-const BASE_DIR = path.resolve(__dirname, '..');
+const BASE_DIR = path.resolve(__dirname, '..', '..');
 const JOBS_DIR = path.join(BASE_DIR, 'data', 'jobs');
 const OUT_PATH = path.join(JOBS_DIR, 'computrabajo.json');       // todas las encontradas
 const QUEUE_PATH = path.join(JOBS_DIR, 'apply_queue.json');      // aprobadas por IA â†’ listas para aplicar
@@ -31,7 +31,7 @@ const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
 const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 
-// â”€â”€â”€ PALABRAS CLAVE GENÃ‰RICAS (Tech MedellÃ­n) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â”€â”€â”€ PALABRAS CLAVE GENÃ‰RICAS (Tech Medellín) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // El motor de bÃºsqueda de Computrabajo amplÃ­a los resultados al usar tÃ©rminos
 // genÃ©ricos. La IA filtra la basura en la Etapa 2.
 const KEYWORDS = [
@@ -88,7 +88,7 @@ function saveSeenIds(idSet) {
 
 // â”€â”€â”€ ETAPA 1: SCRAPE LISTING (tÃ­tulo, empresa, URL, ID) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function scrapeListado(page, keyword) {
-  // sorted by publicationDate = newest first | en-medellin = solo MedellÃ­n
+  // sorted by publicationDate = newest first | en-medellin = solo Medellín
   const url = `https://co.computrabajo.com/trabajo-de-${keyword}-en-medellin?by=publicationDate`;
   log(`  [RASTREO] ${keyword} â†’ ${url}`);
 
@@ -300,7 +300,7 @@ async function main() {
     ofertas: [...aprobadas, ...rechazadas],
   }, null, 2));
 
-  // Agregar aprobadas a la cola de postulaciÃ³n
+  // Agregar aprobadas a la cola de postulación
   const queue = loadQueue();
   const queueIds = new Set(queue.map(o => o.offer_id));
   const nuevasEnCola = aprobadas.filter(o => !queueIds.has(o.offer_id));
@@ -318,7 +318,7 @@ async function main() {
       `âœ… <b>${o.titulo}</b>\n  ðŸ¢ ${o.empresa} | ðŸ“ ${o.lugar}\n  ðŸŽ¯ Score: ${o.auditoria.score} | ${o.auditoria.categoria}\n  ðŸ’¬ ${o.auditoria.razon}\n  <a href="${o.url}">Ver oferta</a>`
     );
     await sendTelegram(
-      `ðŸ’¼ <b>${nuevasEnCola.length} ofertas Tech aprobadas por IA</b> (L-V Â· MedellÃ­n)\n\n${lines.join('\n\n')}`
+      `ðŸ’¼ <b>${nuevasEnCola.length} ofertas Tech aprobadas por IA</b> (L-V Â· Medellín)\n\n${lines.join('\n\n')}`
     );
     log('NotificaciÃ³n Telegram enviada.');
   } else {
