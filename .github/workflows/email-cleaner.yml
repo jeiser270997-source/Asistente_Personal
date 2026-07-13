@@ -47,3 +47,13 @@ jobs:
           EMAIL_SCAN_HOURS: ${{ inputs.hours || '6' }}
         run: node scripts/integrations/email_processor.js
 
+
+      - name: Commit y push de base de datos actualizada
+        env:
+          GH_TOKEN: $\{{ github.token \}}
+        run: |
+          git config user.name "jarvis-bot"
+          git config user.email "jarvis@lifeos.local"
+          git remote set-url origin https://x-access-token:$\{{ github.token \}}@github.com/$\{{ github.repository \}}.git
+          git add runtime/lifeos.db data/memoria_hipocampo.db
+          git diff --cached --quiet || (git commit -m "chore(email): actualizar base de datos tras limpieza de correo" && git push)

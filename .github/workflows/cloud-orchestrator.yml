@@ -1,10 +1,10 @@
-name: Jarvis Cloud Orchestrator
+﻿name: Jarvis Cloud Orchestrator
 
 on:
   schedule:
     # Se ejecuta a las 12:00 UTC, que son las 07:00 AM en Colombia (UTC-5)
     - cron: '0 12 * * *'
-  workflow_dispatch: # Permite ejecutarlo manualmente con un bot�n en GitHub
+  workflow_dispatch: # Permite ejecutarlo manualmente con un botï¿½n en GitHub
 
 jobs:
   run-brain:
@@ -44,3 +44,13 @@ jobs:
         HUGGINGFACE_API_KEY: ${{ secrets.HUGGINGFACE_API_KEY }}
         MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
       run: node scripts/schedulers/brain_orchestrator.js
+
+      - name: Commit y push de base de datos actualizada
+        env:
+          GH_TOKEN: $\{{ github.token \}}
+        run: |
+          git config user.name "jarvis-bot"
+          git config user.email "jarvis@lifeos.local"
+          git remote set-url origin https://x-access-token:$\{{ github.token \}}@github.com/$\{{ github.repository \}}.git
+          git add runtime/lifeos.db data/memoria_hipocampo.db
+          git diff --cached --quiet || (git commit -m "chore(brain): actualizar base de datos tras ciclo de pensamiento matutino" && git push)
