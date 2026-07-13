@@ -1,192 +1,190 @@
 /**
  * scripts/schedulers/morning_briefing.ts
  * 
- * Orquestador proactivo que se ejecuta a las 6:00 AM.
- * Reemplaza al bot conversacional enviando un informe ejecutivo
- * y estructurando directamente el calendario vacío.
+ * Orquestador Unificado de LifeOS - Sargento Logístico Matutino.
+ * Combina clima, UV, Pico y Placa, SIMIT, Mantenimiento y Tareas.
+ * Genera el plan diario con una sola llamada al LLM y sincroniza Calendar.
  */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { createEvent } from '../integrations/gworkspace_manager';
 import { askLLM } from '../../lib/ai/llm_service';
+import { checkMaintenance } from './vehicle_manager';
 require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-interface Task {
-  title: string;
-  duration: number;
-  priority: number;
-  type: string;
-}
+const CONFIG_PATH = path.join(__dirname, '..', '..', 'data', 'config', 'didi_config.json');
+const SCHEDULE_PATH = path.join(__dirname, '..', '..', 'config', 'schedule.json');
+const SIMIT_PATH = path.join(__dirname, '..', '..', 'data', 'cache', 'simit_multas.json');
+const PICO_FILE = path.join(__dirname, '..', '..', 'data', 'pico_placa.json');
 
-interface WeatherData {
-  probLluvia: number;
-  estado: string;
-  uvMax: number;
+let config: any = {};
+if (fs.existsSync(CONFIG_PATH)) {
+  config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
 }
 
 async function sendTelegramMessage(text: string): Promise<void> {
   if (!TELEGRAM_TOKEN || !CHAT_ID) {
-    console.log('⚠️ No hay token de Telegram, pero el mensaje sería:\n', text);
+    console.log('⚠️ Telegram no configurado. Mensaje alternativo:\n', text);
     return;
   }
   await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: text,
-      parse_mode: 'Markdown'
-    })
+    body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'Markdown' })
   });
 }
 
-// ================= CLIMA =================
-async function getMedellinWeather(): Promise<WeatherData> {
+// ================= CLIMA Y UV =================
+async function getMedellinWeather() {
   try {
     const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=6.2518&longitude=-75.5636&daily=weathercode,precipitation_probability_max,uv_index_max&timezone=America%2FBogota');
     const data: any = await res.json();
-    const probLluvia = data.daily.precipitation_probability_max[0];
-    const uvMax = data.daily.uv_index_max[0];
-    const codigo = data.daily.weathercode[0];
-    
-    let estado = "Despejado/Nublado";
-    if (codigo >= 50 && codigo <= 69) estado = "Lluvia ligera";
-    if (codigo >= 80) estado = "Lluvia fuerte / Tormenta";
-    
-    return { probLluvia, estado, uvMax };
+    return {
+      probLluvia: data.daily.precipitation_probability_max[0],
+      uvMax: data.daily.uv_index_max[0],
+      codigo: data.daily.weathercode[0]
+    };
   } catch {
-    return { probLluvia: 0, estado: "Desconocido", uvMax: 5 };
+    return { probLluvia: 0, uvMax: 5, codigo: 0 };
   }
 }
 
-// ================= SIMIT =================
+// ================= FESTIVOS (COLOMBIA) =================
+async function checkFestivo(dateIso: string) {
+  try {
+    const year = dateIso.split('-')[0];
+    const res = await fetch(`https://date.nager.at/api/v3/publicholidays/${year}/CO`);
+    if (!res.ok) return { es_festivo: false, nombre: '' };
+    const festivos: any = await res.json();
+    const festivoHoy = festivos.find((f: any) => f.date === dateIso);
+    if (festivoHoy) return { es_festivo: true, nombre: festivoHoy.localName };
+  } catch {}
+  return { es_festivo: false, nombre: '' };
+}
+
+// ================= SIMIT STATUS =================
 function getSimitStatus(): string {
   try {
-    const p = path.join(__dirname, '..', '..', 'data', 'simit.json');
-    if (fs.existsSync(p)) {
-      const simitData = JSON.parse(fs.readFileSync(p, 'utf8'));
+    if (fs.existsSync(SIMIT_PATH)) {
+      const simitData = JSON.parse(fs.readFileSync(SIMIT_PATH, 'utf8'));
       if (simitData.total_deuda_activa > 0) {
-        return `⚠️ *ALERTA SIMIT:* Tienes comparendos activos. Deuda total: $${simitData.total_deuda_activa.toLocaleString('es-CO')} COP.`;
+        return `⚠️ *SIMIT:* Comparendos activos. Deuda total: $${(simitData.total_deuda_activa).toLocaleString('es-CO')} COP.`;
       }
-      return "✅ *SIMIT:* Estás a paz y salvo.";
+      return '✅ *SIMIT:* Paz y salvo en multas.';
     }
   } catch (e) {}
-  return "ℹ️ *SIMIT:* No se encontró información actual.";
+  return 'ℹ️ *SIMIT:* No se encontró información actual.';
 }
 
-function getTodayTasks(): Task[] {
-  const day = new Date().getDay().toString(); // "0" = Dom, "1" = Lun...
-  const schedulePath = path.join(__dirname, '..', '..', 'config', 'schedule.json');
-  
-  let didiTask: Task[] = [];
-  if (fs.existsSync(schedulePath)) {
-    const scheduleConfig = JSON.parse(fs.readFileSync(schedulePath, 'utf8'));
-    if (scheduleConfig[day]) {
-      didiTask = scheduleConfig[day];
-    }
-  }
-
-  // Agregamos siempre la constante de Job Hunter
-  didiTask.push({ title: 'Aplicar a 5 ofertas en Computrabajo', duration: 1, priority: 1, type: 'Empleo' });
-
-  return didiTask;
-}
-
-export async function runMorningBriefing(): Promise<void> {
-  console.log('🌅 Iniciando Morning Briefing...');
-  const tasks = getTodayTasks();
-  const clima = await getMedellinWeather();
-  const simit = getSimitStatus();
-  
-  let report = '☕ *MORNING BRIEFING - LIFEOS*\n';
-  report += `📅 Fecha: ${new Date().toISOString().split('T')[0]}\n`;
-  report += `🌤️ *Clima Hoy:* ${clima.estado} | Lluvia: ${clima.probLluvia}% | UV Max: ${clima.uvMax}\n\n`;
-  report += `${simit}\n\n`;
-
-  // === CHECK PICO Y PLACA ===
-  const today = new Date();
-  const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
-  const dayName = days[today.getDay()];
-  
+// ================= PICO Y PLACA =================
+function getPicoYPlacaInfo(diaNombre: string, placaStr: string) {
   let picoPlacaData: Record<string, string[]> = {
-    Lunes: ["1", "7"], Martes: ["0", "3"], Miercoles: ["4", "6"], Jueves: ["5", "9"], Viernes: ["2", "8"]
+    Lunes: ['1', '7'], Martes: ['0', '3'], Miercoles: ['4', '6'], Jueves: ['5', '9'], Viernes: ['2', '8']
   };
-  const PICO_FILE = path.join(__dirname, '..', '..', 'data', 'pico_placa.json');
   if (fs.existsSync(PICO_FILE)) {
     picoPlacaData = JSON.parse(fs.readFileSync(PICO_FILE, 'utf8'));
   }
-  
-  const placa = "6"; // La Toyota Corolla KEW496 de Jeiser
-  if (picoPlacaData[dayName] && picoPlacaData[dayName].includes(placa)) {
-    report += `🚗 🚫 *¡ATENCIÓN! HOY TIENES PICO Y PLACA* (Termina en ${placa})\n\n`;
-  }
-  
-  // Alerta de cambio de semestre (agosto en adelante)
-  if (today.getMonth() >= 7 && picoPlacaData.Miercoles && picoPlacaData.Miercoles.includes("6")) {
-    report += `⚠️ *NOTA:* Ya estamos en el segundo semestre y la rotación guardada sigue siendo la vieja. ¡Verifica si el pico y placa ya cambió!\n\n`;
-  }
-  // === FIN PICO Y PLACA ===
+  const restringidas = picoPlacaData[diaNombre] || [];
+  return {
+    restringidas_hoy: restringidas.join(' y '),
+    tiene_restriccion: restringidas.includes(placaStr)
+  };
+}
 
-  report += '🚨 *PRIORIDADES DEL DÍA*\n';
-  
-  const p1 = tasks.filter(t => t.priority === 1);
-  const p2 = tasks.filter(t => t.priority === 2);
-  
-  p1.forEach(t => report += `🔴 [Alta] ${t.title} (${t.duration}h)\n`);
-  p2.forEach(t => report += `🟡 [Media] ${t.title} (${t.duration}h)\n`);
-  
-  if (today.getDay() === 0) {
-    report += '\n⚠️ *MANTENIMIENTO:* Recuerda conectar el S23 Ultra por cable USB (Depuración) hoy para verificar y sincronizar las alarmas maestras de la semana.\n';
-  }
-  
-  report += '\n_Tu calendario ha sido estructurado automáticamente con estos bloques._';
+// ================= FECHA HELPER =================
+function getIsoTime(hoursStr: string) {
+  const d = new Date();
+  const [h, m] = hoursStr.split(':');
+  d.setHours(parseInt(h, 10), parseInt(m, 10), 0, 0);
+  return d.toISOString();
+}
 
-  // --- SARGENTO FINANCIERO (Rewrite con LLM) ---
-  console.log('🧠 Solicitando reescritura al Sargento Financiero...');
+// ================= MAIN RUNNER =================
+export async function runMorningBriefing(): Promise<void> {
+  const now = new Date();
+  const colDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  const todayIso = colDate.toISOString().split('T')[0];
+  const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+  const dayName = days[colDate.getDay()];
+
+  console.log(`[Briefing] Procesando día: ${dayName} (${todayIso})`);
+
+  const [clima, festivoInfo, maintenanceAlerts] = await Promise.all([
+    getMedellinWeather(),
+    checkFestivo(todayIso),
+    Promise.resolve(checkMaintenance())
+  ]);
+
+  const pypInfo = getPicoYPlacaInfo(dayName, config.placa_vehiculo || '6');
+  const simit = getSimitStatus();
+
+  let baseTasks = [];
   try {
-    const sargentoPrompt = `Eres el 'Sargento Financiero', el alter ego estricto, implacable y motivador de LifeOS para Jeiser.
-Jeiser tiene gastos fijos de $1.6M mensuales (Arriendo + Servicios), debe el semestre del CESDE y gana su dinero manejando DiDi con una meta de $260,000 diarios en Medellín bajo un fuerte calor. Su meta de vida es conseguir un trabajo estable en QA Automation.
-    
-A continuación, tienes el reporte crudo del día (clima, tránsito, tareas). REESCRIBE este reporte usando un tono militar, exigente pero motivador (Sinceridad Radical). No le tengas lástima. Recuérdale brutalmente lo que tiene que pagar si no sale a manejar o si pierde el tiempo. Usa emojis agresivos (🔥, 🚨, 💰, 💀, 🚗). Mantén toda la información técnica (clima, probabilidad de lluvia, tareas, etc.) pero inyecta tu regaño y motivación en la introducción y conclusión. 
-NO uses etiquetas markdown de código al devolver tu respuesta.
-
-REPORTE CRUDO:
-${report}`;
-
-    const llmRes = await askLLM(sargentoPrompt, [], 0.3);
-    if (llmRes && llmRes.content) {
-      report = (llmRes.content as string).trim().replace(/^```(markdown|md)?\n/, '').replace(/\n```$/, '');
+    if (fs.existsSync(SCHEDULE_PATH)) {
+      const scheduleConfig = JSON.parse(fs.readFileSync(SCHEDULE_PATH, 'utf8'));
+      baseTasks = scheduleConfig[colDate.getDay().toString()] || [];
     }
-  } catch (e: any) {
-    console.error('❌ Error con el Sargento Financiero (fallback a crudo):', e.message);
-  }
+  } catch {}
 
-  // Enviar a Telegram
-  await sendTelegramMessage(report);
-  console.log('✅ Briefing enviado a Telegram.');
+  const prompt = `Eres el 'Sargento Financiero', el alter ego logístico, estricto y motivador de LifeOS para Jeiser (Medellín).
+Jeiser tiene gastos fijos de $1.6M mensuales (Arriendo + Servicios), debe el semestre del CESDE y gana su dinero manejando DiDi con una meta de $260,000 brutos diarios. Su meta es ser QA Automation Engineer.
 
-  // Agendar en Google Calendar
-  console.log('🗓️  Agendando en Google Calendar (recién purgado)...');
-  
-  const todayDate = new Date();
-  todayDate.setHours(9, 0, 0, 0); // Empezamos a agendar desde las 9 AM
-  
-  for (const t of tasks) {
-    const startISO = todayDate.toISOString();
-    try {
-      await createEvent(t.title, startISO, t.duration, `Prioridad: ${t.priority} | Tipo: ${t.type}`);
-      console.log(`  ➕ Evento creado: ${t.title} a las ${todayDate.getHours()}:00`);
-    } catch (e: any) {
-      console.error(`  ❌ Error agendando ${t.title}:`, e.message);
+DATOS DE HOY:
+- Festivo: ${festivoInfo.es_festivo ? 'SÍ (' + festivoInfo.nombre + ')' : 'NO'}.
+- Clima: ${clima.codigo >= 50 ? 'Lluvia / Tormenta' : 'Despejado/Nublado'} (Lluvia: ${clima.probLluvia}%).
+- Índice UV Máximo: ${clima.uvMax} (Si es >= 7 es un HORNO, de lo contrario es templado).
+- Pico y Placa: Placas ${pypInfo.restringidas_hoy}. ¿Jeiser tiene restricción hoy?: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'}.
+- SIMIT: ${simit}
+- Mantenimiento Carro (Toyota Corolla): ${maintenanceAlerts || 'Ninguno'}
+- Misiones Base (Agenda):
+${JSON.stringify(baseTasks, null, 2)}
+
+INSTRUCCIONES DE PLANIFICACIÓN:
+1. Diseña la estrategia del día. Regaña a Jeiser, motívalo de forma agresiva (Sinceridad Radical). Usa emojis (🔥, 🚨, 💰, 💀, 🚗, 🏊, ⚽).
+2. Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques).
+   - Si es festivo: el colegio de Dominick está cerrado. No agendes ir por él.
+   - Si el UV es >= 7 (Horno): Oblígalo a tomar un descanso largo de 12:00 PM a 3:00 PM y enruta DiDi en la tarde-noche.
+   - Si el UV es < 7 (Templado): Que maneje de corrido con descanso corto.
+   - Si hay clases de CESDE (clase virtual Lun/Mie/Vie 6-8pm), bloquea ese horario.
+   - Añade siempre: \"Aplicar a 5 ofertas en Computrabajo\" (1 hora).
+
+Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no incluyas triple tilde invertida):
+{
+  \"mensaje_telegram\": \"El reporte motivacional y regaño para Telegram en Markdown...\",
+  \"eventos\": [
+    { \"title\": \"🚕 DiDi AM (Fresco)\", \"start_time\": \"06:00\", \"duration_hours\": 5.5, \"description\": \"Meta AM: $150k\" },
+    { \"title\": \"💻 Aplicar ofertas Computrabajo\", \"start_time\": \"12:00\", \"duration_hours\": 1.0, \"description\": \"QA Hunter\" }
+  ]
+}
+`;
+
+  try {
+    const res = await askLLM(prompt, [], 0.3);
+    const parsed = JSON.parse(res.content || '{}');
+
+    await sendTelegramMessage(parsed.mensaje_telegram);
+    console.log('✅ Briefing enviado a Telegram.');
+
+    if (parsed.eventos && parsed.eventos.length > 0) {
+      console.log(`🗓️  Sincronizando ${parsed.eventos.length} eventos con Google Calendar...`);
+      for (const ev of parsed.eventos) {
+        try {
+          const isoStart = getIsoTime(ev.start_time);
+          await createEvent(ev.title, isoStart, ev.duration_hours, ev.description);
+          console.log(`  ➕ Sincronizado: ${ev.title} a las ${ev.start_time}`);
+        } catch (e: any) {
+          console.error(`  ❌ Error agendando ${ev.title}: `, e.message);
+        }
+      }
     }
-    // Añadir tiempo del bloque + 30 min descanso
-    todayDate.setHours(todayDate.getHours() + t.duration, 30);
+
+  } catch (err: any) {
+    console.error('❌ Error fatal en el briefing unificado:', err.message);
+    await sendTelegramMessage(`💥 *Error de Morning Briefing:* ${err.message}`);
   }
-  
-  console.log('🎉 Morning Briefing Finalizado con éxito.');
 }
 
 if (require.main === module) {
