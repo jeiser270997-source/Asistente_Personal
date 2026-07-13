@@ -42,7 +42,7 @@ jobs:
         echo "✅ Código JavaScript válido."
 
     - name: Validar workflows YAML (actionlint)
-      uses: rhysd/actionlint@v1.3.7
+      uses: rhysd/actionlint@v1.7.12
       with:
         args: -color
 
