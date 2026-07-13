@@ -1,4 +1,4 @@
-# --- Estándar ---
+﻿# --- EstÃ¡ndar ---
 node_modules/
 credentials.json
 token.json
@@ -62,7 +62,7 @@ wheel-saver/**/*.pyc
 wheel-saver/.coverage
 wheel-saver/data/typesense/
 
-# --- Submódulo externo ---
+# --- SubmÃ³dulo externo ---
 data/resume_template/
 
 # --- Legacy paths (migrados) ---
@@ -88,3 +88,7 @@ ctx_*.md
 Herramientas/
 scripts/one_shots/*.html
 data/sources/sena/prompts/
+
+# Excepciones para mantener la memoria viva en GitHub
+!data/memoria_hipocampo.db
+!runtime/lifeos.db

@@ -1,8 +1,8 @@
-name: DIAN MUISCA Scraper
+﻿name: DIAN MUISCA Scraper
 
 on:
   schedule:
-    - cron: '0 14 * * 1'   # Lunes 9am Colombia (2pm UTC) — semanal
+    - cron: '0 14 * * 1'   # Lunes 9am Colombia (2pm UTC) â€” semanal
   workflow_dispatch:
 
 permissions:
@@ -33,5 +33,6 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
-          git add data/cache/dian/
+          git add data/cache/dian/ runtime/lifeos.db data/memoria_hipocampo.db
           git diff --cached --quiet || (git commit -m "chore(dian): actualizacion datos MUISCA" && git push)
+
