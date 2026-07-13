@@ -64,3 +64,10 @@ docs/REPOSITORIOS_DISPONIBLES.md
 # dashboard/
 # wheel-saver/
 # Herramientas/
+
+
+# --- Saneamiento CTO ---
+ctx_*.md
+Herramientas/
+scripts/one_shots/*.html
+data/sources/sena/prompts/

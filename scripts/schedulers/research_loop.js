@@ -1,9 +1,10 @@
+const path = require('path');
 /**
  * research_loop.js — 5 pasadas sobre 10,600 repos
  * Busca: MCP servers, skills/agentes, code quality, recursos QA, LLM tools
  */
 const fs = require('fs');
-const db = JSON.parse(fs.readFileSync('data/cache/repos_db.json', 'utf8'));
+const db = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'cache', 'repos_db.json'), 'utf8'));
 console.log(`\n🔬 Research Loop ×5 — ${db.length} repos\n${'═'.repeat(70)}\n`);
 
 function search(keywords, minStars = 200, limit = 12) {

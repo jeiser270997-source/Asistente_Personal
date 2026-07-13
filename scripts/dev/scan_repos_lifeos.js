@@ -1,6 +1,7 @@
+const path = require('path');
 const fs = require('fs');
 
-const db = JSON.parse(fs.readFileSync('data/cache/repos_db.json', 'utf8'));
+const db = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'cache', 'repos_db.json'), 'utf8'));
 console.log(`\n📦 DB cargada: ${db.length} repos\n`);
 
 // Keywords relevantes para el proyecto LifeOS

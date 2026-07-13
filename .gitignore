@@ -81,3 +81,10 @@ data/jobs/cv_jeiser_soporte_ti.pdf
 data/jobs/computrabajo_backup.json
 data/jobs/aplicaciones.json
 data/data/
+
+
+# --- Saneamiento CTO ---
+ctx_*.md
+Herramientas/
+scripts/one_shots/*.html
+data/sources/sena/prompts/

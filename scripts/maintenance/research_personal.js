@@ -1,9 +1,10 @@
+const path = require('path');
 /**
  * research_personal.js — Research loop ×5 personalizado para Jeiser
  * Perfil: QA Student + Didi Driver + DIAN stress + autodidacta + Colombia
  */
 const fs = require('fs');
-const db = JSON.parse(fs.readFileSync('data/cache/repos_db.json', 'utf8'));
+const db = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'cache', 'repos_db.json'), 'utf8'));
 console.log(`\n🧠 Research Personal Loop ×5 — ${db.length} repos\n${'═'.repeat(70)}\n`);
 
 function search(keywords, minStars = 50, limit = 12) {
