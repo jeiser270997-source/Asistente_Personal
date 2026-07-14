@@ -64,6 +64,26 @@ jobs:
         run: |
           litestream replicate -config litestream.yml -exec "node scripts/integrations/email_processor.js"
 
+      - name: Crear labels de Gmail (si no existen)
+        run: node -e "
+const {authorize} = require('./lib/integrations/google_auth');
+const {google} = require('googleapis');
+
+const LABELS = ['Gobierno','Gobierno/DIAN','Gobierno/SIMIT','Educacion','Educacion/SENA','Educacion/CESDE','Trabajo','Trabajo/Postulaciones','Leer','Leer/GitHub'];
+
+async function main() {
+  const auth = await authorize(['https://mail.google.com/']);
+  const gmail = google.gmail({version:'v1', auth});
+  const existing = (await gmail.users.labels.list({userId:'me'})).data.labels.map(l=>l.name);
+  for (const name of LABELS) {
+    if (existing.includes(name)) { console.log('EXISTS:', name); continue; }
+    await gmail.users.labels.create({userId:'me', requestBody:{name}});
+    console.log('CREATED:', name);
+  }
+}
+main().catch(e=>console.error('Label error:',e.message));
+"
+
       - name: Commit y push de base de datos
         env:
           GH_TOKEN: ${{ github.token }}
@@ -71,7 +91,7 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
-          git add data/ runtime/ wheel-saver/data/
+          git add -A
           git diff --cached --quiet && echo "Sin cambios, nada que pushear." && exit 0
           git commit -m "chore(email): actualizar base de datos tras limpieza de correo"
           git pull --rebase origin main
