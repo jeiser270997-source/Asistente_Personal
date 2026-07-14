@@ -2,7 +2,7 @@ name: Seed R2 Database
 on: workflow_dispatch
 jobs:
   seed:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Recuperar las DB del historial
         uses: actions/checkout@v4

@@ -5,9 +5,12 @@ on:
     - cron: '30 10 * * *'  # 6:30 AM Colombia (11:30 UTC)
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   run-orchestrator:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -16,6 +19,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
@@ -35,7 +39,6 @@ jobs:
           litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
 
-
       - name: Run DiDi Orchestrator
         env:
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
@@ -46,3 +49,13 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: litestream replicate -config litestream.yml -exec "npm run briefing"
+
+      - name: Commit y push de base de datos actualizada
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "jarvis-bot"
+          git config user.email "jarvis@lifeos.local"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          git add .
+          git diff --cached --quiet || (git commit -m "chore(didi): actualizar base de datos tras briefing" && git push)

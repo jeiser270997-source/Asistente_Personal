@@ -8,20 +8,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-
-    strategy:
-      matrix:
-        node-version: [20.x] # Usamos la versión LTS de Node
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout del repositorio
       uses: actions/checkout@v4
 
-    - name: Configurar Node.js ${{ matrix.node-version }}
+    - name: Configurar Node.js 20
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20'
         cache: 'npm'
 
     - name: Instalar dependencias del sistema (compilación native addons)
