@@ -3,15 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let CheckpointStore = null;
-let JobStore = null;
-if (USE_SQLITE) {
-  CheckpointStore = require('../../runtime/stores/CheckpointStore');
-  JobStore = require('../../runtime/stores/JobStore');
-}
+const CheckpointStore = require('../../runtime/stores/CheckpointStore');
+const JobStore = require('../../runtime/stores/JobStore');
 
 const BASE_URL = 'https://zajuna.sena.edu.co';
 const USER = process.env.SENA_MOODLE_USER;
@@ -384,7 +377,7 @@ async function main() {
     if (cronograma) saveJSON('cronograma_fechas.json', cronograma);
     const deadlinesData = { deadlines, inlineDates, extraido: new Date().toISOString() };
     saveJSON('deadlines.json', deadlinesData);
-    if (USE_SQLITE) CheckpointStore.set('deadlines', deadlinesData);
+    CheckpointStore.set('deadlines', deadlinesData);
     saveJSON('calificaciones.json', { grades, extraido: new Date().toISOString() });
 
     // Generar ALERTAS_SENA.md con fechas reales
@@ -400,15 +393,7 @@ async function main() {
       deadlines_count: deadlines.length,
       grades_count: grades.length
     };
-    if (USE_SQLITE) {
-      JobStore.logRun('sena_scraper', 'success', null, historialEntry);
-    } else {
-      const historialPath = path.join(DATA_DIR, 'historial_ejecuciones.json');
-      const historial = fs.existsSync(historialPath) ? JSON.parse(fs.readFileSync(historialPath, 'utf8')) : [];
-      historial.push(historialEntry);
-      if (historial.length > 30) historial.shift();
-      saveJSON('historial_ejecuciones.json', historial);
-    }
+    JobStore.logRun('sena_scraper', 'success', null, historialEntry);
 
     log('\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
     log('âœ… SCRAPING COMPLETADO');

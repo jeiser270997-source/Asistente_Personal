@@ -10,9 +10,6 @@ let db = null;
 
 function getDb() {
   if (db) return db;
-  if (process.env.STORAGE_DRIVER === 'json') {
-    process.stderr.write('[runtime] WARNING: STORAGE_DRIVER=json is deprecated. Removal target: v2.0\n');
-  }
   db = new betterSqlite3(DB_PATH);
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');

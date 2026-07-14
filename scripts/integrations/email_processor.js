@@ -14,17 +14,9 @@ const fsPromises = require('node:fs/promises');
 // LLM (OpenAI SDK nativo)
 const { createLLM } = require('../../lib/ai/litellm_client');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let CheckpointStore = null;
-let LedgerStore = null;
-let RE = null;
-if (USE_SQLITE) {
-  CheckpointStore = require('../../runtime/stores/CheckpointStore');
-  LedgerStore = require('../../runtime/stores/LedgerStore');
-  RE = require('../../lib/runtime/resume_engine');
-}
+const CheckpointStore = require('../../runtime/stores/CheckpointStore');
+const LedgerStore = require('../../runtime/stores/LedgerStore');
+const RE = require('../../lib/runtime/resume_engine');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
@@ -49,10 +41,8 @@ function getColombiaNow() {
 // ── Checkpoint (processed_emails.json → CheckpointStore) ──
 
 function loadProcessed() {
-  if (USE_SQLITE) {
-    const cp = CheckpointStore.get('email_processed_ids');
-    if (cp && Array.isArray(cp)) return cp;
-  }
+  const cp = CheckpointStore.get('email_processed_ids');
+  if (cp && Array.isArray(cp)) return cp;
   try {
     const p = path.join(BASE_DIR, 'data', 'processed_emails.json');
     return JSON.parse(fs.readFileSync(p, 'utf8'));
@@ -60,7 +50,7 @@ function loadProcessed() {
 }
 
 function saveProcessed(ids) {
-  if (USE_SQLITE) CheckpointStore.set('email_processed_ids', ids);
+  CheckpointStore.set('email_processed_ids', ids);
   const p = path.join(BASE_DIR, 'data', 'processed_emails.json');
   ensureDir(path.dirname(p));
   fs.writeFileSync(p, JSON.stringify(ids, null, 2), 'utf8');
@@ -221,7 +211,7 @@ async function processEmails() {
   const now = getColombiaNow();
   const hoursBack = parseInt(process.env.EMAIL_SCAN_HOURS || '6', 10);
 
-  if (USE_SQLITE) RE.start('email_processor', { hoursBack });
+  RE.start('email_processor', { hoursBack });
 
   try {
     const auth = await googleAuthorize(SCOPES);
@@ -229,7 +219,7 @@ async function processEmails() {
 
     if (rawEmails.length === 0) {
       log('Sin correos nuevos para procesar');
-      if (USE_SQLITE) RE.finish('email_processor', 'success', { processed: 0 });
+      RE.finish('email_processor', 'success', { processed: 0 });
       log('--- FIN ---');
       return;
     }
@@ -301,13 +291,13 @@ async function processEmails() {
         }
         try { await gmail.users.messages.trash({ userId: 'me', id: email.id }); log(`Correo de postulacion eliminado: ${email.subject}`); } catch (e) { log(`Warning trashing email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
-        if (USE_SQLITE) LedgerStore.emit('email_job_application', { empresa: parsed.empresa, cargo: parsed.cargo, plataforma: action.label });
+        LedgerStore.emit('email_job_application', { empresa: parsed.empresa, cargo: parsed.cargo, plataforma: action.label });
         continue;
       }
 
       if (action.isRejection) {
         log(`Rechazo detectado: ${email.subject}`);
-        if (USE_SQLITE) LedgerStore.emit('email_job_rejection', { subject: email.subject, from: email.from });
+        LedgerStore.emit('email_job_rejection', { subject: email.subject, from: email.from });
         try { await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: [action.label || 'Trabajo/Rechazos'] } }); } catch (e) { log(`Warning labeling email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         continue;
@@ -322,14 +312,14 @@ async function processEmails() {
         } catch (e) { log(`Error archivando: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         ruleActions.push(action);
-        if (USE_SQLITE && action.logToLedger) LedgerStore.emit('email_archived', { subject: email.subject, from: email.from, label: action.label });
+        if (action.logToLedger) LedgerStore.emit('email_archived', { subject: email.subject, from: email.from, label: action.label });
         continue;
       }
 
       if (action.notify) {
         importantEmails.push({ ...email, body, action });
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
-        if (USE_SQLITE) LedgerStore.emit('email_notify', { subject: email.subject, from: email.from, label: action.label });
+        LedgerStore.emit('email_notify', { subject: email.subject, from: email.from, label: action.label });
         continue;
       }
 
@@ -392,13 +382,12 @@ async function processEmails() {
     await sendTelegramMessage(truncate(report, 3500));
     log('Reporte enviado por Telegram');
 
-    if (USE_SQLITE) {
-      RE.finish('email_processor', 'success', { processed: rawEmails.length, important: importantEmails.length, archived: ruleActions.length });
-    }
+    RE.finish('email_processor', 'success', { processed: rawEmails.length, important: importantEmails.length, archived: ruleActions.length });
 
   } catch (err) {
     log(`Error: ${err.message}`);
-    if (USE_SQLITE) { LedgerStore.emit('email_processor_error', { error: err.message }); RE.finish('email_processor', 'error', { reason: err.message }); }
+    LedgerStore.emit('email_processor_error', { error: err.message });
+    RE.finish('email_processor', 'error', { reason: err.message });
     try { await sendTelegramMessage(`Email Processor Error:\n<code>${escapeHTML(err.message)}</code>`); } catch (e) { console.error('Error sending telegram alert:', e.message); }
     process.exit(1);
   }

@@ -2,23 +2,14 @@ const { google } = require('googleapis');
 const { authorize } = require('../../lib/integrations/google_auth');
 const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let CheckpointStore = null;
-let RE = null;
-if (USE_SQLITE) {
-  CheckpointStore = require('../../runtime/stores/CheckpointStore');
-  RE = require('../../lib/runtime/resume_engine');
-}
+const CheckpointStore = require('../../runtime/stores/CheckpointStore');
+const RE = require('../../lib/runtime/resume_engine');
 
 const KEYWORDS = ['DIAN', 'UGPP', 'SIMIT', 'Transito', 'Solvo', 'Concentrix', 'CESDE', 'SENA'];
 
 function loadProcessed() {
-  if (USE_SQLITE) {
-    const cp = CheckpointStore.get('inbox_sensor_processed');
-    if (cp) return new Set(cp);
-  }
+  const cp = CheckpointStore.get('inbox_sensor_processed');
+  if (cp) return new Set(cp);
   try {
     const path = require('path').join(__dirname, '..', 'data', 'processed_emails.json');
     return new Set(JSON.parse(require('fs').readFileSync(path, 'utf8')));
@@ -26,7 +17,7 @@ function loadProcessed() {
 }
 
 function saveProcessed(ids) {
-  if (USE_SQLITE) CheckpointStore.set('inbox_sensor_processed', [...ids]);
+  CheckpointStore.set('inbox_sensor_processed', [...ids]);
   const fs = require('fs');
   const path = require('path').join(__dirname, '..', 'data', 'processed_emails.json');
   fs.mkdirSync(require('path').dirname(path), { recursive: true });
@@ -47,7 +38,7 @@ async function scanInbox(auth) {
   const processed = loadProcessed();
   const newIds = [];
 
-  if (USE_SQLITE) RE.start('inbox_sensor', {});
+  RE.start('inbox_sensor', {});
 
   const res = await gmail.users.messages.list({
     userId: 'me',
@@ -83,7 +74,7 @@ async function scanInbox(auth) {
   if (newIds.length > 0) saveProcessed(processed);
   console.log(`Sensor completado. ${newIds.length} alertas enviadas.`);
 
-  if (USE_SQLITE) RE.finish('inbox_sensor', 'success', { alertas: newIds.length });
+  RE.finish('inbox_sensor', 'success', { alertas: newIds.length });
 }
 
 authorize().then(auth => scanInbox(auth)).catch(err => {

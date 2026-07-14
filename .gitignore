@@ -26,7 +26,10 @@ data/telegram_state.json
 *.secret.json
 
 # --- Cache (todo regenerable, NO versionar) ---
-data/cache/
+data/cache/*
+# Excepciones: archivos cacheados que los workflows necesitan persistir vía git
+!data/cache/dian/
+!data/cache/repos_db.json
 
 # --- Artifacts (todo generado, NO versionar) ---
 data/artifacts/

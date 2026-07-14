@@ -7,13 +7,13 @@
     },
     { 
       name: "jarvis-sensor", 
-      script: "./scripts/inbox_sensor.js", 
+      script: "./scripts/integrations/inbox_sensor.js", 
       cron_restart: "*/15 * * * *", 
       autorestart: false 
     },
     { 
       name: "jarvis-brain", 
-      script: "./scripts/brain_orchestrator.js", 
+      script: "./scripts/schedulers/brain_orchestrator.js", 
       cron_restart: "0 7 * * *", 
       autorestart: false 
     }

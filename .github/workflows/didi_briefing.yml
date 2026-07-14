@@ -35,9 +35,16 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          mkdir -p data runtime
+          mkdir -p data runtime wheel-saver/data
           litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
+          litestream restore -if-replica-exists -config litestream.yml wheel-saver/data/top_repos.db
+
+      - name: Inyectar Credenciales de Google (Desde Secrets)
+        env:
+          CREDS: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          TOKEN: ${{ secrets.GOOGLE_TOKEN_JSON }}
+        run: node -e "const fs=require('fs');fs.writeFileSync('credentials.json',process.env.CREDS||'');fs.writeFileSync('.google_token.json',process.env.TOKEN||'');console.log('ok');"
 
       - name: Run DiDi Orchestrator
         env:

@@ -2,41 +2,20 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let SeguimientoStore = null;
-let RE = null;
-if (USE_SQLITE) {
-  SeguimientoStore = require('../../runtime/stores/SeguimientoStore');
-  RE = require('../../lib/runtime/resume_engine');
-}
+const SeguimientoStore = require('../../runtime/stores/SeguimientoStore');
+const RE = require('../../lib/runtime/resume_engine');
 
 const ALERTAS_PATH = path.join(__dirname, '..', 'data', 'contexto_maestro', 'ALERTAS_SENA.md');
 
 function log(msg) { console.log(msg); }
 
-function loadSeguimientoJson() {
-  try { return JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'sena', 'seguimiento.json'), 'utf8')); } catch { return null; }
-}
-
-function saveSeguimientoJson(data) {
-  data.actualizado = new Date().toISOString();
-  fs.writeFileSync(path.join(__dirname, '..', 'data', 'sena', 'seguimiento.json'), JSON.stringify(data, null, 2), 'utf8');
-}
-
 function loadSeguimiento() {
-  if (USE_SQLITE) return SeguimientoStore.get();
-  return loadSeguimientoJson() || { curso: null, ficha: null, actividades: {}, progreso: {} };
+  return SeguimientoStore.get() || { curso: null, ficha: null, actividades: {}, progreso: {} };
 }
 
 function saveSeguimiento(data) {
   data.actualizado = new Date().toISOString();
-  if (USE_SQLITE) {
-    SeguimientoStore.update(data);
-  } else {
-    saveSeguimientoJson(data);
-  }
+  SeguimientoStore.update(data);
 }
 
 function updateStats(data) {
@@ -110,7 +89,7 @@ function run() {
     const id = args[0];
     if (!id) { log('Uso: node scripts/moodle_sena_tracker.js completar <id>'); process.exit(1); }
 
-    if (USE_SQLITE) RE.start('sena_tracker', { cmd, id });
+    RE.start('sena_tracker', { cmd, id });
     const data = loadSeguimiento();
     let found = false;
 
@@ -124,16 +103,16 @@ function run() {
       }
     }
 
-    if (!found) { log('ID no encontrado: ' + id); if (USE_SQLITE) RE.finish('sena_tracker', 'error', { reason: 'id_not_found' }); process.exit(1); }
+    if (!found) { log('ID no encontrado: ' + id); RE.finish('sena_tracker', 'error', { reason: 'id_not_found' }); process.exit(1); }
 
     updateStats(data);
     saveSeguimiento(data);
     generateAlertasMD(data);
     log(`Progreso: ${data.estadisticas.completadas}/${data.estadisticas.total}`);
-    if (USE_SQLITE) RE.finish('sena_tracker', 'success', { cmd, id });
+    RE.finish('sena_tracker', 'success', { cmd, id });
 
   } else if (cmd === 'ver' || !cmd) {
-    if (USE_SQLITE) RE.start('sena_tracker', { cmd: 'ver' });
+    RE.start('sena_tracker', { cmd: 'ver' });
     const data = loadSeguimiento();
     updateStats(data);
     saveSeguimiento(data);
@@ -157,7 +136,7 @@ function run() {
     }
 
     log(`Progreso: ${data.estadisticas.completadas}/${data.estadisticas.total}`);
-    if (USE_SQLITE) RE.finish('sena_tracker', 'success', { cmd: 'ver' });
+    RE.finish('sena_tracker', 'success', { cmd: 'ver' });
 
   } else if (cmd === 'resumen') {
     const data = loadSeguimiento();

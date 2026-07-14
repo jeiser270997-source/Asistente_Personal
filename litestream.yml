@@ -16,3 +16,12 @@ dbs:
         endpoint: ${R2_ENDPOINT}
         access-key-id: ${R2_ACCESS_KEY_ID}
         secret-access-key: ${R2_SECRET_ACCESS_KEY}
+
+  - path: wheel-saver/data/top_repos.db
+    replicas:
+      - type: s3
+        bucket: lifeos-db
+        path: top_repos
+        endpoint: ${R2_ENDPOINT}
+        access-key-id: ${R2_ACCESS_KEY_ID}
+        secret-access-key: ${R2_SECRET_ACCESS_KEY}

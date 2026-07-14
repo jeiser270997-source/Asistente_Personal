@@ -11,10 +11,6 @@ const JSON_MAP = {
   'deadlines': path.join(DATA_DIR, 'sena', 'deadlines.json'),
 };
 
-function getDriver() {
-  return process.env.STORAGE_DRIVER || 'sqlite';
-}
-
 function seedFromJson(key, jsonPath) {
   try {
     const raw = fs.readFileSync(jsonPath, 'utf8');
@@ -29,14 +25,8 @@ function get(key) {
   if (row) {
     try { return JSON.parse(row.value); } catch { return row.value; }
   }
-  if (getDriver() === 'sqlite') {
-    const jsonPath = JSON_MAP[key];
-    if (jsonPath) return seedFromJson(key, jsonPath);
-  }
   const jsonPath = JSON_MAP[key];
-  if (jsonPath) {
-    try { return JSON.parse(fs.readFileSync(jsonPath, 'utf8')); } catch {}
-  }
+  if (jsonPath) return seedFromJson(key, jsonPath);
   return null;
 }
 
