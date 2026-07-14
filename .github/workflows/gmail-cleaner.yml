@@ -53,19 +53,6 @@ jobs:
           TOKEN: ${{ secrets.GOOGLE_TOKEN_JSON }}
         run: node -e "const fs=require('fs');fs.writeFileSync('credentials.json',process.env.CREDS||'');fs.writeFileSync('.google_token.json',process.env.TOKEN||'');console.log('ok');"
 
-      - name: Ejecutar Email Processor
-        env:
-          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          EMAIL_SCAN_HOURS: ${{ inputs.hours || '6' }}
-        run: |
-          litestream replicate -config litestream.yml -exec "node scripts/integrations/email_processor.js"
-
       - name: Crear labels de Gmail (si no existen)
         run: node -e "
 const {authorize} = require('./lib/integrations/google_auth');
@@ -85,6 +72,19 @@ async function main() {
 }
 main().catch(e=>console.error('Label error:',e.message));
 "
+
+      - name: Ejecutar Email Processor
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          EMAIL_SCAN_HOURS: ${{ inputs.hours || '6' }}
+        run: |
+          litestream replicate -config litestream.yml -exec "node scripts/integrations/email_processor.js"
 
       - name: Commit y push de base de datos
         env:
