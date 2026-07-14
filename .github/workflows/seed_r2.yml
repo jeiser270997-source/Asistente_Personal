@@ -14,7 +14,7 @@ jobs:
 
       - name: Instalar Litestream
         run: |
-          curl -sL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz | tar -xz
+          curl -sL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.5.14-linux-amd64.tar.gz | tar -xz
           sudo mv litestream /usr/local/bin/
 
       - name: Subir a Cloudflare R2
