@@ -36,6 +36,9 @@ jobs:
       - run: npx playwright install chromium --with-deps
       - name: Scrape SENA Moodle
         env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           SENA_MOODLE_USER: ${{ secrets.SENA_MOODLE_USER }}
           SENA_MOODLE_PASS: ${{ secrets.SENA_MOODLE_PASS }}
           SENA_MOODLE_COURSE_ID: '121953'

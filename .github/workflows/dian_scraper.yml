@@ -37,6 +37,9 @@ jobs:
       - run: npx playwright install chromium --with-deps
       - name: Scrape DIAN MUISCA
         env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           DIAN_USER: ${{ secrets.DIAN_USER }}
           DIAN_PASS: ${{ secrets.DIAN_PASS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
