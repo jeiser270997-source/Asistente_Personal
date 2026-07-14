@@ -5,6 +5,9 @@ on:
     - cron: '0 9 * * 1'  # Lunes 9am UTC (4am Colombia)
   workflow_dispatch:       # Ejecución manual
 
+permissions:
+  contents: write
+
 jobs:
   update-db:
     runs-on: ubuntu-22.04
@@ -56,7 +59,7 @@ jobs:
           git config user.name "LifeOS Bot"
           git config user.email "lifeos@jeiser.dev"
           # Cache files no se versionan mas
-          git add -A
+          git add data/state/ data/cache/ data/artifacts/
           git diff --cached --quiet && echo "Sin cambios, nada que pushear." && exit 0
           git commit -m "auto: repos_db actualizada $(date -u +%Y-%m-%d)"
           git pull --rebase origin main

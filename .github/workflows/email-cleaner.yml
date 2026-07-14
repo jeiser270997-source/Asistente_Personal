@@ -11,6 +11,9 @@ on:
         default: '6'
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   process-emails:
     runs-on: ubuntu-22.04
@@ -70,5 +73,5 @@ jobs:
           git config user.name "jarvis-bot"
           git config user.email "jarvis@lifeos.local"
           git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
-          git add -A
+          git add data/state/ data/cache/ data/artifacts/
           git diff --cached --quiet || (git commit -m "chore(email): actualizar base de datos tras limpieza de correo" && git push)
