@@ -188,6 +188,7 @@ Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no 
 
   try {
     const res = await askLLM(prompt, [], 0.3);
+    if (!res) throw new Error('askLLM no retornó respuesta');
     const parsed = JSON.parse(res.content || '{}');
 
     await sendTelegramMessage(parsed.mensaje_telegram);
