@@ -1,12 +1,18 @@
 {
-  "lastUpdate": "2026-07-08T22:01:38.757Z",
-  "totalRepos": 3391,
+  "lastUpdate": "2026-07-14T19:41:06.081Z",
+  "totalRepos": 3400,
   "sources": [
     {
       "name": "EvanLi",
       "date": "2026-07-08",
       "count": 3600,
       "url": "https://raw.githubusercontent.com/EvanLi/Github-Ranking/master/Data/github-ranking-2026-07-08.csv"
+    },
+    {
+      "name": "EvanLi",
+      "date": "2026-07-14",
+      "count": 3600,
+      "url": "https://raw.githubusercontent.com/EvanLi/Github-Ranking/master/Data/github-ranking-2026-07-14.csv"
     }
   ]
 }
