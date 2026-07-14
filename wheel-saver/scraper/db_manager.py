@@ -128,14 +128,6 @@ def upsert_repos(repos_list):
         )
 
     conn.commit()
-
-    # Sincronizar FTS después de inserts batch
-    try:
-        cursor.execute("INSERT INTO repos_fts(repos_fts) VALUES('rebuild')")
-        conn.commit()
-    except Exception:
-        pass
-
     conn.close()
 
 

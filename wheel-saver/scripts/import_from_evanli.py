@@ -183,6 +183,10 @@ def main():
         batch = final[i : i + BATCH]
         upsert_external_repos(batch)
 
+    # Reconstruir índice FTS5 una sola vez al finalizar todos los lotes
+    from scraper.db_manager import rebuild_fts
+    rebuild_fts()
+
     despues = get_stats()
     logger.info(
         "EvanLi: antes={} despues={} nuevos={}",

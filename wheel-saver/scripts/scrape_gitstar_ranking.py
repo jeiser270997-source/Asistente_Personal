@@ -158,7 +158,7 @@ def main():
     todos = scrape_gitstar(start_page=args.start, max_pages=max_pages)
 
     if not todos:
-        logger.warning("No se extrajeron repos de gitstar")
+        logger.warning("No se extrajeron repos de gitstar. Posible cambio en la estructura HTML de gitstar-ranking.com.")
         return
 
     unicos = {}
@@ -174,6 +174,10 @@ def main():
     for i in range(0, len(final), BATCH):
         batch = final[i : i + BATCH]
         upsert_external_repos(batch)
+
+    # Reconstruir índice FTS5 una sola vez al finalizar
+    from scraper.db_manager import rebuild_fts
+    rebuild_fts()
 
     despues = get_stats()
     logger.info(

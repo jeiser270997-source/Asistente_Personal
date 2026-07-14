@@ -243,6 +243,13 @@ def fetch_top_repos(min_stars=500):
         log_run_finish(run_id, total_fetched, total_skipped, min_stars, status="failed")
         return
 
+    # Reconstruir índice FTS5 una sola vez al finalizar
+    try:
+        from scraper.db_manager import rebuild_fts
+        rebuild_fts()
+    except Exception:
+        pass
+
     log_run_finish(run_id, total_fetched, total_skipped, min_stars, status="completed")
     logger.info(
         "Escaneo completado: {} insertados, {} filtrados, {} total en BD",
