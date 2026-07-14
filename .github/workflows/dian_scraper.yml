@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup Litestream
         run: |
-          curl -sL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.5.14-linux-amd64.tar.gz | tar -xz
+          curl -sL https://github.com/benbjohnson/litestream/releases/download/v0.5.14/litestream-0.5.14-linux-x86_64.tar.gz | tar -xz
           sudo mv litestream /usr/local/bin/
 
       - name: Restore Databases from Cloudflare R2
