@@ -1,0 +1,56 @@
+[
+  {
+    "name": "overload_recovery",
+    "priority": 70,
+    "conditions": {
+      "all": [{ "fact": "state", "path": "$.senales_estres.alto", "operator": "equal", "value": true }]
+    },
+    "event": { "type": "decision", "params": { "type": "schedule.block", "payload": { "hours": 2, "reason": "recuperacion_automatica" }, "priority": "high", "source": "jarvis.policy.overload" } }
+  },
+  {
+    "name": "job_stagnation",
+    "priority": 80,
+    "conditions": {
+      "all": [{ "fact": "state", "path": "$.empleo.sin_respuesta", "operator": "greaterThan", "value": 10 }]
+    },
+    "event": { "type": "decision", "params": { "type": "job.strategy.change", "payload": { "mode": "aggressive", "reason": "Mas de 10 aplicaciones sin respuesta" }, "priority": "high", "source": "jarvis.policy.job_stagnation" } }
+  },
+  {
+    "name": "urgent_case",
+    "priority": 100,
+    "conditions": {
+      "all": [{ "fact": "state", "path": "$.casos.urgentes", "operator": "greaterThan", "value": 0 }]
+    },
+    "event": { "type": "decision", "params": { "type": "case.urgent.reminder", "payload": { "motivo": "casos_urgentes_activos" }, "priority": "high", "source": "jarvis.policy.urgent" } }
+  },
+  {
+    "name": "study_overdue",
+    "priority": 60,
+    "conditions": {
+      "all": [
+        { "fact": "state", "path": "$.casos.vencidos", "operator": "greaterThan", "value": 0 },
+        { "fact": "state", "path": "$.estudio.casos_sena", "operator": "greaterThan", "value": 0 }
+      ]
+    },
+    "event": { "type": "decision", "params": { "type": "study.reminder", "priority": "normal", "source": "jarvis.policy.study" } }
+  },
+  {
+    "name": "errors_escalation",
+    "priority": 90,
+    "conditions": {
+      "all": [{ "fact": "state", "path": "$.sistema.errores_24h", "operator": "greaterThan", "value": 3 }]
+    },
+    "event": { "type": "decision", "params": { "type": "system.escalate", "payload": { "message": "Multiples errores en el sistema" }, "priority": "high", "source": "jarvis.policy.errors" } }
+  },
+  {
+    "name": "free_time_suggestion",
+    "priority": 30,
+    "conditions": {
+      "all": [
+        { "fact": "state", "path": "$.sistema.horas_libres_hoy", "operator": "greaterThanInclusive", "value": 2 },
+        { "fact": "state", "path": "$.estudio.casos_sena", "operator": "greaterThan", "value": 0 }
+      ]
+    },
+    "event": { "type": "decision", "params": { "type": "study.suggest", "payload": { "sugerencia": "Bloque de estudio disponible hoy" }, "priority": "low", "source": "jarvis.policy.free_time" } }
+  }
+]
