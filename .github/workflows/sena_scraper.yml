@@ -31,6 +31,7 @@ jobs:
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           mkdir -p data runtime wheel-saver/data
+          rm -f data/memoria_hipocampo.db runtime/lifeos.db wheel-saver/data/top_repos.db
           litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db
           litestream restore -if-replica-exists -config litestream.yml wheel-saver/data/top_repos.db
