@@ -1,4 +1,4 @@
-﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -9,15 +9,8 @@ const BASE_DIR   = path.resolve(__dirname, '..', '..');
 const JOBS_DIR   = path.join(BASE_DIR, 'data', 'jobs');
 const CV_BASE    = path.join(JOBS_DIR, 'cv_base.md');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let AppStore = null;
-let LedgerStore = null;
-if (USE_SQLITE) {
-  AppStore = require('../../runtime/stores/ApplicationStore');
-  LedgerStore = require('../../runtime/stores/LedgerStore');
-}
+const AppStore = require('../../runtime/stores/ApplicationStore');
+const LedgerStore = require('../../runtime/stores/LedgerStore');
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
@@ -56,59 +49,42 @@ async function loginWithRetry(page, email, pass) {
 function log(msg) { console.log(`[${new Date().toISOString()}] ${msg}`); }
 
 function ledger(tipo, data) {
-  if (USE_SQLITE) LedgerStore.emit(tipo, data);
+  LedgerStore.emit(tipo, data);
 }
 
-// â”€â”€â”€ JSON fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-function loadLogJson() {
-  try { return JSON.parse(fs.readFileSync(path.join(JOBS_DIR, 'aplicaciones.json'), 'utf8')); }
-  catch { return []; }
-}
-
-function saveLogJson(data) {
-  fs.writeFileSync(path.join(JOBS_DIR, 'aplicaciones.json'), JSON.stringify(data, null, 2), 'utf8');
-}
 
 function loadAplicaciones() {
-  if (USE_SQLITE) {
-    const apps = AppStore.getAll({ source: 'computrabajo' });
-    return apps.map(a => ({
-      oferta_id: a.id,
-      url: a.url,
-      titulo: a.cargo,
-      empresa: a.empresa,
-      lugar: a.extra_data?.lugar || a.detalles,
-      fecha: a.fecha_aplicacion,
-      score: a.evaluacion?.score,
-      estado: a.estado,
-      razon: a.extra_data?.razon,
-    }));
-  }
-  return loadLogJson();
+  const apps = AppStore.getAll({ source: 'computrabajo' });
+  return apps.map(a => ({
+    oferta_id: a.id,
+    url: a.url,
+    titulo: a.cargo,
+    empresa: a.empresa,
+    lugar: a.extra_data?.lugar || a.detalles,
+    fecha: a.fecha_aplicacion,
+    score: a.evaluacion?.score,
+    estado: a.estado,
+    razon: a.extra_data?.razon,
+  }));
 }
 
 function saveAplicacion(registro) {
-  if (USE_SQLITE) {
-    AppStore.create({
-      id: registro.oferta_id,
-      source: 'computrabajo',
-      empresa: registro.empresa,
-      cargo: registro.titulo,
-      url: registro.url,
-      fecha_aplicacion: registro.fecha,
-      estado: registro.estado,
-      score: registro.score,
-      extra_data: { lugar: registro.lugar, razon: registro.razon, screenshot: registro.screenshot },
-      historial: [{ fecha: new Date().toISOString(), evento: `estado_${registro.estado}` }],
-    });
-    ledger('aplicacion_creada', { oferta_id: registro.oferta_id, empresa: registro.empresa, titulo: registro.titulo, estado: registro.estado });
-    return;
-  }
-  const apps = loadLogJson();
-  apps.push(registro);
-  saveLogJson(apps);
+  AppStore.create({
+    id: registro.oferta_id,
+    source: 'computrabajo',
+    empresa: registro.empresa,
+    cargo: registro.titulo,
+    url: registro.url,
+    fecha_aplicacion: registro.fecha,
+    estado: registro.estado,
+    score: registro.score,
+    extra_data: { lugar: registro.lugar, razon: registro.razon, screenshot: registro.screenshot },
+    historial: [{ fecha: new Date().toISOString(), evento: `estado_${registro.estado}` }],
+  });
+  ledger('aplicacion_creada', { oferta_id: registro.oferta_id, empresa: registro.empresa, titulo: registro.titulo, estado: registro.estado });
 }
 
+// --- TELEGRAM
 // â”€â”€â”€ TELEGRAM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function sendTelegram(text, keyboard = null) {
   if (!TELEGRAM_TOKEN || !TELEGRAM_CHAT) return null;
@@ -548,9 +524,7 @@ async function main() {
 
   await browser.close();
 
-  const nuevasAplicadas = USE_SQLITE
-    ? AppStore.getAll({ source: 'computrabajo', estado: 'aplicado' })
-    : loadLogJson().filter(a => a.estado === 'aplicado');
+  const nuevasAplicadas = AppStore.getAll({ source: 'computrabajo', estado: 'aplicado' });
   log(`Sesion completada. Total aplicaciones: ${nuevasAplicadas.length}`);
   if (nuevasAplicadas.length > 0) {
     await sendTelegram(

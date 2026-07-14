@@ -18,22 +18,14 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const { askLLM } = require('../../lib/ai/llm_service');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
 const DRY_RUN = process.argv.includes('--dry-run');
 
 const bus = require('../../lib/events/event_bus');
 
-let CaseStore = null;
-let LedgerStore = null;
-let CheckpointStore = null;
-let RE = null;
-if (USE_SQLITE) {
-  CaseStore = require('../../runtime/stores/CaseStore');
-  LedgerStore = require('../../runtime/stores/LedgerStore');
-  CheckpointStore = require('../../runtime/stores/CheckpointStore');
-  RE = require('../../lib/runtime/resume_engine');
-}
+const CaseStore = require('../../runtime/stores/CaseStore');
+const LedgerStore = require('../../runtime/stores/LedgerStore');
+const CheckpointStore = require('../../runtime/stores/CheckpointStore');
+const RE = require('../../lib/runtime/resume_engine');
 
 function log(msg) { console.log(`[CTX] ${msg}`); }
 
@@ -43,7 +35,6 @@ function log(msg) { console.log(`[CTX] ${msg}`); }
  * emails con action.notify === true o action.logToLedger === true.
  */
 function loadContextQueue() {
-  if (!USE_SQLITE) return [];
   const queue = CheckpointStore.get('context_queue');
   if (!queue || !Array.isArray(queue)) return [];
   log(`Context Queue: ${queue.length} emails`);
@@ -51,11 +42,10 @@ function loadContextQueue() {
 }
 
 function clearContextQueue() {
-  if (USE_SQLITE) CheckpointStore.set('context_queue', []);
+  CheckpointStore.set('context_queue', []);
 }
 
 function pushToContextQueue(email) {
-  if (!USE_SQLITE) return;
   const queue = CheckpointStore.get('context_queue') || [];
   queue.push(email);
   if (queue.length > 100) queue.splice(0, queue.length - 100);
@@ -112,7 +102,7 @@ ${emails.map((e, i) => `[${i + 1}] De: ${e.from || '?'} | Asunto: ${e.subject ||
  * Aplica los cambios detectados al CaseStore.
  */
 function applyCambios(cambios) {
-  if (!USE_SQLITE || !cambios.length) return 0;
+  if (!cambios.length) return 0;
 
   let count = 0;
   for (const c of cambios) {
@@ -175,13 +165,13 @@ function applyCambios(cambios) {
 async function main() {
   log('Context Engine Daily');
 
-  if (USE_SQLITE) RE.start('context_engine_daily', {});
+  RE.start('context_engine_daily', {});
 
   const queue = loadContextQueue();
 
   if (queue.length === 0) {
     log('Sin correos en la cola de contexto. Nada que procesar.');
-    if (USE_SQLITE) RE.finish('context_engine_daily', 'success', { processed: 0 });
+    RE.finish('context_engine_daily', 'success', { processed: 0 });
     return;
   }
 
@@ -191,7 +181,7 @@ async function main() {
     log('[dry-run] LLM analysis skipped');
     log('[dry-run] Queue would be cleared');
     log('[dry-run] Cases would be created/updated');
-    if (USE_SQLITE) RE.finish('context_engine_daily', 'success', { dry_run: true, queue_size: queue.length });
+    RE.finish('context_engine_daily', 'success', { dry_run: true, queue_size: queue.length });
     return;
   }
 
@@ -200,7 +190,7 @@ async function main() {
   log(`Cambios detectados: ${result.cambios.length}`);
   log(`Resumen: ${result.resumen}`);
 
-  if (result.cambios.length > 0 && USE_SQLITE) {
+  if (result.cambios.length > 0) {
     const creados = applyCambios(result.cambios);
     log(`${creados} casos creados/actualizados`);
 
@@ -215,12 +205,10 @@ async function main() {
   clearContextQueue();
   log('Context Queue cleared');
 
-  if (USE_SQLITE) {
-    RE.finish('context_engine_daily', 'success', {
-      queue_size: queue.length,
-      cambios: result.cambios?.length || 0,
-    });
-  }
+  RE.finish('context_engine_daily', 'success', {
+    queue_size: queue.length,
+    cambios: result.cambios?.length || 0,
+  });
 
   log(`Resumen: ${result.resumen}`);
   bus.emit('context.daily', { emails: queue.length, cambios: result.cambios?.length || 0, resumen: result.resumen });
@@ -229,7 +217,7 @@ async function main() {
 
 main().catch(e => {
   console.error(`[CTX] Error: ${e.message}`);
-  if (USE_SQLITE) RE.finish('context_engine_daily', 'error', { reason: e.message });
+  RE.finish('context_engine_daily', 'error', { reason: e.message });
   process.exit(1);
 });
 

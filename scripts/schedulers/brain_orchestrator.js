@@ -7,16 +7,15 @@ const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 const { escapeHTML, truncate } = require('../../lib/runtime/sanitize');
 const pending = require('../../lib/context/pending');
 const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
-// time_scheduler import removido â€” ya no usamos DeepSeek valley scheduling
+const { PATHS } = require('../../lib/data/paths');
 
-const BASE_DIR = path.resolve(__dirname, '..', '..');
-const LOG_DIR = path.join(BASE_DIR, 'data', 'logs');
-const CONTEXTO_DIR = path.join(BASE_DIR, 'data', 'state', 'contexto_maestro');
-const SKILL_PATH = path.join(BASE_DIR, 'skills', 'cerebro.md');
-const ESTADO_VIVO_PATH = path.join(CONTEXTO_DIR, 'ESTADO_VIVO.md');
-const REGISTRO_ESTUDIO_PATH = path.join(CONTEXTO_DIR, 'REGISTRO_DE_ESTUDIO.md');
-const NOTAS_FILE = path.join(BASE_DIR, 'data', 'notas.md');
-const ALERTAS_SENA_PATH = path.join(CONTEXTO_DIR, 'ALERTAS_SENA.md');
+const LOG_DIR = path.join(__dirname, '..', '..', 'data', 'logs');
+const CONTEXTO_DIR = PATHS.CONTEXT_MAESTRO;
+const SKILL_PATH = PATHS.SKILL_CEREBRO;
+const ESTADO_VIVO_PATH = PATHS.ESTADO_VIVO;
+const REGISTRO_ESTUDIO_PATH = PATHS.REGISTRO_ESTUDIO;
+const NOTAS_FILE = PATHS.NOTAS;
+const ALERTAS_SENA_PATH = PATHS.ALERTAS_SENA;
 
 const COL_HOLIDAYS_2026 = [
   '2026-01-01','2026-01-12','2026-03-23','2026-03-24','2026-03-25',

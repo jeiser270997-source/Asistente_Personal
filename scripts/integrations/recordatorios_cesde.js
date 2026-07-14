@@ -1,12 +1,6 @@
 const { sendNotification } = require('../../lib/integrations/notifications');
 
-const DB_DRIVER = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let CheckpointStore = null;
-if (USE_SQLITE) {
-  CheckpointStore = require('../../runtime/stores/CheckpointStore');
-}
+const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 
 const TEAMS_LINK = 'https://teams.microsoft.com/meet/280288227682235?p=ozE7zsdkk2B1OSSd9w';
 
@@ -20,36 +14,15 @@ const CLASSES = [
   { date: '2026-07-24', num: 9 },
 ];
 
-function loadSentJson() {
-  try {
-    const path = require('path').join(__dirname, '..', 'data', 'recordatorios_enviados.json');
-    return JSON.parse(require('fs').readFileSync(path, 'utf8'));
-  } catch { return []; }
-}
-
-function saveSentJson(dates) {
-  const fs = require('fs');
-  const path = require('path').join(__dirname, '..', 'data', 'recordatorios_enviados.json');
-  fs.mkdirSync(require('path').dirname(path), { recursive: true });
-  fs.writeFileSync(path, JSON.stringify(dates, null, 2));
-}
-
 function loadSent() {
-  if (USE_SQLITE) {
-    const cp = CheckpointStore.get('recordatorios_cesde');
-    return cp || [];
-  }
-  return loadSentJson();
+  const cp = CheckpointStore.get('recordatorios_cesde');
+  return cp || [];
 }
 
 function markSent(date) {
   const sent = loadSent();
   sent.push(date);
-  if (USE_SQLITE) {
-    CheckpointStore.set('recordatorios_cesde', sent);
-  } else {
-    saveSentJson(sent);
-  }
+  CheckpointStore.set('recordatorios_cesde', sent);
 }
 
 function getColombiaDate() {

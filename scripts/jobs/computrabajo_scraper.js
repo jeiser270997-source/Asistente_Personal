@@ -1,4 +1,4 @@
-﻿/**
+/**
  * scripts/jobs/computrabajo_scraper.js
  *
  * Pipeline 3 Etapas:
@@ -18,13 +18,7 @@ const JOBS_DIR = path.join(BASE_DIR, 'data', 'jobs');
 const OUT_PATH = path.join(JOBS_DIR, 'computrabajo.json');       // todas las encontradas
 const QUEUE_PATH = path.join(JOBS_DIR, 'apply_queue.json');      // aprobadas por IA â†’ listas para aplicar
 
-const DB_DRIVER  = process.env.STORAGE_DRIVER || 'sqlite';
-const USE_SQLITE = DB_DRIVER === 'sqlite';
-
-let CheckpointStore = null;
-if (USE_SQLITE) {
-  CheckpointStore = require('../../runtime/stores/CheckpointStore');
-}
+const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
@@ -67,26 +61,15 @@ async function sendTelegram(text) {
 
 // â”€â”€â”€ PERSISTENCIA DE IDs VISTOS (dedup) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function loadSeenIds() {
-  if (USE_SQLITE) {
-    const cp = CheckpointStore.get('computrabajo_seen_ids');
-    return new Set(cp?.ids || []);
-  }
-  try {
-    const data = JSON.parse(fs.readFileSync(path.join(JOBS_DIR, 'computrabajo_last.json'), 'utf8'));
-    return new Set(data.ids || []);
-  } catch { return new Set(); }
+  const cp = CheckpointStore.get('computrabajo_seen_ids');
+  return new Set(cp?.ids || []);
 }
 
 function saveSeenIds(idSet) {
-  const ids = [...idSet];
-  if (USE_SQLITE) {
-    CheckpointStore.set('computrabajo_seen_ids', { ids });
-  } else {
-    fs.writeFileSync(path.join(JOBS_DIR, 'computrabajo_last.json'), JSON.stringify({ ids }));
-  }
+  CheckpointStore.set('computrabajo_seen_ids', { ids: [...idSet] });
 }
 
-// â”€â”€â”€ ETAPA 1: SCRAPE LISTING (tÃ­tulo, empresa, URL, ID) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// --- ETAPA 1: SCRAPE LISTING (tÃ­tulo, empresa, URL, ID) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function scrapeListado(page, keyword) {
   // sorted by publicationDate = newest first | en-medellin = solo Medellín
   const url = `https://co.computrabajo.com/trabajo-de-${keyword}-en-medellin?by=publicationDate`;
