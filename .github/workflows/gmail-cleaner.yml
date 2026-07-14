@@ -1,4 +1,4 @@
-name: Email Cleaner
+name: Gmail Cleaner
 
 on:
   schedule:
