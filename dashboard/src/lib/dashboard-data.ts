@@ -89,18 +89,16 @@ function getRecentMemories(limit: number): any[] {
   const dbPath = path.join(baseDir, 'data', 'memoria_hipocampo.db');
   if (!fs.existsSync(dbPath)) return [];
 
-  let activeDbPath = dbPath;
-  if (process.env.IS_DOCKER === 'true') {
-    activeDbPath = '/tmp/memoria_hipocampo.db';
-    try { fs.copyFileSync(dbPath, activeDbPath); } catch {}
-  }
-
   try {
-    const db = new Database(activeDbPath, { readonly: true });
+    // Al estar la base de datos configurada en modo WAL en el host, 
+    // abrir la conexión con readonly: true permite realizar consultas 
+    // de lectura concurrentes sin interferir con las escrituras síncronas de otros hilos.
+    const db = new Database(dbPath, { readonly: true });
     const rows = db.prepare(`SELECT * FROM hechos ORDER BY timestamp DESC LIMIT ?`).all(limit);
     db.close();
     return rows;
-  } catch {
+  } catch (error) {
+    console.error('[Dashboard Data] Error al leer hechos desde SQLite:', error);
     return [];
   }
 }
