@@ -33,6 +33,7 @@ data/cache/*
 
 # --- Artifacts (todo generado, NO versionar) ---
 data/artifacts/
+!data/artifacts/jobs/  # Excepción: permitir subir CVs y apply logs de Computrabajo
 
 # --- Debug temporales ---
 # Windows device names (artifact from commands)

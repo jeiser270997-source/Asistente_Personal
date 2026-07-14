@@ -1,6 +1,4 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const BASE = path.resolve(__dirname, '..');
+const CheckpointStore = require('../runtime/stores/CheckpointStore');
 
 module.exports = {
   id: 'transito',
@@ -8,14 +6,23 @@ module.exports = {
   getContext() {
     let simitCtx = '';
     try {
-      const simit = JSON.parse(fs.readFileSync(path.join(BASE, 'data', 'simit_multas.json'), 'utf8'));
-      simitCtx = `\n[TRANSITO_JEISER] Placa KEW496 (Toyota Corolla 2010) | Deuda activa: $${(simit.total_deuda_activa/1000).toFixed(0)}K | SOAT vence 31/12/2026 | RTM vence 26/12/2026`;
-      for (const m of simit.multas) {
-        const icono = m.estado === 'Impugnado' ? '🟡' : m.estado.includes('Pagad') ? '✅' : '⬜';
-        simitCtx += `\n  ${icono} ${m.id}: ${m.secretaria} | ${m.infraccion} | ${m.estado} | $${((m.total||0)/1000).toFixed(0)}K`;
+      const simit = CheckpointStore.get('simit_ultima_consulta');
+
+      if (simit) {
+        const multas = simit.detalle?.multas || [];
+        const totalNumeric = parseFloat(String(simit.total || '0').replace(/[^\d]/g, '')) || 0;
+
+        simitCtx = `\n[TRANSITO_JEISER] Placa KEW496 (Toyota Corolla 2010) | Deuda activa: $${(totalNumeric/1000).toFixed(0)}K | SOAT vence 31/12/2026 | RTM vence 26/12/2026`;
+        for (const m of multas) {
+          const valorNumeric = parseFloat(String(m.valor || '0').replace(/[^\d]/g, '')) || 0;
+          const icono = m.estado?.includes('Impugnado') ? '🟡' : m.estado?.includes('Pagad') ? '✅' : '⬜';
+          simitCtx += `\n  ${icono} ${m.id}: ${m.secretaria || 'N/A'} | ${m.infraccion || 'N/A'} | ${m.estado || 'N/A'} | $${(valorNumeric/1000).toFixed(0)}K`;
+        }
       }
       simitCtx += '\n⚠ BXU28C (moto): SOAT VENCIDO 07/07/2025 + RTM VENCIDO 13/07/2025. NO CIRCULAR sin renovar. Multa C02: ~$950K + inmovilizacion.';
-    } catch {}
+    } catch (e) {
+      console.error('[Transito Skill] Error al cargar contexto de SQLite SIMIT:', e.message);
+    }
 
     return `[SKILL: Transito Colombia - Defensa Legal v1.0]
 Jeiser es conductor Didi. Alta exposicion a retenes, fotomultas, comparendos.
