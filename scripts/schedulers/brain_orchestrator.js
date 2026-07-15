@@ -1,4 +1,4 @@
-﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
@@ -8,6 +8,7 @@ const { escapeHTML, truncate } = require('../../lib/runtime/sanitize');
 const pending = require('../../lib/context/pending');
 const { authorize: googleAuthorize } = require('../../lib/integrations/google_auth');
 const { PATHS } = require('../../lib/data/paths');
+const bootcampSkill = require('../../skills/bootcamp_qa');
 
 const LOG_DIR = path.join(__dirname, '..', '..', 'data', 'logs');
 const CONTEXTO_DIR = PATHS.CONTEXT_MAESTRO;
@@ -245,43 +246,62 @@ async function processInbox(auth, emails) {
 }
 
 async function buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria) {
-  const trashLine = trashCount > 0 ? `ðŸ—‘ï¸ [Gmail] ${trashCount} correos basura eliminados automÃ¡ticamente.` : '[Gmail] Sin basura detectada.';
+  const trashLine = trashCount > 0 ? `🗑️ ${trashCount} correos basura eliminados automáticamente.` : 'Sin basura detectada.';
   const emailBlock = importantEmails.length === 0
-    ? '[Gmail] Sin correos importantes en las Ãºltimas 24h.'
+    ? 'Sin correos importantes en las últimas 24h.'
     : importantEmails.map(e =>
-        `ðŸ“© ${e.from}\n   Asunto: ${e.subject}\n   Extracto: ${e.snippet.substring(0, 200)}`
+        `• ${e.from}\n   Asunto: ${e.subject}\n   Extracto: ${e.snippet.substring(0, 150)}`
       ).join('\n\n');
 
   const eventsBlock = events.length === 0
-    ? 'Sin eventos programados para hoy.'
-    : events.map(e => `- ${e.summary} (${e.start} â†’ ${e.end})`).join('\n');
+    ? 'Sin eventos hoy.'
+    : events.map(e => `• ${e.summary} (${e.start})`).join('\n');
 
-  const estudioBlock = registroEstudio
-    ? registroEstudio
-    : 'No disponible';
-  const senaBlock = alertasSena
-    ? alertasSena
-    : 'No disponible';
   const pendingBlock = await pending.formatForBriefing();
+
+  // ── SIMIT ──
+  let simitBlock = 'Sin datos SIMIT.';
+  try {
+    const simitData = JSON.parse(fs.readFileSync(PATHS.SIMIT_ALERTS, 'utf8'));
+    const urgentes = (simitData.alertas || []).filter(a => a.urgente);
+    simitBlock = urgentes.length > 0
+      ? urgentes.map(a => `🔴 ${a.mensaje}`).join('\n')
+      : '✅ Sin multas ni alertas urgentes.';
+  } catch { simitBlock = 'No consultado aún (corre mañana a las 7am).'; }
+
+  // ── Computrabajo ──
+  let jobsBlock = 'Sin ofertas nuevas.';
+  try {
+    const queue = JSON.parse(fs.readFileSync(PATHS.APPLY_QUEUE, 'utf8'));
+    const recientes = (Array.isArray(queue) ? queue : []).slice(-5).reverse();
+    jobsBlock = recientes.length > 0
+      ? recientes.map(o => `• ${o.titulo} @ ${o.empresa} | Score: ${o.auditoria?.score ?? '?'}`).join('\n')
+      : 'Sin ofertas aprobadas en cola.';
+  } catch { jobsBlock = 'No hay datos de Computrabajo aún.'; }
+
+  // ── Bootcamp ──
+  const bootcampBlock = bootcampSkill.getContext() || 'Sin datos de bootcamp.';
 
   return `
 FECHA_HOY: ${dateStr}
 TIPO_DIA: ${dayType}
+CORREOS:
 ${trashLine}
-CORREOS_URGENTES:
 ${emailBlock}
-EVENTOS_CALENDARIO:
+EVENTOS_HOY:
 ${eventsBlock}
 PENDIENTES:
 ${pendingBlock}
-MEMORIA_LARGO_PLAZO (Notas y recordatorios):
-${notasMemoria || 'Sin notas'}
-ESTADO_VIVO (contexto legal/financiero):
-${estadoVivo || 'No disponible'}
-REGISTRO_ESTUDIO (horas acumuladas + progreso bootcamp):
-${estudioBlock}
-ALERTAS_SENA (tareas y vencimientos):
-${senaBlock}
+SIMIT_ALERTAS:
+${simitBlock}
+TRABAJOS_EN_COLA:
+${jobsBlock}
+BOOTCAMP_QA:
+${bootcampBlock}
+ALERTAS_SENA:
+${alertasSena || 'No disponible'}
+ESTADO_VIVO:
+${estadoVivo ? estadoVivo.substring(0, 800) : 'No disponible'}
 `.trim();
 }
 
@@ -302,11 +322,11 @@ async function run() {
     const { getProximosEventos } = require('../../lib/integrations/calendar_client');
     const calCheck = await getProximosEventos(1);
     if (calCheck?.error?.includes('Token expirado') || calCheck?.error?.includes('invalid_grant')) {
-      await sendTelegramMessage('âš ï¸ ALERTA: Token de Google Calendar expirado. Corre: node scripts/setup_google_calendar.js');
-      log('âš ï¸ Token de Calendar expirado â€” notificación enviada');
+      await sendTelegramMessage('âš ï¸  ALERTA: Token de Google Calendar expirado. Corre: node scripts/setup_google_calendar.js');
+      log('âš ï¸  Token de Calendar expirado â€” notificación enviada');
     }
   } catch (e) {
-    log(`âš ï¸ Calendar health check: ${e.message}`);
+    log(`âš ï¸  Calendar health check: ${e.message}`);
   }
   const dateStr = formatDateColombia(now);
   const dayType = determineDayType(now);
@@ -320,7 +340,7 @@ async function run() {
     const [rawEmails, events, skillRaw, estadoVivo, registroEstudio, alertasSena, notasMemoria] = await Promise.all([
       fetchRecentEmails(auth),
       fetchCalendarEvents(auth).catch(e => {
-        log(`âš ï¸ [Calendar] ${e.message}`);
+        log(`âš ï¸  [Calendar] ${e.message}`);
         return [];
       }),
       Promise.resolve(readFileSafe(SKILL_PATH)),
@@ -332,7 +352,31 @@ async function run() {
 
     const { importantEmails, trashCount } = await processInbox(auth, rawEmails);
 
-    const systemPrompt = stripFrontmatter(skillRaw || 'Eres el asistente matutino de Jeiser.') + '\n\nIMPORTANTE: Debes responder SIEMPRE con un objeto JSON vÃ¡lido en espaÃ±ol con esta estructura exacta (sin markdown, solo JSON plano):\n{\n  "mensaje_telegram": "El reporte detallado para enviar a Telegram...",\n  "nuevas_tareas": ["DescripciÃ³n tarea 1", "DescripciÃ³n tarea 2"]\n}';
+    const systemPrompt = `Eres el asistente personal de Jeiser Abraham Gutiérrez Torres (conductor DiDi, estudiante CESDE/SENA, aspirante a QA Automation).
+
+Tu única tarea es generar UN SOLO mensaje de Telegram en HTML para el briefing matutino diario.
+
+REGLAS ABSOLUTAS:
+1. Responde SOLO con JSON válido: {"mensaje_telegram": "...", "nuevas_tareas": []}
+2. El mensaje_telegram debe usar HTML de Telegram (<b>, <i>, <code>). NO uses Markdown.
+3. Sé CONCISO. Máximo 2500 caracteres totales.
+4. Incluye SOLO lo que es accionable o urgente. Omite lo que no tiene novedades.
+5. Termina SIEMPRE con una frase motivadora corta (máx 1 línea) relacionada con la situación real del día.
+6. Detecta si hay tareas nuevas implícitas en el contexto y agrégalas en "nuevas_tareas".
+
+ESTRUCTURA DEL MENSAJE (adaptable según qué tenga novedades):
+📅 <b>Briefing · [DIA] [FECHA]</b>
+
+📧 <b>Correos</b> — [resumen o "inbox limpio"]
+📅 <b>Agenda</b> — [eventos o "día libre"]
+📋 <b>Pendientes</b> — [solo los más urgentes, máx 3]
+🚗 <b>SIMIT</b> — [estado o "✅ sin multas"]
+💼 <b>Trabajos</b> — [ofertas nuevas o "sin novedades"]
+🎓 <b>SENA</b> — [alertas o "al día"]
+📚 <b>Bootcamp</b> — [semana actual + qué toca hoy]
+
+💪 <i>[frase motivadora corta y directa]</i>`;
+
     const userContext = await buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria);
 
     log(`ðŸ“‹ Contexto preparado: ${dayType}, ${importantEmails.length} importantes, ${trashCount} basura eliminada, ${events.length} eventos`);

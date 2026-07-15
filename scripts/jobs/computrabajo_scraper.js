@@ -289,28 +289,23 @@ async function main() {
   saveQueue([...queue, ...nuevasEnCola]);
 
   log(`\nâ•â•â• RESUMEN â•â•â•`);
+  log(`\nâ• â• â•  RESUMEN â• â• â• `);
   log(`  Auditadas por IA : ${candidatas.length}`);
   log(`  Aprobadas        : ${aprobadas.length}`);
   log(`  Rechazadas       : ${rechazadas.length}`);
   log(`  AÃ±adidas a cola  : ${nuevasEnCola.length}`);
 
-  // NotificaciÃ³n Telegram
+  // Notificación consolidada: el brain_orchestrator envía el briefing unificado diario.
+  // Aquí solo logueamos para trazabilidad en GitHub Actions.
   if (nuevasEnCola.length > 0) {
-    const lines = nuevasEnCola.slice(0, 6).map(o =>
-      `\u2705 <b>${o.titulo}</b>\n  \u{1F3E2} ${o.empresa} | \u{1F4CD} ${o.lugar}\n  \u{1F3AF} Score: ${o.auditoria.score} | ${o.auditoria.categoria}\n  \u{1F4AC} ${o.auditoria.razon}\n  <a href="${o.url}">Ver oferta</a>`
+    log(`✅ ${nuevasEnCola.length} ofertas aprobadas por IA → cola de aplicación actualizada.`);
+    nuevasEnCola.slice(0, 6).forEach(o =>
+      log(`   • ${o.titulo} @ ${o.empresa} | Score: ${o.auditoria?.score ?? '?'}`)  
     );
-    await sendTelegram(
-      `\u{1F4BC} <b>${nuevasEnCola.length} ofertas Tech aprobadas por IA</b> (L-V \u00B7 Medell\u00EDn)\n\n${lines.join('\n\n')}`
-    );
-    log('Notificaci\u00F3n Telegram enviada.');
   } else {
-    log('Sin nuevas ofertas aprobadas hoy.');
-    await sendTelegram(`\u{1F4BC} <b>Computrabajo Pipeline</b>\nSe auditaron ${candidatas.length} ofertas. Ninguna nueva aprobada hoy.`);
+    log(`ℹ️ Se auditaron ${candidatas.length} ofertas. Ninguna nueva aprobada hoy.`);
   }
-
-  log(`Cola actual: ${queue.length + nuevasEnCola.length} ofertas pendientes de aplicar.`);
+  log(`Cola actual: ${queue.length + nuevasEnCola.length} ofertas pendientes.`);
 }
 
 main().catch(e => { console.error('[FATAL]', e.message); process.exit(1); });
-
-
