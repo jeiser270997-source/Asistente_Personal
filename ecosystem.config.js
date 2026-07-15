@@ -33,8 +33,7 @@ module.exports = {
     {
       name: "morning-briefing",
       script: "./scripts/schedulers/morning_briefing.ts",
-      interpreter: "npx",
-      interpreter_args: "tsx",
+      exec_interpreter: "tsx",
       cron_restart: "0 12 * * *",
       autorestart: false,
     },
@@ -150,8 +149,7 @@ module.exports = {
     {
       name: "backup-dbs",
       script: "./scripts/maintenance/backup_dbs.ts",
-      interpreter: "npx",
-      interpreter_args: "tsx",
+      exec_interpreter: "tsx",
       cron_restart: "0 4 * * *",
       autorestart: false,
     },
