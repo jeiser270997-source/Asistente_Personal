@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  # Servicio de tu Dashboard de Next.js
+  # Dashboard Next.js — monta el repo en modo lectura para leer datos locales
   lifeos-dashboard:
-    build: 
+    build:
       context: ./dashboard
       dockerfile: Dockerfile
     container_name: lifeos-dashboard
@@ -14,23 +14,3 @@ services:
     volumes:
       - ./:/host_data:ro
     restart: unless-stopped
-    depends_on:
-      - lifeos-postgres
-
-  # NUEVO: Base de datos relacional de producción para tu Roadmap Full Stack
-  lifeos-postgres:
-    image: postgres:16-alpine
-    container_name: lifeos-postgres
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=lifeos_prod
-      - POSTGRES_USER=jeiser_admin
-      - POSTGRES_PASSWORD=tu_contraseña_segura_aqui
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
-
-volumes:
-  pgdata:
-    driver: local

@@ -1,0 +1,177 @@
+# Life OS - Segundo Cerebro de Jeiser v2.4
+**Última actualización:** 2026-07-08 (milestone v1.1 Migración TS + Backups GDrive + Fixes Core)
+
+## Principios de diseño (constitución del proyecto)
+
+1. **Regla antes que IA.** Si puede resolverse con reglas determinísticas, no usar LLM.
+2. **Event Bus antes que acoplamiento.** Los módulos emiten eventos; no conocen a sus consumidores.
+3. **Configuración antes que código.** Las reglas viven en JSON, no en ifs dispersos.
+4. **Medir antes de optimizar.** Toda automatización debe producir métricas.
+5. **Un origen de verdad.** No duplicar estado; usar `lib/data/paths.js` como acceso centralizado.
+6. **La IA es un amplificador, no un requisito.** El sistema debe funcionar aunque el LLM esté deshabilitado.
+7. **Single-Tenant Absoluto (NO SaaS).** Este sistema es personal y exclusivo para Jeiser. Prohibido sobre-ingeniar para escalabilidad multi-usuario. Las mejoras deben enfocarse únicamente en utilidad práctica y pragmatismo, no en arquitecturas complejas innecesarias (ej. evitar clústeres, colas complejas o microservicios que añadan deuda técnica sin aportar valor directo al usuario único).
+
+## Arquitectura general (patrón LifeOS)
+
+```
+Fuente → Normalizer → Rule Engine → {conocido → Action | ambiguo → LLM}
+                                         → Event Bus → Persistencia → Métricas
+```
+
+Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y futuros módulos.
+
+## Arquitectura (Julio 2026) — 87/100 seguridad, 93/100 funcionalidad
+
+```
+📱 Telegram (solo notif) ← → ☁️ GitHub Actions (12 workflows, ubuntu-22.04)
+                                         ↓
+                          🧠 DeepSeek V4 Flash (único LLM, horario valle)
+                                         ↓
+              ┌──────────────────────────┼──────────────────────────┐
+              ▼                          ▼                          ▼
+       🚗 SIMIT (auto)           🎓 SENA (auto)           💼 Jobs (auto)
+              │                          │                          │
+              │                          │                 Computrabajo scraper
+              │                          │                 Auto-apply + CV tailor
+              └──────────────────────────┼──────────────────────────┘
+                                         ▼
+              ┌──────────── 🧠 Arquitectura Lobular ────────────────┐
+              │  Frontal (orquestador) │ Temporal (RAG + memoria)   │
+              │  Parietal (tools)      │ Occipital (visual/docs)    │
+              │  Hipotálamo (autonomía Tamagotchi)                  │
+              └─────────────────────────────────────────────────────┘
+                                         ↓
+              ┌──────────── 💾 Memoria Persistente ─────────────────┐
+              │  SQLite: memoria_hipocampo.db (infinita)            │
+              │  JSON: data/memoria/hechos.json (estructurada)      │
+              │  MD: data/state/contexto_maestro/ESTADO_VIVO.md (perfil)  │
+              └─────────────────────────────────────────────────────┘
+                                         ↓
+         ⚖ Tributaria v6  │  🚦 Transito v1  │  🎯 Bootcamp QA  │  💼 Job Hunter
+```
+
+## CONTEXTO RÁPIDO — Leer al inicio de cada sesión
+
+**Jeiser Abraham Gutierrez Torres** · CC 1019156838 · +57 304 461 5613
+Medellín, Colombia · jeiser270997@gmail.com · Conductor DiDi → busca trabajo QA Tech
+
+**Perfil técnico:** QA Automation Junior · Playwright · JS · Node.js · Git · GitHub Actions · Postman · SQL
+**Proyecto clave:** LifeOS (11 workflows en producción, scraping SIMIT/SENA/DIAN/CT, LLM integration)
+**Mejor match laboral:** Software QA Analyst 55-65/100 · Gap único: 1 año exp formal
+**CESDE:** Sábados 7am-6pm (próximo horario) · actual Lun/Mié/Vie 6-8pm
+**SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
+
+**Perfil Psicológico y Operativo (SRE Mindset):**
+- **Nivel real:** Falso Junior (Aplica a QA Automation Junior pero diseña arquitectura Cloud/SRE).
+- **Mindset:** Hustler pragmático. Trabaja en DiDi, estudia CESDE/SENA y programa infraestructura compleja. Odia el trabajo manual.
+- **Trato requerido:** Comunicación técnica directa, cero explicaciones básicas. Fomentar su marketing personal para potenciar su transición laboral.
+
+**⚠️ PENDIENTES ACTIVOS:**
+1. Experiencia laboral anterior de Jeiser — NO registrada. Preguntar.
+2. SENA Excel — confirmar nombre exacto del curso para el CV.
+3. ✅ Fix login Computrabajo — Resuelto (Flujo 2 pasos implementado).
+4. DIAN obligaciones detalle — navegar Dashboard por clicks (no URL directa).
+5. SENA Actividad 2 — Cuadro Comparativo + Taller (vence 07/07/2026 ⚠️ HOY).
+
+## Skills de Producción
+
+| Skill | Versión | Estado |
+|-------|---------|--------|
+| **transito-colombia-defensa** | v1.0 | ✅ Producción |
+| **tributaria-colombia-defensa** | v6.0 | ✅ UVT 2026 ($52.374) |
+| **anti-sycophancy** | v1.0 | ✅ Sinceridad Radical |
+| **ingeniero_avanzado** | v1.0 | ✅ Basado en Top 200 GitHub |
+| **karpathy_guidelines** | v1.0 | ✅ Think→Code, Simplicity, Surgical |
+| **buen_gusto** | v1.0 | ✅ Anti-Slop activo |
+| **psicologo** | v1.0 | ✅ Soporte emocional |
+| **modo_diario** | v1.0 | ✅ Escucha activa sin filtros |
+| **financiero** | v1.0 | ✅ Consejos personalizados |
+| **finanzas_didi** | v1.0 | ✅ Budget Didi + DIAN + ahorro |
+| **tutor** | v1.0 | ✅ Técnica Feynman |
+| **qa_bootcamp** | v1.0 | ✅ 28 semanas CESDE + roadmap |
+| **job_hunter** | v1.0 | ✅ QA Colombia + CV + entrevistas |
+| **ciberseguridad** | v1.0 | ✅ MITRE/NIST |
+| **memory-engine** | v1.0 | ✅ Búsqueda semántica |
+
+## Automatizaciones Cloud (12 GitHub Actions — todos en ubuntu-22.04)
+
+| Workflow | Frecuencia | Estado |
+|----------|-----------|:------:|
+| `telegram-listener.yml` | Cada 3 min | ✅ |
+| `sena_scraper.yml` | Lun-Vie 6am | ✅ |
+| `simit_checker.yml` | Diario 7am | ✅ |
+| `cloud-orchestrator.yml` | Diario 7am | ✅ |
+| `email-cleaner.yml` | Cada 3h | ✅ |
+| `recordatorio_cesde.yml` | Lun/Mié/Vie 5pm + Sáb 2am UTC | ✅ |
+| `recordatorio_deepseek.yml` | 6am/7pm/10pm | ✅ |
+| `document-pipeline.yml` | Diario 9am | ✅ |
+| `healthcheck.yml` | Diario 8am | ✅ |
+| `ci.yml` | Push | ✅ |
+| `computrabajo_scraper.yml` | Lun-Vie 8am Colombia | ✅ NEW |
+| `dian_scraper.yml` | Lunes 9am Colombia | ✅ NEW |
+
+## Scripts Job Hunter (NEW — 2026-07-06)
+
+```bash
+# Scraping diario Computrabajo
+node scripts/computrabajo_scraper.js
+
+# Pipeline completo: scrape→analiza→tailoring (dry-run)
+node scripts/job_loop.js --loops=3 --min-score=40 --dry-run
+
+# Auto-apply (requiere fix login CT)
+node scripts/computrabajo_apply.js --auto
+
+# CV personalizado para oferta específica
+node scripts/cv_tailorer.js <url_oferta>
+
+# DIAN extracción exhaustiva
+node scripts/dian_scraper.js
+
+# Backup DBs a Google Drive
+npm run backup
+```
+
+## Comandos Rápidos (SSH / Local)
+
+```bash
+# Correos
+node scripts/email_processor.js
+
+# SENA
+node scripts/moodle_sena_tracker.js ver
+
+# SIMIT
+node scripts/simit_scraper.js
+
+# Memoria
+node -e "const m=require('./lib/memory_engine'); console.log(JSON.stringify(m.getResumenMemoria(),null,2))"
+
+# Audit completo
+node scripts/audit.js
+
+# Reflexión nocturna (manual)
+node scripts/reflexion_nocturna.js
+
+# Briefing Matutino (Local - Requiere USB)
+npm run briefing
+```
+
+## Auditoría (08/07/2026)
+
+- **Sintaxis**: ✅ 0 errores. CI/CD reforzado con `npx tsc --noEmit` para archivos TS.
+- **TypeScript**: ✅ `morning_briefing.ts` y `set_alarms.ts` refactorizados corriendo vía `tsx`.
+- **Workflows**: ✅ 12 activos, todos ubuntu-22.04. Auditados y testeados en local.
+- **SIMIT Scraper**: ✅ Bug de variable vacía (`curr.multas` vs `curr.detalle.multas`) corregido. Cero falsas "Multas Resueltas".
+- **Brain Orchestrator**: ✅ Rutas absolutas (`BASE_DIR`) corregidas, ya logra procesar correos del SIMIT exitosamente.
+- **Backups**: ✅ Tarea automatizada para comprimir `.db` y `.json` y moverlos a Google Drive (`G:\My Drive\LifeOS_Backups\`).
+- **Fixes**: ✅ Login Computrabajo arreglado (flujo 2 pasos y detección anti-trampas implementada).
+
+## Reglas de Comportamiento
+
+- **Sinceridad Radical**: Si Jeiser está equivocado, decirlo directamente.
+- **Anti-adulación**: Prohibido "esto es oro puro", "excelente pregunta", etc.
+- **Prioriza la verdad** sobre la validación emocional.
+- **DeepSeek**: Solo usar en horario valle (11pm–8am Colombia). Fuera usar fallback.
+- **Al inicio de sesión**: Leer ESTADO_VIVO.md primero, luego responder.
+- **Regla GitHub**: Si existe repo en GitHub para la tarea, usarlo. Inventar solo si no existe.
