@@ -1,4 +1,4 @@
-name: Computrabajo Scraper
+name: Computrabajo Scraper + Auto-Apply
 
 on:
   schedule:
@@ -6,9 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  scrape:
+  scrape-and-apply:
     runs-on: ubuntu-22.04
-    timeout-minutes: 20
+    timeout-minutes: 45   # apply necesita mas tiempo que solo scraper
 
     steps:
       - uses: actions/checkout@v4
@@ -35,15 +35,16 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          mkdir -p runtime lib/data
+          mkdir -p runtime lib/data data/jobs data/state
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db || true
           litestream restore -if-replica-exists -config litestream.yml lib/data/memoria_hipocampo.db || true
-          echo "✅ DBs restauradas"
+          echo "DBs restauradas"
 
       - name: Run migrations
         run: node runtime/migrate.js
 
-      - name: Run Computrabajo Scraper
+      # ── PASO 1: Scraper — busca ofertas nuevas y las califica ────────────────
+      - name: Scrape Computrabajo
         env:
           COMPUTRABAJO_EMAIL: ${{ secrets.COMPUTRABAJO_EMAIL }}
           COMPUTRABAJO_PASS: ${{ secrets.COMPUTRABAJO_PASS }}
@@ -53,6 +54,37 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/jobs/computrabajo_scraper.js
 
+      # ── PASO 2: Auto-Apply — aplica a ofertas aprobadas (score >= 50, L-V, 2.4M+) ─
+      - name: Auto-Apply to approved offers
+        env:
+          COMPUTRABAJO_EMAIL: ${{ secrets.COMPUTRABAJO_EMAIL }}
+          COMPUTRABAJO_PASS: ${{ secrets.COMPUTRABAJO_PASS }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/jobs/computrabajo_apply.js --auto
+
+      # ── PASO 3: Revisar Gmail — alertas de respuestas/entrevistas ────────────
+      - name: Check job response emails
+        continue-on-error: true   # no romper pipeline si Gmail falla
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GMAIL_TOKEN: ${{ secrets.GMAIL_TOKEN }}
+          GMAIL_CREDENTIALS: ${{ secrets.GMAIL_CREDENTIALS }}
+        run: |
+          # Escribir credenciales desde secrets si no existen como archivos
+          mkdir -p data/auth
+          if [ -n "$GMAIL_CREDENTIALS" ]; then
+            echo "$GMAIL_CREDENTIALS" > data/auth/gmail_credentials.json
+          fi
+          if [ -n "$GMAIL_TOKEN" ]; then
+            echo "$GMAIL_TOKEN" > data/auth/gmail_token.json
+          fi
+          node scripts/jobs/check_job_responses.js || true
+
+      # ── PASO 4: Persistir DBs actualizadas ───────────────────────────────────
       - name: Replicate databases to R2
         if: always()
         env:
