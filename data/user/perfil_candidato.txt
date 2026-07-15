@@ -1,16 +1,34 @@
-﻿NOMBRE: Jeiser Abraham Gutierrez Torres
+NOMBRE: Jeiser Abraham Gutierrez Torres
 CC: 1019156838 | Telefono: +57 304 461 5613 | Email: jeiser270997@gmail.com
-UBICACION: Medellin, Antioquia (Barrio Villa Eloisa)
-VEHICULO: Tiene vehiculo propio (carro), por lo que no tiene restricciones de movilidad en Medellin y su area metropolitana.
-DISPONIBILIDAD HORARIA: Lunes a Viernes (estudia los sabados en CESDE, no puede trabajar los sabados).
-ASPIRACION SALARIAL: Salario minimo legal vigente o segun promedio del mercado para el cargo, negociable.
+UBICACION: Medellin, Antioquia (La Estrella). Tiene carro propio — puede trasladarse por toda el area metropolitana de Medellin y AMVA sin restricciones.
+DISPONIBILIDAD HORARIA: Lunes a Viernes EXCLUSIVAMENTE. Estudia los sabados en CESDE (7am-6pm). Ofertas con sabados, domingos o turnos rotativos son INCOMPATIBLES.
+ASPIRACION SALARIAL: Minimo 2.400.000 COP / mes. Ideal 2.500.000+. Rechazar si menciona salario minimo ($1.423.500) sin bonificacion para cargos de tecnologia.
+
 FORMACION:
-  - Tecnico en Analisis y Desarrollo de Software (CESDE, Medellin) - En curso 2026
-  - Bootcamp QA Automation 28 semanas (Playwright, GitHub Actions, Node.js) - CESDE
-  - Bases de Datos y Excel Avanzado - SENA (Zajuna)
+  - Ingenieria en Sistemas (CESDE, Medellin) — En curso 2026 (carrera tecnica + profesional)
+  - Ingenieria en Sistemas (7mo semestre cursado) — IUP Santiago Marino, Venezuela 2014-2018
+  - QA Automation Bootcamp 28 semanas (Playwright, GitHub Actions, Node.js) — CESDE
+  - Bases de Datos y Excel Avanzado — SENA (2026)
+
 EXPERIENCIA:
-  1. QA Automation Engineer - Proyecto LifeOS (propio, en produccion): Playwright, Node.js, GitHub Actions, SQLite, integracion APIs REST, CI/CD.
-  2. Agente Soporte Nivel 1 (Mesa de Ayuda) - Sitel/Iberia/Amadeus GDS (2021): atencion al usuario, tickets, SLA, sistema GDS.
-  3. Auxiliar de Sistemas / Operador CCTV - Coovisocial (2019-2021): monitoreo sistemas de seguridad, diagnostico de fallas, informes de incidentes.
-SKILLS TECNICOS: Playwright, Node.js, JavaScript, GitHub Actions, SQLite, APIs REST, Git, Microsoft Office (Excel Avanzado), Windows 10/11, Redes basicas TCP/IP, GDS Amadeus.
-IDIOMAS: Espanol nativo, Ingles B1-B2 (lectura tecnica fluida).
+  1. QA Automation / Desarrollador Freelance (2022-presente): Playwright, Node.js, GitHub Actions, SQLite, APIs REST, CI/CD — proyecto LifeOS en produccion real.
+  2. Agente Soporte N1 Campana Iberia Airlines — Foundever/Sitel (Nov 2021-Ene 2022): Amadeus GDS, atencion bilingue, SLA/KPIs. (Excepcion puntual — no busca call center.)
+  3. Operador de Medios Tecnologicos — COOVISOCIAL (Sep 2019-Oct 2021): monitoreo CCTV 24/7, sistemas seguridad electronica, bases de datos de control de acceso.
+
+SKILLS TECNICOS: Playwright, Node.js, JavaScript, TypeScript, GitHub Actions, SQLite, APIs REST, Postman, Git, Docker, Microsoft Office Excel, Windows 10/11, Redes basicas TCP/IP, GDS Amadeus.
+IDIOMAS: Espanol nativo. Ingles B1+ empirico — comprende documentacion tecnica, series y podcasts; puede comunicarse por escrito y verbalmente a nivel funcional. NO apto para call center en ingles.
+CERTIFICACIONES: EF SET 68/100 C1 (lectura/escucha), HubSpot Service Hub, HubSpot Inbound, SENA Excel 2016 (40h, nota 4.5/5).
+
+ROLES BUSCADOS (en orden de preferencia):
+  ✅ QA Automation / QA Manual / Analista de Calidad de Software
+  ✅ Mesa de Ayuda (Help Desk) / Soporte Tecnico L1/L2
+  ✅ Analista de Sistemas / Junior Developer
+  ✅ Operador de Plataforma / Monitoreo de Sistemas
+  ✅ Roles donde pueda aprender y ganar experiencia formal en tecnologia
+
+ROLES EXCLUIDOS (NO aplicar):
+  ❌ Call center puro (asesor telefonico, agente inbound/outbound de voz)
+  ❌ Telemarketing / ventas por telefono
+  ❌ Cargos sin relacion con tecnologia o sistemas
+  ❌ Trabajos con horario sabados o turnos rotativos
+  ❌ Salario menor a 2.400.000 COP en cargos de tecnologia

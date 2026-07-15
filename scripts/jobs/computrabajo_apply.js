@@ -124,29 +124,33 @@ async function waitForApproval(timeoutMs) {
   return null;
 }
 
-// â”€â”€â”€ PERFIL MAESTRO DEL CANDIDATO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── PERFIL MAESTRO DEL CANDIDATO ──────────────────────────────────────────────
 const PERFIL_JEISER = fs.readFileSync(path.join(path.resolve(__dirname, '..', '..'), 'data', 'user', 'perfil_candidato.txt'), 'utf8');
 
-// â”€â”€â”€ SCORE + DETECTOR DE FIN DE SEMANA (IA) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── SCORE: detecta salario, horario y call center desde el TEXTO de la oferta ─
 async function calcularScore(oferta) {
-  const cvBase = fs.existsSync(CV_BASE) ? fs.readFileSync(CV_BASE, 'utf8').substring(0, 800) : '';
-  const prompt = `Eres un evaluador de ofertas de trabajo para Colombia. Analiza la siguiente oferta y responde EXCLUSIVAMENTE con un JSON valido.
+  const descripcion = (oferta.cuerpo || oferta.descripcion || oferta.titulo || '').substring(0, 2000);
+
+  const prompt = `Eres un evaluador de ofertas laborales para Colombia. Lee el TEXTO de la descripcion y responde SOLO con JSON valido.
 
 OFERTA:
 Titulo: ${oferta.titulo}
-Empresa: ${oferta.empresa}
-Lugar: ${oferta.lugar}
-Descripcion completa: ${(oferta.cuerpo || oferta.titulo || '').substring(0, 1200)}
+Empresa: ${oferta.empresa || 'N/A'}
+Lugar: ${oferta.lugar || oferta.ciudad || 'N/A'}
+Descripcion completa:
+${descripcion}
 
 PERFIL DEL CANDIDATO:
 ${PERFIL_JEISER}
 
-EVALUA:
-1. Que tan bien encaja el candidato (0-100).
-2. Si la oferta menciona horario de sabados, domingos, fines de semana, turnos rotativos o disponibilidad de 6 dias. Si la descripcion no especifica horario, asume que es Lunes-Viernes.
+INSTRUCCIONES (lee el texto, no asumas por el titulo):
+1. SALARIO: Si dice "salario minimo", "SMMLV", "$1.4" sin bono para tecnologia = insuficiente. Si dice 2.4M+, "a convenir", "segun experiencia" o no menciona = OK.
+2. HORARIO: Si menciona sabados, domingos, turnos rotativos, "L-S" = rechazar. Si dice L-V o no menciona = OK.
+3. CALL CENTER: Si es SOLO asesor de voz/telemarketing sin componente tecnico = rechazar. Mesa de ayuda tecnica = OK.
+4. MATCH: Encaje del candidato con habilidades requeridas (0-100).
 
-Responde SOLO con este JSON:
-{"score":N,"recomendar":true/false,"requiere_finde":false,"razon":"una frase corta"}`;
+Responde EXACTAMENTE con este JSON:
+{"score":N,"recomendar":true/false,"requiere_finde":false,"salario_insuficiente":false,"es_call_center":false,"salario_detectado":"texto o null","razon":"frase corta"}`;
 
   try {
     const res = await askLLM(prompt, [], 0.1);
