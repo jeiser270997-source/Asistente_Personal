@@ -48,7 +48,16 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: node scripts/integrations/email_processor.js
+        run: |
+          mkdir -p data/auth
+          if [ -n "$GOOGLE_CREDENTIALS_JSON" ]; then
+            echo "$GOOGLE_CREDENTIALS_JSON" > data/auth/gmail_credentials.json
+          fi
+          if [ -n "$GOOGLE_TOKEN_JSON" ]; then
+            echo "$GOOGLE_TOKEN_JSON" > data/auth/gmail_token.json
+          fi
+          node scripts/integrations/email_processor.js
+
 
       - name: Replicate databases to R2
         if: always()
