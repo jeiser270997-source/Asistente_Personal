@@ -49,12 +49,14 @@ Foundever de Colombia S.A. *(Oct 2021 – Dic 2021)*
 - Uso de plataformas CRM para gestión de tickets, seguimiento y escalamiento de casos
 - Cumplimiento de métricas de calidad: NPS, FCR y tiempos de resolución
 
-**Asociado de Servicios**
-Cooperativa de Trabajo Asociado de Bienestar Social *(Sep 2019 – Oct 2021)*
+**Operador de Medios Tecnológicos**
+COOVISOCIAL — Cooperativa de Trabajo Asociado *(Sep 2019 – Oct 2021)*
 
-- 2 años de experiencia formal en entorno operativo estructurado
-- Gestión de tareas, cumplimiento de estándares de calidad y trabajo en equipo
-- Desarrolló disciplina operacional, puntualidad y responsabilidad bajo supervisión directa
+- Operación y monitoreo de sistemas de videovigilancia (CCTV), control de acceso y alarmas
+- Gestión de incidencias en tiempo real: registro, clasificación y escalamiento de eventos
+- Manejo de plataformas de monitoreo y sistemas tecnológicos de seguridad
+- Certificación técnica en Operación de Medios Tecnológicos de Seguridad
+- Trabajo en turnos bajo protocolos estrictos de calidad y cumplimiento
 
 ---
 
