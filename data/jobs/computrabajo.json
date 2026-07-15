@@ -1,112 +1,178 @@
 {
-  "fecha": "2026-07-13T14:35:55.629Z",
-  "total_scrapeadas": 82,
+  "fecha": "2026-07-15T04:56:50.345Z",
+  "total_scrapeadas": 80,
   "aprobadas": 5,
-  "rechazadas": 2,
+  "rechazadas": 8,
   "ofertas": [
     {
-      "offer_id": "577C167FF5D248FE61373E686DCF3405",
+      "offer_id": "A71ABB329A1E8CD961373E686DCF3405",
+      "titulo": "Técnico de Soporte y Gestión de Garantías",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,2 MAS ACTITUD",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-soporte-y-gestion-de-garantias-medellin-en-medellin-A71ABB329A1E8CD961373E686DCF3405#lc=ListOffers-Score6-1",
+      "auditoria": {
+        "score": 50,
+        "recomendar": true,
+        "requiere_finde": false,
+        "categoria": "Otro",
+        "razon": "Score estimado",
+        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nTécnico de Soporte y Gestión de Garantías - Medellín\n\nMAS ACTITUD - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\n$ 1.850.000,00 (Mensual) Contrato de Obra o labor Tiempo Completo\n\nImportante empresa del sector, requiere para su equipo de trabajo, técnico en sistemas o afines, para realizar funciones como atención al cliente, soporte técnico, Recepción e ingreso de garantías, gestión de garantías con proveedores, seguimiento de notas crédito, elaboración de reportes, seguimiento de los procesos de garantía, etc..\n\nSALARIO: $1.850.000 + prestaciones\nHORARIO: Lunes a Sábado\nLUGAR DE TRABAJO: Guayabal\n\nRequerimientos\n\nEducación mínima: Universidad / Carrera técnica\n2 años de experiencia\n\nPalabras clave: tecnologo, tecnico, tech, technician, technology, tecnologia, technologist, apoyo, support, soporte\n\nHace 12 horas (actualizada)\n\nAplicar\n Avísame con ofertas similares\n Denunciar empleo\n\nAcerca de MAS ACTITUD\n\nEn Galaxy Somos una empresa especializada en proporcionar diferentes soluciones integrales en Gestión Humana a sus operaciones productivas, comerciales y administrativas, enfocándonos a generar la interface que permite a la empresa concentrarse en su “Core Bussines” convirtiéndonos así en un aliado estratégico en la gestión de procesos de Selección de Personal, Administración de nomina, Operación Logística, Aseo, Maquila, Apoyo en gestión de Recursos.\n\n\nEvaluación general\n\n4.2\n\n512 Evaluaciones\n\n5\t\n\n52%\n\n4\t\n\n26%\n\n3\t\n\n18%\n\n2\t\n\n2%\n\n1\t\n\n2%\n\n\t\n\n4,04\n\nAmbiente de trabajo\n\n\t\n\n3,96\n\nSalario y prestaciones\n\n\t\n\n3,33\n\nOportunidades de carrera\n\n\t\n\n3,81\n\nDirector general\n\n92% profesionales recomiendan trabajar aquí\n\n Contrucción\n\nActual empleado Risaralda Abril, 2025\n\nBueno es una empresa buena se trabaja bien son buena persona en lo puede ayudar te ayuda\n\nLo mejor Mi desempeño\n\nA mejorar Pues si\n\nRecomienda trabajar aquí\n\n Ejecutivo de ventas\n\nActual empleado Atlántico A"
+      },
+      "scraped_at": "2026-07-15T04:56:24.550Z"
+    },
+    {
+      "offer_id": "E930ED80E9BB1E0261373E686DCF3405",
       "titulo": "Técnico en sistemas con experiencia en soporte ZO",
       "empresa": "",
       "lugar": "",
       "fecha": "4,5 TP",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-en-sistemas-con-experiencia-en-soporte-zo-en-medellin-577C167FF5D248FE61373E686DCF3405#lc=ListOffers-Score6-6",
-      "auditoria": {
-        "score": 80,
-        "recomendar": true,
-        "requiere_finde": false,
-        "categoria": "Mesa de Ayuda",
-        "razon": "El candidato tiene experiencia en soporte y habilidades técnicas relevantes para el cargo de Técnico en sistemas con experiencia en soporte ZO.",
-        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nTécnico en sistemas con experiencia en soporte ZO\n\nTP - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\n$ 1.746.882,00 (Mensual) Contrato a término fijo Tiempo Completo\n\n¡Únete a TP como Especialista Expert! ¿Listo para dar el primer paso? ¡Esta oportunidad es para ti! Lleva tu carrera al siguiente nivel en el TOP Team ¡Únete a nosotros y marca la diferencia! ¿Por qué elegir TP? Salario competi"
-      },
-      "scraped_at": "2026-07-13T14:35:34.051Z"
-    },
-    {
-      "offer_id": "77EAD41016ADB34061373E686DCF3405",
-      "titulo": "Asesor Soporte Técnico Chat y Voz",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4 ATENTO S.A.",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-soporte-tecnico-chat-y-voz-medellin-bachiller-en-medellin-77EAD41016ADB34061373E686DCF3405#lc=ListOffers-Score6-7",
-      "auditoria": {
-        "score": 80,
-        "recomendar": true,
-        "requiere_finde": false,
-        "categoria": "Mesa de Ayuda",
-        "razon": "El candidato tiene experiencia en servicio al cliente y soporte técnico, y su formación en análisis y desarrollo de software es relevante para el cargo de Asesor Soporte Técnico Chat y Voz.",
-        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nAsesor Soporte Técnico Chat y Voz - medellin Bachiller\n\nATENTO S.A. - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\n$ 1.750.905,00 (Mensual) Contrato a término indefinido Tiempo Completo\n\nImportante multinacional del sector requiere para su equipo de trabajo, técnicos o tecnólogos en cualquier carrera con experiencia en servicio al cliente y ventas, dinámico y proactivo con ganas de trabajar."
-      },
-      "scraped_at": "2026-07-13T14:35:38.254Z"
-    },
-    {
-      "offer_id": "43F26DAB43B0599F61373E686DCF3405",
-      "titulo": "Asesor Soporte Técnico Chat y Voz",
-      "empresa": "",
-      "lugar": "",
-      "fecha": "4,4 ATENTO S.A.",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-soporte-tecnico-chat-y-voz-medellin-bachiller-en-medellin-43F26DAB43B0599F61373E686DCF3405#lc=ListOffers-Score6-8",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-en-sistemas-con-experiencia-en-soporte-zo-en-medellin-E930ED80E9BB1E0261373E686DCF3405#lc=ListOffers-Score6-4",
       "auditoria": {
         "score": 50,
         "recomendar": true,
         "requiere_finde": false,
         "categoria": "Otro",
         "razon": "Score estimado",
-        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nAsesor Soporte Técnico Chat y Voz - medellin Bachiller\n\nATENTO S.A. - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\n$ 1.750.905,00 (Mensual) Contrato a término indefinido Tiempo Completo\n\nImportante multinacional del sector requiere para su equipo de trabajo, técnicos o tecnólogos en cualquier carrera con experiencia en servicio al cliente y ventas, dinámico y proactivo con ganas de trabajar. Se establecen las siguientes características: Funciones: Atención, solución, soporte ATENCIÓN 70% CHAT Y 30% VOZ ¿Que perfil debes tener? - Bachiller en adelante Experiencia: 6 meses en Servicio al cliente, soporte, administrativo por call center o presencial ¿Que te brindamos? - Salario legal mínimo vigente + prestaciones de ley + subsidio de transporte + variable por cumplimiento de objetivos Plan carrera y promoción de puesto laboral luego de 6 meses de antigüedad. Contratación inmediata, no pierdas esta gran oportunidad de empleo.\n\nRequerimientos\n\nEducación mínima: Bachillerato / Educación Media\naños de experiencia\n\nPalabras clave: advisor, asesor, apoyo, support, soporte, tecnologo, tecnico, tech, technician, technology, tecnologia, technologist\n\nAyer (actualizada)\n\nAplicar\n Avísame con ofertas similares\n Denunciar empleo\n\nAcerca de ATENTO S.A.\n\nEn Atento somos apasionados de las experiencias de nuestros clientes. Día a día, conectamos a más de 500 millones de consumidores con marcas líderes en 13 países. De esta forma, contribuimos a que importantes empresas atiendan las crecientes demandas de sus clientes al tiempo que mejoramos su eficiencia.\n\n\nEvaluación general\n\n4.4\n\n32.032 Evaluaciones\n\n5\t\n\n61%\n\n4\t\n\n25%\n\n3\t\n\n11%\n\n2\t\n\n1%\n\n1\t\n\n2%\n\n\t\n\n4,06\n\nAmbiente de trabajo\n\n\t\n\n3,98\n\nSalario y prestaciones\n\n\t\n\n3,74\n\nOportunidades de carrera\n\n\t\n\n3,86\n\nDirector general\n\n91% profesionales recomiendan trabajar aquí\n\n Servicio al cliente colfondos\n\nActual empleado Bogotá, D.C. Julio, 2"
+        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nTécnico en sistemas con experiencia en soporte ZO\n\nTP - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\n$ 1.746.882,00 (Mensual) Contrato a término fijo Tiempo Completo\n\n¡Únete a TP como Especialista Expert! ¿Listo para dar el primer paso? ¡Esta oportunidad es para ti! Lleva tu carrera al siguiente nivel en el TOP Team ¡Únete a nosotros y marca la diferencia! ¿Por qué elegir TP? Salario competitivo: $ 1.746.882 + bonificaciones por desempeño Crecimiento profesional, ¡aquí tu potencial no tiene límites! Contrato a término indefinido Capacitación paga y formación diseñada para impulsar tu éxito. Acceso a programas de bienestar, fondo de empleados y descuentos con aliados. Experiencia global en una multinacional con una cultura diversa e inclusiva. ¿Qué buscamos en ti? Nivel de Idioma(s): Español Educación: Diploma de Bachiller - Técnico o tecnólogo en sistemas Disponibilidad: Completa para trabajar en nuestros horarios estructurados de ocho horas diarias, 44 horas a la semana. Pasión por brindar una atención al cliente excepcional orientada a la solución de problemas. Experiencia Laboral: 6 meses en soporte Lugar de Trabajo MEDELLIN Lead the Way! En TP no solo ofrecemos empleos, creamos carreras. Como líderes globales en experiencia del cliente, brindamos un entorno dinámico donde tu talento, pasión y ambición impulsan el éxito real. Aplican términos y condiciones.\n\nRequerimientos\n\nEducación mínima: Bachillerato / Educación Media\naños de experiencia\n\nPalabras clave: tecnologo, tecnico, tech, technician, technology, tecnologia, technologist, system, apoyo, support, soporte\n\nHace 15 horas (actualizada)\n\nAplicar\n Avísame con ofertas similares\n Denunciar empleo\n\nAcerca de TP\n\nSomos líderes mundiales en gestión omnicanal de la experiencia del cliente. Teleperformance conecta a las más grandes y respetadas marcas del planeta con sus clientes, proporcionándoles servicios al"
       },
-      "scraped_at": "2026-07-13T14:35:43.334Z"
+      "scraped_at": "2026-07-15T04:56:30.796Z"
     },
     {
-      "offer_id": "067BC3853A849D8F61373E686DCF3405",
-      "titulo": "Soporte Técnico Nivel 1 Medellin",
+      "offer_id": "CD589F68AD849A0261373E686DCF3405",
+      "titulo": "Auxiliar de Tecnologia Soporte Tecnico Medellin",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,5 TP",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-nivel-1-medellin-en-medellin-067BC3853A849D8F61373E686DCF3405#lc=ListOffers-Score6-10",
+      "fecha": "MEDIC COLOMBIA SAS",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-auxiliar-de-tecnologia-soporte-tecnico-medellin-en-bogota-dc-CD589F68AD849A0261373E686DCF3405#lc=ListOffers-Score6-9",
       "auditoria": {
         "score": 50,
         "recomendar": true,
         "requiere_finde": false,
         "categoria": "Otro",
         "razon": "Score estimado",
-        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nSoporte Técnico Nivel 1 Medellin\n\nTP - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\nA convenir Contrato a término indefinido Tiempo Completo\n\n¡ÚNETE A TP COMO SOPORTE TÉCNICO NIVEL 1- Medellín! TP es una compañía global de servicios digitales para negocios. Nuestra escala global y presencia local nos permiten ser una fuerza para el bien al apoyar a nuestras comunidades, a nuestros clientes, a sus consumidores y al medio ambiente. Ofrecemos servicios empresariales avanzados y digitalmente potenciados para ayudar a las mejores marcas del mundo a optimizar sus operaciones de manera significativa y sostenible. ¿Cuáles serán tus funciones? Gestionar tareas masivas (crecimientos, traslados, desmontes) según la programación y tiempos definidos. Ser el punto principal de contacto del área de IT para la atención de incidencias y solicitudes a través de ServiceNow, correo corporativo y llamadas, siguiendo los protocolos establecidos. Configurar y dar soporte técnico a hardware y software de los equipos de cómputo (físicos y virtuales) de la campaña asignada, cumpliendo con los SLA definidos. Garantizar la disponibilidad y correcto funcionamiento de salas de capacitación y reunión. Acompañar y dar soporte a pruebas de nuevos servicios, nuevas centrales y proyectos de infraestructura IT, asegurando la documentación correspondiente. Requisitos: Formación académica: Técnico, tecnólogo o profesional en Ingeniería Electrónica, Telecomunicaciones, Sistemas o áreas afines. Experiencia: Mínimo 6 meses en cargos similares de Soporte a usuario final, deseable en el sector de Tecnología y Operaciones de IT. Conocimientos técnicos: Conocimiento deseable en: Fundamentos de Networking (Redes LAN/WAN), sistemas Operativos Windows / OS X / Linux, Citrix, VmWare, Windows Server, aplicaciones de ofimática, documentación y estandarización de procesos. Ubicación: Medellín Lo que ofrecemos: Co"
+        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nAuxiliar de Tecnologia Soporte Tecnico Medellin\n\nMEDIC COLOMBIA SAS - Medellín, Antioquia\n\nOferta\nEmpresa\nSalarios\nOfertas similares\nDescripción de la oferta\nA convenir Contrato de Obra o labor Tiempo Completo\n\nAuxiliar de Tecnología\nImportante compañía se encuentra en la búsqueda de un/a Auxiliar de Tecnología, quien será responsable de brindar soporte técnico integral, asegurando el correcto funcionamiento de los equipos, redes y herramientas tecnológicas de la organización.\nResponsabilidades principales\nBrindar soporte técnico presencial y remoto a usuarios.\nRealizar mantenimiento preventivo y correctivo de equipos de cómputo (PC y laptops).\nInstalación y configuración de software corporativo y herramientas tecnológicas.\nSoporte en redes internas y conectividad a internet.\nInstalación y configuración de impresoras y periféricos.\nGestión y control del inventario de equipos tecnológicos.\nAtención de solicitudes de soporte según requerimientos del área.\nPerfil requerido\nTécnico o tecnólogo en Sistemas, redes, mantenimiento o áreas afines.\nMínimo 1 año de experiencia en soporte técnico.\nConocimientos en mantenimiento de equipos, redes básicas y herramientas corporativas.\nOrientación al servicio, resolución de problemas y trabajo en equipo.\nDisponibilidad para movilizarse entre puntos de servicio.\nCondiciones laborales\nSalario: $1.802.600\nContrato. obra labor\nHorario: Lunes a viernes de 8:00 a.m. a 5:00 p.m. | Sábados de 8:00 a.m. a 12:00 m.\nUbicación: Medellin\nSi te interesa la oferta, no dudes en postularte.\n\nRequerimientos\n\nEducación mínima: Universidad / Carrera técnica\naños de experiencia\n\nPalabras clave: ayudante, asistente, auxiliar, aux, auxiliary, assistant, helper, aide, tecnologo, tecnico, tech, technician, technology, tecnologia, technologist, apoyo, support, soporte\n\nHace 16 horas (actualizada)\n\nAplicar\n Avísame con ofertas similares\n Denunciar empleo\n\nAcerca de MEDIC COLOMBIA SAS\n\nEmpresa dedicada al come"
       },
-      "scraped_at": "2026-07-13T14:35:48.326Z"
+      "scraped_at": "2026-07-15T04:56:37.021Z"
     },
     {
-      "offer_id": "E729DA949576B87861373E686DCF3405",
-      "titulo": "Analista de soporte técnico (Con Discapacidad Física)",
+      "offer_id": "97DBB2BA2342D3B061373E686DCF3405",
+      "titulo": "Agente de servicio al cliente / Soporte técnico Nivel 1 DomoNow",
       "empresa": "",
       "lugar": "",
-      "fecha": "Agencia de Empleo de Comfenalco Antioquia",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-tecnico-con-discapacidad-fisica-en-medellin-E729DA949576B87861373E686DCF3405#lc=ListOffers-Score6-11",
+      "fecha": "4,0 OFIMA S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-agente-de-servicio-al-cliente-soporte-tecnico-nivel-1-domonow-en-medellin-97DBB2BA2342D3B061373E686DCF3405#lc=ListOffers-Score6-10",
       "auditoria": {
         "score": 50,
         "recomendar": true,
         "requiere_finde": false,
         "categoria": "Otro",
         "razon": "Score estimado",
-        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nAnalista de soporte técnico (Con Discapacidad Física)\n\nAgencia de Empleo de Comfenalco Antioquia - Medellín, Antioquia\n\nOferta\nEmpresa\nSalarios\nOfertas similares\nDescripción de la oferta\nA convenir Contrato a término indefinido Tiempo Completo\n\nEn B-SECURE creemos que la diversidad es nuestra mayor fuerza. Por eso, estamos en la búsqueda de dos nuevos integrantes con ganas de crecer y aportar su talento en áreas clave de nuestra organización. Áreas Disponibles Estamos abiertos a perfiles que quieran desarrollarse en: Sistemas / TI: Soporte técnico, gestión de redes o desarrollo (según tu especialidad). ¿Qué buscamos? Personas proactivas, con orientación al detalle y ganas de trabajar en equipo. Manejo de herramientas de oficina (Office 365, Google Workspace, etc.). Certificado de discapacidad (indispensable para la aplicación a estas vacantes específicas). ¡Muchas ganas de aprender y proponer! Lo que te ofrecemos Cultura Inclusiva: Un ambiente basado en el respeto, la equidad y la empatía. Ajustes Razonables: Adaptamos el puesto de trabajo y las herramientas según tus necesidades específicas para que puedas brillar. Crecimiento: Plan de carrera y capacitación constante. Contratación: Término indefinido con todas las prestaciones de ley. Formación: Técnica Experiencia: 6 Meses Salario: 1 SMMLV Ubicación: Medellín Horario: Lunes a Viernes de 8:00 AM a 6:00 PM No buscamos que te adaptes a nosotros, queremos crecer contigo.\n\nRequerimientos\n\nEducación mínima: Universidad / Carrera técnica\naños de experiencia\n\nPalabras clave: analyst, apoyo, support, soporte, tecnologo, tecnico, tech, technician, technology, tecnologia, technologist, physical, fisica\n\nAyer (actualizada)\n\nAplicar\n Avísame con ofertas similares\n Denunciar empleo\n\nAcerca de Agencia de Empleo de Comfenalco Antioquia\n\nLa Agencia de Gestión y Colocación de Empleo Comfenalco Antioquia te acerca a oportunidades de empleo, de acuerdo con tu perfil, experiencia e in"
+        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nAgente de servicio al cliente / Soporte técnico Nivel 1 DomoNow\n\nOFIMA S.A.S - Medellín, Antioquia\n\nOferta\nEmpresa\nEvaluaciones\nSalarios\nOfertas similares\nDescripción de la oferta\nA convenir Contrato a término indefinido Tiempo Completo\n\nEn OFIMA S.A.S., compañía con más de 35 años desarrollando soluciones tecnológicas empresariales, buscamos un Agente de Servicio al Cliente Soporte Técnico Nivel 1 para nuestra línea de negocio Domonow, plataforma especializada en administración de propiedad horizontal. Buscamos una persona orientada al servicio, con habilidades de comunicación, capacidad para resolver problemas y pasión por ayudar a los usuarios a adoptar soluciones tecnológicas. Su principal reto será acompañar a nuestros clientes durante los procesos de implementación, capacitación y soporte funcional de la plataforma, garantizando una experiencia positiva y una adecuada adopción del software. ¡Te invitamos a postularte y formar parte de nuestro equipo! Responsabilidades Liderar procesos de implementación de la plataforma Domonow en nuevas copropiedades. Configurar la plataforma de acuerdo con las necesidades funcionales de cada cliente. Diseñar, estructurar y realizar seguimiento a cronogramas de implementación. Capacitar administradores, residentes y personal operativo en el uso de la plataforma. Brindar acompañamiento continuo durante las fases de implementación y estabilización. Atender requerimientos, consultas e incidencias funcionales de primer nivel. Gestionar y documentar solicitudes, casos e interacciones con clientes. Promover la adopción de la plataforma mediante estrategias de acompañamiento y gestión del cambio. Realizar seguimiento a indicadores de uso, satisfacción y adopción del software. Coordinar con áreas internas de producto, tecnología y soporte para la resolución de casos. Elaborar reportes de avance, implementación y experiencia del cliente. Escalar oportunamente incidencias técnicas que re"
       },
-      "scraped_at": "2026-07-13T14:35:54.768Z"
+      "scraped_at": "2026-07-15T04:56:43.265Z"
     },
     {
-      "offer_id": "8D880D2C4E2D4D4861373E686DCF3405",
-      "titulo": "Junior Recruiter Bilingue (Barranquilla, Bogota, Cali, Medelin, Bucaramanga)",
+      "offer_id": "0EC424EA942EA7B361373E686DCF3405",
+      "titulo": "Analista de Soporte Mesa de Ayuda",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "Importante empresa del sector",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-soporte-mesa-de-ayuda-en-medellin-0EC424EA942EA7B361373E686DCF3405#lc=ListOffers-Score6-0",
+      "auditoria": {
+        "score": 50,
+        "recomendar": true,
+        "requiere_finde": false,
+        "categoria": "Otro",
+        "razon": "Score estimado",
+        "descripcion": "Buscar empleos\nLogin Crear HdV\n Volver al listado\nAnalista de Soporte Mesa de Ayuda\n\nImportante empresa del sector - Medellín, Antioquia\n\nOferta\nOfertas similares\nDescripción de la oferta\n$ 2.390.000,00 (Mensual) Contrato a término indefinido Tiempo Completo\n\nLa empresa Consorcio ITS ubicada en la ciudad de Medellín se encuentra en la búsqueda para su equipo de trabajo analista de soporte mesa de ayuda con 1 año de experiencia en soporte técnico, mesa de ayuda y atención a usuarios. Formación académica: Tecnología en sistemas, telecomunicaciones, redes, electrónica o áreas afines (graduado). Requerimientos y/o conocimientos para el cargo: - Manejo de Microsoft 365 (Outlook, Teams, Office). - Experiencia en herramientas de gestión de tickets (JIRA o similares). - Conocimientos básicos en Active Directory, redes LAN y gestión de activos tecnológicos. - Deseable conocimiento en prácticas ITIL. Misión del cargo: Brindar soporte técnico oportuno a los usuarios, gestionando incidentes y requerimientos, garantizando el correcto funcionamiento de los equipos y recursos tecnológicos de la organización. Funciones: - Atender y gestionar solicitudes, incidentes y requerimientos de los usuarios. - Brindar soporte técnico remoto y presencial. - Realizar diagnóstico y solución de fallas de hardware y software. - Administrar inventarios y activos tecnológicos. - Realizar alistamiento de equipos, gestionar usuarios y permisos básicos, así como hacer seguimiento y cierre oportuno de los casos registrados. Salario: $2.390.000 + prestaciones legales vigentes. Tipo de contrato: Término indefinido. Horario: Lunes a Viernes rango horario de 7:00 a.m a 5;00 p.m, sábado hasta el medio día, Debe tener disponibilidad para trabajar en horarios rotativos, ya que se maneja la figura de disponibilidad que se rota de manera semanal. Lugar de trabajo: Medellín.\n\nRequerimientos\n\nEducación mínima: Universidad / Carrera tecnológica\n1 año de experiencia\n\nPalabras clave: analyst, apoyo, support, soporte"
+      },
+      "scraped_at": "2026-07-15T04:56:49.499Z"
+    },
+    {
+      "offer_id": "F7A2CC6CC91A8A8461373E686DCF3405",
+      "titulo": "Customer Service Bilingue (Healthcare)",
       "empresa": "",
       "lugar": "",
       "fecha": "4,6 SOLVO S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-junior-recruiter-bilingue-barranquilla-bogota-cali-medelin-bucaramanga-en-medellin-8D880D2C4E2D4D4861373E686DCF3405#lc=ListOffers-Score6-1",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-customer-service-bilingue-healthcare-en-medellin-F7A2CC6CC91A8A8461373E686DCF3405#lc=ListOffers-Score5-1",
       "auditoria": {
         "razon": "Filtro Regex: Rol no tech/QA"
       }
     },
     {
-      "offer_id": "382E0CB689E2D7A661373E686DCF3405",
-      "titulo": "Reclutador Junior Bilingue Remoto",
+      "offer_id": "70D8ADE16632605561373E686DCF3405",
+      "titulo": "Asesor call center / Para personas con discapacidad",
       "empresa": "",
       "lugar": "",
-      "fecha": "4,6 SOLVO S.A.S",
-      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-reclutador-junior-bilingue-remoto-en-medellin-382E0CB689E2D7A661373E686DCF3405#lc=ListOffers-Score6-7",
+      "fecha": "4,8 AGENCIA DE EMPLEO COMFAMA",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-call-center-para-personas-con-discapacidad-en-medellin-70D8ADE16632605561373E686DCF3405#lc=ListOffers-Score5-14",
+      "auditoria": {
+        "razon": "Filtro Regex: Rol no tech/QA"
+      }
+    },
+    {
+      "offer_id": "982520D2870DD7C261373E686DCF3405",
+      "titulo": "Coordinador de calidad y formación /Call Center Bilingüe",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,3 BPO Global Services S.A.S",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-coordinador-de-calidad-y-formacion-call-center-bilingue-en-medellin-982520D2870DD7C261373E686DCF3405#lc=ListOffers-Score6-3",
+      "auditoria": {
+        "razon": "Filtro Regex: Rol no tech/QA"
+      }
+    },
+    {
+      "offer_id": "AF102C601AB2D27061373E686DCF3405",
+      "titulo": "Operario de Calidad Sector Constructor",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "GENTE OK",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-operario-de-calidad-sector-constructor-en-medellin-AF102C601AB2D27061373E686DCF3405#lc=ListOffers-Score6-6",
+      "auditoria": {
+        "razon": "Filtro Regex: Rol no tech/QA"
+      }
+    },
+    {
+      "offer_id": "EC98353DB4CBA47F61373E686DCF3405",
+      "titulo": "Analista de Mercadeo. Técnico/a, tecnólogo/a comercial. 1 año de exp en ventas, compras o mercadeo",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,8 AGENCIA DE EMPLEO COMFAMA",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-analista-de-mercadeo-tecnicoa-tecnologoa-comercial-1-ano-de-exp-en-ventas-compras-o-mercadeo-maxempleomedellin-en-medellin-EC98353DB4CBA47F61373E686DCF3405#lc=ListOffers-Score5-11",
+      "auditoria": {
+        "razon": "Filtro Regex: Rol no tech/QA"
+      }
+    },
+    {
+      "offer_id": "3E4336B4E9F85D6861373E686DCF3405",
+      "titulo": "Asesor Junior Tecnología, Telecomunicaciones y Financiamiento",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "4,6 Eficacia",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-junior-tecnologia-telecomunicaciones-y-financiamiento-persona-comercial-de-operadores-como-wom-tigo-movistar-etc-en-medellin-3E4336B4E9F85D6861373E686DCF3405#lc=ListOffers-Score6-0",
+      "auditoria": {
+        "razon": "Filtro Regex: Rol no tech/QA"
+      }
+    },
+    {
+      "offer_id": "C60C75CECD86447661373E686DCF3405",
+      "titulo": "Asesor(a) Comercial Junior Con Moto",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "UNI2 Microcrédito",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesora-comercial-junior-con-moto-medellin-en-medellin-C60C75CECD86447661373E686DCF3405#lc=ListOffers-Score6-13",
+      "auditoria": {
+        "razon": "Filtro Regex: Rol no tech/QA"
+      }
+    },
+    {
+      "offer_id": "3C2A9A64DAD40E9E61373E686DCF3405",
+      "titulo": "Asesor Comercial Junior / Sin Experiencia Con Moto",
+      "empresa": "",
+      "lugar": "",
+      "fecha": "UNI2 Microcrédito",
+      "url": "https://co.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesor-comercial-junior-sin-experiencia-con-moto-medellin-en-medellin-3C2A9A64DAD40E9E61373E686DCF3405#lc=ListOffers-Score6-16",
       "auditoria": {
         "razon": "Filtro Regex: Rol no tech/QA"
       }

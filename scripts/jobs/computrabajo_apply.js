@@ -7,7 +7,7 @@ const { robustLogin } = require('./ct_login_helper');
 
 const BASE_DIR   = path.resolve(__dirname, '..', '..');
 const JOBS_DIR   = path.join(BASE_DIR, 'data', 'jobs');
-const CV_BASE    = path.join(JOBS_DIR, 'cv_base.md');
+const CV_BASE    = path.join(BASE_DIR, 'data', 'sources', 'jobs', 'cv_base.md');
 
 const AppStore = require('../../runtime/stores/ApplicationStore');
 const LedgerStore = require('../../runtime/stores/LedgerStore');
@@ -18,7 +18,7 @@ const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
 const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 
 const AUTO_MODE = process.argv.includes('--auto');
-const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=60').split('=')[1]);
+const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=50').split('=')[1]);
 const APPROVAL_TIMEOUT_MS = 120_000;
 
 // â”€â”€â”€ Login retry guard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -92,7 +92,7 @@ async function sendTelegram(text, keyboard = null) {
   if (keyboard) body.reply_markup = { inline_keyboard: keyboard };
   const r = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
     body: JSON.stringify(body),
   });
   const data = await r.json();
@@ -532,10 +532,9 @@ async function main() {
   log(`Sesion completada. Total aplicaciones: ${nuevasAplicadas.length}`);
   if (nuevasAplicadas.length > 0) {
     await sendTelegram(
-      `ðŸ“Š <b>Resumen Auto-Apply</b>\n${nuevasAplicadas.slice(-5).map(a => `âœ… ${a.titulo} â€” ${a.empresa}`).join('\n')}`
+      `\u{1F4CA} <b>Resumen Auto-Apply</b>\n${nuevasAplicadas.slice(-5).map(a => `\u2705 ${a.cargo || 'Cargo'} \u2014 ${a.empresa || 'Empresa'}`).join('\n')}`
     );
   }
 }
 
 main().catch(e => { console.error('Error:', e.message); process.exit(1); });
-
