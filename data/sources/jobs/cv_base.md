@@ -80,13 +80,15 @@ COOVISOCIAL — Cooperativa de Trabajo Asociado *(Sep 2019 – Oct 2021)*
 - QA Automation Bootcamp · CESDE *(En curso — 2026)*
 - Bases de Datos — Sistemas de Gestión · SENA *(2026)*
 - Manejo de Herramientas Microsoft Office 2016: Excel · SENA *(Jun 2026 — 40h, nota 4.5)*
-- EF SET English Certificate · EF Education First *(B1 — 43/50)*
+- EF SET English Certificate 68/100 · C1 Advanced · EF Education First *(Mar 2026)*
+- HubSpot Service Hub Software Certification · HubSpot Academy *(Mar 2026 — válido hasta Abr 2027)*
+- HubSpot Inbound Certification · HubSpot Academy *(Mar 2026 — válido hasta Abr 2028)*
 
 ---
 
 ## IDIOMAS
 
-Español (nativo) · Inglés (B1 — lectura técnica fluida)
+Español (nativo) · Inglés (**C1 Advanced** — EF SET 68/100, Mar 2026)
 
 ---
 *Perfil: QA Automation Junior / Analista de Calidad / Tester Manual-Automatizado*
