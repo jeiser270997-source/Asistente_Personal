@@ -1,4 +1,4 @@
-﻿/**
+/**
  * job_loop.js â€” Pipeline completo de Job Hunter
  * Loop x5: Scrape â†’ Analyze â†’ Tailor CV â†’ Apply
  * 
@@ -10,14 +10,14 @@ const fs    = require('node:fs');
 const path  = require('node:path');
 const { execSync, spawn } = require('node:child_process');
 const { askLLM } = require('../../lib/ai/llm_service');
+const { PATHS }  = require('../../lib/data/paths');
 const { chromium } = require('playwright');
 const { robustLogin } = require('./ct_login_helper');
 
-const BASE_DIR  = path.resolve(__dirname, '..', '..');
-const JOBS_DIR  = path.join(BASE_DIR, 'data', 'jobs');
-const CV_BASE   = path.join(BASE_DIR, 'data', 'sources', 'jobs', 'cv_base.md');
-const CV_OUT    = path.join(JOBS_DIR, 'cv_tailored');
-const APPLY_LOG = path.join(JOBS_DIR, 'aplicaciones.json');
+const CV_BASE   = PATHS.CV_BASE;
+const CV_OUT    = PATHS.JOBS_TAILORED;
+const APPLY_LOG = PATHS.APLICACIONES;
+
 
 const LOOPS     = parseInt((process.argv.find(a => a.startsWith('--loops=')) || '--loops=5').split('=')[1]);
 const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=60').split('=')[1]);

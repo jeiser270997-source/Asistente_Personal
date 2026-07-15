@@ -12,11 +12,10 @@ const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 const { askLLM }   = require('../../lib/ai/llm_service');
+const { PATHS }    = require('../../lib/data/paths');
 
-const BASE_DIR = path.resolve(__dirname, '..', '..');
-const JOBS_DIR = path.join(BASE_DIR, 'data', 'jobs');
-const OUT_PATH = path.join(JOBS_DIR, 'computrabajo.json');       // todas las encontradas
-const QUEUE_PATH = path.join(JOBS_DIR, 'apply_queue.json');      // aprobadas por IA â†’ listas para aplicar
+const OUT_PATH   = PATHS.COMPUTRABAJO_JSON;            // todas las encontradas
+const QUEUE_PATH = PATHS.APPLY_QUEUE;                  // aprobadas por IA → listas para aplicar
 
 const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 

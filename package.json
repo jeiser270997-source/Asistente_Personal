@@ -12,7 +12,6 @@
     "json-rules-engine": "^7.3.1",
     "openai": "^6.46.0",
     "pdf-parse": "^2.4.5",
-    "pino": "^10.3.1",
     "playwright": "^1.61.1",
     "telegraf": "^4.16.3",
     "valibot": "^1.4.2"

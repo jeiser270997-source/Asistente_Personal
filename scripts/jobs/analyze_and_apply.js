@@ -9,13 +9,13 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..'
 const fs = require('node:fs');
 const path = require('node:path');
 const { askLLM } = require('../../lib/ai/llm_service');
+const { PATHS }  = require('../../lib/data/paths');
 const { chromium } = require('playwright');
 const { robustLogin } = require('./ct_login_helper');
 
-const BASE_DIR = path.resolve(__dirname, '..', '..');
-const JOBS_DIR = path.join(BASE_DIR, 'data', 'jobs');
-const CT_FILE = path.join(JOBS_DIR, 'computrabajo.json');
-const APPLY_LOG = path.join(JOBS_DIR, 'aplicaciones.json');
+const CT_FILE   = PATHS.COMPUTRABAJO_JSON;
+const APPLY_LOG = PATHS.APLICACIONES;
+
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
 const CT_PASS = process.env.COMPUTRABAJO_PASS;
 const BATCH = parseInt(process.argv.find(a => a.startsWith('--batch='))?.split('=')[1] || '5');

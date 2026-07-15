@@ -1,0 +1,65 @@
+name: Telegram Listener
+
+on:
+  schedule:
+    - cron: '*/3 * * * *'   # Cada 3 minutos
+  workflow_dispatch:
+
+jobs:
+  listen:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Litestream
+        run: |
+          curl -fsSL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz | tar -xz
+          sudo mv litestream /usr/local/bin/
+
+      - name: Restore databases from R2
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          mkdir -p runtime lib/data
+          litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db || true
+          litestream restore -if-replica-exists -config litestream.yml lib/data/memoria_hipocampo.db || true
+          echo "✅ DBs restauradas"
+
+      - name: Run migrations
+        run: node runtime/migrate.js
+
+      - name: Run Telegram Listener
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
+          FREEBUFF_API_KEY: ${{ secrets.FREEBUFF_API_KEY }}
+        run: node scripts/integrations/telegram_listener.js
+
+      - name: Replicate databases to R2
+        if: always()
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          litestream replicate -exec "echo done" -config litestream.yml &
+          sleep 10
+          kill %1 2>/dev/null || true
