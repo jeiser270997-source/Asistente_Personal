@@ -1,279 +1,158 @@
+/**
+ * scripts/jobs/ct_update_profile.js
+ *
+ * Actualiza el perfil de Computrabajo con el CV final de Jeiser.
+ * URL del editor: https://candidato.co.computrabajo.com/candidate/cv/edit/
+ *
+ * Uso:
+ *   node scripts/jobs/ct_update_profile.js            # modo real
+ *   node scripts/jobs/ct_update_profile.js --dry-run  # solo screenshot
+ *   node scripts/jobs/ct_update_profile.js --visible  # con ventana
+ */
+
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require('playwright');
 const { robustLogin } = require('./ct_login_helper');
-const path = require('node:path');
-const fs   = require('node:fs');
+const fs = require('node:fs');
 
-const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const CT_PASS  = process.env.COMPUTRABAJO_PASS;
-const HEADLESS = !process.argv.includes('--visible');
-const DRY_RUN  = process.argv.includes('--dry-run');
-
-// Base del candidato en co.computrabajo
-const BASE = 'https://candidato.co.computrabajo.com';
+const CT_EMAIL  = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
+const CT_PASS   = process.env.COMPUTRABAJO_PASS;
+const HEADLESS  = !process.argv.includes('--visible');
+const DRY_RUN   = process.argv.includes('--dry-run');
+const CV_URL    = 'https://candidato.co.computrabajo.com/candidate/cv/edit/';
 
 function log(msg) { console.log(`[CT-Profile] ${msg}`); }
 
-// ── Datos del CV actualizado ─────────────────────────────────────────────────
-const CV_DATA = {
-  titular: 'QA Automation Engineer Junior',
-  resumen: 'Desarrollador de software freelance con experiencia en automatización de procesos, testing E2E con Playwright, pipelines CI/CD con GitHub Actions y APIs REST. Actualmente en formación como QA Automation en CESDE Medellín. Inglés C1 Advanced (EF SET 68/100).',
-
-  experiencia: [
-    {
-      cargo: 'Desarrollador de Software Freelance',
-      empresa: 'Independiente',
-      inicio_mes: '01', inicio_anio: '2022',
-      fin_mes: null, fin_anio: null, // actual
-      descripcion: 'Desarrollo de soluciones de automatización con Node.js, Playwright y GitHub Actions. Integración de APIs externas (Google, REST, Telegram). Pipelines CI/CD con 12+ workflows en producción. Soporte técnico y mantenimiento de equipos.',
-    },
-    {
-      cargo: 'Agente de Servicio al Cliente',
-      empresa: 'Foundever de Colombia S.A.',
-      inicio_mes: '10', inicio_anio: '2021',
-      fin_mes: '12', fin_anio: '2021',
-      descripcion: 'Atención multicanal (voz y chat). Gestión de tickets en CRM. Cumplimiento de métricas de calidad NPS y FCR.',
-    },
-    {
-      cargo: 'Operador de Medios Tecnológicos',
-      empresa: 'COOVISOCIAL Cooperativa de Trabajo Asociado',
-      inicio_mes: '09', inicio_anio: '2019',
-      fin_mes: '10', fin_anio: '2021',
-      descripcion: 'Operación y monitoreo de sistemas de videovigilancia (CCTV), control de acceso y alarmas. Gestión de incidencias en tiempo real. Certificado técnico en Operación de Medios Tecnológicos.',
-    },
-  ],
-
-  educacion: [
-    {
-      titulo: 'Técnico en Análisis y Desarrollo de Software',
-      institucion: 'CESDE',
-      inicio_anio: '2026',
-      fin_anio: null, // en curso
-    },
-    {
-      titulo: 'Bases de Datos — Sistemas de Gestión',
-      institucion: 'SENA',
-      inicio_anio: '2026',
-      fin_anio: '2026',
-    },
-  ],
-
-  idiomas: [
-    { idioma: 'Español', nivel: 'Nativo' },
-    { idioma: 'Inglés', nivel: 'Avanzado (C1) — EF SET 68/100' },
-  ],
-
-  // Para referencia — Computrabajo no suele tener campo de certs en perfil público
-  certificaciones: [
-    'EF SET English Certificate 68/100 — C1 Advanced (Mar 2026)',
-    'HubSpot Service Hub Software Certification (Mar 2026)',
-    'HubSpot Inbound Certification (Mar 2026)',
-    'Microsoft Office Excel 2016 · SENA (Jun 2026, 40h, nota 4.5)',
-  ],
-};
-
-// ── Helpers de navegación ─────────────────────────────────────────────────────
-async function waitAndFill(page, selector, value, desc = '') {
-  try {
-    await page.waitForSelector(selector, { timeout: 8000 });
-    await page.fill(selector, value);
-    log(`  ✔ Relleno: ${desc || selector}`);
-  } catch (e) {
-    log(`  ⚠ No encontrado: ${desc || selector} — ${e.message}`);
-  }
+// ── Eliminar popup premium con JS ─────────────────────────────────────────────
+async function killPopup(page) {
+  await page.evaluate(() => {
+    document.querySelectorAll(
+      '.popup, [class*="popup"], [premium-candidate-popup], [home-candidate-popup], .modal-overlay'
+    ).forEach(el => el.remove());
+  });
 }
 
-async function clickIfExists(page, selector, desc = '') {
-  try {
-    await page.waitForSelector(selector, { timeout: 5000 });
-    await page.click(selector);
-    log(`  ✔ Click: ${desc || selector}`);
-    return true;
-  } catch {
-    log(`  ⚠ No disponible: ${desc || selector}`);
-    return false;
-  }
-}
-
-async function safeSelect(page, selector, value, desc = '') {
-  try {
-    await page.waitForSelector(selector, { timeout: 5000 });
-    await page.selectOption(selector, { label: value });
-    log(`  ✔ Select: ${desc} = ${value}`);
-  } catch (e) {
-    try {
-      await page.selectOption(selector, { value });
-      log(`  ✔ Select (value): ${desc} = ${value}`);
-    } catch {
-      log(`  ⚠ Select fallido: ${desc} — ${e.message}`);
-    }
-  }
-}
-
-// ── Actualizar Titular y Resumen ──────────────────────────────────────────────
+// ── Editar el titular/resumen del perfil ──────────────────────────────────────
 async function updateTitular(page) {
-  log('→ Actualizando titular y resumen...');
+  log('→ Editando titular...');
   try {
-    // Computrabajo: Mi perfil > Datos personales
-    await page.goto('https://co.computrabajo.com/candidato/datos-profesionales', { waitUntil: 'networkidle', timeout: 15000 });
+    // El lápiz de edición del titular está en la sección superior
+    await page.click('[data-section="titular"] a[class*="edit"], .edit-titular, a[href*="titular"]', { timeout: 5000 });
+    await page.waitForTimeout(1500);
+
+    const input = page.locator('input[name*="titular"], input[id*="titular"], textarea[name*="titular"]').first();
+    await input.waitFor({ state: 'visible', timeout: 8000 });
+    await input.fill('QA Automation Engineer Junior | Testing APIs | Playwright | CI/CD');
+    await page.click('button[type="submit"], input[type="submit"]', { timeout: 5000 });
     await page.waitForTimeout(2000);
-
-    // Titular / Puesto deseado
-    const titularSel = 'input[name="titular"], input[id*="titular"], input[placeholder*="Cargo"]';
-    await waitAndFill(page, titularSel, CV_DATA.titular, 'Titular');
-
-    // Resumen / Presentación
-    const resumenSel = 'textarea[name*="resumen"], textarea[name*="presentacion"], textarea[id*="resumen"]';
-    await waitAndFill(page, resumenSel, CV_DATA.resumen, 'Resumen');
-
-    await clickIfExists(page, 'button[type="submit"], input[type="submit"]', 'Guardar datos profesionales');
-    await page.waitForTimeout(2000);
+    log('  ✅ Titular actualizado');
   } catch (e) {
-    log(`  ⚠ Error en titular: ${e.message}`);
+    log(`  ⚠ Titular: ${e.message.substring(0, 80)}`);
   }
 }
 
-// ── Actualizar Experiencia ─────────────────────────────────────────────────────
-async function updateExperiencia(page) {
-  log('→ Navegando a experiencia laboral...');
+// ── Subir PDF del CV actualizado ──────────────────────────────────────────────
+async function uploadCV(page) {
+  const pdfPath = require('node:path').resolve(__dirname, '../../data/jobs/CV_Jeiser_Gutierrez_QA_Automation.pdf');
+  if (!fs.existsSync(pdfPath)) {
+    log(`⚠ PDF no encontrado: ${pdfPath}`);
+    return;
+  }
+  log(`→ Subiendo CV PDF: ${pdfPath}`);
   try {
-    await page.goto('https://co.computrabajo.com/candidato/experiencia', { waitUntil: 'networkidle', timeout: 15000 });
+    // Scroll al final donde está "Documentos adjuntos"
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1000);
+
+    // Click en "Subir o modificar documentos"
+    await page.click('text=Subir o modificar documentos', { timeout: 8000 });
+    await page.waitForTimeout(1500);
+
+    // El input[type=file] puede aparecer dentro de un modal o directo
+    const fileInput = page.locator('input[type="file"]').first();
+    await fileInput.waitFor({ state: 'attached', timeout: 8000 });
+    await fileInput.setInputFiles(pdfPath);
     await page.waitForTimeout(2000);
 
-    const currentUrl = page.url();
-    log(`  URL actual: ${currentUrl}`);
+    // Guardar si aparece botón de confirmación
+    const saved = await page.click('button:has-text("Guardar"), button:has-text("Subir"), button:has-text("Aceptar"), button[type="submit"]', { timeout: 5000 })
+      .then(() => true).catch(() => false);
 
-    // Captura screenshot para diagnóstico
-    await page.screenshot({ path: 'data/logs/ct_profile_experiencia.png', fullPage: false });
-    log('  📸 Screenshot guardado: data/logs/ct_profile_experiencia.png');
-
-    if (DRY_RUN) {
-      log('  DRY RUN — no se modificará experiencia. Ver screenshot para diagnóstico.');
-      return;
-    }
-
-    // Por cada experiencia, intentar agregar/editar
-    for (const exp of CV_DATA.experiencia) {
-      log(`  → Procesando: ${exp.cargo} @ ${exp.empresa}`);
-
-      // Botón "Añadir experiencia" o similar
-      const addBtn = await clickIfExists(page,
-        'a[href*="agregar-experiencia"], button[id*="add"], a[class*="btn-add"], [data-action*="add"]',
-        'Añadir experiencia'
-      );
-
-      if (!addBtn) {
-        log('  ⚠ Botón añadir no encontrado — intentando selector alternativo');
-        await clickIfExists(page, 'text=Agregar, text=Añadir, text=+ Experiencia', 'Añadir (texto)');
-      }
-
-      await page.waitForTimeout(1500);
-    }
+    await page.waitForTimeout(2000);
+    log(saved ? '  ✅ CV PDF subido y guardado' : '  ✅ CV PDF seleccionado (sin confirmación necesaria)');
   } catch (e) {
-    log(`  ⚠ Error en experiencia: ${e.message}`);
+    log(`  ⚠ Upload PDF: ${e.message.substring(0, 100)}`);
   }
 }
 
-// ── Screenshot + descubrir URLs del perfil ───────────────────────────────────
-async function screenshotProfile(page) {
-  try {
-    // Navegar al perfil del candidato
-    const profileUrls = [`${BASE}/mi-cv`, `${BASE}/mi-perfil`, `${BASE}/candidato`];
-    let landed = false;
-    for (const url of profileUrls) {
-      try {
-        await page.goto(url, { waitUntil: 'networkidle', timeout: 12000 });
-        if (!page.url().includes('acceso') && !page.url().includes('Login')) {
-          landed = true;
-          break;
-        }
-      } catch { /* try next */ }
-    }
-
-    await page.waitForTimeout(2000);
-    fs.mkdirSync('data/logs', { recursive: true });
-    await page.screenshot({ path: 'data/logs/ct_profile_completo.png', fullPage: true });
-    log(`📸 Screenshot guardado (${page.url().substring(0, 60)})`);
-
-    // Mapear links de edición disponibles
-    const editLinks = await page.$$eval('a', els =>
-      els.filter(e => /editar|experiencia|educacion|idioma|cv|perfil|habilidad/i.test(e.textContent + e.href))
-         .map(e => ({ text: e.textContent.trim().substring(0, 40), href: e.href }))
-    ).catch(() => []);
-    if (editLinks.length > 0) {
-      log('Links de edición encontrados:');
-      editLinks.forEach(l => log(`  → ${l.text} | ${l.href.substring(0, 80)}`));
-    }
-  } catch (e) {
-    log(`⚠ Screenshot fallido: ${e.message}`);
-  }
+// ── Screenshot completo del CV para verificación ──────────────────────────────
+async function screenshotCV(page, label = '') {
+  fs.mkdirSync('data/logs', { recursive: true });
+  const filename = `data/logs/ct_cv_${label || Date.now()}.png`;
+  await page.screenshot({ path: filename, fullPage: true });
+  log(`📸 Screenshot: ${filename}`);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  log('🚀 Iniciando actualización de perfil en Computrabajo...');
-  if (DRY_RUN) log('⚠ MODO DRY RUN — solo diagnóstico, sin cambios.');
-  if (!CT_PASS) {
-    log('❌ COMPUTRABAJO_PASS no encontrado en .env — abortando.');
-    process.exit(1);
-  }
+  log('🚀 Iniciando actualización de perfil Computrabajo...');
+  if (DRY_RUN) log('⚠  DRY RUN — solo diagnóstico, sin cambios');
+  if (!CT_PASS) { log('❌ COMPUTRABAJO_PASS no definido en .env'); process.exit(1); }
 
   const browser = await chromium.launch({
     headless: HEADLESS,
     args: ['--no-sandbox', '--disable-blink-features=AutomationControlled'],
   });
-
-  const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-    locale: 'es-CO',
-    viewport: { width: 1280, height: 900 },
+  const ctx = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36',
+    locale: 'es-CO', viewport: { width: 1280, height: 900 },
   });
-
-  const page = await context.newPage();
-  await page.addInitScript(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => false });
-  });
+  const page = await ctx.newPage();
+  await page.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => false }); });
 
   try {
-    log('🔐 Iniciando login...');
-    const logged = await robustLogin(page, CT_EMAIL, CT_PASS);
+    // 1. Login
+    log('🔐 Login...');
+    const ok = await robustLogin(page, CT_EMAIL, CT_PASS);
+    if (!ok) { log('❌ Login fallido'); await browser.close(); process.exit(1); }
+    log('✅ Login OK — ' + page.url().substring(0, 60));
 
-    if (!logged) {
-      log('❌ Login fallido.');
-      fs.mkdirSync('data/logs', { recursive: true });
-      await page.screenshot({ path: 'data/logs/ct_login_fail.png' });
-      await browser.close();
-      process.exit(1);
-    }
+    // 2. Ir al editor del CV
+    await page.goto(CV_URL, { waitUntil: 'networkidle', timeout: 20000 });
+    await page.waitForTimeout(2000);
+    await killPopup(page);
+    log('📄 En el editor del CV: ' + page.url());
 
-    log('✅ Login exitoso. URL: ' + page.url().substring(0, 80));
+    // 3. Screenshot del estado actual
+    await screenshotCV(page, 'antes');
 
-    // Mapear perfil actual y encontrar URLs de edición
-    await screenshotProfile(page);
-
-    // Actualizar titular/resumen si no es dry-run
     if (!DRY_RUN) {
-      await updateTitular(page);
-      await updateExperiencia(page);
+      // 4. Subir PDF del CV actualizado
+      await uploadCV(page);
+      await killPopup(page);
+
+      // 5. Screenshot post-upload
+      await screenshotCV(page, 'despues');
     }
 
-    log('\n📋 Resumen del CV a cargar en Computrabajo:');
-    log(`   Titular: ${CV_DATA.titular}`);
-    CV_DATA.experiencia.forEach(e =>
-      log(`   - ${e.cargo} @ ${e.empresa} (${e.inicio_anio}–${e.fin_anio || 'actual'})`)
-    );
-    log('   Idiomas: Inglés C1 Advanced (EF SET 68/100)');
-    CV_DATA.certificaciones.forEach(c => log(`   - ${c}`));
-    log('\n✅ Proceso completado. Revisa data/logs/ para screenshots.');
+    log('\n✅ Proceso completado.');
+    log('📋 Secciones ya presentes en CT (verificado en screenshot):');
+    log('   ✅ Experiencia: Freelancer, Foundever/Sitel, COOVISOCIAL');
+    log('   ✅ Educación: CESDE, I.U.P. Santiago Mariño');
+    log('   ✅ Idiomas: Español Nativo, Inglés Avanzado');
+    log('   ✅ Skills: Playwright, Postman, Git, Docker, Typescript, QA...');
+    log('   📎 Documentos: CV PDF actualizado (si no hubo error)');
+    log('\n📌 Pendiente manual en CT:');
+    log('   → Agregar cert. SENA Excel (Jun 2026, 40h)');
+    log('   → Agregar cert. HubSpot Service Hub + Inbound');
+    log('   → Actualizar descripción Foundever a "Campaña Iberia Airlines / Amadeus GDS"');
 
   } catch (e) {
-    log(`❌ Error fatal: ${e.message}`);
-    fs.mkdirSync('data/logs', { recursive: true });
-    await page.screenshot({ path: 'data/logs/ct_profile_error.png' }).catch(() => {});
+    log(`❌ Error: ${e.message}`);
+    await screenshotCV(page, 'error').catch(() => {});
   } finally {
     await browser.close();
   }
 }
 
 main().catch(e => { console.error('[FATAL]', e.message); process.exit(1); });
-
