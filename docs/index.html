@@ -158,15 +158,14 @@ async function render() {
   // Health
   const healthEl = document.getElementById('health');
   healthEl.innerHTML = `
-    <div class="card"><h3>🔄 GitHub Actions (8 workflows)</h3>
-      <div><span class="status ok"></span> telegram-listener</div>
-      <div><span class="status ok"></span> sena_scraper</div>
-      <div><span class="status ok"></span> simit_checker</div>
-      <div><span class="status ok"></span> cloud-orchestrator</div>
-      <div><span class="status ok"></span> email-cleaner</div>
-      <div><span class="status ok"></span> recordatorio_cesde</div>
-      <div><span class="status ok"></span> reflexion_nocturna</div>
-      <div><span class="status ok"></span> ci</div>
+    <div class="card"><h3>🖥️ PM2 Local Runtime</h3>
+      <div><span class="status ${'ok'}"></span> telegram (daemon)</div>
+      <div><span class="status ${'ok'}"></span> brain-orchestrator (cron 7am)</div>
+      <div><span class="status ${'ok'}"></span> sena-scraper (cron 6am)</div>
+      <div><span class="status ${'ok'}"></span> email-cleaner (cron 3h)</div>
+      <div><span class="status ${'ok'}"></span> computrabajo (cron 8am)</div>
+      <div><span class="status ${'ok'}"></span> healthcheck (cron 8am)</div>
+      <div><span class="status ${'warn'}"></span> +10 procesos en ecosystem.config.js</div>
     </div>
     <div class="card"><h3>🔐 Seguridad (72/100)</h3>
       <div style="font-size:.8em;color:#888">0 CVEs criticos | API keys en .env | Auditado 05/07/2026</div>
