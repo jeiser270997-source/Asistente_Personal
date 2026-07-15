@@ -1,0 +1,83 @@
+name: Computrabajo Auto-Apply
+
+on:
+  schedule:
+    # Lun-Vie 09:00am Colombia (14:00 UTC) — después del scraper de 8am
+    - cron: '0 14 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      min_score:
+        description: 'Score mínimo para aplicar (default: 60)'
+        required: false
+        default: '60'
+      dry_run:
+        description: 'Dry run — no aplica, solo muestra qué aplicaría'
+        required: false
+        default: 'false'
+
+jobs:
+  apply:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Install Litestream
+        run: |
+          curl -fsSL https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-amd64.tar.gz | tar -xz
+          sudo mv litestream /usr/local/bin/
+
+      - name: Restore databases from R2
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          mkdir -p runtime lib/data
+          litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db || true
+          litestream restore -if-replica-exists -config litestream.yml lib/data/memoria_hipocampo.db || true
+          echo "✅ DBs restauradas"
+
+      - name: Run migrations
+        run: node runtime/migrate.js
+
+      - name: Auto-apply to approved jobs
+        env:
+          COMPUTRABAJO_EMAIL: ${{ secrets.COMPUTRABAJO_EMAIL }}
+          COMPUTRABAJO_PASS: ${{ secrets.COMPUTRABAJO_PASS }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          MIN_SCORE: ${{ github.event.inputs.min_score || '60' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          FLAGS="--auto --min-score=${MIN_SCORE}"
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "🔍 Modo DRY RUN — no se aplicará a ninguna oferta"
+            FLAGS="$FLAGS --dry-run"
+          fi
+          node scripts/jobs/computrabajo_apply.js $FLAGS
+
+      - name: Replicate databases to R2
+        if: always()
+        env:
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          litestream replicate -exec "echo done" -config litestream.yml &
+          sleep 10
+          kill %1 2>/dev/null || true

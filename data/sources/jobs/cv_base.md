@@ -1,68 +1,75 @@
-# Jeiser Abraham Gutierrez Torres
-**QA Automation Engineer Junior | Medellín, Colombia**
-
-📧 jeiser270997@gmail.com · 📱 +57 304 461 5613 · 🔗 [linkedin.com/in/jeiser](https://linkedin.com/in/jeiser) · 🐙 [github.com/jeiser270997](https://github.com/jeiser270997)
-
----
-
-## EDUCATION
-
-**Técnico en Análisis y Desarrollo de Software** — CESDE, Medellín *(2026 – Presente)*
-Bootcamp QA Automation · Playwright · Selenium · Postman · Jira · Agile/Scrum
-
-**Bases de Datos — Generalidades y Sistemas de Gestión** — SENA Virtual *(Jun – Jul 2026)*
-Modelado ER · Normalización · SQL · Sistemas de gestión de bases de datos
+# JEISER ABRAHAM GUTIÉRREZ TORRES
+jeiser270997@gmail.com · +57 304 461 5613 · [linkedin.com/in/jeiser](https://linkedin.com/in/jeiser) · [github.com/jeiser270997](https://github.com/jeiser270997)
+Medellín, Colombia · Disponible inmediatamente · Trabajo remoto y presencial
 
 ---
 
-## SKILLS
+## EDUCACIÓN
+
+**Técnico en Análisis y Desarrollo de Software** · CESDE, Medellín *(2026 – Presente)*
+Enfoque en QA Automation: Playwright, Selenium, Postman, Jira, Agile/Scrum
+
+**Bases de Datos — Sistemas de Gestión** · SENA Virtual *(Jun 2026 – Presente)*
+SQL, modelado ER, normalización, MySQL
+
+---
+
+## HABILIDADES TÉCNICAS
 
 **Testing & QA**
-Playwright · Selenium WebDriver · Cypress · Postman · REST API Testing · Manual Testing · Test Case Design · Bug Reporting
+Playwright · Selenium WebDriver · Cypress · Postman · REST API Testing · Testing Manual · Diseño de casos de prueba · Reporte de bugs · Regresión · Smoke testing
 
 **Lenguajes & Herramientas**
-JavaScript · Python (básico) · SQL · Git · GitHub Actions · HTML/CSS · Node.js
+JavaScript · TypeScript · SQL · Python (básico) · Git · GitHub · Node.js · HTML/CSS
+
+**CI/CD & DevOps**
+GitHub Actions · Integración continua · Pipelines automatizados · Linux (bash)
 
 **Metodologías**
-Agile · Scrum · CI/CD · SDLC · STLC
-
-**Soft Skills**
-Atención al detalle · Pensamiento analítico · Comunicación efectiva · Autodidacta
+Agile · Scrum · SDLC · STLC · Gestión de defectos
 
 ---
 
-## PROJECTS
+## EXPERIENCIA
 
-**LifeOS — Asistente Personal Autónomo** *(2026)*
-Sistema de IA personal con 7 herramientas (tool-calling), Google Calendar, Gmail, SIMIT, SENA Moodle.
-Stack: Node.js · LangGraph · DeepSeek API · Playwright · GitHub Actions · SQLite
-→ 11 workflows automatizados · scraping en producción · memoria persistente
+**Desarrollador de Software Freelance**
+Independiente — Medellín, Colombia *(2022 – Presente)*
 
-**SENA QA Bootcamp — Ejercicios de Automatización** *(2026)*
-Suite de tests E2E con Playwright para sitios web reales.
-Stack: Playwright · JavaScript · GitHub Actions
-
----
-
-## EXPERIENCE
-
-**Conductor — DiDi Colombia** *(2024 – Presente)*
-Gestión autónoma de tiempo, métricas de rendimiento, atención al cliente, resolución de incidentes.
-→ Desarrolló disciplina operacional y manejo de presión bajo demanda variable.
+- Desarrolló e implementó soluciones de automatización de procesos para clientes independientes
+- Diseñó pipelines de CI/CD con GitHub Actions para integración y despliegue automático
+- Integró APIs externas (Google, REST, Telegram) en sistemas de monitoreo y notificaciones en tiempo real
+- Construyó scripts de scraping y extracción de datos con Playwright en entornos productivos
+- Aplicó buenas prácticas de control de versiones (Git), documentación técnica y testing funcional
+- Gestionó de forma autónoma el ciclo completo: levantamiento de requerimientos, desarrollo, QA y despliegue
 
 ---
 
-## CERTIFICATIONS & COURSES
+## PROYECTOS TÉCNICOS
 
-- QA Automation Bootcamp — CESDE *(En curso, 2026)*
-- Bases de Datos — SENA *(2026)*
-- Fundamentos de Programación — Platzi *(completar)*
+**Suite E2E con Playwright — Proyecto CESDE** *(2026)*
+- Diseñó y ejecutó casos de prueba automatizados sobre aplicaciones web reales (formularios, flujos de autenticación, validaciones de UI)
+- Integró la suite en GitHub Actions para ejecución en pipeline CI con reportes automáticos
+- Stack: Playwright · JavaScript · GitHub Actions
+
+**Sistema de Automatización con APIs Cloud** *(2025 – 2026)*
+- Construyó sistema de automatización multi-módulo conectado a Gmail API, Google Calendar API y servicios REST externos
+- Implementó base de datos SQLite con migraciones versionadas y replicación automática a Cloudflare R2
+- Orquestó 12 workflows de GitHub Actions en producción continua con manejo de errores y alertas
+- Stack: Node.js · SQLite · GitHub Actions · Playwright · REST APIs
 
 ---
 
-## LANGUAGES
+## CERTIFICACIONES
 
-Español (nativo) · Inglés (lectura técnica B1)
+- QA Automation Bootcamp · CESDE *(En curso — 2026)*
+- Bases de Datos · SENA *(2026)*
+- Git & GitHub · Platzi *(2024)*
 
 ---
-*Disponible para trabajo remoto y presencial en Medellín · Modalidad: tiempo completo o medio tiempo*
+
+## IDIOMAS
+
+Español (nativo) · Inglés (B1 — lectura técnica fluida)
+
+---
+*Perfil orientado a QA Automation Junior / Analista de Calidad / Tester Manual-Automatizado*

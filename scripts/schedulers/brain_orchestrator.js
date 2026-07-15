@@ -82,10 +82,66 @@ function readFileSafe(p) {
   try {
     return fs.readFileSync(p, 'utf8');
   } catch {
-    log(`âš ï¸ No se pudo leer: ${p}`);
+    log(`⚠️ No se pudo leer: ${p}`);
     return '';
   }
 }
+
+// ── DiDi context: pico y placa + horas recomendadas ─────────────────────────
+// Placa KEW496 → último dígito 6
+// Medellín 2026: pico y placa rotativos por dígito y día
+const PICO_PLACA_2026 = {
+  // { digito: [días con restricción] } donde 0=Dom, 1=Lun, ..., 6=Sáb
+  1: [1, 2], 2: [1, 2], 3: [2, 3], 4: [2, 3],
+  5: [3, 4], 6: [3, 4], 7: [4, 5], 8: [4, 5],
+  9: [5, 1], 0: [5, 1],
+};
+
+function getDiDiContext(date) {
+  const dow = date.getDay(); // 0=Dom...6=Sáb
+  const hour = date.getHours();
+  const diasSemana = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const diaHoy = diasSemana[dow];
+
+  // Pico y placa placa KEW496 (dígito 6)
+  const digito = 6;
+  const restriccionDias = PICO_PLACA_2026[digito] || [];
+  const tieneRestriccion = restriccionDias.includes(dow);
+  const picoPlaca = tieneRestriccion
+    ? `🔴 PICO Y PLACA hoy (${diaHoy}) — placa KEW496 (dígito 6) NO puede circular 7-9am y 5-7pm`
+    : `✅ Sin pico y placa hoy (${diaHoy}) — KEW496 puede circular libremente`;
+
+  // Horas recomendadas para manejar DiDi
+  let horasRec;
+  if (dow === 0 || COL_HOLIDAYS_2026.includes(date.toISOString().split('T')[0])) {
+    horasRec = '🟡 Domingo/festivo: demanda moderada. Mejor 10am-2pm y 6pm-10pm';
+  } else if (dow === 6) {
+    horasRec = '🟢 Sábado: alta demanda nocturna. Mejor 10am-1pm y 8pm-12am';
+  } else if (dow === 5) {
+    horasRec = '🟢 Viernes: pico fuerte 5-9pm (salidas). Considera turno tarde';
+  } else {
+    horasRec = '🟢 Pico mañana: 6-9am | Pico tarde: 5-8pm | Muerto: 2-4pm';
+  }
+
+  // Ganancias semana actual desde DB (si existen)
+  let gananciasSemana = 'Sin datos (usa `registrar_didi` para trackear)';
+  try {
+    const Database = require('better-sqlite3');
+    const db = new Database(PATHS.DB_PATH || require('../../lib/data/paths').PATHS.LIFEOS_DB);
+    const row = db.prepare(`
+      SELECT SUM(ingreso) as total, COUNT(*) as dias
+      FROM didi_jornadas
+      WHERE fecha >= date('now', '-7 days')
+    `).get();
+    if (row && row.total) {
+      gananciasSemana = `$${Number(row.total).toLocaleString('es-CO')} en ${row.dias} día(s) esta semana`;
+    }
+    db.close();
+  } catch { /* tabla no existe aún */ }
+
+  return `${picoPlaca}\n${horasRec}\nGanancias 7 días: ${gananciasSemana}`;
+}
+
 
 async function authorize() {
   const SCOPES = ['https://www.googleapis.com/auth/gmail.modify', 'https://www.googleapis.com/auth/calendar.readonly'];
@@ -282,6 +338,9 @@ async function buildContext(dayType, dateStr, importantEmails, trashCount, event
   // ── Bootcamp ──
   const bootcampBlock = bootcampSkill.getContext() || 'Sin datos de bootcamp.';
 
+  // ── DiDi ──
+  const diDiBlock = getDiDiContext(new Date());
+
   return `
 FECHA_HOY: ${dateStr}
 TIPO_DIA: ${dayType}
@@ -298,12 +357,15 @@ TRABAJOS_EN_COLA:
 ${jobsBlock}
 BOOTCAMP_QA:
 ${bootcampBlock}
+DIDI:
+${diDiBlock}
 ALERTAS_SENA:
 ${alertasSena || 'No disponible'}
 ESTADO_VIVO:
 ${estadoVivo ? estadoVivo.substring(0, 800) : 'No disponible'}
 `.trim();
 }
+
 
 const { askLLM } = require('../../lib/ai/llm_service');
 
@@ -374,8 +436,10 @@ ESTRUCTURA DEL MENSAJE (adaptable según qué tenga novedades):
 💼 <b>Trabajos</b> — [ofertas nuevas o "sin novedades"]
 🎓 <b>SENA</b> — [alertas o "al día"]
 📚 <b>Bootcamp</b> — [semana actual + qué toca hoy]
+🚕 <b>DiDi</b> — [pico y placa + horas recomendadas + ganancias semana]
 
 💪 <i>[frase motivadora corta y directa]</i>`;
+
 
     const userContext = await buildContext(dayType, dateStr, importantEmails, trashCount, events, estadoVivo, registroEstudio, alertasSena, notasMemoria);
 
