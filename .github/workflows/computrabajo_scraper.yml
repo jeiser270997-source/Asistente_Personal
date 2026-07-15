@@ -67,20 +67,19 @@ jobs:
 
       # ── PASO 3: Revisar Gmail — alertas de respuestas/entrevistas ────────────
       - name: Check job response emails
-        continue-on-error: true   # no romper pipeline si Gmail falla
+        continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GMAIL_TOKEN: ${{ secrets.GMAIL_TOKEN }}
-          GMAIL_CREDENTIALS: ${{ secrets.GMAIL_CREDENTIALS }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
         run: |
-          # Escribir credenciales desde secrets si no existen como archivos
           mkdir -p data/auth
-          if [ -n "$GMAIL_CREDENTIALS" ]; then
-            echo "$GMAIL_CREDENTIALS" > data/auth/gmail_credentials.json
+          if [ -n "$GOOGLE_CREDENTIALS_JSON" ]; then
+            echo "$GOOGLE_CREDENTIALS_JSON" > data/auth/gmail_credentials.json
           fi
-          if [ -n "$GMAIL_TOKEN" ]; then
-            echo "$GMAIL_TOKEN" > data/auth/gmail_token.json
+          if [ -n "$GOOGLE_TOKEN_JSON" ]; then
+            echo "$GOOGLE_TOKEN_JSON" > data/auth/gmail_token.json
           fi
           node scripts/jobs/check_job_responses.js || true
 
