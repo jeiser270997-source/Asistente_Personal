@@ -15,10 +15,9 @@ const now = new Date();
 const timestamp = now.toISOString().replace(/T/, '_').replace(/:/g, '-').split('.')[0];
 const backupFile = path.join(BACKUP_DIR, `lifeos_dbs_${timestamp}.zip`);
 
-// Rutas de las bases de datos a respaldar
+// Rutas de las bases de datos a respaldar (paths canónicos)
 const dbPaths = [
-  path.join(ROOT_DIR, 'lib', 'data', 'memoria_hipocampo.db'),
-  path.join(ROOT_DIR, 'data', 'memoria_hipocampo.db'), // Por si acaso hay una copia aquí
+  path.join(ROOT_DIR, 'data', 'memoria_hipocampo.db'),
   path.join(ROOT_DIR, 'runtime', 'lifeos.db')
 ].filter(p => fs.existsSync(p)); // Solo las que realmente existen
 

@@ -23,7 +23,7 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 ## Arquitectura (Julio 2026)
 
 ```
-📱 Telegram (solo notif) ← → ☁️ GitHub Actions (13 workflows, ubuntu-22.04)
+📱 Telegram (local via PM2) ← → 🖥️ Local Runtime (PM2 / Task Scheduler)
                                          ↓
                           🧠 DeepSeek V4 Flash / Gemini / OpenRouter (multi-proveedor)
                                          ↓
@@ -50,7 +50,7 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 
 **Perfil técnico:** QA Automation Junior · Playwright · JS/TS · Node.js · Git · GitHub Actions · Postman · SQL
 **Stack real:** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `valibot` · `fuse.js` · `googleapis` · `cheerio`
-**Proyecto clave:** LifeOS (13 workflows en producción, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
+**Proyecto clave:** LifeOS (~~13 workflows GHA~~ → migrando a PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
 **CESDE:** Sábados 7am-6pm (próximo horario) · Lun/Mié/Vie 6-8pm
 **SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
 
@@ -59,23 +59,17 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 - Hustler pragmático: trabaja en DiDi, estudia CESDE/SENA y programa infraestructura compleja
 - Trato: comunicación técnica directa, cero explicaciones básicas
 
-## Automatizaciones Cloud (13 GitHub Actions — todos en ubuntu-22.04)
+## Automatizaciones
 
-| Workflow | Frecuencia | Estado |
-|----------|-----------|:------:|
-| `telegram-listener.yml` | Cada 3 min | ✅ |
-| `sena_scraper.yml` | Lun-Vie 6am | ✅ |
-| `simit_checker.yml` | Diario 7am | ✅ |
-| `cloud-orchestrator.yml` | Diario 7am | ✅ |
-| `email-cleaner.yml` | Cada 3h | ✅ |
-| `recordatorio_cesde.yml` | Lun/Mié/Vie 5pm + Sáb 2am UTC | ⏸ (Calendar desactivado) |
-| `recordatorio_deepseek.yml` | 6am/7pm/10pm | ✅ |
-| `document-pipeline.yml` | Diario 9am | ✅ |
-| `healthcheck.yml` | Diario 8am | ✅ |
-| `ci.yml` | Push | ✅ |
-| `computrabajo_scraper.yml` | Lun-Vie 8am Colombia | ✅ |
-| `computrabajo_apply.yml` | Lun-Vie 9am Colombia | ✅ |
-| `dian_scraper.yml` | Lunes 9am Colombia | ✅ |
+~~13 GitHub Actions~~ eliminados Jul 2026 (deep audit).
+Migrando a runtime local vía PM2 + Task Scheduler.
+
+| Proceso | Stack | Estado |
+|---------|-------|:------:|
+| Telegram listener | PM2 (ecosystem.config.js) | ✅ |
+| Inbox sensor | PM2 cron */15 min | ✅ |
+| Brain orchestrator | PM2 cron 7am | ✅ |
+| Email, SIMIT, SENA, DIAN, CT | Pendiente migrar a PM2 | ⏳ |
 
 ## Comandos Rápidos (SSH / Local)
 
@@ -105,16 +99,20 @@ npm run backup
 npm run briefing
 ```
 
-## Auditoría (15/07/2026 — post deep audit)
+## Auditoría (15/07/2026 — deep audit completo)
 
-Deep audit ejecutado: score 48→75+ con fixes aplicados.
+Deep audit ejecutado: score 48→72+ con fixes aplicados.
 - **F01**: Path memoria_hipocampo.db unificado → `data/` (canónico)
 - **F02**: OpenRouter 402 mitigado (max_tokens dinámico 400-1200)
 - **F03**: Healthcheck reescrito con PATHS canónicos (9 checks, no scripts/data)
 - **F04**: Fail-closed en scorer — LLM caído = score 0, no auto-apply
 - **F06**: Gitignore + untrack litestream leftovers
-- **F07**: SENA scraper selectores más resilientes
+- **F07**: SENA scraper selectores más resilientes + syntax fix
+- **F08**: scripts/data/ archivado a etc/archived/
 - **F09/F10**: Docs honestos, PII removida de system prompt global
+- **O1**: SENA syntax `})await` corregido
+- **O2**: Fail-closed real en 4 scripts de jobs (scraper, apply, job_loop, cv_tailorer)
+- **O4**: 13 workflows GHA eliminados
 
 **Stack real (`package.json`):** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `valibot` · `fuse.js` · `googleapis` · `cheerio` · `dotenv`
 
