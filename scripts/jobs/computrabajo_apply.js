@@ -41,7 +41,7 @@ async function loginWithRetry(page, email, pass) {
   // 3 fallos consecutivos â†’ notificar
   log('âŒ 3 intentos de login fallidos. Notificando...');
   try {
-    await sendTelegram(`âš ï¸ <b>Computrabajo: Login fallido</b>\n3 intentos consecutivos de login fallaron.\nPosible causa: selectores desactualizados o credenciales invÃ¡lidas.\nRevisa y ejecuta: node scripts/jobs/login_ct.js --debug`);
+    await sendTelegram(`\u26A0\uFE0F <b>Computrabajo: Login fallido</b>\n3 intentos consecutivos de login fallaron.\nRevisa: node scripts/jobs/login_ct.js --debug`);
   } catch {}
   throw new Error('Login failed after 3 attempts');
 }
@@ -129,40 +129,49 @@ const PERFIL_JEISER = fs.readFileSync(path.join(path.resolve(__dirname, '..', '.
 
 // ── SCORE: detecta salario, horario y call center desde el TEXTO de la oferta ─
 async function calcularScore(oferta) {
+  const tituloLower = (oferta.titulo || '').toLowerCase();
+
+  // Pre-filtro por keywords: rechazo inmediato sin LLM
+  const CC_BLOCK = [
+    'call center', 'asesor telefonico', 'asesor de voz', 'agente de voz',
+    'telemarketing', 'ventas telefonicas', 'ventas por telefono',
+    'contact center agente', 'operador de contact', 'agente call',
+    'ejecutivo de cobro', 'cobrador telefonico',
+  ];
+  if (CC_BLOCK.some(k => tituloLower.includes(k))) {
+    log(`   ⛔ Pre-filtro call center: ${oferta.titulo}`);
+    return { score: 0, recomendar: false, razon: 'Call center detectado en titulo' };
+  }
+
   const descripcion = (oferta.cuerpo || oferta.descripcion || oferta.titulo || '').substring(0, 2000);
-
-  const prompt = `Eres un evaluador de ofertas laborales para Colombia. Lee el TEXTO de la descripcion y responde SOLO con JSON valido.
-
-OFERTA:
-Titulo: ${oferta.titulo}
-Empresa: ${oferta.empresa || 'N/A'}
-Lugar: ${oferta.lugar || oferta.ciudad || 'N/A'}
-Descripcion completa:
-${descripcion}
-
-PERFIL DEL CANDIDATO:
-${PERFIL_JEISER}
-
-INSTRUCCIONES (lee el texto, no asumas por el titulo):
-1. SALARIO: Si dice "salario minimo", "SMMLV", "$1.4" sin bono para tecnologia = insuficiente. Si dice 2.4M+, "a convenir", "segun experiencia" o no menciona = OK.
-2. HORARIO: Si menciona sabados, domingos, turnos rotativos, "L-S" = rechazar. Si dice L-V o no menciona = OK.
-3. CALL CENTER: Si es SOLO asesor de voz/telemarketing sin componente tecnico = rechazar. Mesa de ayuda tecnica = OK.
-4. MATCH: Encaje del candidato con habilidades requeridas (0-100).
-
-Responde EXACTAMENTE con este JSON:
-{"score":N,"recomendar":true/false,"requiere_finde":false,"salario_insuficiente":false,"es_call_center":false,"salario_detectado":"texto o null","razon":"frase corta"}`;
+  const prompt = [
+    'Eres evaluador de ofertas laborales para Colombia. Responde SOLO con JSON valido.',
+    '',
+    `OFERTA: ${oferta.titulo} | ${oferta.empresa || 'N/A'} | ${oferta.lugar || 'N/A'}`,
+    `DESC: ${descripcion}`,
+    `PERFIL: ${PERFIL_JEISER.substring(0, 400)}`,
+    '',
+    'INSTRUCCIONES:',
+    '1. SMMLV/salario minimo/$1.4M sin bono = salario_insuficiente:true',
+    '2. Sabados/domingos/L-S/rotativos = requiere_finde:true',
+    '3. Call center puro sin tech = es_call_center:true',
+    '4. MATCH 0-100 con perfil QA/Soporte/Sistemas',
+    '',
+    'JSON: {"score":N,"recomendar":true,"requiere_finde":false,"salario_insuficiente":false,"es_call_center":false,"salario_detectado":null,"razon":"frase"}',
+  ].join('\n');
 
   try {
-    const res = await askLLM(prompt, [], 0.1);
-    const json = (res.content || '').replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(json);
-    if (parsed.requiere_finde) {
-      log(`   â›” IA detectÃ³ horario fin de semana: ${oferta.titulo}`);
-      return { score: 0, recomendar: false, razon: 'Requiere trabajo en fin de semana (estudia sabados)' };
-    }
+    const res    = await askLLM(prompt, [], 0.1);
+    const raw    = (res.content || '').replace(/```json|```/g, '').trim();
+    const m      = raw.match(/{[sS]*}/);
+    const parsed = JSON.parse(m ? m[0] : raw);
+    if (parsed.requiere_finde)        return { score: 0, recomendar: false, razon: 'Requiere fin de semana' };
+    if (parsed.salario_insuficiente)  return { score: 0, recomendar: false, razon: 'Salario: ' + (parsed.salario_detectado || 'minimo') };
+    if (parsed.es_call_center)        return { score: 0, recomendar: false, razon: 'Call center puro' };
     return parsed;
-  } catch {
-    return { score: 55, recomendar: true, razon: 'Score estimado' };
+  } catch (e) {
+    log(`   ⚠ Score fallback: ${e.message.substring(0, 40)}`);
+    return { score: 40, recomendar: true, razon: 'Score estimado (LLM error)' };
   }
 }
 
@@ -460,7 +469,7 @@ async function main() {
     let aprobado = AUTO_MODE;
 
     if (!AUTO_MODE && TELEGRAM_TOKEN) {
-      const msg = `ðŸŽ¯ <b>Oferta QA detectada</b> (score: ${match.score}/100)\n\n<b>${oferta.titulo}</b>\nðŸ¢ ${oferta.empresa || 'Empresa'}\nðŸ“ ${oferta.lugar || 'Colombia'}\n\n<i>${match.razon}</i>\n\nAplicar automaticamente?`;
+      const msg = `\u{1F3AF} <b>Oferta detectada</b> (score: ${match.score}/100)\n\n<b>${oferta.titulo}</b>\n\u{1F3E2} ${oferta.empresa || 'Empresa'}\n\u{1F4CD} ${oferta.lugar || 'Colombia'}\n\n<i>${match.razon}</i>\n\nAplicar automaticamente?`;
 
       await sendTelegram(msg, [
         [{ text: 'Si, aplicar', callback_data: 'si' }, { text: 'Saltar', callback_data: 'no' }]
@@ -513,10 +522,11 @@ async function main() {
 
     if (resultado.external_url) {
       log(`   EXTERNA: ${oferta.titulo} requiere aplicacion manual`);
-      await sendTelegram(`âš ï¸ <b>Aplicacion Externa Detectada</b>\n${oferta.titulo} â€” ${oferta.empresa}\nLa empresa requiere aplicar en su propio portal. Hazlo tu mismo aqui:\n<a href="${resultado.external_url}">Abrir portal externo</a>`);
+      await sendTelegram(`\u26A0\uFE0F <b>Aplicacion Externa</b>\n${oferta.titulo}\nAplica aqui: <a href="${resultado.external_url}">Portal externo</a>`);
     } else if (resultado.exito) {
       log(`   APLICADO: ${oferta.titulo} en ${oferta.empresa}`);
-      await sendTelegram(`âœ… <b>Aplicacion enviada</b>\n${oferta.titulo} â€” ${oferta.empresa}\n<a href="${oferta.url}">Ver oferta</a>`);
+      sesionAplicadas.push({ cargo: oferta.titulo, empresa: oferta.empresa });
+      await sendTelegram(`\u2705 <b>Aplicacion enviada</b>\n${oferta.titulo} \u2014 ${oferta.empresa || 'Empresa'}\n<a href="${oferta.url}">Ver oferta</a>`);
     } else {
       log(`   Error aplicando: ${resultado.razon}`);
     }
@@ -528,12 +538,12 @@ async function main() {
 
   await browser.close();
 
-  const nuevasAplicadas = AppStore.getAll({ source: 'computrabajo', estado: 'aplicado' });
-  log(`Sesion completada. Total aplicaciones: ${nuevasAplicadas.length}`);
-  if (nuevasAplicadas.length > 0) {
-    await sendTelegram(
-      `\u{1F4CA} <b>Resumen Auto-Apply</b>\n${nuevasAplicadas.slice(-5).map(a => `\u2705 ${a.cargo || 'Cargo'} \u2014 ${a.empresa || 'Empresa'}`).join('\n')}`
-    );
+  log(`Sesion completada. Total aplicaciones: ${sesionAplicadas.length}`);
+  if (sesionAplicadas.length > 0) {
+    const lineas = sesionAplicadas.map(a => `\u2705 ${a.cargo} \u2014 ${a.empresa || 'Empresa'}`).join('\n');
+    await sendTelegram(`\u{1F4CA} <b>Resumen Auto-Apply</b>\n${lineas}`);
+  } else {
+    await sendTelegram(`\u{1F4CA} Auto-Apply finalizado. Sin nuevas aplicaciones en esta sesion.`);
   }
 }
 
