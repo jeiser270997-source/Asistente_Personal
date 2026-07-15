@@ -78,8 +78,9 @@ COOVISOCIAL — Cooperativa de Trabajo Asociado *(Sep 2019 – Oct 2021)*
 ## CERTIFICACIONES
 
 - QA Automation Bootcamp · CESDE *(En curso — 2026)*
-- Bases de Datos · SENA *(2026)*
-- Git & GitHub · Platzi *(2024)*
+- Bases de Datos — Sistemas de Gestión · SENA *(2026)*
+- Manejo de Herramientas Microsoft Office 2016: Excel · SENA *(Jun 2026 — 40h, nota 4.5)*
+- EF SET English Certificate · EF Education First *(B1 — 43/50)*
 
 ---
 
