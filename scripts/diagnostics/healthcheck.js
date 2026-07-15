@@ -1,8 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-
-const BASE = path.resolve(__dirname, '..');
-const DATA_DIR = path.join(BASE, 'data');
+const { DIR, PATHS } = require('../../lib/data/paths');
 
 function checkFile(filePath, maxAgeHours = 48) {
   try {
@@ -15,37 +13,42 @@ function checkFile(filePath, maxAgeHours = 48) {
   }
 }
 
-const health = {
-  timestamp: new Date().toISOString(),
-  checks: {
-    simit_scraper: checkFile(path.join(DATA_DIR, 'simit', 'ultima_consulta.json')),
-    sena_scraper: checkFile(path.join(DATA_DIR, 'sena', 'curso.json')),
-    memoria: checkFile(path.join(DATA_DIR, 'memoria', 'hechos.json'), 72),
-    bootcamp: checkFile(path.join(DATA_DIR, 'bootcamp', 'curriculum.json'), 720),
-    seguimiento_sena: checkFile(path.join(DATA_DIR, 'sena', 'seguimiento.json'), 168),
-    contexto_vital: checkFile(path.join(DATA_DIR, 'contexto_vital.json'), 720),
-  },
-  resumen: {
-    total: 6,
-    ok: 0,
-    warn: 0,
-    err: 0
-  }
+// Map of canonical checks using PATHS/DIR from paths.js
+const checks = {
+  simit_scraper:       { path: PATHS.SIMIT_LAST_QUERY,                     maxAge: 48 },
+  sena_scraper:        { path: PATHS.SENA_CURSO,                          maxAge: 48 },
+  sena_tracking:       { path: PATHS.SENA_TRACKING,                       maxAge: 168 },
+  memoria_db:          { path: PATHS.MEMORIA_DB,                          maxAge: 72 },
+  bootcamp:            { path: PATHS.BOOTCAMP_CURRICULUM,                 maxAge: 720 },
+  contexto_maestro:    { path: PATHS.ESTADO_VIVO,                         maxAge: 720 },
+  contexto_vital:      { path: PATHS.VITAL,                               maxAge: 720 },
+  simit_alertas:       { path: PATHS.SIMIT_ALERTS,                        maxAge: 48 },
+  computrabajo_cache:  { path: PATHS.JOBS_COMPUTRABAJO,                   maxAge: 72 },
 };
 
-for (const [name, check] of Object.entries(health.checks)) {
-  if (check.status === 'ok') health.resumen.ok++;
-  else if (check.status === 'warn') health.resumen.warn++;
+const health = {
+  timestamp: new Date().toISOString(),
+  checks: {},
+  resumen: { total: Object.keys(checks).length, ok: 0, warn: 0, err: 0 }
+};
+
+for (const [name, cfg] of Object.entries(checks)) {
+  const result = checkFile(cfg.path, cfg.maxAge);
+  health.checks[name] = result;
+  if (result.status === 'ok') health.resumen.ok++;
+  else if (result.status === 'warn') health.resumen.warn++;
   else health.resumen.err++;
 }
 
 health.score = health.resumen.ok === health.resumen.total ? 100 :
                health.resumen.err === 0 ? 75 :
-               health.resumen.ok >= 3 ? 50 : 25;
+               health.resumen.ok >= health.resumen.total / 2 ? 50 : 25;
 
-const auditDir = path.join(DATA_DIR, 'audit');
+// Write health report to DIR.STATE (data/state/audit) instead of scripts/data/
+const auditDir = path.join(DIR.STATE, 'audit');
 if (!fs.existsSync(auditDir)) fs.mkdirSync(auditDir, { recursive: true });
 fs.writeFileSync(path.join(auditDir, 'health.json'), JSON.stringify(health, null, 2));
 
 console.log(`Health: ${health.resumen.ok}/${health.resumen.total} OK, ${health.resumen.warn} warn, ${health.resumen.err} err`);
+console.log(`Score: ${health.score}/100`);
 console.log(JSON.stringify(health, null, 2));

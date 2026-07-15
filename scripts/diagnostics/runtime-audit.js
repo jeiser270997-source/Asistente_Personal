@@ -46,7 +46,7 @@ const ALLOWED_DIRS = [
   'data/artifacts/jobs/cv_tailored',
   'data/sources/sena/materiales',
   'data/resume_template',
-  'data/cache/dian',          // cache: per-section .txt and _tablas.json
+  'data/cache/dian',          // cache: per-section .txt and _tablas.json (via PATHS.DIAN)
   'logs',
   'docs',
 ];

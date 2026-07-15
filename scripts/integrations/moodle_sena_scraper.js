@@ -34,16 +34,34 @@ async function login(page) {
   log('ðŸ” Login en ZAJUNA SENA...');
   await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
 
-  await page.selectOption('select[name="typeDocument"]', 'CC');
+  // Esperar a que el formulario de login esté completamente cargado
+  await page.waitForSelector('select[name="typeDocument"]', { timeout: 15000 }).catch(() => {
+    log('⚠️ Selector typeDocument no encontrado, recargando...');
+  });
+  await page.waitForTimeout(2000);
+
+  await page.selectOption('select[name="typeDocument"]', 'CC').catch(async () => {
+    log('⚠️ Fallback: intentando con etiqueta del select');
+    await page.evaluate(() => {
+      const sel = document.querySelector('select[name="typeDocument"]');
+      if (sel) sel.value = 'CC';
+    });
+  });
   await page.fill('input[name="document"]', USER);
   await page.fill('input[name="password"]', PASS);
 
   const btn = await page.$('button[name="form_login_user"]');
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {}),
-    btn.click()
-  ]);
-  await page.waitForTimeout(2000);
+  if (btn) {
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {}),
+      btn.click()
+    ]);
+  } else {
+    // Fallback: try pressing Enter
+    await page.keyboard.press('Enter');
+    await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {});
+  }
+  await page.waitForTimeout(3000);
 
   if (page.url().includes('my/courses')) {
     log('âœ… Login exitoso');
@@ -56,8 +74,10 @@ async function login(page) {
 // â”€â”€â”€ CURSO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function extractCourse(page) {
   log('ðŸ“š Extrayendo curso...');
-  await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(3000);
+  await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(async () => {
+    log('Timeout en carga del curso, reintentando...');
+    await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {});
+  })await page.waitForTimeout(3000);
 
   const course = {
     id: COURSE_ID,

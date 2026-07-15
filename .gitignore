@@ -48,14 +48,23 @@ data/data/
 # [PERMITIDO GITHUB] data/memoria/
 lib/data/memoria_hipocampo.db
 
+# --- Litestream local state (no versionar) ---
+**/.memoria_hipocampo.db-litestream/
+**/.lifeos.db-litestream/
+*.db-litestream/
+
 # --- Runtime DB (regenerable) ---
 runtime/lifeos.db
 runtime/lifeos.db-wal
 runtime/lifeos.db-shm
+runtime/lifeos.db.tmp-wal
+runtime/lifeos.db.tmp-shm
 data/*.db-wal
 data/*.db-shm
 *.db-wal
 *.db-shm
+*.db.tmp-wal
+*.db.tmp-shm
 
 # --- Attachments descargados (no versionar) ---
 data/email_attachments/

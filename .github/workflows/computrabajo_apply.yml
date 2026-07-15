@@ -45,9 +45,9 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          mkdir -p runtime lib/data
+          mkdir -p runtime data
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db || true
-          litestream restore -if-replica-exists -config litestream.yml lib/data/memoria_hipocampo.db || true
+          litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db || true
           echo "✅ DBs restauradas"
 
       - name: Run migrations

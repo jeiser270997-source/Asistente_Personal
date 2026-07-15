@@ -35,21 +35,34 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          mkdir -p runtime lib/data
+          mkdir -p runtime data
           litestream restore -if-replica-exists -config litestream.yml runtime/lifeos.db || true
-          litestream restore -if-replica-exists -config litestream.yml lib/data/memoria_hipocampo.db || true
+          litestream restore -if-replica-exists -config litestream.yml data/memoria_hipocampo.db || true
           echo "✅ DBs restauradas"
 
       - name: Run migrations
         run: node runtime/migrate.js
 
       - name: Run SENA Scraper
+        id: scraper
+        continue-on-error: true
         env:
           SENA_MOODLE_USER: ${{ secrets.SENA_MOODLE_USER }}
           SENA_MOODLE_PASS: ${{ secrets.SENA_MOODLE_PASS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/integrations/moodle_sena_scraper.js
+
+      - name: Upload debug artifacts on failure
+        if: steps.scraper.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: sena-scraper-debug
+          path: |
+            scripts/screenshots/
+            scripts/data/sena/
+          retention-days: 3
+          if-no-files-found: ignore
 
       - name: Replicate databases to R2
         if: always()

@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-07-15T22:34:14.755Z",
+  "checks": {
+    "simit_scraper": {
+      "status": "warn",
+      "age": "220.4h",
+      "msg": "Desactualizado"
+    },
+    "sena_scraper": {
+      "status": "err",
+      "age": "N/A",
+      "msg": "Archivo no encontrado"
+    },
+    "sena_tracking": {
+      "status": "warn",
+      "age": "191.9h",
+      "msg": "Desactualizado"
+    },
+    "memoria_db": {
+      "status": "ok",
+      "age": "17.9h"
+    },
+    "bootcamp": {
+      "status": "ok",
+      "age": "191.9h"
+    },
+    "contexto_maestro": {
+      "status": "ok",
+      "age": "54.2h"
+    },
+    "contexto_vital": {
+      "status": "err",
+      "age": "N/A",
+      "msg": "Archivo no encontrado"
+    },
+    "simit_alertas": {
+      "status": "warn",
+      "age": "191.9h",
+      "msg": "Desactualizado"
+    },
+    "computrabajo_cache": {
+      "status": "warn",
+      "age": "220.4h",
+      "msg": "Desactualizado"
+    }
+  },
+  "resumen": {
+    "total": 9,
+    "ok": 3,
+    "warn": 4,
+    "err": 2
+  },
+  "score": 25
+}

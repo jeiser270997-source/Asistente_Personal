@@ -4,7 +4,8 @@ const path = require('path');
  * Perfil: QA Student + Didi Driver + DIAN stress + autodidacta + Colombia
  */
 const fs = require('fs');
-const db = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'cache', 'repos_db.json'), 'utf8'));
+const { PATHS, DIR } = require('../../lib/data/paths');
+const db = JSON.parse(fs.readFileSync(PATHS.REPOS_DB, 'utf8'));
 console.log(`\n🧠 Research Personal Loop ×5 — ${db.length} repos\n${'═'.repeat(70)}\n`);
 
 function search(keywords, minStars = 50, limit = 12) {
@@ -86,5 +87,7 @@ for (const [cat, repos] of Object.entries(results)) {
 }
 
 console.log(report);
-fs.writeFileSync('data/cache/research/research_personal_results.json', JSON.stringify(results, null, 2));
+const outDir = path.join(DIR.CACHE, 'research');
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+fs.writeFileSync(path.join(outDir, 'research_personal_results.json'), JSON.stringify(results, null, 2));
 console.log('✅ Guardado en data/cache/research/research_personal_results.json\n');
