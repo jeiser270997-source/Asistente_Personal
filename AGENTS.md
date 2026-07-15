@@ -50,7 +50,7 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 
 **Perfil técnico:** QA Automation Junior · Playwright · JS/TS · Node.js · Git · GitHub Actions · Postman · SQL
 **Stack real:** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `valibot` · `fuse.js` · `googleapis` · `cheerio`
-**Proyecto clave:** LifeOS (~~13 workflows GHA~~ → migrando a PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
+**Proyecto clave:** LifeOS (~~13 workflows GHA~~ → 18 procesos PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
 **CESDE:** Sábados 7am-6pm (próximo horario) · Lun/Mié/Vie 6-8pm
 **SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
 
@@ -62,14 +62,32 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 ## Automatizaciones
 
 ~~13 GitHub Actions~~ eliminados Jul 2026 (deep audit).
-Migrando a runtime local vía PM2 + Task Scheduler.
+Runtime local vía PM2 (`ecosystem.config.js`). Arrancar con `pm2 start`.
 
-| Proceso | Stack | Estado |
-|---------|-------|:------:|
-| Telegram listener | PM2 (ecosystem.config.js) | ✅ |
-| Inbox sensor | PM2 cron */15 min | ✅ |
-| Brain orchestrator | PM2 cron 7am | ✅ |
-| Email, SIMIT, SENA, DIAN, CT | Pendiente migrar a PM2 | ⏳ |
+| Proceso | Tipo | Schedule (UTC) |
+|---------|:----:|:--------------:|
+| jarvis-telegram | daemon | always-on |
+| brain-orchestrator | cron | 7am COT (12pm) |
+| context-engine-daily | cron | 6am COT (11am) |
+| morning-briefing | cron (tsx) | 7am COT (12pm) |
+| email-cleaner | cron | cada 3h |
+| inbox-sensor | cron | */15 min |
+| sena-scraper | cron | lun-vie 6am COT (11am) |
+| sena-tracker | cron | 7am COT (12pm) |
+| simit-checker | cron | 7am COT (12pm) |
+| dian-scraper | cron | lun 9am COT (2pm) |
+| computrabajo-scraper | cron | lun-vie 8am COT (1pm) |
+| computrabajo-apply ⚠️ | cron | lun-vie 9am COT (2pm) |
+| job-loop | cron | lun-vie 10am COT (3pm) |
+| healthcheck | cron | 8am COT (1pm) |
+| recordatorio-deepseek | cron | 6am/7pm/10pm COT |
+| document-pipeline | cron | 9am COT (2pm) |
+| vehicle-manager | cron | 6am COT (11am) |
+| backup-dbs | cron (tsx) | 11pm COT (4am) |
+
+> **⚠️ computrabajo-apply**: Opera en modo SEMI-AUTO por defecto (sin flag `--auto`).
+> Si no hay token Telegram configurado, no aplica ofertas. Nunca ejecutar con `--auto`
+> sin supervisión humana. Política: modo semi-auto siempre, full-auto solo con aprobación explícita.
 
 ## Comandos Rápidos (SSH / Local)
 
