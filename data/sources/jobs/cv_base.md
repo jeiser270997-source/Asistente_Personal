@@ -12,6 +12,9 @@ Enfoque en QA Automation: Playwright, Selenium, Postman, Jira, Agile/Scrum
 **Bases de Datos — Sistemas de Gestión** · SENA Virtual *(Jun 2026 – Presente)*
 SQL, modelado ER, normalización, MySQL
 
+**Ingeniería en Sistemas** *(7mo semestre — sin título)* · I.U.P. Santiago Mariño, Venezuela *(Jul 2014 – Jul 2018)*
+Formación universitaria en informática, algoritmos, bases de datos y redes. Equivale al 70% de la carrera completa.
+
 ---
 
 ## HABILIDADES TÉCNICAS
@@ -42,12 +45,13 @@ Independiente — Medellín, Colombia *(2022 – Presente)*
 - Brindó servicios de mantenimiento y soporte técnico a equipos (hardware/software)
 - Gestión autónoma del ciclo completo: requerimientos, desarrollo, testing y despliegue
 
-**Agente de Servicio al Cliente**
-Foundever de Colombia S.A. *(Oct 2021 – Dic 2021)*
+**Agente de Soporte N1 — Campaña Iberia Airlines**
+Foundever de Colombia S.A. *(antes Sitel)* · *(Nov 2021 – Ene 2022)*
 
-- Atención multicanal (voz y chat) resolviendo incidentes técnicos y consultas de usuarios
-- Uso de plataformas CRM para gestión de tickets, seguimiento y escalamiento de casos
-- Cumplimiento de métricas de calidad: NPS, FCR y tiempos de resolución
+- Soporte técnico especializado para Iberia Airlines usando Amadeus GDS (Global Distribution System)
+- Atención bilingüe (español/inglés) a agentes de viaje y pasajeros de aerolínea
+- Gestión de reservas, reemisión de tiquetes y resolución de incidencias en plataforma Amadeus
+- Cumplimiento estricto de SLAs y KPIs de calidad definidos por el cliente
 
 **Operador de Medios Tecnológicos**
 COOVISOCIAL — Cooperativa de Trabajo Asociado *(Sep 2019 – Oct 2021)*

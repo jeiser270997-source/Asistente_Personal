@@ -1,12 +1,19 @@
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require('playwright');
+const { robustLogin } = require('./ct_login_helper');
 const fs = require('node:fs');
 
-const EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
-const PASS  = process.env.COMPUTRABAJO_PASS;
+const CV_EDIT_URL = 'https://candidato.co.computrabajo.com/candidate/cv/edit/';
 
-async function diagnose() {
-  const browser = await chromium.launch({ headless: false, slowMo: 400 });
+async function killPopup(page) {
+  await page.evaluate(() => {
+    document.querySelectorAll('.popup, .modal, [class*="popup"], [premium-candidate-popup], [home-candidate-popup]')
+      .forEach(el => el.remove());
+  });
+}
+
+async function run() {
+  const browser = await chromium.launch({ headless: false, slowMo: 300 });
   const ctx = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36',
     locale: 'es-CO', viewport: { width: 1280, height: 900 },
@@ -15,51 +22,37 @@ async function diagnose() {
   await page.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => false }); });
   fs.mkdirSync('data/logs', { recursive: true });
 
-  console.log('→ Navegando a login...');
-  await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'networkidle', timeout: 20000 });
-  await page.waitForTimeout(3000);
-  await page.screenshot({ path: 'data/logs/ct_diag_acceso.png' });
+  await robustLogin(page, process.env.COMPUTRABAJO_EMAIL, process.env.COMPUTRABAJO_PASS);
+  await page.waitForTimeout(2000);
+
+  // Navegar directo al editor del CV
+  console.log('Navegando al editor del CV...');
+  await page.goto(CV_EDIT_URL, { waitUntil: 'networkidle', timeout: 20000 });
+  await page.waitForTimeout(2000);
+  await killPopup(page);
+  await page.waitForTimeout(1000);
+
   console.log('URL:', page.url());
+  await page.screenshot({ path: 'data/logs/ct_cv_edit.png', fullPage: true });
 
-  const inputs = await page.$$eval('input, button', els => els.map(e => ({
-    tag: e.tagName, id: e.id, name: e.name, type: e.type || e.getAttribute('type'),
-    placeholder: e.placeholder || '', text: e.textContent?.trim().substring(0,30),
-    class: e.className?.substring(0, 60), visible: e.offsetParent !== null
-  })));
-  console.log('Elementos interactivos:', JSON.stringify(inputs, null, 2));
+  // Mapear secciones editables
+  const secciones = await page.$$eval(
+    'section, [class*="section"], [class*="block"], .cv-section',
+    els => els.map(e => ({ class: e.className?.substring(0,60), id: e.id, text: e.textContent?.trim().substring(0,80) }))
+  ).catch(() => []);
+  console.log('\n=== SECCIONES ===');
+  secciones.slice(0, 20).forEach(s => console.log(`  [${s.id || s.class?.substring(0,30)}] ${s.text?.substring(0,60)}`));
 
-  // Intentar rellenar email
-  const emailSel = inputs.find(i => i.type === 'email' || i.type === 'text' && i.placeholder.toLowerCase().includes('mail'));
-  if (emailSel) {
-    console.log('\n→ Rellenando email con selector:', emailSel.id || emailSel.name || emailSel.placeholder);
-    const sel = emailSel.id ? `#${emailSel.id}` : `input[placeholder="${emailSel.placeholder}"]`;
-    await page.fill(sel, EMAIL);
-    await page.screenshot({ path: 'data/logs/ct_diag_email_filled.png' });
+  const btns = await page.$$eval(
+    'a[href*="edit"], a[href*="add"], button, a[class*="edit"], a[class*="add"]',
+    els => els.map(e => ({ tag: e.tagName, text: e.textContent?.trim().substring(0,50), href: e.href || '', class: e.className?.substring(0,40) }))
+              .filter(e => e.text)
+  ).catch(() => []);
+  console.log('\n=== BOTONES ===');
+  btns.slice(0, 30).forEach(b => console.log(`  [${b.tag}] "${b.text}" → ${b.href.substring(0,80)}`));
 
-    // Buscar botón continuar
-    const btns = await page.$$eval('button, input[type="submit"], a.btn', els =>
-      els.map(e => ({ tag: e.tagName, id: e.id, text: e.textContent?.trim(), type: e.type }))
-    );
-    console.log('Botones:', JSON.stringify(btns, null, 2));
-
-    // Click continuar
-    try {
-      await page.click('button[type="submit"], #continueWithMailButton, button:has-text("Continuar"), button:has-text("Siguiente")', { timeout: 5000 });
-      await page.waitForTimeout(3000);
-      await page.screenshot({ path: 'data/logs/ct_diag_paso2.png' });
-      console.log('→ Paso 2 URL:', page.url());
-
-      const inputs2 = await page.$$eval('input', els => els.map(e => ({
-        id: e.id, name: e.name, type: e.type, placeholder: e.placeholder, visible: e.offsetParent !== null
-      })));
-      console.log('Inputs paso 2:', JSON.stringify(inputs2, null, 2));
-    } catch(e) { console.log('Click continuar falló:', e.message.substring(0,80)); }
-  } else {
-    console.log('⚠ No se encontró input de email. Ver screenshot.');
-  }
-
-  await page.waitForTimeout(10000);
+  await page.waitForTimeout(15000);
   await browser.close();
 }
 
-diagnose().catch(e => console.error('FATAL:', e.message));
+run().catch(e => console.error('FATAL:', e.message));
