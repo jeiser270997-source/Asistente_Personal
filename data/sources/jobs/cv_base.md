@@ -1,6 +1,6 @@
 # JEISER ABRAHAM GUTIÉRREZ TORRES
 jeiser270997@gmail.com · +57 304 461 5613 · [linkedin.com/in/jeiser](https://linkedin.com/in/jeiser) · [github.com/jeiser270997](https://github.com/jeiser270997)
-Medellín, Colombia · Disponible inmediatamente · Trabajo remoto y presencial
+Medellín, Colombia · Disponible inmediatamente · Remoto y presencial
 
 ---
 
@@ -20,10 +20,10 @@ SQL, modelado ER, normalización, MySQL
 Playwright · Selenium WebDriver · Cypress · Postman · REST API Testing · Testing Manual · Diseño de casos de prueba · Reporte de bugs · Regresión · Smoke testing
 
 **Lenguajes & Herramientas**
-JavaScript · TypeScript · SQL · Python (básico) · Git · GitHub · Node.js · HTML/CSS
+JavaScript · TypeScript · SQL · Python (básico) · Git · GitHub · Node.js · HTML/CSS · Linux (bash)
 
 **CI/CD & DevOps**
-GitHub Actions · Integración continua · Pipelines automatizados · Linux (bash)
+GitHub Actions · Integración continua · Pipelines automatizados · Docker (básico)
 
 **Metodologías**
 Agile · Scrum · SDLC · STLC · Gestión de defectos
@@ -35,26 +35,40 @@ Agile · Scrum · SDLC · STLC · Gestión de defectos
 **Desarrollador de Software Freelance**
 Independiente — Medellín, Colombia *(2022 – Presente)*
 
-- Desarrolló e implementó soluciones de automatización de procesos para clientes independientes
-- Diseñó pipelines de CI/CD con GitHub Actions para integración y despliegue automático
-- Integró APIs externas (Google, REST, Telegram) en sistemas de monitoreo y notificaciones en tiempo real
-- Construyó scripts de scraping y extracción de datos con Playwright en entornos productivos
-- Aplicó buenas prácticas de control de versiones (Git), documentación técnica y testing funcional
-- Gestionó de forma autónoma el ciclo completo: levantamiento de requerimientos, desarrollo, QA y despliegue
+- Desarrolló soluciones de automatización de procesos integrando APIs externas (Google, REST, Telegram)
+- Implementó pipelines de CI/CD con GitHub Actions para pruebas y despliegue continuo
+- Construyó scripts de scraping y testing E2E con Playwright en entornos productivos
+- Administró bases de datos SQLite con migraciones versionadas y replicación automatizada
+- Brindó servicios de mantenimiento y soporte técnico a equipos (hardware/software)
+- Gestión autónoma del ciclo completo: requerimientos, desarrollo, testing y despliegue
+
+**Agente de Servicio al Cliente**
+Foundever de Colombia S.A. *(Oct 2021 – Dic 2021)*
+
+- Atención multicanal (voz y chat) resolviendo incidentes técnicos y consultas de usuarios
+- Uso de plataformas CRM para gestión de tickets, seguimiento y escalamiento de casos
+- Cumplimiento de métricas de calidad: NPS, FCR y tiempos de resolución
+
+**Asociado de Servicios**
+Cooperativa de Trabajo Asociado de Bienestar Social *(Sep 2019 – Oct 2021)*
+
+- 2 años de experiencia formal en entorno operativo estructurado
+- Gestión de tareas, cumplimiento de estándares de calidad y trabajo en equipo
+- Desarrolló disciplina operacional, puntualidad y responsabilidad bajo supervisión directa
 
 ---
 
 ## PROYECTOS TÉCNICOS
 
-**Suite E2E con Playwright — Proyecto CESDE** *(2026)*
-- Diseñó y ejecutó casos de prueba automatizados sobre aplicaciones web reales (formularios, flujos de autenticación, validaciones de UI)
-- Integró la suite en GitHub Actions para ejecución en pipeline CI con reportes automáticos
+**Suite de Automatización E2E — CESDE** *(2026)*
+- Casos de prueba automatizados con Playwright sobre aplicaciones web reales
+- Pipeline CI en GitHub Actions con reportes automáticos por ejecución
 - Stack: Playwright · JavaScript · GitHub Actions
 
-**Sistema de Automatización con APIs Cloud** *(2025 – 2026)*
-- Construyó sistema de automatización multi-módulo conectado a Gmail API, Google Calendar API y servicios REST externos
-- Implementó base de datos SQLite con migraciones versionadas y replicación automática a Cloudflare R2
-- Orquestó 12 workflows de GitHub Actions en producción continua con manejo de errores y alertas
+**Sistema de Automatización con APIs Cloud** *(2022 – 2026)*
+- Sistema multi-módulo conectado a Gmail API, Google Calendar API y servicios REST
+- Base de datos SQLite con migraciones versionadas y replicación a Cloudflare R2
+- 12+ workflows de GitHub Actions en producción continua
 - Stack: Node.js · SQLite · GitHub Actions · Playwright · REST APIs
 
 ---
@@ -72,4 +86,4 @@ Independiente — Medellín, Colombia *(2022 – Presente)*
 Español (nativo) · Inglés (B1 — lectura técnica fluida)
 
 ---
-*Perfil orientado a QA Automation Junior / Analista de Calidad / Tester Manual-Automatizado*
+*Perfil: QA Automation Junior / Analista de Calidad / Tester Manual-Automatizado*
