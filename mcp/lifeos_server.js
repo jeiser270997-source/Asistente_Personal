@@ -27,6 +27,7 @@ const { execSync, spawn } = require('node:child_process');
 const { PATHS } = require('../lib/data/paths');
 const memory    = require('../lib/memory/memory_engine');
 const pending   = require('../lib/context/pending');
+const bootcamp  = require('../skills/bootcamp_qa');
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -140,6 +141,39 @@ const TOOLS = [
         id: { type: 'string', description: 'ID de la tarea a completar (obtenido de ver_tareas)' },
       },
       required: ['id'],
+    },
+  },
+  {
+    name: 'ver_bootcamp',
+    description: 'Muestra el progreso actual del Bootcamp QA Automation: fase, semana, ejercicios pendientes, entregable. ' +
+      'Úsalo cuando diga "vamos a estudiar", "qué toca hoy", "cómo voy en el bootcamp", "semana actual".',
+    inputSchema: { type: 'object', properties: {}, required: [] },
+  },
+  {
+    name: 'avanzar_bootcamp',
+    description: 'Registra un ejercicio completado o avanza a la siguiente semana del bootcamp. ' +
+      'Úsalo cuando diga "completé el ejercicio X", "terminé la semana", "avanza al siguiente módulo".',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ejercicio: {
+          type: 'string',
+          description: 'Nombre del ejercicio completado (opcional)',
+        },
+        horas: {
+          type: 'number',
+          description: 'Horas de estudio invertidas en esta sesión (opcional)',
+        },
+        avanzar_semana: {
+          type: 'boolean',
+          description: 'Si true, incrementa la semana actual en 1',
+        },
+        nota: {
+          type: 'string',
+          description: 'Nota de aprendizaje de la sesión (opcional)',
+        },
+      },
+      required: [],
     },
   },
   {
@@ -283,6 +317,59 @@ async function executeTool(name, args) {
       } catch (e) {
         return err(`Error procesando correos: ${e.message.substring(0, 300)}`);
       }
+    }
+
+    case 'ver_bootcamp': {
+      const ctx = bootcamp.getContext();
+      if (!ctx) return err('No se pudo leer el curriculum del bootcamp. Verifica data/state/bootcamp/curriculum.json');
+      return ok(ctx);
+    }
+
+    case 'avanzar_bootcamp': {
+      const progresoPath = PATHS.BOOTCAMP_PROGRESS;
+      let progreso;
+      try { progreso = JSON.parse(fs.readFileSync(progresoPath, 'utf8')); }
+      catch { return err('No se pudo leer progreso.json del bootcamp.'); }
+
+      const cambios = [];
+
+      if (args.ejercicio) {
+        if (!progreso.completados) progreso.completados = [];
+        if (!progreso.completados.includes(args.ejercicio)) {
+          progreso.completados.push(args.ejercicio);
+          cambios.push(`✅ Ejercicio registrado: "${args.ejercicio}"`);
+        } else {
+          cambios.push(`ℹ️ Ejercicio ya estaba registrado: "${args.ejercicio}"`);
+        }
+      }
+
+      if (args.horas) {
+        progreso.horas_acumuladas = (progreso.horas_acumuladas || 0) + args.horas;
+        cambios.push(`⏱️ +${args.horas}h → Total: ${progreso.horas_acumuladas}h`);
+      }
+
+      if (args.avanzar_semana) {
+        progreso.semana_actual = (progreso.semana_actual || 1) + 1;
+        cambios.push(`📅 Avanzado a semana ${progreso.semana_actual}`);
+      }
+
+      if (args.nota) {
+        if (!progreso.notas) progreso.notas = [];
+        progreso.notas.push({ fecha: new Date().toISOString().split('T')[0], nota: args.nota });
+        cambios.push(`📝 Nota de sesión guardada.`);
+        // También guarda en memoria para RAG
+        memory.guardarHecho(
+          `[BOOTCAMP] Semana ${progreso.semana_actual}: ${args.nota}`,
+          'estudio', 'mcp_bootcamp', 'alta', ['bootcamp', 'qa', 'estudio']
+        );
+      }
+
+      if (cambios.length === 0) {
+        return ok('No se especificó qué actualizar. Usa: ejercicio, horas, avanzar_semana o nota.');
+      }
+
+      fs.writeFileSync(progresoPath, JSON.stringify(progreso, null, 2));
+      return ok(`## Bootcamp actualizado\n${cambios.join('\n')}\n\nSemana actual: ${progreso.semana_actual} | Horas totales: ${progreso.horas_acumuladas}h`);
     }
 
     default:

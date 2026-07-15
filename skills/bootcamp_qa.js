@@ -1,10 +1,10 @@
 const fs = require('node:fs');
+const { PATHS, DIR } = require('../lib/data/paths');
 const path = require('node:path');
 
-const BASE = path.resolve(__dirname, '..');
-const CURRICULUM_PATH = path.join(BASE, 'data', 'bootcamp', 'curriculum.json');
-const REPOS_PATH = path.join(BASE, 'data', 'bootcamp', 'repos_mapping.json');
-const SEGUIMIENTO_PATH = path.join(BASE, 'data', 'bootcamp', 'progreso.json');
+const CURRICULUM_PATH  = PATHS.BOOTCAMP_CURRICULUM;
+const REPOS_PATH       = path.join(DIR.STATE, 'bootcamp', 'repos_mapping.json');
+const SEGUIMIENTO_PATH = PATHS.BOOTCAMP_PROGRESS;
 
 function loadJSON(p) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); }
