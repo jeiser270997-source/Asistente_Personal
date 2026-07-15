@@ -77,7 +77,8 @@ async function extractCourse(page) {
   await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(async () => {
     log('Timeout en carga del curso, reintentando...');
     await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {});
-  })await page.waitForTimeout(3000);
+  });
+  await page.waitForTimeout(4000);
 
   const course = {
     id: COURSE_ID,
