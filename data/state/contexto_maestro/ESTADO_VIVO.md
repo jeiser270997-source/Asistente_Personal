@@ -73,23 +73,13 @@
 - **Memoria:** SQLite persistente (`memoria_hipocampo.db`) — hechos.json migrado a SQLite (Jul 2026)
 - **LLM:** DeepSeek V4 Flash (horario valle 11pm-8am Colombia)
 - **Fallback:** Gemini Flash / OpenRouter Free
-- **Workflows activos:** 12 (todos ubuntu-22.04) — ver tabla abajo
+- **Workflows activos:** 0 (migrando a local/PM2 — workflow YAMLs eliminados Jul 2026) — ver tabla abajo
 
 ## 🤖 Automatizaciones Producción
-| Workflow | Frecuencia | Estado |
-|----------|-----------|:------:|
-| `telegram-listener.yml` | Cada 3 min | ✅ |
-| `sena_scraper.yml` | Lun-Vie 6am | ✅ |
-| `simit_checker.yml` | Diario 7am | ✅ |
-| `cloud-orchestrator.yml` | Diario 7am | ✅ |
-| `email-cleaner.yml` | Cada 3h | ✅ |
-| `recordatorio_cesde.yml` | DESACTIVADO — Google Calendar | ⏸ |
-| `recordatorio_deepseek.yml` | 6am/7pm/10pm | ✅ |
-| `document-pipeline.yml` | Diario 9am | ✅ |
-| `healthcheck.yml` | Diario 8am | ✅ |
-| `ci.yml` | Push | ✅ |
-| `computrabajo_scraper.yml` | Lun-Vie 8am | ✅ |
-| `dian_scraper.yml` | Lunes 9am | ✅ |
+| ~~Workflow~~ | ~~Frecuencia~~ | ~~Estado~~ |
+|:---|---|:---:|
+| Todos los YAML | — | 🗑️ Eliminados Jul 2026 (deep audit) |
+| Sustituto local | PM2 / Task Scheduler | 🔄 En migración |
 
 ## 📋 Scripts Job Hunter
 | Script | Uso | Estado |
@@ -117,14 +107,14 @@
 |-----------|-------|---------|
 | Event Bus | Custom 335 líneas | EventEmitter nativo (234 líneas) + DLQ wrapper |
 | Motor de reglas | matchPattern custom 109 líneas | json-rules-engine v7.3.1 + 3 operadores custom |
-| LLM Service | fetch() nativo a DeepSeek | LangChain ChatOpenAI + baseURL DeepSeek + valley/pico |
+| LLM Service | fetch() nativo a DeepSeek | openai SDK + LiteLLM client + baseURL DeepSeek + valley/pico |
 | Memoria hechos | JSON file (hechos.json) | SQLite (memoria_hipocampo.db) |
 | Bootstrap | bootstrap.js custom 40 líneas | dotenv.config() directo |
 | Skills duplicadas | 3 skills cargadas 2x | 0 duplicadas |
 | Skills externas | 6 rutas a Documents | 100% local (30 skills) |
 
 ### Librerías nuevas
-`json-rules-engine` · `valibot` · `pino` · `date-fns`
+`json-rules-engine` · `valibot`
 
 ### Dependencias eliminadas
 `lowdb` (código muerto — 0 referencias en runtime)

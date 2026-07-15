@@ -171,7 +171,7 @@ async function calcularScore(oferta) {
     return parsed;
   } catch (e) {
     log(`   ⚠ Score fallback: ${e.message.substring(0, 40)}`);
-    return { score: 40, recomendar: true, razon: 'Score estimado (LLM error)' };
+    return { score: 0, recomendar: false, razon: 'LLM no disponible — fail-closed' };
   }
 }
 

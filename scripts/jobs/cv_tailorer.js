@@ -104,7 +104,7 @@ PERFIL JEISER: QA Automation Junior, Playwright, JS, CESDE bootcamp en curso, si
     const json = (response.content || '').replace(/```json|```/g, '').trim();
     return JSON.parse(json);
   } catch {
-    return { score: 50, recomendar_aplicar: true, razon: 'Score no calculado' };
+    return { score: 0, recomendar_aplicar: false, razon: 'LLM no disponible — fail-closed', scoring_status: 'failed' };
   }
 }
 

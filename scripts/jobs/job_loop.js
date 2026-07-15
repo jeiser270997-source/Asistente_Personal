@@ -191,7 +191,7 @@ Responde SOLO en JSON vÃ¡lido:
     const raw = (res.content || '').replace(/```json|```/g, '').trim();
     return JSON.parse(raw);
   } catch {
-    return { score: 50, recomendar: true, razon_corta: 'AnÃ¡lisis manual requerido', skills_match: [], skills_gap: [] };
+    return { score: 0, recomendar: false, razon_corta: 'LLM no disponible — fail-closed', skills_match: [], skills_gap: [], scoring_status: 'failed' };
   }
 }
 

@@ -174,7 +174,7 @@ JSON:
     return { ...parsed, descripcion: descripcion.substring(0, 500) };
   } catch (e) {
     log(`  [AUDITORÃA] Error IA: ${e.message}`);
-    return { score: 50, recomendar: true, requiere_finde: false, categoria: 'Otro', razon: 'Score estimado', descripcion };
+    return { score: 0, recomendar: false, requiere_finde: false, categoria: 'Otro', razon: 'LLM no disponible — fail-closed', descripcion, scoring_status: 'failed' };
   }
 }
 
