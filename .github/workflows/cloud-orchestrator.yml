@@ -41,6 +41,27 @@ jobs:
       - name: Run migrations
         run: node runtime/migrate.js
 
+      # ── Briefing Matutino ─── clima, SIMIT, pico/placa, tareas del día ──────
+      - name: Morning Briefing
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+        run: |
+          mkdir -p data/auth data/cache data/config config
+          if [ -n "$GOOGLE_CREDENTIALS_JSON" ]; then
+            echo "$GOOGLE_CREDENTIALS_JSON" > data/auth/gmail_credentials.json
+          fi
+          if [ -n "$GOOGLE_TOKEN_JSON" ]; then
+            echo "$GOOGLE_TOKEN_JSON" > data/auth/gmail_token.json
+          fi
+          npx tsx scripts/schedulers/morning_briefing.ts || true
+
       - name: Run Brain Orchestrator
         env:
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
@@ -53,6 +74,7 @@ jobs:
           SAMBANOVA_API_KEY: ${{ secrets.SAMBANOVA_API_KEY }}
           FREEBUFF_API_KEY: ${{ secrets.FREEBUFF_API_KEY }}
         run: node scripts/schedulers/brain_orchestrator.js
+
 
       - name: Replicate databases to R2
         if: always()
