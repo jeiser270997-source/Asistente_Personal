@@ -49,12 +49,12 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          mkdir -p data/auth
+          # google_auth.js lee desde la raiz del proyecto
           if [ -n "$GOOGLE_CREDENTIALS_JSON" ]; then
-            echo "$GOOGLE_CREDENTIALS_JSON" > data/auth/gmail_credentials.json
+            echo "$GOOGLE_CREDENTIALS_JSON" > credentials.json
           fi
           if [ -n "$GOOGLE_TOKEN_JSON" ]; then
-            echo "$GOOGLE_TOKEN_JSON" > data/auth/gmail_token.json
+            echo "$GOOGLE_TOKEN_JSON" > .google_token.json
           fi
           node scripts/integrations/email_processor.js
 
