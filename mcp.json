@@ -1,11 +1,11 @@
 {
   "mcpServers": {
-    "life-os-memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
+    "lifeos": {
+      "command": "node",
+      "args": ["mcp/lifeos_server.js"],
+      "env": {
+        "DOTENV_CONFIG_PATH": ".env"
+      }
     }
   }
 }
