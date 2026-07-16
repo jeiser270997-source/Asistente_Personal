@@ -1,4 +1,4 @@
-﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -35,10 +35,9 @@ async function login(page) {
   await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
 
   // Esperar a que el formulario de login esté completamente cargado
-  await page.waitForSelector('select[name="typeDocument"]', { timeout: 15000 }).catch(() => {
+  await page.waitForSelector('select[name="typeDocument"]', { state: 'visible', timeout: 15000 }).catch(() => {
     log('⚠️ Selector typeDocument no encontrado, recargando...');
   });
-  await page.waitForTimeout(2000);
 
   await page.selectOption('select[name="typeDocument"]', 'CC').catch(async () => {
     log('⚠️ Fallback: intentando con etiqueta del select');
@@ -67,18 +66,19 @@ async function login(page) {
     log('âœ… Login exitoso');
     return true;
   }
-  log('âŒ Login fallido');
+  log('❌ Login fallido');
   return false;
 }
 
-// â”€â”€â”€ CURSO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── CURSO ──────────────────────────────────────────────────────────────────
 async function extractCourse(page) {
-  log('ðŸ“š Extrayendo curso...');
+  log('📚 Extrayendo curso...');
   await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(async () => {
     log('Timeout en carga del curso, reintentando...');
     await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {});
   });
-  await page.waitForTimeout(4000);
+  // Esperar a que el contenido del curso aparezca (secciones) en lugar de esperar 4 seg
+  await page.waitForSelector('.course-section, li.section', { state: 'attached', timeout: 15000 }).catch(() => null);
 
   const course = {
     id: COURSE_ID,

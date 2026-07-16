@@ -40,41 +40,43 @@ function shot(page, name) {
 // ─── LOGIN ────────────────────────────────────────────────────
 async function loginDIAN(page) {
   log('🔐 Login DIAN MUISCA...');
-  await page.goto(DIAN_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(3000);
+  try {
+    await page.goto(DIAN_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    // Esperar a que el selector del documento aparezca en lugar de esperar 3 seg ciegos
+    await page.waitForSelector('mat-select, .mat-select-trigger', { state: 'visible', timeout: 15000 });
+  } catch (e) {
+    log('   ❌ Portal DIAN no disponible o timeout de red: ' + e.message.substring(0, 50));
+    return false;
+  }
 
   // 1. Seleccionar CC en mat-select
   log('   Paso 1: Seleccionando Cédula de Ciudadanía...');
   try {
     await page.click('mat-select, .mat-select-trigger', { timeout: 5000 });
-    await page.waitForTimeout(1000);
+    await page.waitForSelector('mat-option:has-text("Cédula de ciudadanía"), mat-option:has-text("Cedula")', { state: 'visible', timeout: 5000 });
     await page.click('mat-option:has-text("Cédula de ciudadanía"), mat-option:has-text("Cedula")', { timeout: 5000 });
-    await page.waitForTimeout(500);
     log('   ✅ CC seleccionado');
   } catch (e) { log('   ⚠ mat-select: ' + e.message.substring(0, 50)); }
 
   // 2. Número documento
   try {
+    await page.waitForSelector('input[name="numDocumento"], input[formcontrolname="numDocumento"]', { state: 'visible', timeout: 5000 });
     await page.click('input[name="numDocumento"], input[formcontrolname="numDocumento"]');
-    await page.waitForTimeout(200);
     await page.type('input[name="numDocumento"], input[formcontrolname="numDocumento"]', DIAN_USER, { delay: 50 });
   } catch (e) { log('   ⚠ numDoc: ' + e.message.substring(0, 50)); }
-  await page.waitForTimeout(300);
 
   // 3. Contraseña
   try {
+    await page.waitForSelector('input[type="password"]', { state: 'visible', timeout: 5000 });
     await page.click('input[type="password"]');
-    await page.waitForTimeout(200);
     await page.type('input[type="password"]', DIAN_PASS, { delay: 50 });
   } catch (e) { log('   ⚠ pass: ' + e.message.substring(0, 50)); }
-  await page.waitForTimeout(300);
 
   // 4. Checkbox términos
   try {
     await page.click('mat-checkbox, .mat-checkbox-layout', { timeout: 3000 });
     log('   ✅ Checkbox marcado');
   } catch (e) { log('   ⚠ checkbox: ' + e.message.substring(0, 50)); }
-  await page.waitForTimeout(500);
 
   // 5. Ingresar
   try {
