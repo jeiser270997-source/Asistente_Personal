@@ -10,7 +10,7 @@
  *   - Casilla de correo oficial
  * Guarda cada sección en data/cache/dian/ como JSON + captura screenshots.
  */
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const fs   = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');

@@ -1,7 +1,7 @@
 /**
  * find_aplicaciones.js — Encuentra la URL del historial de aplicaciones CT
  */
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require('playwright');
 const path = require('node:path');
 const { robustLogin } = require('./ct_login_helper');

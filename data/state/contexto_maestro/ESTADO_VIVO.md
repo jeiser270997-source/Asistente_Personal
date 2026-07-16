@@ -37,17 +37,13 @@
 
 ## 🎓 Académico / Educativo
 - **Institución principal:** CESDE, Medellín — **Beca 70%**
-- **Curso introductorio (becados):** Obligatorio · Presencial · 6–8pm
-  - Clase 3: Lun 6 Jul ✅
-  - Clase 4: Mié 8 Jul
-  - Clase 5: Vie 10 Jul
-  - Clase 6: Mié 15 Jul
-  - Clase 7: Vie 17 Jul
-  - Clase 8: Mié 22 Jul
-  - Clase 9: Vie 24 Jul → **Asignación del taller**
-  - Clase 10: Lun 27 Jul → **Entrega del taller** (deadline real)
-  - 📅 Recordatorios en Google Calendar (`data/artifacts/cesde_introductorio_julio2026.ics`)
-- **CESDE Bootcamp QA presencial:** Inicia **Sábado 25 de julio de 2026** (7am–6pm)
+- **Técnico Laboral en Desarrollo de Software (CESDE):** Presencial (Aula 406)
+  - 📅 **Sábados:**
+    - 07:30 - 10:30: Gestión de Bases de Datos
+    - 10:30 - 15:00: Introducción a la Programación
+    - 15:00 - 18:00: Lógica de Programación
+  - 🌐 **Virtual:** Cátedra Ser Emprendedor (Sin horario fijo)
+  - 📌 *Inicia:* Sábado 25 de julio de 2026
 - **SENA — Bases de Datos:** (ficha 3549155, Zajuna) ✅ AA1 + AA2 entregadas. AA3 en curso (08-20 Jul)
 - **SENA — Excel:** Plataforma Zajuna — pendiente confirmar nombre exacto
 

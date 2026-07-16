@@ -1,7 +1,7 @@
 /**
  * check_aplicaciones.js — Verifica historial de aplicaciones en CT
  */
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require('playwright');
 const path = require('node:path');
 const { robustLogin } = require('./ct_login_helper');
@@ -26,7 +26,9 @@ const CT_PASS  = process.env.COMPUTRABAJO_PASS;
   console.log('Login:', page.url());
 
   // Ir al historial de aplicaciones
-  await page.goto('https://candidato.co.computrabajo.com/candidate/applications', { waitUntil: 'load', timeout: 20000 });
+  const url = 'https://candidato.co.computrabajo.com/candidate/match?st=1';
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  console.log('URL: ' + page.url());
   await page.waitForTimeout(2500);
   await page.screenshot({ path: path.join(__dirname, '..', 'diag_aplicaciones.png') });
   console.log('URL:', page.url());

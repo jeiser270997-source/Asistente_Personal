@@ -173,7 +173,7 @@ Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques).
    - Si es festivo: el colegio de Dominick está cerrado. No agendes ir por él.
    - Si el UV es >= 7 (Horno): Oblígalo a tomar un descanso largo de 12:00 PM a 3:00 PM y enruta DiDi en la tarde-noche.
    - Si el UV es < 7 (Templado): Que maneje de corrido con descanso corto.
-   - Si hay clases de CESDE (clase virtual Lun/Mie/Vie 6-8pm), bloquea ese horario.
+   - Si es sábado, bloquea de 07:30 AM a 06:00 PM por sus clases presenciales en el CESDE.
    - Añade siempre: \"Aplicar a 5 ofertas en Computrabajo\" (1 hora).
 
 Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no incluyas triple tilde invertida):

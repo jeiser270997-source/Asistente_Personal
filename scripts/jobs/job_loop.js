@@ -17,10 +17,11 @@ const { robustLogin } = require('./ct_login_helper');
 const CV_BASE   = PATHS.CV_BASE;
 const CV_OUT    = PATHS.JOBS_TAILORED;
 const APPLY_LOG = PATHS.APLICACIONES;
+const JOBS_DIR  = PATHS.JOBS_DIR;
 
 
 const LOOPS     = parseInt((process.argv.find(a => a.startsWith('--loops=')) || '--loops=5').split('=')[1]);
-const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=60').split('=')[1]);
+const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=40').split('=')[1]);
 const DRY_RUN   = process.argv.includes('--dry-run');
 
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
@@ -45,19 +46,19 @@ async function sendTelegram(text) {
 // â”€â”€â”€ SCRAPE LISTA DE OFERTAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function scrapeOfertasList() {
   const SEARCHES = [
-    'tester-manual-software',
-    'analista-qa-software',
-    'qa-junior',
-    'analista-pruebas',
-    'practicante-qa',
     'soporte-tecnico-software',
-    'qa-trainee',
-    'software-qa-analyst',
     'auxiliar-sistemas',
     'mesa-de-ayuda',
     'helpdesk',
     'soporte-nivel-1',
     'mesa-ayuda-sistemas',
+    'tester-manual-software',
+    'analista-qa-software',
+    'qa-junior',
+    'analista-pruebas',
+    'practicante-qa',
+    'qa-trainee',
+    'software-qa-analyst',
   ];
   const { chromium: _c } = require('playwright');
   const browser = await chromium.launch({ headless: true });
@@ -166,10 +167,11 @@ CANDIDATO - Jeiser Gutierrez:
 - Experiencia PrÃ¡ctica: Creador de LifeOS (sistema autÃ³nomo de producciÃ³n con 11 workflows CI/CD, scraping, integraciÃ³n LLM y base de datos SQLite).
 - Disponible: tiempo completo o medio tiempo, Medellín + remoto
 
-REGLA DE EVALUACIÃ“N CLAVE:
-Ignora los requisitos corporativos rÃ­gidos de "1 o 2 aÃ±os de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 aÃ±o de experiencia real. Si la vacante es Junior/Trainee y los skills tÃ©cnicos (JS, Playwright, Automation) hacen match, asÃ­gnale un score ALTO (>= 60) y evalÃºa su capacidad real, no los aÃ±os en papel.
+REGLA DE EVALUACIÓN CLAVE:
+Ignora los requisitos corporativos rígidos de "1 o 2 años de experiencia formal". El proyecto LifeOS demuestra habilidades avanzadas equivalentes a +1 año de experiencia real. Si la vacante es Junior/Trainee y los skills técnicos (JS, Playwright, Automation) hacen match, asígnele un score ALTO (>= 60) y evalúa su capacidad real.
+NUEVA DIRECTRIZ (SOPORTE TI): El candidato (Jeiser) busca activamente roles de Soporte Técnico, Mesa de Ayuda, Helpdesk y Auxiliar de Sistemas para entrar a la industria tecnológica mientras estudia (usando su experiencia previa bilingüe en Sitel/Amadeus y sólidos conocimientos de SO y hardware). Asigne scores MUY ALTOS (>=60) a estos roles, siempre que no impliquen solo cargar cajas.
 
-n	REGLAS ESTRICTAS: NO asignar score > 30 a roles de: Analista de OxÃ­geno, SST, QuÃ­mico, FisicoquÃ­mico, Calidad industrial (alimentos, laboratorio, procesos). Solo si la descripciÃ³n menciona herramientas de software explÃ­citamente.
+REGLAS ESTRICTAS: NO asignar score > 30 a roles de: Analista de Oxígeno, SST, Químico, Fisicoquímico, Calidad industrial (alimentos, laboratorio, procesos). Solo si la descripción menciona herramientas de software explícitamente.
 OFERTA: ${oferta.titulo} | ${oferta.empresa} | ${oferta.lugar}
 DESCRIPCIÃ“N: ${desc.substring(0, 1500)}
 

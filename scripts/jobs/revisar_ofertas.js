@@ -1,4 +1,4 @@
-﻿const { robustLogin } = require('./ct_login_helper');
+const { robustLogin } = require('./ct_login_helper');
 /**
  * revisar_ofertas.js â€” Scrape y evalÃºa top 10 ofertas Medellín (sesiÃ³n CT)
  */
@@ -168,7 +168,8 @@ Responde: {"score":<0-100>,"recomendacion":"APLICAR"|"REVISAR"|"DESCARTAR","razo
 
     let ev = { score: 0, recomendacion: 'REVISAR', razon: 'Error parsing LLM response', puntos_fuertes: [], gaps: [] };
     try {
-      const sysPrompt = `Eres un evaluador de compatibilidad laboral. Responde SOLO con JSON vÃ¡lido, sin texto adicional.`;
+      const sysPrompt = `Eres un evaluador de compatibilidad laboral. Responde SOLO con JSON válido, sin texto adicional.
+REGLA CLAVE: El candidato busca ganar experiencia en la industria entrando por roles de Soporte Técnico, Mesa de Ayuda, Helpdesk y Auxiliar de Sistemas. Si la oferta es para estos roles, asigne un score ALTO (>=60), reconociendo su experiencia previa bilingüe en Sitel/Amadeus y conocimientos actuales de sistemas.`;
       const msg = await askLLM(sysPrompt, [{ role: 'user', content: prompt }]);
       const raw = typeof msg === 'string' ? msg : (msg?.content || '');
       const m = raw.match(/\{[\s\S]*\}/);

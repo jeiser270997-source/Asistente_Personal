@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -51,22 +51,29 @@ async function login(page) {
 
   const btn = await page.$('button[name="form_login_user"]');
   if (btn) {
+    await page.evaluate(() => {
+      const modal = document.querySelector('#connection-guard-modal');
+      if (modal) modal.remove();
+    }).catch(()=>{});
+
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {}),
-      btn.click()
+      page.evaluate(b => b.click(), btn).catch(() => btn.click({ force: true }))
     ]);
   } else {
     // Fallback: try pressing Enter
     await page.keyboard.press('Enter');
     await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {});
   }
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(10000); // Increased wait time for Zajuna to redirect
 
-  if (page.url().includes('my/courses')) {
-    log('âœ… Login exitoso');
+  if (page.url().includes('my/courses') || page.url().includes('dashboard')) {
+    log('✅ Login exitoso');
     return true;
   }
-  log('❌ Login fallido');
+  log('❌ Login fallido. URL actual: ' + page.url());
+  log('Título: ' + await page.title().catch(() => 'unknown'));
+  await page.screenshot({ path: path.join(__dirname, '..', '..', 'sena_error.png'), timeout: 5000 }).catch(() => log('⚠️ No se pudo tomar screenshot por timeout'));
   return false;
 }
 

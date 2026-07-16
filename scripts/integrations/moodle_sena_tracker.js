@@ -1,11 +1,11 @@
-﻿require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 
 const SeguimientoStore = require('../../runtime/stores/SeguimientoStore');
 const RE = require('../../lib/runtime/resume_engine');
 
-const ALERTAS_PATH = path.join(__dirname, '..', 'data', 'contexto_maestro', 'ALERTAS_SENA.md');
+const ALERTAS_PATH = path.join(__dirname, '..', '..', 'data', 'state', 'contexto_maestro', 'ALERTAS_SENA.md');
 
 function log(msg) { console.log(msg); }
 
