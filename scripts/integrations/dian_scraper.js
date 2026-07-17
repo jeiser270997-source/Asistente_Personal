@@ -87,8 +87,11 @@ async function loginDIAN(page) {
       if (btn) { btn.removeAttribute('disabled'); btn.click(); }
     });
   }
-  await page.waitForTimeout(8000);
-
+  try {
+    await page.waitForLoadState('networkidle', { timeout: 15000 });
+  } catch (e) {
+    log('   ⚠ Timeout esperando networkidle en login, continuando...');
+  }
   const ok = page.url().includes('muisca.dian.gov.co') && !page.url().includes('WebIdentidadLogin');
   log(ok ? `✅ Login OK → ${page.url()}` : `❌ Login fallido → ${page.url()}`);
   await shot(page, 'dashboard.png');
@@ -97,12 +100,15 @@ async function loginDIAN(page) {
 
 // ─── HELPER: extraer texto limpio de una página ───────────────
 async function extractPageText(page) {
-  return page.evaluate(() => {
-    // Remover scripts, styles, nav repetitivos
-    const clone = document.body.cloneNode(true);
-    clone.querySelectorAll('script,style,nav,header,footer').forEach(el => el.remove());
-    return clone.innerText.replace(/\s{3,}/g, '\n\n').trim().substring(0, 8000);
-  });
+  try {
+    return await page.evaluate(() => {
+      document.querySelectorAll('script, style, nav, footer, iframe').forEach(e => e.remove());
+      return document.body.innerText.replace(/\s+/g, ' ').substring(0, 8000);
+    });
+  } catch (e) {
+    log('   ❌ Error en extractPageText: ' + e.message);
+    return null;
+  }
 }
 
 // ─── HELPER: extraer tabla ────────────────────────────────────
@@ -126,8 +132,11 @@ async function visitAndExtract(page, url, nombre) {
   log(`   → ${nombre}: ${url}`);
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
-    await page.waitForTimeout(2500);
-    const title  = await page.title();
+    try {
+      await page.waitForLoadState('networkidle', { timeout: 10000 });
+    } catch(e) {
+      log('   ⚠ Timeout en espera de sub-página: ' + title);
+    }    const title  = await page.title();
     const isError = title.includes('Error') || title.includes('404') || title.includes('JBoss');
     if (isError) {
       log(`   ⚠ ${nombre}: página no disponible (${title})`);
@@ -219,48 +228,50 @@ async function main() {
     resumen: '',
   };
 
-  const loginOk = await loginDIAN(page);
-  resultado.login_exitoso = loginOk;
+  try {
+    const loginOk = await loginDIAN(page);
+    resultado.login_exitoso = loginOk;
 
-  if (!loginOk) {
-    CheckpointStore.set('dian_ultima_consulta', resultado);
-    LedgerStore.emit('dian_login_fallido', { fecha: resultado.fecha });
-    saveJSON('ultima_consulta.json', resultado);
-    RE.finish('dian_scraper', 'error', { reason: 'login_failed' });
-    await browser.close();
-    log('Login fallido. Abortando.');
-    process.exit(1);
-  }
+    if (!loginOk) {
+      CheckpointStore.set('dian_ultima_consulta', resultado);
+      LedgerStore.emit('dian_login_fallido', { fecha: resultado.fecha });
+      saveJSON('ultima_consulta.json', resultado);
+      RE.finish('dian_scraper', 'error', { reason: 'login_failed' });
+      log('Login fallido. Abortando.');
+      return;
+    }
 
-  LedgerStore.emit('dian_login_ok', { fecha: resultado.fecha });
+    LedgerStore.emit('dian_login_ok', { fecha: resultado.fecha });
 
-  // Extraer links del dashboard para descubrir URLs disponibles
-  const dashLinks = await extractDashboardLinks(page);
-  resultado.links_dashboard = dashLinks;
-  log(`   Dashboard links encontrados: ${dashLinks.length}`);
+    // Extraer links del dashboard para descubrir URLs disponibles
+    const dashLinks = await extractDashboardLinks(page);
+    resultado.links_dashboard = dashLinks;
+    log(`   Dashboard links encontrados: ${dashLinks.length}`);
 
-  // Visitar cada sección conocida
-  log('\n📋 Extrayendo secciones DIAN...');
-  for (const sec of SECCIONES_DIAN) {
-    resultado.secciones[sec.nombre] = await visitAndExtract(page, sec.url, sec.nombre);
-    await page.waitForTimeout(1000); // pausa entre peticiones
-  }
+    // Visitar cada sección conocida
+    log('\n📋 Extrayendo secciones DIAN...');
+    for (const sec of SECCIONES_DIAN) {
+      resultado.secciones[sec.nombre] = await visitAndExtract(page, sec.url, sec.nombre);
+      // pausa corta para no saturar la CPU
+      await new Promise(r => setTimeout(r, 1000));  
+    }
 
-  // Visitar links dinámicos del dashboard que no estaban en la lista
-  const conocidos = new Set(SECCIONES_DIAN.map(s => s.url));
-  const extras = dashLinks.filter(l => l.href && !conocidos.has(l.href) && l.href.includes('muisca'));
-  log(`\n🔍 Visitando ${extras.length} links adicionales del dashboard...`);
-  for (const link of extras.slice(0, 10)) { // máx 10 extra
-    const key = link.text.toLowerCase().replace(/\s+/g, '_').substring(0, 30);
-    resultado.secciones[key] = await visitAndExtract(page, link.href, link.text);
-    await page.waitForTimeout(800);
-  }
+    // Visitar links dinámicos del dashboard que no estaban en la lista
+    const conocidos = new Set(SECCIONES_DIAN.map(s => s.url));
+    const extras = dashLinks.filter(l => l.href && !conocidos.has(l.href) && l.href.includes('muisca'));
+    log(`\n🔍 Visitando ${extras.length} links adicionales del dashboard...`);
+    for (const link of extras.slice(0, 10)) { // máx 10 extra
+      const key = link.text.toLowerCase().replace(/\s+/g, '_').substring(0, 30);
+      resultado.secciones[key] = await visitAndExtract(page, link.href, link.text);
+      // pausa corta entre retries
+      await new Promise(r => setTimeout(r, 800));  
+    }
 
-  // Generar resumen textual
-  const disponibles = Object.entries(resultado.secciones).filter(([, v]) => v.disponible);
-  const noDisponibles = Object.entries(resultado.secciones).filter(([, v]) => !v.disponible);
+    // Generar resumen textual
+    const disponibles = Object.entries(resultado.secciones).filter(([, v]) => v.disponible);
+    const noDisponibles = Object.entries(resultado.secciones).filter(([, v]) => !v.disponible);
 
-  resultado.resumen = `DIAN MUISCA — Extracción ${new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })}
+    resultado.resumen = `DIAN MUISCA — Extracción ${new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })}
 NIT: ${DIAN_USER}
 Login: ✅
 Secciones disponibles: ${disponibles.length}/${Object.keys(resultado.secciones).length}
@@ -271,25 +282,30 @@ ${disponibles.map(([k, v]) => `  ✅ ${k}: ${(v.texto || '').substring(0, 80)}`)
 NO DISPONIBLES (404/error):
 ${noDisponibles.map(([k]) => `  ❌ ${k}`).join('\n')}`;
 
-  CheckpointStore.set('dian_ultima_consulta', resultado);
-  LedgerStore.emit('dian_consulta_completada', { fecha: resultado.fecha, disponibles: disponibles.length, total: Object.keys(resultado.secciones).length });
-  saveJSON('ultima_consulta.json', resultado);
-  log('\n' + resultado.resumen);
+    CheckpointStore.set('dian_ultima_consulta', resultado);
+    LedgerStore.emit('dian_consulta_completada', { fecha: resultado.fecha, disponibles: disponibles.length, total: Object.keys(resultado.secciones).length });
+    saveJSON('ultima_consulta.json', resultado);
+    log('\n' + resultado.resumen);
 
-  // Guardar cada sección disponible como archivo separado para fácil acceso
-  for (const [nombre, datos] of disponibles) {
-    if (datos.texto) {
-      fs.writeFileSync(path.join(DATA_DIR, `${nombre}.txt`), datos.texto, 'utf8');
+    // Guardar cada sección disponible como archivo separado para fácil acceso
+    for (const [nombre, datos] of disponibles) {
+      if (datos.texto) {
+        fs.writeFileSync(path.join(DATA_DIR, `${nombre}.txt`), datos.texto, 'utf8');
+      }
+      if (datos.tablas && datos.tablas.length > 0) {
+        saveJSON(`${nombre}_tablas.json`, datos.tablas);
+      }
     }
-    if (datos.tablas && datos.tablas.length > 0) {
-      saveJSON(`${nombre}_tablas.json`, datos.tablas);
-    }
+
+    RE.finish('dian_scraper', 'success', { secciones_ok: disponibles.length, secciones_fail: noDisponibles.length });
+    log(`\nExtraccion DIAN completada. Datos en: ${DATA_DIR}`);
+    log(`   ${disponibles.length} secciones con datos, ${noDisponibles.length} no disponibles`);
+  } catch (err) {
+    log('❌ Excepción fatal en DIAN scraper: ' + err.message);
+    RE.finish('dian_scraper', 'error', { reason: err.message });
+  } finally {
+    await browser.close();
   }
-
-  await browser.close();
-  RE.finish('dian_scraper', 'success', { secciones_ok: disponibles.length, secciones_fail: noDisponibles.length });
-  log(`\nExtraccion DIAN completada. Datos en: ${DATA_DIR}`);
-  log(`   ${disponibles.length} secciones con datos, ${noDisponibles.length} no disponibles`);
 }
 
 main().catch(e => { console.error('❌ Error:', e.message); process.exit(1); });

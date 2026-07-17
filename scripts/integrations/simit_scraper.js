@@ -42,7 +42,7 @@ async function scrapeSIMIT(page) {
   log('🔍 Consultando SIMIT para placa ' + PLACA + '...');
 
   await page.goto(SIMIT_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(3000);
+  await page.waitForSelector('#txtBusqueda', { state: 'visible', timeout: 15000 }).catch(() => null);
 
   // Type plate number and search (the portal is an SPA so input is dynamic)
   const input = await page.$('#txtBusqueda');
@@ -52,11 +52,15 @@ async function scrapeSIMIT(page) {
   }
 
   await input.fill(PLACA);
-  await page.waitForTimeout(500);
+  await page.waitForSelector('#btnNumDocPlaca', { state: 'visible', timeout: 5000 }).catch(() => null);
 
   const searchBtn = await page.$('#btnNumDocPlaca');
   if (searchBtn) await searchBtn.click();
-  await page.waitForTimeout(5000);
+  
+  // Wait for results to load
+  await page.waitForFunction(() => {
+    return document.body.innerText.includes('Total:') || document.body.innerText.includes('No se encontraron');
+  }, { timeout: 15000 }).catch(() => null);
 
   // The page should now show results
   const hasResults = await page.evaluate(() => {
@@ -71,49 +75,55 @@ async function scrapeSIMIT(page) {
   }
 
   // Extract data from the Angular SPA
-  const data = await page.evaluate(() => {
-    const body = document.body.innerText;
-    
-    // Extract total
-    const totalMatch = body.match(/Total:\s*\$?\s*([\d.,]+)/);
-    
-    // Count multas
-    const multasMatch = body.match(/Multas:\s*(\d+)/);
-    const comparendosMatch = body.match(/Comparendos:\s*(\d+)/);
-    const acuerdosMatch = body.match(/Acuerdos de pago:\s*(\d+)/);
+  let data;
+  try {
+    data = await page.evaluate(() => {
+      const body = document.body.innerText;
+      
+      // Extract total
+      const totalMatch = body.match(/Total:\s*\$?\s*([\d.,]+)/);
+      
+      // Count multas
+      const multasMatch = body.match(/Multas:\s*(\d+)/);
+      const comparendosMatch = body.match(/Comparendos:\s*(\d+)/);
+      const acuerdosMatch = body.match(/Acuerdos de pago:\s*(\d+)/);
 
-    // Extract individual multa details from table
-    const rows = document.querySelectorAll('table tr, .table tr, tbody tr');
-    const multas = [];
-    
-    for (const row of rows) {
-      const cells = row.querySelectorAll('td');
-      if (cells.length >= 5) {
-        const texts = Array.from(cells).map(c => c.textContent.trim());
-        // Look for multa/comparendo IDs (numeric patterns)
-        if (texts[0] && /^\d{5,}/.test(texts[0].replace(/\D/g, ''))) {
-          multas.push({
-            id: texts[0].replace(/\D/g, ''),
-            tipo: texts[1] || '',
-            fecha: texts[2] || '',
-            secretaria: texts[3] || '',
-            infraccion: texts[4] || '',
-            estado: texts[5] || '',
-            valor: texts[6] || ''
-          });
+      // Extract individual multa details from table
+      const rows = document.querySelectorAll('table tr, .table tr, tbody tr');
+      const multas = [];
+      
+      for (const row of rows) {
+        const cells = row.querySelectorAll('td');
+        if (cells.length >= 5) {
+          const texts = Array.from(cells).map(c => c.textContent.trim());
+          // Look for multa/comparendo IDs (numeric patterns)
+          if (texts[0] && /^\d{5,}/.test(texts[0].replace(/\D/g, ''))) {
+            multas.push({
+              id: texts[0].replace(/\D/g, ''),
+              tipo: texts[1] || '',
+              fecha: texts[2] || '',
+              secretaria: texts[3] || '',
+              infraccion: texts[4] || '',
+              estado: texts[5] || '',
+              valor: texts[6] || ''
+            });
+          }
         }
       }
-    }
 
-    return {
-      total: totalMatch ? totalMatch[1] : null,
-      numMultas: multasMatch ? parseInt(multasMatch[1]) : 0,
-      numComparendos: comparendosMatch ? parseInt(comparendosMatch[1]) : 0,
-      numAcuerdos: acuerdosMatch ? parseInt(acuerdosMatch[1]) : 0,
-      multas,
-      rawText: body.substring(0, 3000)
-    };
-  });
+      return {
+        total: totalMatch ? totalMatch[1] : null,
+        numMultas: multasMatch ? parseInt(multasMatch[1]) : 0,
+        numComparendos: comparendosMatch ? parseInt(comparendosMatch[1]) : 0,
+        numAcuerdos: acuerdosMatch ? parseInt(acuerdosMatch[1]) : 0,
+        multas,
+        rawText: body.substring(0, 3000)
+      };
+    });
+  } catch (err) {
+    log('❌ Error extrayendo datos con page.evaluate: ' + err.message);
+    return null;
+  }
 
   log(`   Total: ${data.total}`);
   log(`   Multas: ${data.numMultas}, Comparendos: ${data.numComparendos}`);

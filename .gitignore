@@ -107,3 +107,6 @@ scripts/one_shots/*.html
 data/sources/sena/prompts/
 
 # Excepciones para mantener la memoria viva en GitHub
+
+data/cache/repos_db.json
+etc/archived/

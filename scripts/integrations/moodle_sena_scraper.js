@@ -65,7 +65,7 @@ async function login(page) {
     await page.keyboard.press('Enter');
     await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {});
   }
-  await page.waitForTimeout(10000); // Increased wait time for Zajuna to redirect
+  try { await page.waitForLoadState('networkidle', { timeout: 15000 }); } catch (e) { log('Timeout waitForLoadState'); } // Increased wait time for Zajuna to redirect
 
   if (page.url().includes('my/courses') || page.url().includes('dashboard')) {
     log('✅ Login exitoso');
@@ -105,7 +105,7 @@ async function extractCourse(page) {
   }
 
   // Secciones y actividades
-  const sections = await page.evaluate(() => {
+  const sections = await safeEvaluate(page, () => {
     const result = [];
     const secEls = document.querySelectorAll('li.section, .course-section');
 
@@ -158,9 +158,9 @@ async function extractDeadlines(page) {
 
   // Try the upcoming page first
   await page.goto(`${BASE_URL}/zajuna/calendar/view.php?view=upcoming`, { waitUntil: 'domcontentloaded', timeout: 15000 });
-  await page.waitForTimeout(3000);
+  try { await page.waitForLoadState('networkidle', { timeout: 10000 }); } catch (e) { log('Timeout waitForLoadState'); }
 
-  const deadlines = await page.evaluate(() => {
+  const deadlines = await safeEvaluate(page, () => {
     const events = document.querySelectorAll('.event, .calendar_event, tr');
     const result = [];
     events.forEach(ev => {
@@ -186,9 +186,9 @@ async function extractDeadlines(page) {
 
   // Also check the course page for inline dates
   await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(2000);
+  try { await page.waitForLoadState('networkidle', { timeout: 10000 }); } catch (e) { log('Timeout waitForLoadState'); }
 
-  const inlineDates = await page.evaluate(() => {
+  const inlineDates = await safeEvaluate(page, () => {
     const result = [];
     const activities = document.querySelectorAll('.activity');
     activities.forEach(act => {
@@ -218,9 +218,9 @@ async function extractDeadlines(page) {
 async function extractGrades(page) {
   log('ðŸ“Š Extrayendo calificaciones...');
   await page.goto(`${BASE_URL}/zajuna/grade/report/user/index.php?id=${COURSE_ID}`, { waitUntil: 'domcontentloaded', timeout: 15000 });
-  await page.waitForTimeout(3000);
+  try { await page.waitForLoadState('networkidle', { timeout: 10000 }); } catch (e) { log('Timeout waitForLoadState'); }
 
-  const grades = await page.evaluate(() => {
+  const grades = await safeEvaluate(page, () => {
     const rows = document.querySelectorAll('table.generaltable tr, .user-grade tr');
     return Array.from(rows).slice(1).map(row => {
       const cells = row.querySelectorAll('td, th');
@@ -239,9 +239,9 @@ async function extractCronograma(page) {
 
   // Buscar pagina del cronograma en el curso
   await page.goto(COURSE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-  await page.waitForTimeout(2000);
+  try { await page.waitForLoadState('networkidle', { timeout: 10000 }); } catch (e) { log('Timeout waitForLoadState'); }
 
-  const cronogramaUrl = await page.evaluate(() => {
+  const cronogramaUrl = await safeEvaluate(page, () => {
     const links = document.querySelectorAll('.activity a');
     for (const a of links) {
       if (a.textContent.toLowerCase().includes('cronograma')) return a.href;
@@ -255,9 +255,9 @@ async function extractCronograma(page) {
   }
 
   await page.goto(cronogramaUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
-  await page.waitForTimeout(2000);
+  try { await page.waitForLoadState('networkidle', { timeout: 10000 }); } catch (e) { log('Timeout waitForLoadState'); }
 
-  const fullText = await page.evaluate(() => document.body.innerText);
+  const fullText = await safeEvaluate(page, () => document.body.innerText, "");
 
   const inicioMatch = fullText.match(/FECHA DE INICIO:\s*(\d{2}\/\d{2}\/\d{4})/);
   const limiteMatch = fullText.match(/FECHA LÃMITE ENVÃO DE EVIDENCIAS:\s*(\d{2}\/\d{2}\/\d{4})/);

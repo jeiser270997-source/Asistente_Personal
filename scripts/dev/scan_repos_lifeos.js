@@ -1,7 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 
-const db = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'cache', 'repos_db.json'), 'utf8'));
+const Database = require('better-sqlite3');
+
+const dbPath = path.join(__dirname, '..', '..', 'wheel-saver', 'data', 'top_repos.db');
+const sqlDb = new Database(dbPath, { readonly: true });
+const db = sqlDb.prepare('SELECT name, description as desc, language as lang, stars, url FROM repos').all();
 console.log(`\n📦 DB cargada: ${db.length} repos\n`);
 
 // Keywords relevantes para el proyecto LifeOS

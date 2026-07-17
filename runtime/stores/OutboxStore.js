@@ -69,7 +69,7 @@ function getPending(db, limit = 50) {
  */
 function markProcessing(db, eventId) {
   db.prepare(`
-    UPDATE event_outbox SET status = 'processing', updated_at = datetime('now')
+    UPDATE event_outbox SET status = 'processing', updated_at = datetime('now'), processing_at = datetime('now')
     WHERE event_id = ?
   `).run(eventId);
 }
@@ -117,7 +117,7 @@ function markFailed(db, eventId, errorMessage) {
 function resetStuck(db) {
   const result = db.prepare(`
     UPDATE event_outbox SET status = 'pending', retry_count = 0, updated_at = datetime('now')
-    WHERE status = 'processing'
+    WHERE status = 'processing' AND processing_at < datetime('now', '-10 minutes')
   `).run();
   return result.changes;
 }
