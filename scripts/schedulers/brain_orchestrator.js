@@ -126,8 +126,8 @@ function getDiDiContext(date) {
   // Ganancias semana actual desde DB (si existen)
   let gananciasSemana = 'Sin datos (usa `registrar_didi` para trackear)';
   try {
-    const Database = require('better-sqlite3');
-    const db = new Database(PATHS.DB_PATH || require('../../lib/data/paths').PATHS.LIFEOS_DB);
+    const { getDb } = require('../../runtime/stores/Database');
+    const db = getDb();
     const row = db.prepare(`
       SELECT SUM(ingreso) as total, COUNT(*) as dias
       FROM didi_jornadas
@@ -136,7 +136,6 @@ function getDiDiContext(date) {
     if (row && row.total) {
       gananciasSemana = `$${Number(row.total).toLocaleString('es-CO')} en ${row.dias} día(s) esta semana`;
     }
-    db.close();
   } catch { /* tabla no existe aún */ }
 
   return `${picoPlaca}\n${horasRec}\nGanancias 7 días: ${gananciasSemana}`;

@@ -4,11 +4,11 @@ const { agregarHecho } = require('../../lib/memory/memory_engine');
 const path = require('node:path');
 const fs = require('node:fs');
 
-const NOMBRE = 'Jeiser Abraham Gutierrez Torres';
-const CC = '1019156838';
-const PLACA = 'KEW496';
-const CELULAR = '3044615613';
-const EMAIL = 'jeiser270997@gmail.com';
+const NOMBRE = process.env.USER_NAME || '[REDACTED]';
+const CC = process.env.USER_CC;
+const PLACA = process.env.USER_PLATE;
+const CELULAR = process.env.USER_PHONE;
+const EMAIL = process.env.USER_EMAIL;
 
 const COMPARENDO = {
   id: '0000838097',

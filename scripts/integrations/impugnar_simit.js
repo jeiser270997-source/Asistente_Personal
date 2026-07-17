@@ -2,9 +2,9 @@ const { google } = require('googleapis');
 const { authorize } = require('../../lib/integrations/google_auth');
 const { agregarHecho } = require('../../lib/memory/memory_engine');
 
-const NOMBRE = 'Jeiser Abraham Gutierrez Torres';
-const CC = '1019156838';
-const PLACA = 'KEW496';
+const NOMBRE = process.env.USER_NAME || '[REDACTED]';
+const CC = process.env.USER_CC;
+const PLACA = process.env.USER_PLATE;
 const DIRECCION = 'KR 100 A No. 12 ...'; // RUNT address
 
 const COMPARENDO = {

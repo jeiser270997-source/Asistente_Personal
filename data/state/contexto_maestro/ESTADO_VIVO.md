@@ -3,10 +3,10 @@
 
 ## 👤 Identidad
 - **Nombre:** Jeiser Abraham Gutierrez Torres
-- **CC:** 1019156838
-- **Teléfono:** +57 304 461 5613
-- **Email:** jeiser270997@gmail.com
-- **Ubicación:** Urb. Villa Eloisa, Bloque 25 Apto 102, Medellín, Colombia
+- **CC:** [REDACTED - Ver .env]
+- **Teléfono:** [REDACTED - Ver .env]
+- **Email:** [REDACTED - Ver .env]
+- **Ubicación:** [REDACTED - Ver .env]
 - **Dispositivo Principal:** Samsung Galaxy S23 Ultra (Android / One UI)
 - **Acceso al sistema:** SSH vía Tailscale → OpenCode (interacción directa)
 - **Canal Telegram:** Activo (algunos workflows desactivados por errores puntuales)
@@ -21,7 +21,7 @@
 - **Gastos Fijos Detectados:** Arriendo ($1,300,000) + Servicios EPM (~$308,000). Total base mensual: ~$1.6M
 - **Estrategia DiDi:** Turnos fraccionados (AM 5:00-10:30 y PM 15:30-20:00). 
   - Regla estricta: NO CONDUCIR de 10:30 AM a 3:30 PM por ola de calor.
-  - Carro: Toyota Corolla 2010 (KEW496) - Rendimiento 8 km/L.
+  - Carro: Toyota Corolla 2010 ([REDACTED - Ver .env]) - Rendimiento 8 km/L.
   - Táctica: Viajes menores a 20 min, zonas planas, maximizar bonos nocturnos.
 - **Deuda DIAN AG2023:** ~$9.8M vencida. **REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.** Prescripción ~09/2029.
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.

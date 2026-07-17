@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const crypto = require('node:crypto');
 const betterSqlite3 = require('better-sqlite3');
 
-const DB_PATH = process.env.LIFEOS_DB_PATH || path.resolve(__dirname, '..', '..', 'runtime', 'lifeos.db');
+const DB_PATH = process.env.LIFEOS_DB_PATH || path.resolve(__dirname, '..', '..', 'data', 'memoria_hipocampo.db');
 const MIGRATIONS_DIR = path.resolve(__dirname, '..', 'migrations');
 
 let db = null;

@@ -6,7 +6,7 @@ const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 const LedgerStore = require('../../runtime/stores/LedgerStore');
 const RE = require('../../lib/runtime/resume_engine');
 
-const USER = process.env.MEDELLIN_USER || '1019156838';
+const USER = process.env.MEDELLIN_USER || process.env.USER_CC;
 const PASS = process.env.MEDELLIN_PASS;
 const LOGIN_URL = 'https://www.medellin.gov.co/irj/portal/medellin/servicios_digitales_movilidad';
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'cache', 'medellin');

@@ -1,0 +1,293 @@
+{
+  "id": "121953",
+  "nombre": "BASES DE DATOS GENERALIDADES Y SISTEMAS DE GESTION (3549155)",
+  "ficha": "3549155",
+  "url": "https://zajuna.sena.edu.co/zajuna/course/view.php?id=121953",
+  "fecha_extraccion": "2026-07-17T10:01:37.110Z",
+  "secciones": [
+    {
+      "nombre": "ANUNCIO",
+      "actividades": [
+        {
+          "nombre": "ANUNCIOS  Foro",
+          "tipo": "foro",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/forum/view.php?id=7725783"
+        }
+      ]
+    },
+    {
+      "nombre": "INFORMACIÓN GENERAL",
+      "actividades": [
+        {
+          "nombre": "Información del programa  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723847"
+        },
+        {
+          "nombre": "Diseño curricular  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723848"
+        },
+        {
+          "nombre": "Foro de dudas e inquietudes",
+          "tipo": "foro",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/forum/view.php?id=7723850"
+        },
+        {
+          "nombre": "Documentos de interés para el aprendiz  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723851"
+        }
+      ]
+    },
+    {
+      "nombre": "CRONOGRAMA",
+      "actividades": [
+        {
+          "nombre": "Cronograma  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723853"
+        }
+      ]
+    },
+    {
+      "nombre": "ACTIVIDADES INICIALES",
+      "actividades": [
+        {
+          "nombre": "Actualización de datos personales  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723856"
+        },
+        {
+          "nombre": "Sondeo de conocimientos previos  Prueba de Conocimiento",
+          "tipo": "cuestionario",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/quiz/view.php?id=7723857"
+        },
+        {
+          "nombre": "Foro social",
+          "tipo": "foro",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/forum/view.php?id=7723859"
+        }
+      ]
+    },
+    {
+      "nombre": "ACTIVIDAD 1",
+      "actividades": [
+        {
+          "nombre": "Guía de aprendizaje 1  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723861"
+        },
+        {
+          "nombre": "Material de formación: Generalidades y conceptos básicos de bases de datos  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723863"
+        },
+        {
+          "nombre": "Materiales complementarios  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723865"
+        },
+        {
+          "nombre": "Foro Temático. Reconocer las características de la evolución de las  bases de datos en cada una de sus etapas",
+          "tipo": "foro",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/forum/view.php?id=7723867"
+        },
+        {
+          "nombre": "Taller: Aplicar los conceptos de una base de datos según requerimientos de una empresa.  Evidencia",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723870"
+        }
+      ]
+    },
+    {
+      "nombre": "Evidencias",
+      "actividades": [
+        {
+          "nombre": "Foro Temático. Reconocer las características de la evolución de las  bases de datos en cada una de sus etapas",
+          "tipo": "foro",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/forum/view.php?id=7723867"
+        },
+        {
+          "nombre": "Taller: Aplicar los conceptos de una base de datos según requerimientos de una empresa.  Evidencia",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723870"
+        }
+      ]
+    },
+    {
+      "nombre": "ACTIVIDAD 2",
+      "actividades": [
+        {
+          "nombre": "Guía de aprendizaje 2  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723871"
+        },
+        {
+          "nombre": "Material de formación: Conceptos de bases de datos conceptuales  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723872"
+        },
+        {
+          "nombre": "Materiales complementarios  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723873"
+        },
+        {
+          "nombre": "Evidencia: Cuadro comparativo. Comprender los conceptos de bases de datos conceptuales",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723874"
+        },
+        {
+          "nombre": "Evidencia: Taller aplicado. Desarrollar los componentes de las bases de datos conceptuales",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723876"
+        }
+      ]
+    },
+    {
+      "nombre": "Evidencias",
+      "actividades": [
+        {
+          "nombre": "Evidencia: Cuadro comparativo. Comprender los conceptos de bases de datos conceptuales",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723874"
+        },
+        {
+          "nombre": "Evidencia: Taller aplicado. Desarrollar los componentes de las bases de datos conceptuales",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723876"
+        }
+      ]
+    },
+    {
+      "nombre": "ACTIVIDAD 3",
+      "actividades": [
+        {
+          "nombre": "Guía de aprendizaje 3  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723880"
+        },
+        {
+          "nombre": "Material de formación: Reglas para la normalización en una base de datos  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723883"
+        },
+        {
+          "nombre": "SCORM Evidencia: Actividad interactiva. Identificar los conceptos de normalización en las bases de datos  Paquete SCORM",
+          "tipo": "scorm",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/scorm/view.php?id=7723886"
+        },
+        {
+          "nombre": "Evidencia documento: Aplicar la técnica de normalización a una base de datos en una empresa.",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723905"
+        }
+      ]
+    },
+    {
+      "nombre": "Evidencias",
+      "actividades": [
+        {
+          "nombre": "SCORM Evidencia: Actividad interactiva. Identificar los conceptos de normalización en las bases de datos  Paquete SCORM",
+          "tipo": "scorm",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/scorm/view.php?id=7723886"
+        },
+        {
+          "nombre": "Evidencia documento: Aplicar la técnica de normalización a una base de datos en una empresa.",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723905"
+        }
+      ]
+    },
+    {
+      "nombre": "ACTIVIDAD 4",
+      "actividades": [
+        {
+          "nombre": "Guía de aprendizaje 4  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723908"
+        },
+        {
+          "nombre": "Material de formación: Aplicación y diseño de bases de datos relacional  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723909"
+        },
+        {
+          "nombre": "Materiales complementarios  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723911"
+        },
+        {
+          "nombre": "SCORM Evidencia: Actividad interactiva. Reconocer los conceptos generales de una base de datos relacional.  Paquete SCORM",
+          "tipo": "scorm",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/scorm/view.php?id=7723912"
+        },
+        {
+          "nombre": "Evidencia: Estudio de caso. Diseñar una base de datos relacional para una empresa",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723935"
+        },
+        {
+          "nombre": "Sondeo de evaluacion del programa  Prueba de Conocimiento",
+          "tipo": "cuestionario",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/quiz/view.php?id=7723938"
+        }
+      ]
+    },
+    {
+      "nombre": "Evidencias",
+      "actividades": [
+        {
+          "nombre": "SCORM Evidencia: Actividad interactiva. Reconocer los conceptos generales de una base de datos relacional.  Paquete SCORM",
+          "tipo": "scorm",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/scorm/view.php?id=7723912"
+        },
+        {
+          "nombre": "Evidencia: Estudio de caso. Diseñar una base de datos relacional para una empresa",
+          "tipo": "tarea",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/assign/view.php?id=7723935"
+        },
+        {
+          "nombre": "Sondeo de evaluacion del programa  Prueba de Conocimiento",
+          "tipo": "cuestionario",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/quiz/view.php?id=7723938"
+        }
+      ]
+    },
+    {
+      "nombre": "SESIONES EN LÍNEA",
+      "actividades": [
+        {
+          "nombre": "Enlace encuentros Online BASES DE DATOS GENERALIDADES Y SISTEMAS DE GESTION  URL",
+          "tipo": "enlace",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/url/view.php?id=7795183"
+        }
+      ]
+    },
+    {
+      "nombre": "GRABACIONES SESIONES EN LINEA",
+      "actividades": []
+    },
+    {
+      "nombre": "BIBLIOTECA SENA",
+      "actividades": [
+        {
+          "nombre": "Bilblioteca SENA  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723941"
+        }
+      ]
+    },
+    {
+      "nombre": "SOFTWARE DEL PROGRAMA",
+      "actividades": [
+        {
+          "nombre": "Software requerido para trabajar en la plataforma  Página",
+          "tipo": "pagina",
+          "url": "https://zajuna.sena.edu.co/zajuna/mod/page/view.php?id=7723963"
+        }
+      ]
+    }
+  ]
+}
