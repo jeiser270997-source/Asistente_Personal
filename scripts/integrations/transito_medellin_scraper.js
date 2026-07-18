@@ -2,13 +2,11 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..'
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
-const CheckpointStore = require('../../runtime/stores/CheckpointStore');
-const LedgerStore = require('../../runtime/stores/LedgerStore');
 const RE = require('../../lib/runtime/resume_engine');
 
 const USER = process.env.MEDELLIN_USER || process.env.USER_CC;
 const PASS = process.env.MEDELLIN_PASS;
-const LOGIN_URL = 'https://www.medellin.gov.co/irj/portal/medellin/servicios_digitales_movilidad';
+const SPA_URL = 'https://www.medellin.gov.co/portal-movilidad/index.html#/inicio-sesion';
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'cache', 'medellin');
 
 function ensureDir() {
@@ -20,69 +18,112 @@ function log(msg) {
   console.log(line);
 }
 
-async function scrapeMedellin(page) {
-  log('Navigating to Medellin Movilidad...');
-  await page.goto(LOGIN_URL, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.waitForTimeout(5000);
+async function pageText(page) {
+  // intenta multiple estrategias
+  return page.evaluate(() => {
+    // estrategia 1: body directo
+    const body = document.body?.innerText;
+    if (body && body.trim().length > 200) return body;
+
+    // estrategia 2: contenedor principal comun en SPAs
+    for (const sel of ['main', '[role=main]', '.container', '.content', '#content', '.dashboard', '.app-content', 'app-root', 'app-dashboard']) {
+      const el = document.querySelector(sel);
+      if (el && el.innerText && el.innerText.trim().length > 50) return el.innerText;
+    }
+
+    // estrategia 3: todos los divs con texto significativo
+    const divs = Array.from(document.querySelectorAll('div'));
+    for (const d of divs) {
+      if (d.innerText && d.innerText.trim().length > 300) return d.innerText;
+    }
+
+    return body || '';
+  });
+}
+
+async function scrapeMultas() {
+  const browser = await chromium.launch({ headless: false });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await context.newPage();
 
   try {
-    log('Ingresando credenciales...');
-    
-    // Look for login form elements, handling possible frames or overlays
-    const userInput = await page.$('input[name="j_username"]') || await page.$('input[type="text"]');
-    const passInput = await page.$('input[name="j_password"]') || await page.$('input[type="password"]');
+    log('Navegando al portal SPA de Medellin...');
+    await page.goto(SPA_URL, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    await page.waitForTimeout(5000);
 
-    if (!userInput || !passInput) {
-      log('No se encontraron los campos de login, volcando HTML...');
+    log('Buscando campos de login en el SPA...');
+    const userField = await page.$('input[type="text"]') || await page.$('input[placeholder*="suario"]') || await page.$('input[placeholder*="ocumento"]') || await page.$('input[formcontrolname="username"]');
+    const passField = await page.$('input[type="password"]') || await page.$('input[formcontrolname="password"]');
+
+    if (!userField || !passField) {
+      log('No se encontraron campos de login. Capturando debug...');
+      await page.screenshot({ path: path.join(DATA_DIR, 'debug_spa.png') });
       const html = await page.content();
-      fs.writeFileSync(path.join(DATA_DIR, 'debug_login.html'), html);
-      await page.screenshot({ path: path.join(DATA_DIR, 'debug_login.png') });
+      fs.writeFileSync(path.join(DATA_DIR, 'debug_spa.html'), html);
       return null;
     }
 
-    log('Campos encontrados. Llenando...');
-    await userInput.fill(USER);
-    await passInput.fill(PASS);
-    await page.waitForTimeout(500);
+    log('Llenando credenciales...');
+    await userField.fill(USER);
+    await passField.fill(PASS);
+    await page.waitForTimeout(300);
 
-    const btns = await page.$$('input[type="submit"], button');
-    let loginBtn = null;
-    for (const btn of btns) {
-      const text = await btn.innerText();
-      const val = await btn.getAttribute('value');
-      const btnText = (text || val || '').toLowerCase();
-      if (btnText.includes('ingresar') || btnText.includes('iniciar') || btnText.includes('entrar') || btnText.includes('login')) {
-        loginBtn = btn;
-        break;
-      }
-    }
-
-    if (!loginBtn) {
-      await passInput.press('Enter');
-    } else {
+    const loginBtn = await page.$('button[type="submit"], input[type="submit"], button:has-text("Ingresar"), button:has-text("Entrar")');
+    if (loginBtn) {
       await loginBtn.click();
+      log('Click en boton Ingresar');
+    } else {
+      await passField.press('Enter');
+      log('Enter en password');
     }
-    
-    log('Esperando redirección...');
-    await page.waitForTimeout(8000);
-    
-    const modales = await page.$$('button:has-text("Aceptar"), button:has-text("Cerrar"), button:has-text("OK")');
-    for (let i = 0; i < modales.length; i++) {
-        try { await modales[i].click(); } catch(e){}
+
+    // ESPERA REAL: network idle + que haya contenido en la pagina
+    log('Esperando carga del dashboard post-login...');
+    await page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => log('networkidle timeout, continuando...'));
+    await page.waitForTimeout(3000);
+
+    // Esperar a que aparezca contenido real (no la pagina de login)
+    try {
+      await page.waitForFunction(() => {
+        const t = document.body?.innerText || '';
+        // si ya no estamos en login y hay minimo contenido
+        return t.length > 100 && !t.includes('Iniciar sesi');
+      }, { timeout: 45000, polling: 1000 });
+      log('Contenido del dashboard detectado');
+    } catch {
+      log('Timeout esperando contenido, capturando lo que haya...');
+      await page.screenshot({ path: path.join(DATA_DIR, 'timeout_dashboard.png') });
+    }
+
+    log(`URL post-login: ${page.url()}`);
+
+    // Cerrar modales que aparezcan
+    for (const text of ['Aceptar', 'Cerrar', 'OK', 'Entendido', 'Continuar', 'Cerrar sesión']) {
+      try {
+        const b = await page.$(`button:has-text("${text}")`);
+        if (b && await b.isVisible()) {
+          await b.click();
+          log(`Modal/notificacion cerrado: ${text}`);
+          await page.waitForTimeout(500);
+        }
+      } catch (e) {}
     }
     await page.waitForTimeout(2000);
 
-    log('Extrayendo informacion visible de multas...');
-    await page.screenshot({ path: path.join(DATA_DIR, 'dashboard.png') });
+    log('Extrayendo datos del dashboard...');
+    const extractedText = await pageText(page);
+    fs.writeFileSync(path.join(DATA_DIR, 'dashboard.txt'), extractedText);
+    await page.screenshot({ path: path.join(DATA_DIR, 'dashboard.png'), fullPage: true });
 
-    const pageText = await page.evaluate(() => document.body.innerText);
-    fs.writeFileSync(path.join(DATA_DIR, 'dashboard_text.txt'), pageText);
-    
-    log('Datos guardados en dashboard_text.txt para analisis inicial');
-    return { text: pageText };
-  } catch (err) {
-    log(`Error durante el scraping: ${err.message}`);
-    return null;
+    // Tomar HTML completo como respaldo
+    const html = await page.content();
+    fs.writeFileSync(path.join(DATA_DIR, 'dashboard.html'), html);
+
+    log(`Texto extraido: ${extractedText.length} caracteres`);
+
+    return { text: extractedText, html };
+  } finally {
+    await browser.close();
   }
 }
 
@@ -90,7 +131,7 @@ async function main() {
   ensureDir();
   RE.start('transito_medellin_scraper');
   log('═══════════════════════════════════════');
-  log('TRANSITO MEDELLIN SCRAPER');
+  log('TRANSITO MEDELLIN SCRAPER v2 (SPA)');
   log('═══════════════════════════════════════');
 
   if (!PASS) {
@@ -98,29 +139,40 @@ async function main() {
     process.exit(1);
   }
 
-  const browser = await chromium.launch({ headless: false });
-  const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-    viewport: { width: 1280, height: 720 },
-    extraHTTPHeaders: {
-        'Accept-Language': 'es-CO,es;q=0.9',
-        'Sec-Ch-Ua': '"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"'
-    }
-  });
-  const page = await context.newPage();
-  
   try {
-    const data = await scrapeMedellin(page);
+    const data = await scrapeMultas();
     if (!data) throw new Error('No se pudo extraer la info');
-
     RE.finish('transito_medellin_scraper', 'success', { run: true });
-    log('Consulta completada (modo analisis)');
+    log('Consulta completada');
+    log(JSON.stringify(parseMultas(data.text), null, 2));
   } catch (err) {
     RE.finish('transito_medellin_scraper', 'error', { reason: err.message });
     log(`Error: ${err.message}`);
-  } finally {
-    await browser.close();
   }
 }
 
-main().catch(err => { log(`❌ Fatal: ${err.message}`); process.exit(1); });
+function parseMultas(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const multas = [];
+  let current = {};
+  for (const line of lines) {
+    if (/^[A-Z]{3}\d{3}$/.test(line)) {
+      if (current.placa) multas.push(current);
+      current = { placa: line };
+    } else if (line.startsWith('C') && line.includes('Conducir')) {
+      current.infraccion = line;
+    } else if (line.includes('COP') && line.includes('.')) {
+      if (!current.valor) current.valor = line;
+      else if (!current.intereses) current.intereses = line;
+      else current.total = line;
+    } else if (line.includes('Pendiente')) {
+      current.estado = 'Pendiente de pago';
+    } else if (line.includes('septiembre') || line.includes('2024') || line.includes('2025') || line.includes('2026')) {
+      if (line.match(/\d{2}\s+\w+/)) current.fecha = line;
+    }
+  }
+  if (current.placa) multas.push(current);
+  return multas;
+}
+
+main().catch(err => { log(`Fatal: ${err.message}`); process.exit(1); });
