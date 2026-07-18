@@ -7,7 +7,7 @@ const LedgerStore = require('../../runtime/stores/LedgerStore');
 const RE = require('../../lib/runtime/resume_engine');
 
 const USER = process.env.ITAGUI_USER || 'jeiser270997@gmail.com';
-const PASS = process.env.ITAGUI_PASS;
+const PASS = process.env.ITAGUI_PASS || 'A125%230a';
 const LOGIN_URL = 'https://movilidad.transitoitagui.gov.co/portal-servicios/#/inicio-login';
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'cache', 'itagui');
 
@@ -29,7 +29,8 @@ async function scrapeItagui(page) {
   try {
     log('Ingresando credenciales...');
     
-    log('Esperando carga inicial...');
+    log('Esperando carga inicial completa...');
+    await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => log('Networkidle timeout alcanzado'));
     await page.waitForTimeout(5000);
     
     // Click "Ingresar" if it's a modal or separate route
@@ -58,8 +59,8 @@ async function scrapeItagui(page) {
     for (const el of emailInputs) {
       if (await el.isVisible()) {
         await el.click();
-        await page.waitForTimeout(200);
-        await el.type(USER, { delay: 50 });
+        await page.waitForTimeout(500);
+        await el.fill(USER);
         break;
       }
     }
@@ -69,16 +70,42 @@ async function scrapeItagui(page) {
     let passFilled = null;
     for (const el of passInputs) {
       if (await el.isVisible()) {
-        await el.click();
-        await page.waitForTimeout(200);
-        await el.type(PASS, { delay: 50 });
+        const html = await el.evaluate(n => n.outerHTML);
+        log(`DEBUG: Campo de contraseña detectado: ${html}`);
+        
+        await el.focus();
+        await page.waitForTimeout(1000); 
+        
+        const finalPass = PASS;
+        
+        // Simular pegado real a nivel sistema (usando execCommand si es posible) o asignación pura
+        await page.evaluate((passText) => {
+            const active = document.activeElement;
+            active.removeAttribute('maxlength');
+            active.maxLength = 100;
+            
+            // Intento 1: execCommand (simula Pegar)
+            if (!document.execCommand('insertText', false, passText)) {
+                // Intento 2: asignación directa si el navegador bloquea execCommand
+                active.value = passText;
+            }
+            active.dispatchEvent(new Event('input', { bubbles: true }));
+            active.dispatchEvent(new Event('change', { bubbles: true }));
+        }, finalPass);
+
+        await page.waitForTimeout(500);
+
+        // Verificar que la clave se haya pegado completa
+        const passLen = await el.evaluate(node => node.value ? node.value.length : 0);
+        log(`Verificacion final: La clave insertada tiene ${passLen} caracteres.`);
+        
         passFilled = el;
         break;
       }
     }
     await page.waitForTimeout(500);
 
-    const submitBtn = await page.$('button[type="submit"]');
+    const submitBtn = await page.$('button[type="submit"], button:has-text("Iniciar sesión")');
     if (submitBtn) {
       log('Haciendo click en el botón de Iniciar sesión (submit)...');
       await submitBtn.click();
@@ -87,8 +114,8 @@ async function scrapeItagui(page) {
       await passFilled.press('Enter');
     }
     
-    log('Esperando redirección o mensaje de error...');
-    await page.waitForTimeout(8000);
+    log('Esperando redirección y carga del dashboard (tarda un poco)...');
+    await page.waitForTimeout(15000);
     
     // Verificar si hay errores
     const errorMsg = await page.$('.alert, .error, .toast-message, mat-error, .text-danger');

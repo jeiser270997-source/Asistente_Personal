@@ -27,10 +27,10 @@
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
 - **DIAN AG2025:** NO OBLIGADO. No declarar.
 - **UGPP 2023:** Cerrado favorable 12/06/2026.
-- **SIMIT — Total deuda:** ~$1.862.535 (3 multas activas en sistema)
-  - 🔵 **C29 Medellín** (000067915426032025) — $657.292 — Pendiente pago. Lleva mucho tiempo, NO ha pasado a cobro coactivo. Sin riesgo inmediato.
-  - 🟠 **C29 Itagüí** (000083809722062026) — $705.380 — ✅ **YA PAGADA.** Se pagó vía embargo Bancolombia (cuenta bancaria) + pago directo del resto. Sigue apareciendo en SIMIT por demora en actualización.
-  - ⛔ **C14 Itagüí** (000043026508052024) — $568.003 — **COBRO COACTIVO.** Riesgo de nuevo embargo. Se envió recurso de reposición/impugnación por correo a contactosimit@fcm.org.co. En espera de respuesta.
+- **SIMIT — Total deuda:** ~$1.862.535 (3 multas activas en sistema, **verificado por scraper**)
+  - 🔵 **Multa Medellín** — Pendiente pago (Verificado por scraper Medellín: 1 sola multa por $658.364). No se ha pagado porque Medellín no embarga rápido.
+  - 🟠 **Multa Itagüí #1** — ✅ **YA PAGADA.** Itagüí embargó y cobró. Sigue apareciendo en SIMIT por demora.
+  - ⛔ **Multa Itagüí #2 (Nueva)** — **Peligro de embargo.** (Scraper Itagüí arreglado: superado bug de truncamiento por símbolo '#' en el .env). Estrategia activa: Derecho de petición radicado 02/07/2026. Frena embargos temporalmente. Posible victoria por Silencio Administrativo el ~24 de julio. SIMIT (Martha) pide oficio para descargarla.
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
 - **Denuncia Moto BXU28C:** NUNC 110016102535202609577 (abuso de confianza) — Fiscalía 11, radicada 20/05/2026. Consultar estado: https://www.fiscalia.gov.co/colombia/servicios-de-informacion-al-ciudadano/consultas/
 - **Denuncia NUNC 110016102838202604358:** Caso separado — Fiscalía 68 U. Intervención Temprana Bogotá. 21/05/2026: sin avances sustanciales. Contacto: fis68loctempranabog@fiscalia.gov.co
