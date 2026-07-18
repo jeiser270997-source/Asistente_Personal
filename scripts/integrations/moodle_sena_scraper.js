@@ -29,6 +29,15 @@ function saveJSON(filename, data) {
   fs.writeFileSync(path.join(DATA_DIR, filename), JSON.stringify(data, null, 2), 'utf8');
 }
 
+async function safeEvaluate(page, fn, fallback = []) {
+  try {
+    return await page.evaluate(fn);
+  } catch (err) {
+    log(`safeEvaluate fallback: ${err.message}`);
+    return fallback;
+  }
+}
+
 // â”€â”€â”€ LOGIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function login(page) {
   log('ðŸ” Login en ZAJUNA SENA...');
@@ -362,7 +371,7 @@ function generateAlertasMD(course, deadlines, inlineDates, cronograma) {
     lines.push('');
   }
 
-  const alertasDir = path.join(BASE_DIR, 'data', 'contexto_maestro');
+  const alertasDir = path.join(__dirname, '..', '..', 'data', 'state', 'contexto_maestro');
   ensureDir(alertasDir);
   fs.writeFileSync(path.join(alertasDir, 'ALERTAS_SENA.md'), lines.join('\n'), 'utf8');
   log('   ALERTAS_SENA.md generado');
