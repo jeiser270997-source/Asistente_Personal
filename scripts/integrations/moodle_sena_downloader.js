@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
+require('dotenv').config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
@@ -48,16 +48,44 @@ async function main() {
   log('📚 SENA PDF DOWNLOADER v2');
   log('═══════════════════════════════════════');
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext({ acceptDownloads: true });
   const page = await context.newPage();
 
   // Login
-  await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
-  await page.selectOption('select[name="typeDocument"]', 'CC');
-  await page.fill('input[name="document"]', USER);
-  await page.fill('input[name="password"]', PASS);
-  const btn = await page.$('button[name="form_login_user"]');
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForTimeout(3000); // Dar tiempo a que el spinner desaparezca
+
+  // Cerrar modal intrusivo de "Conexión inestable" si aparece
+  try {
+    const modalTitle = page.locator('text="Conexión a internet inestable"').first();
+    await modalTitle.waitFor({ state: 'visible', timeout: 5000 });
+    console.log('   ⚠ Modal detectado, intentando cerrar...');
+    await page.keyboard.press('Escape'); // Forma universal de cerrar modales
+    await page.waitForTimeout(1000);
+    // Plan B si el escape no funciona:
+    if (await modalTitle.isVisible()) {
+        const closeBtn = page.locator('img[src*="close"], svg, .close, button.close, [aria-label="Cerrar"], [aria-label="Close"]').first();
+        await closeBtn.click({ force: true });
+    }
+  } catch (e) {
+    // Si no aparece el modal, continuamos tranquilos
+  }
+
+  // Nuevo login usando placeholders y roles (más resiliente a cambios)
+  const selectLocator = page.locator('select').first();
+  await selectLocator.waitFor({ state: 'visible', timeout: 15000 });
+  try {
+    await selectLocator.selectOption({ label: 'Cédula de Ciudadanía' });
+  } catch (e) {
+    try { await selectLocator.selectOption('CC'); }
+    catch (err) { await selectLocator.selectOption({ index: 1 }); }
+  }
+
+  await page.getByPlaceholder(/Ingresa el Documento/i).fill(USER);
+  await page.getByPlaceholder(/Ingresa la Contraseña/i).fill(PASS);
+  
+  const btn = page.locator('button:has-text("Iniciar sesión"), a:has-text("Iniciar sesión"), .btn:has-text("Iniciar sesión")').first();
   await Promise.all([
     page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {}),
     btn.click()

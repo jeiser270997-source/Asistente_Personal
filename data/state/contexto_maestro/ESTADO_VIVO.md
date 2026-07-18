@@ -25,7 +25,7 @@
   - Táctica: Viajes menores a 20 min, zonas planas, maximizar bonos nocturnos.
 - **Deuda DIAN AG2023:** ~$9.8M vencida. **REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.** Prescripción ~09/2029.
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
-- **DIAN AG2025:** NO OBLIGADO. No declarar.
+- **DIAN AG2025:** Declaración de renta presentada en 2026. (Ojo: esto generó actividad en el MUISCA, reforzar regla de no abrir el buzón de notificaciones).
 - **UGPP 2023:** Cerrado favorable 12/06/2026.
 - **SIMIT — Total deuda:** ~$1.862.535 (3 multas activas en sistema, **verificado por scraper**)
   - 🔵 **Multa Medellín** — Pendiente pago (Verificado por scraper Medellín: 1 sola multa por $658.364). No se ha pagado porque Medellín no embarga rápido.
