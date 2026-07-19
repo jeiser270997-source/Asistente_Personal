@@ -40,3 +40,12 @@
 
 **Contexto:** Nuevas capacidades se agregan constantemente.
 **Decisión:** Skills con trigger, input, run(), output. Registradas en Skill Engine. Event-driven, no llamadas directas.
+
+## Rule Engine antes que heuristicas (email classifier ordering)
+
+**Contexto:** `email_processor.js` clasificaba correos llamando `isImportant()` (heuristicas JUNK_KEYWORDS) PRIMERO, y solo después el `ruleEngine.matchAll()` (reglas determinísticas basadas en remitente/dominio). Esto causaba que correos legítimos de dominios conocidos (SENA, Google Security) se clasificaran como Basura si el `from` contenía palabras como `noreply` o `senavirtual`.
+**Decisión:** Invertir el orden: rule_engine (reglas determinísticas de alta precisión) PRIMERO, `isImportant()` SOLO si ninguna regla matchea. Principio: reglas concretas > heuristicas.
+- Si rule_engine matchea → se ejecuta la acción y se salta `isImportant()`
+- Si no matchea → `isImportant()` clasifica como importante o basura
+- Adjuntos: extraídos a función `processAttachments()` compartida entre todos los handlers
+- `noreply`/`no-reply` eliminados de JUNK_KEYWORDS por causar falsos negativos

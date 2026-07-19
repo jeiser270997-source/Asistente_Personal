@@ -238,18 +238,20 @@ function extractBodyText(msg) {
   return text.trim();
 }
 
+// Sincronizado con email_processor.js — mismas keywords para consistencia
 const TRASH_PATTERNS = [
   /descuento/i, /oferta/i, /unsubscribe/i, /newsletter/i,
-  /promociÃ³n/i, /publicidad/i, /BIG School/i,
-  /no\s+responda/i, /notificación\s+de\s+envÃ­o/i,
-  /cÃ³digo\s+de\s+descuento/i, /black\s+friday/i, /cyber\s+day/i,
+  /promoción/i, /publicidad/i, /BIG School/i,
+  /no\s+responda/i, /notificación\s+de\s+envío/i,
+  /código\s+de\s+descuento/i, /black\s+friday/i, /cyber\s+day/i,
 ];
 
 const IMPORTANT_KEYWORDS = [
   'dian', 'simit', 'cesde', 'sena', 'solvo', 'concentrix',
   'multa', 'comparendo', 'tarea', 'urgente',
-  'notificación judicial', 'embargo', 'mandamiento',
-  'citación', 'requerimiento',
+  'notificacion judicial', 'embargo', 'mandamiento',
+  'citacion', 'requerimiento', 'entrevista',
+  'factura', 'contrato', 'nomina', 'salario', 'postulacion'
 ];
 
 async function processInbox(auth, emails) {

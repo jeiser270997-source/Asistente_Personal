@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-18 (round 2: SSRF, permisos, event bus, dashboard, .gitignore)
+**Última actualización:** 2026-07-19 (round 4: email processor fixes)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -166,6 +166,18 @@ Deep audit con WheelSaver: score 92/100, ready checklist 7/7.
 | **R3-06** | `scripts/diagnostics/pm2_health_monitor.js` — endpoint HTTP /health + /metrics (Prometheus) para uptime-kuma | ✅ |
 | **R3-07** | `ecosystem.config.js` — proceso `pm2-health` añadido (daemon, puerto 9090) | ✅ |
 | **R3-08** | `docs/wheelsaver_deep_audit_lifeos_round3.md` — reporte consolidado del deep audit | ✅ |
+
+### Ronda 4 (19/07/2026 — Email Processor fixes + refactor)
+
+Auditoría de clasificación de correos y refactorización.
+
+| Fix | Descripción | Estado |
+|:---:|-------------|:------:|
+| **R4-01** [CRITICAL] | `email_processor.js`: Reorden del loop — `ruleEngine.matchAll()` ejecutado PRIMERO, `isImportant()` después. Antes isImportant() movía correos a Basura antes de que el rule_engine los clasificara (ej: Confirmación matrícula SENA perdida). | ✅ |
+| **R4-02** [HIGH] | `email_processor.js`: Eliminados `'noreply'`/`'no-reply'` de `JUNK_KEYWORDS`. Causaban falsos negativos en alertas legítimas (Google Security, SENA, etc.). | ✅ |
+| **R4-03** [MEDIUM] | `email_processor.js`: Refactor — lógica de descarga de adjuntos extraída a función compartida `processAttachments()`. Ahora se llama desde `action.archive`, `action.notify` y fallback `isImportant()`. Antes solo se ejecutaba en el fallback. | ✅ |
+| **R4-04** [LOW] | `brain_orchestrator.js`: Keywords sincronizadas con `email_processor.js` + eliminar encoding roto en patrones regex. | ✅ |
+| **R4-05** [LOW] | `docs/DECISIONS.md`: Add entry about email classifier ordering. | ✅ |
 
 ## Reglas de Comportamiento
 

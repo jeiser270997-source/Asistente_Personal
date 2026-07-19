@@ -62,7 +62,7 @@ async function isImportant(from, subject, body = "") {
   const text = `${from} ${subject} ${body}`.toLowerCase();
   
   // 1. REGLA DE BASURA (Gratis y rápida)
-  const JUNK_KEYWORDS = ['newsletter', 'oferta', 'promocion', 'descuento', 'suscripcion', 'noreply', 'no-reply', 'publicidad'];
+  const JUNK_KEYWORDS = ['newsletter', 'oferta', 'promocion', 'descuento', 'suscripcion', 'publicidad']; // noreply/no-reply eliminados: causaban falsos negativos en correos importantes (Google Security, SENA, etc.)
   if (JUNK_KEYWORDS.some(kw => text.includes(kw))) return false;
 
   // 2. REGLA DE ORO (Importante)
@@ -185,6 +185,34 @@ async function getEmailBody(gmail, id) {
   }
 }
 
+// ── Procesamiento compartido de adjuntos (extraído a función para reutilizar en rule_engine) ──
+
+async function processAttachments(gmail, email) {
+  try {
+    const detail = await gmail.users.messages.get({ userId: 'me', id: email.id, format: 'full' });
+    const parts = [];
+    function walk(p) {
+      if (p.parts) p.parts.forEach(walk);
+      else if (p.filename && p.body?.attachmentId) parts.push(p);
+    }
+    walk(detail.data.payload);
+
+    for (const part of parts) {
+      const att = await gmail.users.messages.attachments.get({
+        userId: 'me', messageId: email.id, id: part.body.attachmentId
+      });
+      const attData = Buffer.from(att.data.data, 'base64');
+      const safeName = part.filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+      
+      const docText = `Documento Adjunto (${safeName}) recibido de ${email.from} el ${email.date}. Asunto: ${email.subject}.`;
+      agregarHecho(docText, 'documentos', ['email', 'adjunto', safeName]);
+      log(`💾 Adjunto Inyectado a Memoria: ${safeName}`);
+    }
+  } catch (e) {
+    log(`❌ Error procesando adjunto en ${email.id}: ${e.message}`);
+  }
+}
+
 async function summarizeEmails(emails) {
   if (emails.length === 0) return [];
   const prompt = `Analiza cada correo IMPORTANTE y responde estrictamente con un array JSON. Para cada correo extrae:
@@ -275,53 +303,16 @@ async function processEmails() {
     for (const email of rawEmails) {
       const body = await getEmailBody(gmail, email.id);
       email.body = body;
+
+      // ⚠️ ORDEN CORREGIDO: Rule Engine PRIMERO, isImportant() después
+      // Antes isImportant() se ejecutaba primero y movía correos a Basura
+      // antes de que el rule_engine pudiera clasificarlos correctamente.
       
-      const esImportante = await isImportant(email.from, email.subject, body);
-
-      if (esImportante) {
-        log(`🟢 KEEP: ${email.subject.substring(0, 40)}`);
-        // importantEmails se maneja mas abajo
-        
-        // ── Lógica de Adjuntos y Memoria ──
-        try {
-          const detail = await gmail.users.messages.get({ userId: 'me', id: email.id, format: 'full' });
-          const parts = [];
-          function walk(p) {
-            if (p.parts) p.parts.forEach(walk);
-            else if (p.filename && p.body?.attachmentId) parts.push(p);
-          }
-          walk(detail.data.payload);
-
-          for (const part of parts) {
-            const att = await gmail.users.messages.attachments.get({
-              userId: 'me', messageId: email.id, id: part.body.attachmentId
-            });
-            const data = Buffer.from(att.data.data, 'base64');
-            const safeName = part.filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-            
-            // Inyectar a memoria
-            const docText = `Documento Adjunto (${safeName}) recibido de ${email.from} el ${email.date}. Asunto: ${email.subject}.`;
-            agregarHecho(docText, 'documentos', ['email', 'adjunto', safeName]);
-            log(`💾 Adjunto Inyectado a Memoria: ${safeName}`);
-          }
-        } catch (e) {
-          log(`❌ Error procesando adjunto: ${e.message}`);
-        }
-      } else {
-        log(`🔴 BASURA (A revisar): ${email.subject.substring(0, 40)}`);
-        trashCandidates.push(email.id);
-        const basuraId = await getOrCreateLabelId(gmail, 'Basura');
-        if (basuraId) {
-            try { 
-                await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['INBOX', 'UNREAD'], addLabelIds: [basuraId] } }); 
-            } catch (e) { log(`Warning moviendo a basura: ${e.message}`); }
-        }
-      }
-
-      // Rule Engine (para registrar postulaciones a empleos o automatizaciones extra)
+      // 1. Rule Engine (reglas determinísticas de alta precisión)
       const matches = ruleEngine.matchAll(email);
       const action = ruleEngine.highestPriority(matches);
 
+      // 2. Si el rule_engine matched, ejecutar acción y saltar isImportant()
       if (action.isJobApplication) {
         const parsed = parseJobFromEmail(email.subject, body);
         const result = jobTracker.logApplication({
@@ -354,6 +345,8 @@ async function processEmails() {
       }
 
       if (action.archive) {
+        // Procesar adjuntos antes de archivar
+        await processAttachments(gmail, email);
         try {
           const mod = { removeLabelIds: ['UNREAD'] };
           if (action.label) {
@@ -370,16 +363,31 @@ async function processEmails() {
       }
 
       if (action.notify) {
+        // Procesar adjuntos antes de notificar
+        await processAttachments(gmail, email);
         importantEmails.push({ ...email, body, action });
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         LedgerStore.emit('email_notify', { subject: email.subject, from: email.from, label: action.label });
         continue;
       }
 
-      // No rule matched — check importance
+      // No rule matched — check importance con isImportant()
+      const esImportante = await isImportant(email.from, email.subject, body);
+      
+      // ── Lógica de Adjuntos y Memoria (solo para importantes) ──
       if (esImportante) {
+        log(`🟢 KEEP: ${email.subject.substring(0, 40)}`);
+        await processAttachments(gmail, email);
         importantEmails.push({ ...email, body });
       } else {
+        log(`🔴 BASURA (Sin regla ni keyword): ${email.subject.substring(0, 40)}`);
+        trashCandidates.push(email.id);
+        const basuraId = await getOrCreateLabelId(gmail, 'Basura');
+        if (basuraId) {
+            try { 
+                await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['INBOX', 'UNREAD'], addLabelIds: [basuraId] } }); 
+            } catch (e) { log(`Warning moviendo a basura: ${e.message}`); }
+        }
         restEmails.push(email);
       }
       if (!processedIds.includes(email.id)) processedIds.push(email.id);
