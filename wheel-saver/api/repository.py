@@ -1,6 +1,29 @@
+import os
 import aiosqlite
-from async_lru import alru_cache
+import time
 import logging
+
+# ── Cache con TTL ────────────────────────────────────────────────────────────
+_CACHE_TTL_SECONDS = int(os.environ.get("WHEELSAVER_CACHE_TTL", "300"))  # 5 min default
+
+_cache = {}  # {key: (timestamp, result)}
+
+def _cached(key: str, ttl: int | None = None):
+    """Obtiene del cache si existe y no ha expirado."""
+    if key in _cache:
+        ts, result = _cache[key]
+        if time.time() - ts < (ttl or _CACHE_TTL_SECONDS):
+            return result
+    return None
+
+def _set_cache(key: str, result):
+    """Guarda en cache con timestamp."""
+    _cache[key] = (time.time(), result)
+
+async def _invalidate_cache():
+    """Invalida todo el cache. Llamar después de trigger_scrape."""
+    _cache.clear()
+
 
 async def search_repos_async(db: aiosqlite.Connection, keyword: str, limit: int = 5):
     """Busqueda vectorial/full-text en SQLite (FTS5 + fallback LIKE)."""
@@ -36,6 +59,7 @@ async def search_repos_async(db: aiosqlite.Connection, keyword: str, limit: int 
         logging.error(f"Error búsqueda asíncrona: {e}")
         return []
 
+
 async def search_repos_multi_keywords_async(
     db: aiosqlite.Connection, keywords: list[str], limit: int = 5
 ):
@@ -43,7 +67,7 @@ async def search_repos_multi_keywords_async(
     if not keywords:
         return []
 
-    fts_query_and = " AND ".join(f'"{kw}"' for kw in keywords)
+    fts_query_and = " AND ".join(f'"{kw.replace(chr(34), "")}"' for kw in keywords)
 
     try:
         cursor = await db.execute(
@@ -63,7 +87,7 @@ async def search_repos_multi_keywords_async(
             results_list = [dict(r) for r in results]
             seen = {r["name"] for r in results_list}
 
-            fts_query_or = " OR ".join(f'"{kw}"' for kw in keywords)
+            fts_query_or = " OR ".join(f'"{kw.replace(chr(34), "")}"' for kw in keywords)
             cursor = await db.execute(
                 """
                 SELECT r.name, r.owner, r.description, r.url, r.stars, r.language, r.topics
@@ -91,8 +115,12 @@ async def search_repos_multi_keywords_async(
         return []
 
 
-@alru_cache(maxsize=32)
 async def get_stats_async(db: aiosqlite.Connection):
+    """Estadísticas con cache TTL."""
+    cached = _cached("get_stats")
+    if cached is not None:
+        return cached
+
     stats = {}
     cursor = await db.execute("SELECT COUNT(*) as count FROM repos")
     row = await cursor.fetchone()
@@ -119,6 +147,7 @@ async def get_stats_async(db: aiosqlite.Connection):
     top_langs = await cursor.fetchall()
     stats["top_languages"] = {r["language"]: r["cnt"] for r in top_langs}
 
+    _set_cache("get_stats", stats)
     return stats
 
 
@@ -131,8 +160,13 @@ async def get_repo_async(db: aiosqlite.Connection, owner: str, name: str):
     return dict(row) if row else None
 
 
-@alru_cache(maxsize=32)
 async def get_languages_async(db: aiosqlite.Connection, min_repos: int, limit: int):
+    """Lenguajes con cache TTL."""
+    cache_key = f"get_languages_{min_repos}_{limit}"
+    cached = _cached(cache_key)
+    if cached is not None:
+        return cached
+
     cursor = await db.execute(
         """SELECT language, COUNT(*) as count FROM repos
            WHERE language != '' GROUP BY language
@@ -140,7 +174,10 @@ async def get_languages_async(db: aiosqlite.Connection, min_repos: int, limit: i
         (min_repos, limit),
     )
     langs = await cursor.fetchall()
-    return [{"language": r["language"], "repos": r["count"]} for r in langs]
+    result = [{"language": r["language"], "repos": r["count"]} for r in langs]
+
+    _set_cache(cache_key, result)
+    return result
 
 
 async def list_repos_async(

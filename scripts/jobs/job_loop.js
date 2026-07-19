@@ -11,6 +11,7 @@ const path  = require('node:path');
 const { execSync, spawn } = require('node:child_process');
 const { askLLM } = require('../../lib/ai/llm_service');
 const { PATHS }  = require('../../lib/data/paths');
+const { escapeHTML } = require('../../lib/runtime/sanitize');
 const { chromium } = require('playwright');
 const { robustLogin } = require('./ct_login_helper');
 
@@ -24,7 +25,8 @@ const LOOPS     = parseInt((process.argv.find(a => a.startsWith('--loops=')) || 
 const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=40').split('=')[1]);
 const DRY_RUN   = process.argv.includes('--dry-run');
 
-const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
+const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL;
+if (!CT_EMAIL) { console.error('FATAL: COMPUTRABAJO_EMAIL no está configurado en .env'); process.exit(1); }
 const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
@@ -255,9 +257,12 @@ async function aplicar(oferta, browser) {
     }
 
     await page.waitForLoadState('networkidle', { timeout: 4000 }).catch(() => {});
-    const confirmado = await page.evaluate(() =>
-      /postul|envi|éxito|registrad|aplicac/i.test(document.body.innerText)
-    );
+    const confirmado = await page.evaluate(() => {
+      const texto = document.body.innerText;
+      const exito = /postulaci[oó]n exitosa|aplicaci[oó]n exitosa|has sido postulado|postulaci[oó]n enviada|registrad[ao]/i.test(texto);
+      const error = /ya (te has|has) postulado|no se pudo|no fue posible|error al (postular|enviar)|ha sido registrada previamente|ya aplicaste a esta oferta/i.test(texto);
+      return exito && !error;
+    });
 
     const shot = path.join(JOBS_DIR, `apply_${oferta.id}_${Date.now()}.png`);
     await page.screenshot({ path: shot });
@@ -292,8 +297,8 @@ async function main() {
     // PASO 1: Scrape
     log('ðŸ“¡ [1/4] Scraping Computrabajo...');
     const ofertas = await scrapeOfertasList();
-    const UBICACIONES_OK  = /medell[iÃ­]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo/i;
-    const UBICACIONES_NOK = /bogot[aÃ¡]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eÃ©]|santa marta/i;
+    const UBICACIONES_OK  = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo/i;
+    const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;
 
     const nuevas = ofertas.filter(o => {
       if (yaAplicadas.has(o.id)) return false;
@@ -364,7 +369,7 @@ async function main() {
           if (resultado.exito) {
             yaAplicadas.add(oferta.id);
             log(`       âœ… APLICADO`);
-            await sendTelegram(`\u2705 <b>Aplicaci\u00F3n enviada</b>\n${oferta.titulo} \u2014 ${oferta.empresa}\nScore: ${analisis.score}/100\n<a href="${oferta.url}">Ver oferta</a>`);
+            await sendTelegram(`\u2705 <b>Aplicaci\u00F3n enviada</b>\n${escapeHTML(oferta.titulo)} \u2014 ${escapeHTML(oferta.empresa)}\nScore: ${analisis.score}/100\n<a href="${escapeHTML(oferta.url)}">Ver oferta</a>`);
           } else {
             log(`       âš  No confirmado: ${resultado.razon}`);
           }
@@ -379,7 +384,9 @@ async function main() {
 
       resultados.push(registro);
       aplicaciones.push(registro);
-      fs.writeFileSync(APPLY_LOG, JSON.stringify(aplicaciones, null, 2));
+      const tmp = APPLY_LOG + '.tmp';
+      fs.writeFileSync(tmp, JSON.stringify(aplicaciones, null, 2));
+      fs.renameSync(tmp, APPLY_LOG);
     }
 
     // Pausa entre loops
@@ -412,7 +419,7 @@ async function main() {
       log(`  ${icon} [${r.analisis.score}] ${r.titulo} â€” ${r.empresa} | ${r.analisis.razon_corta}`);
     });
 
-  const msg = `\u{1F3AF} <b>Job Loop x${LOOPS} completado</b>\nAnalizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length}\n${aplicadas.map(r => `\u2705 ${r.titulo} \u2014 ${r.empresa}`).join('\n')}`;
+  const msg = `\u{1F3AF} <b>Job Loop x${LOOPS} completado</b>\nAnalizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length}\n${aplicadas.map(r => `\u2705 ${escapeHTML(r.titulo)} \u2014 ${escapeHTML(r.empresa)}`).join('\n')}`;
   await sendTelegram(msg);
 
   log('\nâœ… Datos en: ' + JOBS_DIR);

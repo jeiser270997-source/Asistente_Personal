@@ -53,8 +53,15 @@ function log(msg) {
 
 function getColombiaDate() {
   const now = new Date();
-  const col = new Date(now.toLocaleString('en-US', { timeZone: 'America/Bogota' }));
-  return col;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Bogota',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+  }).formatToParts(now);
+  const p = {};
+  for (const part of parts) p[part.type] = part.value;
+  return new Date(`${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}-05:00`);
 }
 
 function determineDayType(date) {
@@ -70,7 +77,7 @@ function determineDayType(date) {
 
 function formatDateColombia(date) {
   const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  const days = ['domingo','lunes','martes','miÃ©rcoles','jueves','viernes','sÃ¡bado'];
+  const days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   return `${days[date.getDay()]} ${date.getDate()} de ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 

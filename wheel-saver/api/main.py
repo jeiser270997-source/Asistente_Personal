@@ -9,6 +9,7 @@ Uso:
 Documentacion automatica: http://localhost:8000/docs
 """
 
+import os
 from fastapi import FastAPI, Query, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -24,7 +25,16 @@ from api.repository import (
     get_languages_async,
     list_repos_async,
     get_top_async,
+    _invalidate_cache,
 )
+from api.auth import require_auth
+
+# Determinar orígenes CORS permitidos según entorno
+CORS_ORIGINS = os.environ.get("WHEELSAVER_CORS_ORIGINS", "")
+if CORS_ORIGINS:
+    cors_origins = [o.strip() for o in CORS_ORIGINS.split(",")]
+else:
+    cors_origins = ["http://localhost:8000", "http://127.0.0.1:8000"]
 
 app = FastAPI(
     title="WheelSaver API",
@@ -34,15 +44,15 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=cors_origins,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
 @app.get("/")
-async def root():
+async def root(token: str = Depends(require_auth)):
     return RedirectResponse(url="/web/index.html")
 
 
@@ -55,6 +65,7 @@ async def health(db: aiosqlite.Connection = Depends(get_db)):
 
 @app.get("/search")
 async def search(
+    token: str = Depends(require_auth),
     q: str = Query(..., description="Keyword(s) para buscar"),
     limit: int = Query(10, ge=1, le=100, description="Max resultados"),
     language: str = Query(None, description="Filtrar por lenguaje"),
@@ -81,13 +92,20 @@ async def search(
 
 
 @app.get("/stats")
-async def api_stats(db: aiosqlite.Connection = Depends(get_db)):
+async def api_stats(
+    token: str = Depends(require_auth),
+    db: aiosqlite.Connection = Depends(get_db),
+):
     """Estadisticas de la base de datos."""
     return await get_stats_async(db)
 
 
 @app.get("/repos/{owner}/{name}")
-async def get_repo(owner: str, name: str, db: aiosqlite.Connection = Depends(get_db)):
+async def get_repo(
+    owner: str, name: str,
+    token: str = Depends(require_auth),
+    db: aiosqlite.Connection = Depends(get_db),
+):
     """Obtener un repositorio por owner y nombre."""
     repo = await get_repo_async(db, owner, name)
     if not repo:
@@ -97,6 +115,7 @@ async def get_repo(owner: str, name: str, db: aiosqlite.Connection = Depends(get
 
 @app.get("/languages")
 async def languages(
+    token: str = Depends(require_auth),
     limit: int = Query(50, ge=1, le=200, description="Max lenguajes"),
     min_repos: int = Query(1, ge=1, description="Min repos por lenguaje"),
     db: aiosqlite.Connection = Depends(get_db),
@@ -108,6 +127,7 @@ async def languages(
 
 @app.get("/repos")
 async def list_repos(
+    token: str = Depends(require_auth),
     page: int = Query(1, ge=1, description="Numero de pagina"),
     per_page: int = Query(50, ge=1, le=200, description="Repos por pagina"),
     language: str = Query(None, description="Filtrar por lenguaje"),
@@ -127,6 +147,7 @@ async def list_repos(
 
 @app.get("/top")
 async def top(
+    token: str = Depends(require_auth),
     limit: int = Query(10, ge=1, le=100, description="Cuantos top repos"),
     language: str = Query(None, description="Filtrar por lenguaje"),
     db: aiosqlite.Connection = Depends(get_db),
@@ -139,11 +160,13 @@ async def top(
 @app.post("/scrape")
 async def trigger_scrape(
     background_tasks: BackgroundTasks,
+    token: str = Depends(require_auth),
     min_stars: int = Query(500, ge=10, description="Estrellas minimas para buscar"),
 ):
     """Lanza el scraper de GitHub de forma asíncrona en el mismo proceso."""
     from scraper.github_fetcher import fetch_top_repos
     background_tasks.add_task(fetch_top_repos, min_stars)
+    background_tasks.add_task(_invalidate_cache)
     return {"status": "ok", "message": f"Scraper iniciado (min_stars={min_stars})"}
 
 
@@ -154,6 +177,7 @@ class AskRequest(BaseModel):
 @app.post("/ask")
 async def ask_agent(
     req: AskRequest,
+    token: str = Depends(require_auth),
     db: aiosqlite.Connection = Depends(get_db)
 ):
     """Realiza una consulta al LLM multi-proveedor (RAG) usando repositorios como contexto. Failover automático entre free tiers."""

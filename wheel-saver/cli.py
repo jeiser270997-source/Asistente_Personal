@@ -161,7 +161,7 @@ def import_gitstar(
 
 @app.command()
 def api(
-    host: str = typer.Option("0.0.0.0", "--host", help="Direccion de escucha"),
+    host: str = typer.Option("127.0.0.1", "--host", help="Direccion de escucha (default: localhost) — usar 0.0.0.0 solo si se expone deliberadamente"),
     port: int = typer.Option(8000, "--port", "-p", help="Puerto"),
 ):
     """Lanza el servidor FastAPI con la API REST."""
