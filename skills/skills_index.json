@@ -1,0 +1,339 @@
+{
+  "skills": [
+    {
+      "id": "tributaria",
+      "type": "js",
+      "nombre": "Tributaria Colombia",
+      "keywords": ["dian", "rut", "impuestos", "declaracion de renta", "retefuente", "iva", "facturacion", "sanciones", "requerimiento", "embargo", "cobro coactivo", "exogena", "contador", "pre-litigio", "nulidad", "firmeza", "compensacion"],
+      "prioridad": 10
+    },
+    {
+      "id": "laboral",
+      "type": "js",
+      "nombre": "Busqueda Laboral",
+      "keywords": ["trabajo", "empleo", "vacante", "postulacion", "curriculum", "entrevista", "computrabajo", "linkedin", "contrato", "salario", "solvo", "concentrix"],
+      "prioridad": 8
+    },
+    {
+      "id": "legal",
+      "type": "js",
+      "nombre": "Legal Colombia",
+      "keywords": ["fiscalia", "denuncia", "nuc", "citacion", "juzgado", "abogado", "tutela", "contrato"],
+      "prioridad": 9
+    },
+    {
+      "id": "finanzas",
+      "type": "js",
+      "nombre": "Finanzas Personales",
+      "keywords": ["epm", "banco", "bancolombia", "nequi", "daviplata", "tarjeta", "prestamo", "credito", "deuda", "ahorro", "presupuesto", "nomina", "pago", "recibo"],
+      "prioridad": 7
+    },
+    {
+      "id": "estudio",
+      "type": "js",
+      "nombre": "Estudio SENA/CESDE",
+      "keywords": ["sena", "cesde", "clase", "taller", "tarea", "curso", "programa", "formacion", "certificado", "ficha", "instructor", "horario"],
+      "prioridad": 8
+    },
+    {
+      "id": "salud",
+      "type": "js",
+      "nombre": "Salud y Bienestar",
+      "keywords": ["eps", "cita medica", "medicamento", "salud", "doctor", "hospital", "clinica", "examen", "formula", "sintomas"],
+      "prioridad": 6
+    },
+    {
+      "id": "bootcamp_qa",
+      "type": "js",
+      "nombre": "Bootcamp QA Automation",
+      "keywords": ["bootcamp", "estudiar", "aprender", "playwright", "cypress", "vitest", "testing", "qa", "automation", "ejercicio", "practica", "tarea", "entregable", "semana", "fase", "progreso", "portfolio", "entrevista", "cv", "linkedin", "trabajo", "empleo", "carrera", "typescript", "javascript", "fundamentos", "mentoria"],
+      "prioridad": 10
+    },
+    {
+      "id": "transito",
+      "type": "js",
+      "nombre": "Transito Colombia - Defensa Legal",
+      "keywords": ["transito", "comparendo", "multa", "fotomulta", "simit", "didi", "uber", "conductor", "plataforma", "reten", "agente", "policia", "velocidad", "c29", "c14", "soat", "tecnomecanica", "ley 1843", "fotodeteccion", "dei", "senalizacion", "notificacion fisica", "impugnar", "recurso reposicion", "prescripcion"],
+      "prioridad": 10
+    },
+    {
+      "id": "tributaria_md",
+      "type": "md",
+      "nombre": "Defensa Tributaria DIAN",
+      "ruta": ".agents/skills/tributaria/SKILL.md",
+      "version": "6.0",
+      "keywords": ["dian", "rut", "impuestos", "declaracion de renta", "retefuente", "iva", "requerimiento", "embargo", "cobro coactivo", "exogena", "sanciones", "contador", "art 26 et", "pre-litigio", "nulidad", "firma digital", "fee", "reforma tributaria", "sancion", "firmeza", "compensacion"],
+      "prioridad": 10
+    },
+    {
+      "id": "extractor_md",
+      "type": "md",
+      "nombre": "Extractor de Contexto v9",
+      "ruta": ".agents/skills/extractor/SKILL.md",
+      "version": "9.0",
+      "keywords": ["extractor", "contexto", "extraer", "analisis", "confianza", "verificacion"],
+      "prioridad": 9
+    },
+    {
+      "id": "softball_md",
+      "type": "md",
+      "nombre": "Manager Softball Índer Envigado 2026",
+      "ruta": ".agents/skills/softball/SKILL.md",
+      "version": "3.0",
+      "keywords": ["softball", "inder", "envigado", "beisbol", "manager", "equipo", "entrenamiento", "torneo", "jugador", "lineup", "pitcheo"],
+      "prioridad": 7
+    },
+    {
+      "id": "caveman_md",
+      "type": "md",
+      "nombre": "Caveman Ultra-Compressed Mode",
+      "ruta": ".agents/skills/caveman/SKILL.md",
+      "version": "1.0",
+      "keywords": ["caveman", "cavernicola", "ultra compressed", "minimo", "compacto", "tokens"],
+      "prioridad": 5
+    },
+    {
+      "id": "ingeniero_md",
+      "type": "md",
+      "nombre": "Ingeniero / CTO / Arquitecto",
+      "ruta": ".agents/skills/ingeniero/SKILL.md",
+      "version": "1.0",
+      "keywords": ["arquitecto", "cto", "ingeniero senior", "full stack", "arquitectura", "codigo", "desarrollo", "software", "programacion", "sistema"],
+      "prioridad": 8
+    },
+    {
+      "id": "job_filter_md",
+      "type": "md",
+      "nombre": "Filtro de Ofertas Laborales Jeiser",
+      "ruta": ".agents/skills/job-filter/SKILL.md",
+      "version": "1.0",
+      "keywords": ["filtro", "oferta", "trabajo", "jeiser", "aplicar", "empleo"],
+      "prioridad": 9
+    },
+    {
+      "id": "bill_manager_md",
+      "type": "md",
+      "nombre": "Gestor de Pagos y Suscripciones",
+      "ruta": ".agents/skills/bill-manager/SKILL.md",
+      "version": "1.0",
+      "keywords": ["epm", "claro", "recibo", "suscripcion", "pago", "factura", "gasto", "presupuesto", "ahorro", "netflix", "spotify"],
+      "prioridad": 8
+    },
+    {
+      "id": "backup_automator_md",
+      "type": "md",
+      "nombre": "Backup Automático y Protección de Datos",
+      "ruta": ".agents/skills/backup-automator/SKILL.md",
+      "version": "1.0",
+      "keywords": ["backup", "respaldo", "seguridad", "copia", "perder datos", "git push", "duplicati", "git commit"],
+      "prioridad": 7
+    },
+    {
+      "id": "think_opa_md",
+      "type": "md",
+      "nombre": "Motor de Políticas de Decisión",
+      "ruta": ".agents/skills/think-opa/SKILL.md",
+      "version": "1.0",
+      "keywords": ["decision", "politica", "regla", "prioridad", "think", "planificar", "que hacer hoy", "jarvis", "automatizar"],
+      "prioridad": 10
+    },
+    {
+      "id": "typescript_tutor_md",
+      "type": "md",
+      "nombre": "TypeScript Tutor para QA",
+      "ruta": ".agents/skills/typescript-tutor/SKILL.md",
+      "version": "1.0",
+      "keywords": ["typescript", "types", "interfaces", "ts", "tipado", "javascript", "playwright typescript"],
+      "prioridad": 9
+    },
+    {
+      "id": "docker_qa_md",
+      "type": "md",
+      "nombre": "Docker para QA Automation",
+      "ruta": ".agents/skills/docker-qa/SKILL.md",
+      "version": "1.0",
+      "keywords": ["docker", "contenedor", "docker-compose", "devops", "ci cd", "contenedores tests"],
+      "prioridad": 7
+    },
+    {
+      "id": "sql_testing_md",
+      "type": "md",
+      "nombre": "SQL para Testing de Bases de Datos",
+      "ruta": ".agents/skills/sql-testing/SKILL.md",
+      "version": "1.0",
+      "keywords": ["sql", "base de datos", "query", "select", "join", "database testing", "postgresql", "sqlite"],
+      "prioridad": 8
+    },
+    {
+      "id": "career_qa_md",
+      "type": "md",
+      "nombre": "Mentor de Carrera QA",
+      "ruta": ".agents/skills/career-qa/SKILL.md",
+      "version": "1.0",
+      "keywords": ["linkedin", "cv", "entrevista", "trabajo", "salario", "empleo qa", "postulacion", "carrera", "curriculum"],
+      "prioridad": 10
+    },
+    {
+      "id": "anti_sycophancy_md",
+      "type": "sistema",
+      "nombre": "Anti-Sycophancy (Anti-Alucinación)",
+      "ruta": ".agents/skills/anti-sycophancy/SKILL.md",
+      "version": "1.0",
+      "keywords": ["verdad", "alucinacion", "sycophancy", "mentira", "falso", "comprobar", "verificar", "evidencia", "claim", "hecho", "duda", "certeza"],
+      "prioridad": 9
+    },
+    {
+      "id": "archify_md",
+      "type": "sistema",
+      "nombre": "Archify (Diagramas de Arquitectura)",
+      "ruta": ".agents/skills/archify/SKILL.md",
+      "version": "1.0",
+      "keywords": ["arquitectura", "diagrama", "mermaid", "archify", "visual", "flujo", "componente", "dependencia", "estructura"],
+      "prioridad": 7
+    },
+    {
+      "id": "buen_gusto_md",
+      "type": "sistema",
+      "nombre": "Buen Gusto (Filtro Anti-Slop)",
+      "ruta": ".agents/skills/buen_gusto/SKILL.md",
+      "version": "1.0",
+      "keywords": ["estilo", "redaccion", "anti-slop", "refinado", "hemingway", "sinceridad", "directo"],
+      "prioridad": 8
+    },
+    {
+      "id": "caveman_system_md",
+      "type": "sistema",
+      "nombre": "Caveman (Sistema)",
+      "ruta": ".agents/skills/caveman/SKILL.md",
+      "version": "1.0",
+      "keywords": ["caveman", "cavernicola", "ultra compressed", "minimo", "compacto", "tokens"],
+      "prioridad": 5
+    },
+    {
+      "id": "cerebro_md",
+      "type": "sistema",
+      "nombre": "Cerebro (Orquestador)",
+      "ruta": ".agents/skills/cerebro/SKILL.md",
+      "version": "1.0",
+      "keywords": ["cerebro", "orquestador", "asistente", "briefing", "resumen", "prioridades"],
+      "prioridad": 10
+    },
+    {
+      "id": "ciberseguridad_md",
+      "type": "sistema",
+      "nombre": "Oficial de Ciberseguridad",
+      "ruta": ".agents/skills/ciberseguridad/SKILL.md",
+      "version": "1.0",
+      "keywords": ["ciberseguridad", "seguridad", "mitre", "nist", "ssrf", "tokens", "secrets", "allowlist"],
+      "prioridad": 8
+    },
+    {
+      "id": "content_pipeline_md",
+      "type": "sistema",
+      "nombre": "Content Pipeline",
+      "ruta": ".agents/skills/content-pipeline/SKILL.md",
+      "version": "1.0",
+      "keywords": ["youtube", "bot", "storyteller", "horror", "ffmpeg", "video", "pipeline", "scraped"],
+      "prioridad": 7
+    },
+    {
+      "id": "karpathy_guidelines_md",
+      "type": "sistema",
+      "nombre": "Principios de Karpathy",
+      "ruta": ".agents/skills/karpathy_guidelines/SKILL.md",
+      "version": "1.0",
+      "keywords": ["karpathy", "guidelines", "principles", "simplicity", "surgical", "think", "code"],
+      "prioridad": 8
+    },
+    {
+      "id": "last30days_md",
+      "type": "sistema",
+      "nombre": "Last 30 Days (Investigación Web)",
+      "ruta": ".agents/skills/last30days/SKILL.md",
+      "version": "1.0",
+      "keywords": ["investigacion", "buscar", "tendencias", "noticias", "polymarket", "reddit", "x"],
+      "prioridad": 7
+    },
+    {
+      "id": "modo_diario_md",
+      "type": "sistema",
+      "nombre": "Modo Diario",
+      "ruta": ".agents/skills/modo_diario/SKILL.md",
+      "version": "1.0",
+      "keywords": ["diario", "escucha", "desahogo", "emocional", "estres", "hablar", "conversar"],
+      "prioridad": 9
+    },
+    {
+      "id": "personal_dashboard_md",
+      "type": "sistema",
+      "nombre": "Personal Dashboard",
+      "ruta": ".agents/skills/personal-dashboard/SKILL.md",
+      "version": "1.0",
+      "keywords": ["dashboard", "status", "resumen", "agenda", "didi", "sena", "cesde", "legal", "finanzas"],
+      "prioridad": 10
+    },
+    {
+      "id": "product_manager_md",
+      "type": "sistema",
+      "nombre": "Product Manager",
+      "ruta": ".agents/skills/product_manager/SKILL.md",
+      "version": "1.0",
+      "keywords": ["pm", "product manager", "strategy", "mvp", "rice", "roadmap", "prd"],
+      "prioridad": 8
+    },
+    {
+      "id": "psicologo_md",
+      "type": "sistema",
+      "nombre": "Consejero Psicológico (Satori)",
+      "ruta": ".agents/skills/psicologo/SKILL.md",
+      "version": "1.0",
+      "keywords": ["consejeria", "psicologia", "filosofia", "emocion", "ansiedad", "estres", "reflexion", "ifs", "estoico", "budismo", "jung", "sabiduria", "terapia", "bienestar emocional"],
+      "prioridad": 9
+    },
+    {
+      "id": "second_brain_health_md",
+      "type": "sistema",
+      "nombre": "Second Brain Health",
+      "ruta": ".agents/skills/second-brain-health/SKILL.md",
+      "version": "1.0",
+      "keywords": ["salud", "sueño", "cafe", "ejercicio", "estres", "pantalla", "alimentacion", "cronotipo"],
+      "prioridad": 8
+    },
+    {
+      "id": "skill_auditor_md",
+      "type": "sistema",
+      "nombre": "Skill Auditor",
+      "ruta": ".agents/skills/skill-auditor/SKILL.md",
+      "version": "1.0",
+      "keywords": ["audit", "security", "privacidad", "secrets", "tokens", "pii"],
+      "prioridad": 8
+    },
+    {
+      "id": "wheel_overengineered_md",
+      "type": "sistema",
+      "nombre": "Wheel Overengineered",
+      "ruta": ".agents/skills/wheel_overengineered/SKILL.md",
+      "version": "1.0",
+      "keywords": ["overengineering", "sobreingenieria", "abstraccion", "abstracciones", "simplificar", "complejidad"],
+      "prioridad": 7
+    },
+    {
+      "id": "wheel_ready_md",
+      "type": "sistema",
+      "nombre": "Wheel Ready",
+      "ruta": ".agents/skills/wheel_ready/SKILL.md",
+      "version": "1.0",
+      "keywords": ["ready", "checklist", "testing", "ci", "docker", "auth", "logging"],
+      "prioridad": 7
+    },
+    {
+      "id": "wheel_swap_md",
+      "type": "sistema",
+      "nombre": "Wheel Swap",
+      "ruta": ".agents/skills/wheel_swap/SKILL.md",
+      "version": "1.0",
+      "keywords": ["swap", "reemplazo", "alternativa", "libreria", "github", "boilerplate"],
+      "prioridad": 8
+    }
+  ]
+}

@@ -1,81 +1,58 @@
+/**
+ * skills/router.js
+ * Enrutador unificado de habilidades de LifeOS (FIX-007).
+ * Consume un único índice unificado (skills_index.json) para resolver
+ * de forma dinámica habilidades de tipo JS, Markdown y del Sistema.
+ */
 const fs = require('node:fs');
 const path = require('node:path');
 
 const SKILLS_DIR = __dirname;
-const REGISTRY_PATH = path.join(SKILLS_DIR, 'registry.json');
-const USER_INDEX_PATH = path.join(SKILLS_DIR, 'user_skills_index.json');
-const SISTEMA_INDEX_PATH = path.join(SKILLS_DIR, 'skills_sistema_index.json');
+const INDEX_PATH = path.join(SKILLS_DIR, 'skills_index.json');
 
-function loadRegistry() {
+function loadIndex() {
   try {
-    return JSON.parse(fs.readFileSync(REGISTRY_PATH, 'utf8'));
-  } catch {
-    return { skills: [] };
-  }
-}
-
-function loadUserIndex() {
-  try {
-    return JSON.parse(fs.readFileSync(USER_INDEX_PATH, 'utf8'));
-  } catch {
-    return { skills: [] };
-  }
-}
-
-function loadSystemIndex() {
-  try {
-    return JSON.parse(fs.readFileSync(SISTEMA_INDEX_PATH, 'utf8'));
-  } catch {
+    return JSON.parse(fs.readFileSync(INDEX_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[router] No se pudo leer el índice unificado: ${err.message}`);
     return { skills: [] };
   }
 }
 
 function loadSkill(id) {
   try {
-    const mod = require(path.join(SKILLS_DIR, id));
-    return mod;
+    return require(path.join(SKILLS_DIR, id));
   } catch (err) {
-    console.warn(`[router] Skill no disponible o error cargando "${id}": ${err.message.substring(0, 80)}`);
+    console.warn(`[router] Skill JS no disponible o error cargando "${id}": ${err.message.substring(0, 80)}`);
     return null;
   }
 }
 
 function loadMDSkill(skillEntry) {
   try {
-    const content = fs.readFileSync(skillEntry.ruta, 'utf8');
+    // Soportar tanto rutas relativas como absolutas de Windows (FIX-007)
+    const absolutePath = path.isAbsolute(skillEntry.ruta)
+      ? skillEntry.ruta
+      : path.resolve(SKILLS_DIR, '..', skillEntry.ruta);
+
+    const content = fs.readFileSync(absolutePath, 'utf8');
     const lines = content.split('\n');
     const head = lines.slice(0, 30).join('\n');
-    return `[SKILL USER: ${skillEntry.nombre} v${skillEntry.version}]\n${head}\n...`;
-  } catch {
-    return `[SKILL USER: ${skillEntry.nombre}] no disponible`;
+    return `[SKILL ${skillEntry.type.toUpperCase()}: ${skillEntry.nombre} v${skillEntry.version || '1.0'}]\n${head}\n...`;
+  } catch (err) {
+    return `[SKILL ${skillEntry.type.toUpperCase()}: ${skillEntry.nombre}] no disponible o ruta inválida`;
   }
 }
 
 function detectSkills(texto) {
-  const registry = loadRegistry();
+  const idx = loadIndex();
   const lower = texto.toLowerCase();
   const matches = [];
 
-  for (const skill of registry.skills) {
+  for (const skill of idx.skills) {
     const matchCount = skill.keywords.filter(kw => lower.includes(kw)).length;
     if (matchCount > 0) {
-      matches.push({ id: skill.id, matchCount, prioridad: skill.prioridad, source: 'js' });
-    }
-  }
-
-  const userIndex = loadUserIndex();
-  for (const skill of userIndex.skills) {
-    const matchCount = skill.keywords.filter(kw => lower.includes(kw)).length;
-    if (matchCount > 0) {
-      matches.push({ id: skill.id, matchCount, prioridad: skill.prioridad, source: 'md' });
-    }
-  }
-
-  const systemIndex = loadSystemIndex();
-  for (const skill of systemIndex.skills) {
-    const matchCount = skill.keywords.filter(kw => lower.includes(kw)).length;
-    if (matchCount > 0) {
-      matches.push({ id: skill.id, matchCount, prioridad: skill.prioridad, source: 'sistema' });
+      matches.push({ ...skill, matchCount });
     }
   }
 
@@ -91,29 +68,18 @@ function getContextForText(texto) {
     const parts = [];
     for (const skill of matched) {
       try {
-        if (skill.source === 'js') {
+        if (skill.type === 'js') {
           const mod = loadSkill(skill.id);
           if (mod && typeof mod.getContext === 'function') {
             const ctx = mod.getContext();
             if (ctx) parts.push(ctx);
           }
-        } else if (skill.source === 'md') {
-          const userIndex = loadUserIndex();
-          const entry = userIndex.skills.find(s => s.id === skill.id);
-          if (entry) {
-            const ctx = loadMDSkill(entry);
-            if (ctx) parts.push(ctx);
-          }
-        } else if (skill.source === 'sistema') {
-          const systemIndex = loadSystemIndex();
-          const entry = systemIndex.skills.find(s => s.id === skill.id);
-          if (entry) {
-            const ctx = loadMDSkill(entry);
-            if (ctx) parts.push(ctx);
-          }
+        } else {
+          const ctx = loadMDSkill(skill);
+          if (ctx) parts.push(ctx);
         }
       } catch (err) {
-        console.warn(`[router] Error obteniendo contexto para skill "${skill.id}": ${err.message.substring(0, 80)}`);
+        console.warn(`[router] Error cargando contexto de skill "${skill.id}": ${err.message.substring(0, 80)}`);
       }
     }
 
@@ -126,18 +92,20 @@ function getContextForText(texto) {
 
 function getAllSkillContexts() {
   try {
-    const registry = loadRegistry();
+    const idx = loadIndex();
     const parts = [];
 
-    for (const skill of registry.skills) {
-      try {
-        const mod = loadSkill(skill.id);
-        if (mod && typeof mod.getContext === 'function') {
-          const ctx = mod.getContext();
-          if (ctx) parts.push(ctx);
+    for (const skill of idx.skills) {
+      if (skill.type === 'js') {
+        try {
+          const mod = loadSkill(skill.id);
+          if (mod && typeof mod.getContext === 'function') {
+            const ctx = mod.getContext();
+            if (ctx) parts.push(ctx);
+          }
+        } catch (err) {
+          console.warn(`[router] Error cargando context de skill "${skill.id}": ${err.message.substring(0, 60)}`);
         }
-      } catch (err) {
-        console.warn(`[router] Error cargando skill "${skill.id}": ${err.message.substring(0, 60)}`);
       }
     }
 
@@ -148,18 +116,24 @@ function getAllSkillContexts() {
   }
 }
 
+function getBriefByType(type) {
+  try {
+    const idx = loadIndex();
+    return idx.skills
+      .filter(s => s.type === type)
+      .map(s => `- ${s.nombre} (v${s.version || '1.0'}): ${s.keywords.slice(0, 5).join(', ')}...`)
+      .join('\n');
+  } catch {
+    return '';
+  }
+}
+
 function getAllSystemSkillsBrief() {
-  const systemIndex = loadSystemIndex();
-  return systemIndex.skills.map(s =>
-    `- ${s.nombre} (v${s.version}): ${s.keywords.slice(0, 5).join(', ')}...`
-  ).join('\n');
+  return getBriefByType('sistema');
 }
 
 function getAllUserSkillsBrief() {
-  const userIndex = loadUserIndex();
-  return userIndex.skills.map(s =>
-    `- ${s.nombre} (v${s.version}): ${s.keywords.slice(0, 5).join(', ')}...`
-  ).join('\n');
+  return getBriefByType('md');
 }
 
 module.exports = { detectSkills, getContextForText, getAllSkillContexts, getAllUserSkillsBrief, getAllSystemSkillsBrief, loadMDSkill };
