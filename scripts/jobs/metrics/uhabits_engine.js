@@ -5,10 +5,9 @@
  * a un formato CSV compatible con la app Android Loop Habit Tracker (uhabits).
  */
 const fs = require('node:fs');
-const path = require('node:path');
+const { PATHS } = require('../../../lib/data/paths');
 
-const BACKUP_DIR = path.join(__dirname, '..', '..', '..', 'data', 'backups');
-const CSV_PATH = path.join(BACKUP_DIR, 'uhabits_export.csv');
+const CSV_PATH = PATHS.UHABITS_EXPORT;
 
 /**
  * Formato esperado por Loop Habits CSV:

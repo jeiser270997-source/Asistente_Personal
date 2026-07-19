@@ -2,14 +2,19 @@
  * scripts/schedulers/morning_briefing.ts
  * 
  * Orquestador Unificado de LifeOS - Sargento Logístico Matutino.
- * Combina clima, UV, Pico y Placa, SIMIT, Mantenimiento y Tareas.
- * Genera el plan diario con una sola llamada al LLM y sincroniza Calendar.
+ * Combina clima, UV, Pico y Placa, SIMIT, Mantenimiento, Tráfico en tiempo real (TomTom),
+ * pendientes del sistema y estado académico de Zajuna (SENA).
  */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { createEvent } from '../integrations/gworkspace_manager';
 import { askLLM } from '../../lib/ai/llm_service';
 import { checkMaintenance } from './vehicle_manager';
+
+// Integración de módulos de datos reales de LifeOS (Zajuna & Tráfico)
+const { getTrafficReport } = require('../../lib/integrations/tomtom_client');
+const SeguimientoStore = require('../../runtime/stores/SeguimientoStore');
+
 require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -94,6 +99,45 @@ function getPicoYPlacaInfo(diaNombre: string, placaStr: string) {
   };
 }
 
+// ================= ZAJUNA (SENA) PENDIENTS =================
+function getZajunaPending(): string {
+  try {
+    const senaData = SeguimientoStore.get();
+    if (senaData && senaData.actividades) {
+      const lines: string[] = [];
+      const hoy = new Date();
+      const manana = new Date(hoy);
+      manana.setDate(manana.getDate() + 1);
+      const mananaStr = manana.toISOString().split('T')[0];
+
+      for (const [key, act] of Object.entries(senaData.actividades)) {
+        const actividad: any = act;
+        const incomplete = (actividad.evidencias || []).filter((e: any) => !e.completado);
+        if (incomplete.length > 0) {
+          const limitStr = actividad.fecha_limite ? ` (Vence: ${actividad.fecha_limite})` : '';
+          
+          // Detectar vencimientos críticos (hoy o mañana)
+          const esCritico = actividad.fecha_limite && (
+            actividad.fecha_limite === hoy.toISOString().split('T')[0] ||
+            actividad.fecha_limite === mananaStr
+          );
+          const prefix = esCritico ? '🚨🔴 *CRÍTICO*' : '📌';
+          
+          lines.push(`${prefix} *${actividad.nombre}*${limitStr}`);
+          incomplete.forEach((e: any) => {
+            const idInfo = e.id ? ` (ID: ${e.id})` : '';
+            lines.push(`  - [ ] _${e.nombre}_${idInfo}`);
+          });
+        }
+      }
+      return lines.length > 0 ? lines.join('\n') : '✅ Sin entregas pendientes en Zajuna.';
+    }
+  } catch (e: any) {
+    console.warn(`[Briefing] Error leyendo ZajunaStore: ${e.message}`);
+  }
+  return 'ℹ️ No se pudieron cargar los datos de Zajuna.';
+}
+
 // ================= FECHA HELPER =================
 function getIsoTime(hoursStr: string) {
   const d = new Date();
@@ -112,16 +156,19 @@ export async function runMorningBriefing(): Promise<void> {
 
   console.log(`[Briefing] Procesando día: ${dayName} (${todayIso})`);
 
-  const [clima, festivoInfo, maintenanceAlerts] = await Promise.all([
+  // Ejecución concurrente de integraciones externas y locales
+  const [clima, festivoInfo, maintenanceAlerts, trafficReport] = await Promise.all([
     getMedellinWeather(),
     checkFestivo(todayIso),
-    Promise.resolve(checkMaintenance())
+    Promise.resolve(checkMaintenance()),
+    getTrafficReport()
   ]);
 
   const pypInfo = getPicoYPlacaInfo(dayName, config.placa_vehiculo || '6');
   const simit = getSimitStatus();
+  const senaPending = getZajunaPending();
 
-  let baseTasks = [];
+  let baseTasks: any[] = [];
   try {
     if (fs.existsSync(SCHEDULE_PATH)) {
       const scheduleConfig = JSON.parse(fs.readFileSync(SCHEDULE_PATH, 'utf8'));
@@ -134,13 +181,17 @@ Jeiser tiene gastos fijos de $1.6M mensuales (Arriendo + Servicios), debe el sem
 
 DATOS REALES DE HOY:
 - Fecha: ${todayIso} (${dayName})
-- Vehículo Principal de Jeiser: Toyota Corolla 2010 (Placa: KEW496, termina en 6)
-- Vehículo Secundario (Moto): Placa BXU28C (¡SOAT y RTM vencidos! No circular bajo ninguna circunstancia)
+- Vehículo Principal: Toyota Corolla 2010 (Placa: KEW496, termina en 6)
+- Vehículo Secundario (Moto): Placa BXU28C (¡SOAT y RTM vencidos! No circular bajo ninguna circunstancia o habrá inmovilización)
 - Festivo: ${festivoInfo.es_festivo ? 'SÍ (' + festivoInfo.nombre + ')' : 'NO'}.
 - Clima: ${clima.codigo >= 50 ? 'Lluvia / Tormenta' : 'Despejado/Nublado'} (Lluvia: ${clima.probLluvia}%, UV Máximo: ${clima.uvMax}).
 - Pico y Placa: Placas restringidas hoy: ${pypInfo.restringidas_hoy}. ¿Jeiser tiene restricción hoy con su carro placa KEW496?: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'}.
 - SIMIT: ${simit}
+- Tráfico Real de TomTom: 
+${trafficReport}
 - Mantenimiento Carro (Toyota Corolla): ${maintenanceAlerts || 'Ninguno'}
+- Entregas Pendientes en Zajuna (SENA):
+${senaPending}
 - Misiones Base (Agenda):
 ${JSON.stringify(baseTasks, null, 2)}
 
@@ -154,34 +205,44 @@ ESTRUCTURA DEL MENSAJE TELEGRAM (Estricta, conserva los títulos y emojis):
 🌤️ *CLIMA Y CONDICIONES*
 • Estado: [Estado del clima]
 • Probabilidad de Lluvia: ${clima.probLluvia}%
-• Índice UV Máximo: ${clima.uvMax} (Protección solar recomendada)
-• Pico y Placa: [Aplica/No aplica hoy para ti, indica explícitamente que tu placa es KEW496 y si descansas o no]
+• Índice UV Máximo: ${clima.uvMax} [Si es >= 7, añade una advertencia de ola de calor y enrutamiento valle]
+• Pico y Placa: [Aplica/No aplica hoy para ti]
 
 🚗 *SIMIT & MANTENIMIENTO*
-• SIMIT: [Resumen de deudas/comparendos o Paz y Salvo]
-• Carro: [Alertas de mantenimiento o 'Al día']
+• SIMIT: [Resumen de deudas/comparendos]
+• Carro: [Alertas de mantenimiento]
 
-📋 *PENDIENTES Y PRIORIDADES DE HOY*
-[Muestra la lista de misiones base con sus duraciones y prioridades en forma de viñetas claras]
+🚨 *ZAJUNA (SENA) PENDIENTES*
+[Inserta aquí de manera crítica y detallada las actividades y sub-evidencias pendientes de Zajuna. Si hay entregas que vencen hoy o mañana, destácalas con alarma extrema y pon su ID]
+
+🚧 *TRÁFICO EN VIVO (DiDi Hubs)*
+[Inserta el informe de tráfico de TomTom con tiempos estimados y retrasos actuales]
+
+📅 *PROGRAMACIÓN DEL DÍA POR HORAS*
+[Genera una agenda cronológica estricta y detallada de su día, por ejemplo:
+ - 05:00 - 06:00: Rutina y preparación
+ - 06:00 - 11:30: Turno DiDi AM (Meta: $150k)
+ - 11:30 - 15:30: Descanso de Ola de calor / Almuerzo / Estudio
+ - 15:30 - 21:00: Turno DiDi PM (Meta: $110k)
+ - 21:00 - 22:00: Estudio Zajuna (Evidencia ID: XXX)]
 
 🎖️ *REGAÑO DEL SARGENTO FINANCIERO*
-[Aquí pones el regaño motivacional agresivo, estricto y militar, recordándole las metas, el CESDE y DiDi. Máximo 1 párrafo de 4 líneas.]
+[Aquí pones el regaño motivacional agresivo, estricto y militar, recordándole las deudas, el CESDE y DiDi. Máximo 1 párrafo de 4 líneas.]
 
 _Tus eventos de hoy ya fueron sincronizados en Google Calendar._
 
-Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques).
+Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques) que retornarás en el JSON.
    - Si es festivo: el colegio de Dominick está cerrado. No agendes ir por él.
-   - Si el UV es >= 7 (Horno): Oblígalo a tomar un descanso largo de 12:00 PM a 3:00 PM y enruta DiDi en la tarde-noche.
-   - Si el UV es < 7 (Templado): Que maneje de corrido con descanso corto.
+   - Si el UV es >= 7: Oblígalo a tomar un descanso de DiDi de 11:00 AM a 3:30 PM (ola de calor) y trabajar en la tarde-noche.
    - Si es sábado, bloquea de 07:30 AM a 06:00 PM por sus clases presenciales en el CESDE.
-   - Añade siempre: \"Aplicar a 5 ofertas en Computrabajo\" (1 hora).
+   - Añade siempre: "Aplicar a 5 ofertas en Computrabajo" (1 hora).
 
 Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no incluyas triple tilde invertida):
 {
-  \"mensaje_telegram\": \"[Usa la estructura estricta arriba]\",
-  \"eventos\": [
-    { \"title\": \"🚕 DiDi AM (Fresco)\", \"start_time\": \"06:00\", \"duration_hours\": 5.5, \"description\": \"Meta AM: $150k\" },
-    { \"title\": \"💻 Aplicar ofertas Computrabajo\", \"start_time\": \"12:00\", \"duration_hours\": 1.0, \"description\": \"QA Hunter\" }
+  "mensaje_telegram": "[Usa la estructura estricta arriba con emojis]",
+  "eventos": [
+    { "title": "🚕 DiDi AM (Fresco)", "start_time": "06:00", "duration_hours": 5.5, "description": "Meta AM: $150k" },
+    { "title": "💻 Aplicar ofertas Computrabajo", "start_time": "12:00", "duration_hours": 1.0, "description": "QA Hunter" }
   ]
 }
 `;

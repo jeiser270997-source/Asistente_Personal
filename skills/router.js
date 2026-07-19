@@ -32,8 +32,10 @@ function loadSystemIndex() {
 
 function loadSkill(id) {
   try {
-    return require(path.join(SKILLS_DIR, id));
-  } catch {
+    const mod = require(path.join(SKILLS_DIR, id));
+    return mod;
+  } catch (err) {
+    console.warn(`[router] Skill no disponible o error cargando "${id}": ${err.message.substring(0, 80)}`);
     return null;
   }
 }
@@ -82,50 +84,68 @@ function detectSkills(texto) {
 }
 
 function getContextForText(texto) {
-  const matched = detectSkills(texto);
-  if (matched.length === 0) return '';
+  try {
+    const matched = detectSkills(texto);
+    if (matched.length === 0) return '';
 
-  const parts = [];
-  for (const skill of matched) {
-    if (skill.source === 'js') {
-      const mod = loadSkill(skill.id);
-      if (mod && typeof mod.getContext === 'function') {
-        const ctx = mod.getContext();
-        if (ctx) parts.push(ctx);
-      }
-    } else if (skill.source === 'md') {
-      const userIndex = loadUserIndex();
-      const entry = userIndex.skills.find(s => s.id === skill.id);
-      if (entry) {
-        const ctx = loadMDSkill(entry);
-        if (ctx) parts.push(ctx);
-      }
-    } else if (skill.source === 'sistema') {
-      const systemIndex = loadSystemIndex();
-      const entry = systemIndex.skills.find(s => s.id === skill.id);
-      if (entry) {
-        const ctx = loadMDSkill(entry);
-        if (ctx) parts.push(ctx);
+    const parts = [];
+    for (const skill of matched) {
+      try {
+        if (skill.source === 'js') {
+          const mod = loadSkill(skill.id);
+          if (mod && typeof mod.getContext === 'function') {
+            const ctx = mod.getContext();
+            if (ctx) parts.push(ctx);
+          }
+        } else if (skill.source === 'md') {
+          const userIndex = loadUserIndex();
+          const entry = userIndex.skills.find(s => s.id === skill.id);
+          if (entry) {
+            const ctx = loadMDSkill(entry);
+            if (ctx) parts.push(ctx);
+          }
+        } else if (skill.source === 'sistema') {
+          const systemIndex = loadSystemIndex();
+          const entry = systemIndex.skills.find(s => s.id === skill.id);
+          if (entry) {
+            const ctx = loadMDSkill(entry);
+            if (ctx) parts.push(ctx);
+          }
+        }
+      } catch (err) {
+        console.warn(`[router] Error obteniendo contexto para skill "${skill.id}": ${err.message.substring(0, 80)}`);
       }
     }
-  }
 
-  return parts.join('\n\n');
+    return parts.join('\n\n');
+  } catch (err) {
+    console.warn(`[router] Error en getContextForText: ${err.message.substring(0, 80)}`);
+    return '';
+  }
 }
 
 function getAllSkillContexts() {
-  const registry = loadRegistry();
-  const parts = [];
+  try {
+    const registry = loadRegistry();
+    const parts = [];
 
-  for (const skill of registry.skills) {
-    const mod = loadSkill(skill.id);
-    if (mod && typeof mod.getContext === 'function') {
-      const ctx = mod.getContext();
-      if (ctx) parts.push(ctx);
+    for (const skill of registry.skills) {
+      try {
+        const mod = loadSkill(skill.id);
+        if (mod && typeof mod.getContext === 'function') {
+          const ctx = mod.getContext();
+          if (ctx) parts.push(ctx);
+        }
+      } catch (err) {
+        console.warn(`[router] Error cargando skill "${skill.id}": ${err.message.substring(0, 60)}`);
+      }
     }
-  }
 
-  return parts.join('\n\n');
+    return parts.join('\n\n');
+  } catch (err) {
+    console.warn(`[router] Error en getAllSkillContexts: ${err.message.substring(0, 60)}`);
+    return '';
+  }
 }
 
 function getAllSystemSkillsBrief() {

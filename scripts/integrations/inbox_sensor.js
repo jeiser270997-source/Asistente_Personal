@@ -4,6 +4,7 @@ const { sendTelegramMessage } = require('../../lib/integrations/telegram');
 
 const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 const RE = require('../../lib/runtime/resume_engine');
+const { PATHS } = require('../../lib/data/paths');
 
 const KEYWORDS = ['DIAN', 'UGPP', 'SIMIT', 'Transito', 'Solvo', 'Concentrix', 'CESDE', 'SENA'];
 
@@ -11,17 +12,14 @@ function loadProcessed() {
   const cp = CheckpointStore.get('inbox_sensor_processed');
   if (cp) return new Set(cp);
   try {
-    const path = require('path').join(__dirname, '..', 'data', 'processed_emails.json');
-    return new Set(JSON.parse(require('fs').readFileSync(path, 'utf8')));
+    return new Set(JSON.parse(require('fs').readFileSync(PATHS.PROCESSED_EMAILS, 'utf8')));
   } catch { return new Set(); }
 }
 
 function saveProcessed(ids) {
   CheckpointStore.set('inbox_sensor_processed', [...ids]);
-  const fs = require('fs');
-  const path = require('path').join(__dirname, '..', 'data', 'processed_emails.json');
-  fs.mkdirSync(require('path').dirname(path), { recursive: true });
-  fs.writeFileSync(path, JSON.stringify([...ids], null, 2));
+  require('fs').mkdirSync(require('path').dirname(PATHS.PROCESSED_EMAILS), { recursive: true });
+  require('fs').writeFileSync(PATHS.PROCESSED_EMAILS, JSON.stringify([...ids], null, 2));
 }
 
 function matchesKeywords(text) {

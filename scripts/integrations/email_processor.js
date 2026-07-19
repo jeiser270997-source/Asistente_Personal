@@ -11,8 +11,9 @@ const ruleEngine = require('../../lib/runtime/rule_engine');
 const { agregarHecho } = require('../../lib/memory/memory_engine');
 const fsPromises = require('node:fs/promises');
 
-// LLM (OpenAI SDK nativo)
-const { createLLM } = require('../../lib/ai/litellm_client');
+// Importaciones unificadas de rutas y LLM (FIX-001 & FIX-005)
+const { PATHS, DIR } = require('../../lib/data/paths');
+const { askLLM } = require('../../lib/ai/llm_service');
 
 const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 const LedgerStore = require('../../runtime/stores/LedgerStore');
@@ -44,16 +45,14 @@ function loadProcessed() {
   const cp = CheckpointStore.get('email_processed_ids');
   if (cp && Array.isArray(cp)) return cp;
   try {
-    const p = path.join(BASE_DIR, 'data', 'processed_emails.json');
-    return JSON.parse(fs.readFileSync(p, 'utf8'));
+    return JSON.parse(fs.readFileSync(PATHS.PROCESSED_EMAILS, 'utf8'));
   } catch { return []; }
 }
 
 function saveProcessed(ids) {
   CheckpointStore.set('email_processed_ids', ids);
-  const p = path.join(BASE_DIR, 'data', 'processed_emails.json');
-  ensureDir(path.dirname(p));
-  fs.writeFileSync(p, JSON.stringify(ids, null, 2), 'utf8');
+  ensureDir(path.dirname(PATHS.PROCESSED_EMAILS));
+  fs.writeFileSync(PATHS.PROCESSED_EMAILS, JSON.stringify(ids, null, 2), 'utf8');
 }
 
 // ── Clasificación Inteligente con LLM ──
@@ -197,16 +196,27 @@ async function processAttachments(gmail, email) {
     }
     walk(detail.data.payload);
 
+    if (parts.length === 0) return;
+
+    // Estructura de guardado canónica (FIX-005)
+    const dateStr = new Date().toISOString().split('T')[0];
+    const emailDir = path.join(DIR.DOCS, dateStr, email.id.substring(0, 12));
+    if (!fs.existsSync(emailDir)) fs.mkdirSync(emailDir, { recursive: true });
+
     for (const part of parts) {
       const att = await gmail.users.messages.attachments.get({
         userId: 'me', messageId: email.id, id: part.body.attachmentId
       });
       const attData = Buffer.from(att.data.data, 'base64');
       const safeName = part.filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-      
-      const docText = `Documento Adjunto (${safeName}) recibido de ${email.from} el ${email.date}. Asunto: ${email.subject}.`;
+      const filePath = path.join(emailDir, safeName);
+
+      // Escritura física obligatoria (FIX-005)
+      fs.writeFileSync(filePath, attData);
+
+      const docText = `Documento Adjunto (${safeName}) recibido de ${email.from} el ${email.date}. Asunto: ${email.subject}. Guardado en: ${filePath}`;
       agregarHecho(docText, 'documentos', ['email', 'adjunto', safeName]);
-      log(`💾 Adjunto Inyectado a Memoria: ${safeName}`);
+      log(`💾 Adjunto Guardado en Disco e Inyectado a Memoria: ${safeName} (${filePath})`);
     }
   } catch (e) {
     log(`❌ Error procesando adjunto en ${email.id}: ${e.message}`);
@@ -227,49 +237,31 @@ Formato obligatorio: [{"id":"...","from":"...","subject":"...","summary":"...","
 Correos:
 ${emails.map(e => `- ID: ${e.id} | De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
 
-  const openRouterKey = process.env.OPENROUTER_API_KEY;
-  const groqKey = process.env.GROQ_API_KEY;
-  const providerKey = openRouterKey || groqKey;
-
-  if (!providerKey) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(API no configurada)' }));
-
-  const baseURL = openRouterKey
-    ? 'https://openrouter.ai/api/v1'
-    : 'https://api.groq.com/openai/v1';
-  const model = openRouterKey
-    ? 'google/gemini-2.5-flash'
-    : 'llama-3.3-70b-versatile';
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${providerKey}`,
-  };
-  if (openRouterKey) {
-    headers['HTTP-Referer'] = 'https://github.com/jeiser-dev/lifeos';
-    headers['X-Title'] = 'LifeOS';
-  }
+  // Detección heurística de PII o contenido financiero/legal (FIX-001)
+  const isSensitive = emails.some(e => {
+    const txt = `${e.from} ${e.subject} ${e.body || ''}`.toLowerCase();
+    return /dian|simit|comparendo|multa|bancolombia|nequi|daviplata|juridico|embargo|coactivo|deuda|fiscalia/i.test(txt);
+  });
 
   try {
-    const res = await fetch(`${baseURL}/chat/completions`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        model,
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.1, max_tokens: 1000
-      }),
-      signal: AbortSignal.timeout(30000),
-    });
-    if (!res.ok) { log(`LLM: HTTP ${res.status}`); return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(error API)' })); }
-    const data = await res.json();
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(resp vacia)' }));
-    const parsed = JSON.parse(content.replace(/```json|```/g, '').trim());
+    // Uso del servicio unificado con bandera de sensibilidad (fail-closed local-only activo)
+    const res = await askLLM(prompt, [], 0.1, null, isSensitive);
+    const raw = (res.content || '').trim();
+    const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) return parsed;
   } catch (err) {
-    log(`LLM error: ${err.message.substring(0, 60)}`);
+    log(`[summarizeEmails] Falló consulta unificada: ${err.message.substring(0, 100)}`);
   }
-  return emails.map(e => ({ from: e.from, subject: e.subject, summary: '(resumen no disponible)' }));
+
+  // Fallback determinista seguro
+  return emails.map(e => ({
+    id: e.id,
+    from: e.from,
+    subject: e.subject,
+    summary: '(resumen no disponible)',
+    pending_action: null,
+    suggested_label: 'Personal'
+  }));
 }
 
 // ── Main ──

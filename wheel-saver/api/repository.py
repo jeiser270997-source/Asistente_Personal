@@ -183,6 +183,11 @@ async def get_languages_async(db: aiosqlite.Connection, min_repos: int, limit: i
 async def list_repos_async(
     db: aiosqlite.Connection, order_col: str, language: str, per_page: int, offset: int
 ):
+    # Guardrail contra Inyección SQL por interpolación (FIX-006)
+    allowed_cols = {"stars", "name", "updated_at", "language", "owner"}
+    if order_col not in allowed_cols:
+        raise ValueError(f"Columna de ordenación no válida: {order_col}")
+
     if language:
         cursor = await db.execute(
             f"SELECT * FROM repos WHERE language = ? ORDER BY {order_col} DESC LIMIT ? OFFSET ?",

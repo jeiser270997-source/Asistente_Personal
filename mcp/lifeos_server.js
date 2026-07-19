@@ -214,9 +214,8 @@ async function executeTool(name, args) {
 
     case 'ver_correos': {
       const limite = args.limite ?? 10;
-      // Lee el JSON procesado que genera email_processor.js
-      const emailsPath = path.join(PATHS.CONTEXT_MAESTRO, '..', '..', 'processed_emails.json');
-      const data = readJSON(emailsPath);
+      // Lee el JSON procesado desde el origen de verdad único (FIX-002)
+      const data = readJSON(PATHS.PROCESSED_EMAILS);
       if (!data) return ok('No hay correos procesados aún. Usa `procesar_correos` para actualizar.');
       const emails = (Array.isArray(data) ? data : data.emails || []).slice(-limite).reverse();
       if (emails.length === 0) return ok('Inbox limpio — no hay correos recientes procesados.');
