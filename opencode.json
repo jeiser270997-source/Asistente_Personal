@@ -1,5 +1,21 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "permission": "allow",
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "*": "deny",
+      "node -c *": "allow",
+      "tsc --noEmit*": "allow",
+      "python -m py_compile *": "allow",
+      "go build *": "allow",
+      "git diff*": "allow",
+      "git status*": "allow",
+      "git commit*": "deny",
+      "git push*": "deny",
+      "git add*": "deny",
+      "git rm*": "deny"
+    },
+    "webfetch": "deny"
+  },
   "model": "openrouter/deepseek/deepseek-chat-v3-0324:free"
 }
