@@ -90,7 +90,8 @@ async function main() {
   }
 }
 
-main().catch(e => {
+main().catch(async (e) => {
   console.error(`[jarvis] Fatal: ${e.message}`);
+  await bus.drain();
   process.exit(1);
 });

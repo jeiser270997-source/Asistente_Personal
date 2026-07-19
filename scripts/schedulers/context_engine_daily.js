@@ -215,9 +215,10 @@ async function main() {
   log('Context Engine Daily completado');
 }
 
-main().catch(e => {
+main().catch(async (e) => {
   console.error(`[CTX] Error: ${e.message}`);
   RE.finish('context_engine_daily', 'error', { reason: e.message });
+  await bus.drain();
   process.exit(1);
 });
 
