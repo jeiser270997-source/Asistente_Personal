@@ -1,7 +1,11 @@
 ﻿import { NextResponse } from 'next/server';
 import path from 'path';
+import { isAuthorized, unauthorizedResponse } from '@/lib/auth';
 
 export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return unauthorizedResponse();
+  }
   try {
     const { messages } = await request.json();
 
@@ -18,9 +22,7 @@ export async function POST(request: Request) {
     const rootDir = process.env.IS_DOCKER === 'true' ? '/host_data' : path.join(process.cwd(), '..');
     const frontalPath = path.join(rootDir, 'lib', 'lobulos', 'frontal');
 
-    // Bypass de Webpack: usar eval('require') para forzar la carga nativa de Node.js en tiempo de ejecución
-    const nativeRequire = eval('require');
-    const frontal = nativeRequire(frontalPath);
+    const frontal = require(frontalPath);
 
     console.log(`🧠 [Dashboard Chat] Procesando pensamiento nativo para: "${lastMessage.substring(0, 40)}..."`);
     const reply = await frontal.procesarPensamiento(lastMessage);
@@ -28,6 +30,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ reply });
   } catch (error: any) {
     console.error('Error en /api/chat:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
