@@ -1,5 +1,17 @@
 [
   {
+    "name": "gobierno-colombia-general",
+    "match": { "from": ["*@*.gov.co"] },
+    "actions": { "label": "Gobierno/General", "notify": true, "logToLedger": true },
+    "priority": "P0"
+  },
+  {
+    "name": "cesde-becas-comfama",
+    "match": { "fromContains": ["comfama", "cesde"] },
+    "actions": { "label": "Educacion/CESDE", "notify": true, "logToLedger": true },
+    "priority": "P1"
+  },
+  {
     "name": "dian-oficial",
     "match": { "from": ["*@dian.gov.co", "*@muisca.gov.co"] },
     "actions": { "label": "Gobierno/DIAN", "archive": true, "markRead": true, "logToLedger": true },

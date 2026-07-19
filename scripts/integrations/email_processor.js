@@ -15,6 +15,7 @@ const fsPromises = require('node:fs/promises');
 const { PATHS, DIR } = require('../../lib/data/paths');
 const { askLLM } = require('../../lib/ai/llm_service');
 
+const bus = require('../../lib/events/event_bus');
 const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 const LedgerStore = require('../../runtime/stores/LedgerStore');
 const RE = require('../../lib/runtime/resume_engine');
@@ -358,6 +359,19 @@ async function processEmails() {
         // Procesar adjuntos antes de notificar
         await processAttachments(gmail, email);
         importantEmails.push({ ...email, body, action });
+
+        // 🚨 ALERTA INSTANTÁNEA (FIX-012): Despachar de inmediato mientras conduces
+        try {
+          bus.emit('email.important', {
+            from: email.from,
+            subject: email.subject,
+            summary: `⚡ NOTIFICACIÓN CRÍTICA DETECTADA: ${action.label || 'Urgente'}\n\n<i>${body.substring(0, 300).replace(/</g, '&lt;').replace(/>/g, '&gt;')}...</i>`
+          }, { source: 'email_processor.instant', priority: 'high' });
+          log(`🚨 Alerta instantánea emitida para: ${email.subject}`);
+        } catch (e) {
+          log(`⚠️ Error emitiendo alerta instantánea: ${e.message}`);
+        }
+
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         LedgerStore.emit('email_notify', { subject: email.subject, from: email.from, label: action.label });
         continue;
@@ -368,9 +382,22 @@ async function processEmails() {
       
       // ── Lógica de Adjuntos y Memoria (solo para importantes) ──
       if (esImportante) {
-        log(`🟢 KEEP: ${email.subject.substring(0, 40)}`);
+        log(`🟢 KEEP (Filtro Semántico): ${email.subject.substring(0, 40)}`);
         await processAttachments(gmail, email);
         importantEmails.push({ ...email, body });
+
+        // 🚨 ALERTA INSTANTÁNEA PARA EMAILS SEMÁNTICAMENTE IMPORTANTES (FIX-012)
+        // Por ejemplo, invitaciones a entrevistas detectadas por IA que no tenían regla fija
+        if (/entrevista|interview|citacion|seleccion|reunion|meeting|prueba/i.test(email.subject + ' ' + body)) {
+          try {
+            bus.emit('email.important', {
+              from: email.from,
+              subject: email.subject,
+              summary: `💼 <b>PROCESO LABORAL DETECTADO:</b>\n\n<i>${body.substring(0, 300).replace(/</g, '&lt;').replace(/>/g, '&gt;')}...</i>`
+            }, { source: 'email_processor.instant_job', priority: 'high' });
+            log(`💼 Alerta de proceso laboral emitida para: ${email.subject}`);
+          } catch {}
+        }
       } else {
         log(`🔴 BASURA (Sin regla ni keyword): ${email.subject.substring(0, 40)}`);
         trashCandidates.push(email.id);

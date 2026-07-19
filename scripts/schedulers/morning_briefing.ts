@@ -255,7 +255,10 @@ Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no 
     await sendTelegramMessage(parsed.mensaje_telegram);
     console.log('✅ Briefing enviado a Telegram.');
 
-    if (parsed.eventos && parsed.eventos.length > 0) {
+    // Sincronización condicional con Google Calendar (FIX-009)
+    if (process.env.DISABLE_CALENDAR_SYNC === 'true') {
+      console.log('ℹ️  Sincronización con Google Calendar desactivada por configuración (.env).');
+    } else if (parsed.eventos && parsed.eventos.length > 0) {
       console.log(`🗓️  Sincronizando ${parsed.eventos.length} eventos con Google Calendar...`);
       for (const ev of parsed.eventos) {
         try {

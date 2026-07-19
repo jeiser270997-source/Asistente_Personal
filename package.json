@@ -39,7 +39,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "pack": "npx repomix --output repomix_active.md",
-    "jobs:process": "node scripts/jobs/process_juniorjobs.js"
+    "jobs:process": "node scripts/jobs/process_juniorjobs.js",
+    "test:scrapers": "node scripts/diagnostics/scraper_health.js"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",

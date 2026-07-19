@@ -8,6 +8,11 @@ function checksum(sql) {
   return crypto.createHash('sha256').update(sql.replace(/\r\n/g, '\n')).digest('hex').substring(0, 16);
 }
 
+function legacyChecksum(sql) {
+  // Versión anterior sin normalización de \r\n (compatibilidad con migraciones pre-runner.js)
+  return crypto.createHash('sha256').update(sql).digest('hex').substring(0, 16);
+}
+
 function ensureMigrationsTable(db) {
   db.exec(`CREATE TABLE IF NOT EXISTS schema_migrations (
     version INTEGER PRIMARY KEY,
