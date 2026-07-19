@@ -8,9 +8,41 @@ const MIGRATIONS_DIR = path.resolve(__dirname, '..', 'migrations');
 
 let db = null;
 
+/**
+ * FIX-013: Retry wrapper para SQLITE_BUSY con exponential backoff.
+ * Cuando múltiples procesos PM2 escriben concurrentemente, SQLite
+ * puede lanzar SQLITE_BUSY incluso con WAL + busy_timeout.
+ * Este wrapper reintenta automáticamente con backoff.
+ */
+function withRetry(fn, maxRetries = 3) {
+  let lastError;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return fn();
+    } catch (err) {
+      lastError = err;
+      if (err.message && (err.message.includes('SQLITE_BUSY') || err.code === 'SQLITE_BUSY')) {
+        if (attempt < maxRetries) {
+          const delay = Math.min(500 * Math.pow(2, attempt), 4000);
+          console.warn(`[DB] SQLITE_BUSY (intento ${attempt + 1}/${maxRetries}), esperando ${delay}ms...`);
+          // Sleep síncrono: bloquea el event loop pero es necesario para better-sqlite3
+          const start = Date.now();
+          while (Date.now() - start < delay) {
+            // busy-wait — única opción en API síncrona
+          }
+          continue;
+        }
+        console.error(`[DB] SQLITE_BUSY agotado tras ${maxRetries} reintentos`);
+      }
+      throw err;
+    }
+  }
+  throw lastError;
+}
+
 function getDb() {
   if (db) return db;
-  db = new betterSqlite3(DB_PATH);
+  db = withRetry(() => new betterSqlite3(DB_PATH));
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');
   db.pragma('synchronous = NORMAL');

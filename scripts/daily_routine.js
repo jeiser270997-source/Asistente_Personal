@@ -19,12 +19,11 @@ require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.en
 const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
-const { sendTelegramMessage } = require('../lib/integrations/telegram');
-
-// ── CONFIGURACIÓN ────────────────────────────────────────────────────────────
-const SHUTDOWN_AFTER_RUN = true;  // false para pruebas
-const SHUTDOWN_DELAY_S  = 60;     // segundos antes de apagar
-const ROOT_DIR = path.resolve(__dirname, '..');
+const { sendTelegramMessage } = require('../lib/integrations/telegram');  // ── CONFIGURACIÓN ────────────────────────────────────────────────────────────
+  const DRY_RUN = process.argv.includes('--dry-run');
+  const SHUTDOWN_AFTER_RUN = !process.argv.includes('--no-shutdown') && !DRY_RUN;
+  const SHUTDOWN_DELAY_S  = 60;     // segundos antes de apagar
+  const ROOT_DIR = path.resolve(__dirname, '..');
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 
@@ -65,15 +64,19 @@ function banner() {
  * Ejecuta un script secuencialmente.
  * Si falla, registra el error pero CONTINÚA con el siguiente.
  * Los scrapers críticos tienen reintento automático.
- */
-function runScript(scriptPath, interpreter = process.execPath, retries = 0) {
-  const fullPath = path.join(ROOT_DIR, scriptPath);
-  if (!fs.existsSync(fullPath)) {
-    log(`⚠️  Script no encontrado: ${scriptPath} — saltando`);
-    return false;
-  }
+ */  function runScript(scriptPath, interpreter = process.execPath, retries = 0) {
+    const fullPath = path.join(ROOT_DIR, scriptPath);
+    if (!fs.existsSync(fullPath)) {
+      log(`⚠️  Script no encontrado: ${scriptPath} — saltando`);
+      return false;
+    }
 
-  for (let attempt = 0; attempt <= retries; attempt++) {
+    if (DRY_RUN) {
+      log(`🔍 [DRY-RUN] Se ejecutaría: ${scriptPath} (retries: ${retries})`);
+      return true;
+    }
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       log(`🚀 Ejecutando: ${scriptPath}${retries > 0 ? ` (intento ${attempt + 1}/${retries + 1})` : ''}`);
       execSync(`${interpreter} "${fullPath}"`, {

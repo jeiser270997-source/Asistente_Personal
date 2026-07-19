@@ -75,7 +75,22 @@ async function scanInbox(auth) {
   RE.finish('inbox_sensor', 'success', { alertas: newIds.length });
 }
 
-authorize().then(auth => scanInbox(auth)).catch(err => {
-  console.error('Error en inbox_sensor:', err);
-  process.exit(1);
-});
+// ── FIX-012: Ejecución segura con await + bus.drain() ──
+(async () => {
+  try {
+    const auth = await authorize();
+    await scanInbox(auth);
+  } catch (err) {
+    console.error('Error en inbox_sensor:', err);
+    process.exit(1);
+  } finally {
+    try {
+      const bus = require('../../lib/events/event_bus');
+      await bus.drain();
+    } catch (e) {
+      console.warn('[inbox_sensor] bus.drain():', e.message);
+    }
+    const { close: closeDb } = require('../../runtime/stores/Database');
+    closeDb();
+  }
+})();

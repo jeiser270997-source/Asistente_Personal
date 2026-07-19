@@ -167,6 +167,19 @@ Deep audit con WheelSaver: score 92/100, ready checklist 7/7.
 | **R3-07** | `ecosystem.config.js` — proceso `pm2-health` añadido (daemon, puerto 9090) | ✅ |
 | **R3-08** | `docs/wheelsaver_deep_audit_lifeos_round3.md` — reporte consolidado del deep audit | ✅ |
 
+### Ronda 5 (19/07/2026 — Fase 2: Migración, tests seguros, WheelSaver, documentación)
+
+Auditoría de deuda técnica y saneamiento general.
+
+| Fix | Prioridad | Descripción | Estado |
+|:---:|:---------:|-------------|:-----:|
+| **FIX-016** | 🔴 HIGH | `runtime/migrate.js`: Unificar DB_PATH del migrador standalone con el canónico `data/memoria_hipocampo.db` vía `process.env.LIFEOS_DB_PATH` | ✅ |
+| **FIX-017** | 🟠 MEDIUM | `scripts/daily_routine.js`: Args `--dry-run` y `--no-shutdown` para testear rutina sin apagar el host físico | ✅ |
+| **FIX-018** | 🟠 MEDIUM | `lib/integrations/wheel_saver_client.js`: Guardas en 6 entrypoints + caché operacional (`_isOperationalCached`) para evitar llamadas con DB vacía | ✅ |
+| **FIX-019** | 🔵 LOW | `README.md` + `dashboard/README.md`: Reemplazar templates heredados (Litestream, create-next-app) con documentación real de LifeOS | ✅ |
+
+**Validación:** 87/87 tests exitosos. Sin regresiones.
+
 ### Ronda 4 (19/07/2026 — Email Processor fixes + refactor)
 
 Auditoría de clasificación de correos y refactorización.

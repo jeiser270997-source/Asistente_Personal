@@ -6,8 +6,13 @@ const CheckpointStore = require('../../runtime/stores/CheckpointStore');
 const LedgerStore = require('../../runtime/stores/LedgerStore');
 const RE = require('../../lib/runtime/resume_engine');
 
-const USER = process.env.ITAGUI_USER || 'jeiser270997@gmail.com';
-const PASS = process.env.ITAGUI_PASS || 'A125%230a';
+const USER = process.env.ITAGUI_USER;
+const PASS = process.env.ITAGUI_PASS;
+
+if (!USER || !PASS) {
+  console.error('[Itagüí] FALTAN ITAGUI_USER y/o ITAGUI_PASS en .env');
+  process.exit(1);
+}
 const LOGIN_URL = 'https://movilidad.transitoitagui.gov.co/portal-servicios/#/inicio-login';
 const DATA_DIR = path.join(__dirname, '..', '..', 'data', 'cache', 'itagui');
 

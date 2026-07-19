@@ -491,4 +491,20 @@ async function processEmails() {
   log('--- FIN ---');
 }
 
-processEmails();
+// ── FIX-012: Ejecución segura con await + bus.drain() ──
+(async () => {
+  try {
+    await processEmails();
+  } catch (e) {
+    console.error('[Email Processor] Fatal:', e.message);
+    process.exit(1);
+  } finally {
+    try {
+      await bus.drain();
+    } catch (e) {
+      console.warn('[Email Processor] bus.drain():', e.message);
+    }
+    const { close: closeDb } = require('../../runtime/stores/Database');
+    closeDb();
+  }
+})();

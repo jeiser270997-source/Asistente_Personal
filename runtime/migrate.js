@@ -10,7 +10,7 @@ const path = require('path');
 const fs = require('fs');
 
 const MIGRATIONS_DIR = path.resolve(__dirname, 'migrations');
-const DB_PATH = path.resolve(__dirname, 'lifeos.db');
+const DB_PATH = process.env.LIFEOS_DB_PATH || path.resolve(__dirname, '..', 'data', 'memoria_hipocampo.db');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 

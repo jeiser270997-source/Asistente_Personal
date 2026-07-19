@@ -486,8 +486,22 @@ ESTRUCTURA DEL MENSAJE (adaptable según qué tenga novedades):
   }
 }
 
-run();
-
+// ── FIX-012: Ejecución segura con await ──
+(async () => {
+  try {
+    await run();
+  } catch (e) {
+    console.error('[Brain Orchestrator] Fatal:', e.message);
+    process.exit(1);
+  } finally {
+    try {
+      const bus = require('../../lib/events/event_bus');
+      await bus.drain();
+    } catch (e) {
+      console.warn('[Brain Orchestrator] bus.drain():', e.message);
+    }
+  }
+})();
 
 
 
