@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-15 (deep audit fixes: paths unificados, fail-closed, docs honestos)
+**Última actualización:** 2026-07-18 (round 2: SSRF, permisos, event bus, dashboard, .gitignore)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -117,7 +117,9 @@ npm run backup
 npm run briefing
 ```
 
-## Auditoría (15/07/2026 — deep audit completo)
+## Auditorías
+
+### Ronda 1 (15/07/2026 — deep audit completo)
 
 Deep audit ejecutado: score 48→72+ con fixes aplicados.
 - **F01**: Path memoria_hipocampo.db unificado → `data/` (canónico)
@@ -132,7 +134,22 @@ Deep audit ejecutado: score 48→72+ con fixes aplicados.
 - **O2**: Fail-closed real en 4 scripts de jobs (scraper, apply, job_loop, cv_tailorer)
 - **O4**: 13 workflows GHA eliminados
 
-**Stack real (`package.json`):** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `valibot` · `fuse.js` · `googleapis` · `cheerio` · `dotenv`
+### Ronda 2 (18/07/2026 — seguridad, permisos, event bus, dashboard)
+
+Auditoría de seguridad y robustez.
+- **FIX-001** [CRITICAL] — SSRF en `crawl4ai_client.js`: validación `isPrivateIp()` + `isUrlSafe()`. ✅
+- **FIX-002** [CRITICAL] — `opencode.json`: permisos granulares (`*: deny`) con allowlist. ✅
+- **FIX-003** [CRITICAL] — `.claude/settings.local.json`: retirados patrones git del allowlist. ✅
+- **FIX-004** [HIGH] — Event bus conectado a Transactional Outbox (`OutboxStore.insert()`). ✅
+- **FIX-005** [LOW] — `bus.drain()` antes de `process.exit()` en jarvis/context. ✅
+- **FIX-006** [MEDIUM] — Dashboard API: error sanitizado vs `error.message` crudo. ✅
+- **FIX-007** [MEDIUM] — `frontal.js`: `JSON.parse` de tool-call envuelto en try/catch. ✅
+- **FIX-008** [LOW] — IPv6 `::` añadido a bloqueo en `isPrivateIp()`. ✅
+- **FIX-009** [MEDIUM] — 🔲 Pendiente: `email_processor.js` envía correos al LLM sin `sensitive=true`.
+
+**Protecciones adicionales (18/07/2026):**
+- `.gitignore` actualizado con dumps personales, diagnostics, scratch, temp, audit patches
+- 7 scripts de jobs obsoletos archivados en `scripts/jobs/_archived/`
 
 ## Reglas de Comportamiento
 
