@@ -1,8 +1,14 @@
 [
   {
     "name": "gobierno-colombia-general",
-    "match": { "from": ["*@*.gov.co"] },
+    "match": { "from": ["*gov.co"] },
     "actions": { "label": "Gobierno/General", "notify": true, "logToLedger": true },
+    "priority": "P0"
+  },
+  {
+    "name": "simit-transito",
+    "match": { "from": ["*fcm.org.co", "*simit.org.co"], "subjectContains": ["comparendo", "multa", "simit"] },
+    "actions": { "label": "Gobierno/SIMIT", "notify": true, "logToLedger": true },
     "priority": "P0"
   },
   {
@@ -12,44 +18,32 @@
     "priority": "P1"
   },
   {
-    "name": "dian-oficial",
-    "match": { "from": ["*@dian.gov.co", "*@muisca.gov.co"] },
-    "actions": { "label": "Gobierno/DIAN", "archive": true, "markRead": true, "logToLedger": true },
-    "priority": "P0"
-  },
-  {
-    "name": "simit-transito",
-    "match": { "from": ["*@fcm.org.co", "*simit*"], "subjectContains": ["comparendo", "multa", "simit"] },
-    "actions": { "label": "Gobierno/SIMIT", "notify": true, "logToLedger": true },
-    "priority": "P0"
+    "name": "claro-cobranzas-coguasimales",
+    "match": { "from": ["*claro.com", "*claro.com.co", "*coguasimales.co", "*coguasimales.com"] },
+    "actions": { "label": "Finanzas/Cobranzas", "notify": true, "logToLedger": true },
+    "priority": "P1"
   },
   {
     "name": "sena-moodle",
-    "match": { "from": ["*@sena.edu.co", "*@senavirtual.edu.co"] },
+    "match": { "from": ["*sena.edu.co", "*senavirtual.edu.co"] },
     "actions": { "label": "Educacion/SENA", "archive": true, "markRead": true },
     "priority": "P1"
   },
   {
-    "name": "cesde-bootcamp",
-    "match": { "fromContains": ["cesde"], "anyWord": ["clase", "taller", "bootcamp", "aa1", "aa2", "aa3", "aa4"] },
-    "actions": { "label": "Educacion/CESDE", "notify": true },
-    "priority": "P1"
-  },
-  {
     "name": "computrabajo-postulacion",
-    "match": { "from": ["*@computrabajo.com", "*@computrabajo.com.co"], "subject": ["*postulaci*", "*aplicado*", "*solicitud*"] },
+    "match": { "from": ["*computrabajo.com", "*computrabajo.com.co"], "subject": ["*postulaci*", "*aplicado*", "*solicitud*"] },
     "actions": { "label": "Trabajo/Postulaciones", "archive": true, "markRead": true, "isJobApplication": true },
     "priority": "P1"
   },
   {
     "name": "linkedin-postulacion",
-    "match": { "from": ["*@linkedin.com"], "subject": ["*application*", "*solicitud*", "*postulado*", "*aplicado*"] },
+    "match": { "from": ["*linkedin.com"], "subject": ["*application*", "*solicitud*", "*postulado*", "*aplicado*"] },
     "actions": { "label": "Trabajo/LinkedIn", "archive": true, "markRead": true, "isJobApplication": true },
     "priority": "P1"
   },
   {
     "name": "indeed-postulacion",
-    "match": { "from": ["*@indeed.com"], "subject": ["*application*", "*solicitud*"] },
+    "match": { "from": ["*indeed.com"], "subject": ["*application*", "*solicitud*"] },
     "actions": { "label": "Trabajo/Indeed", "archive": true, "markRead": true, "isJobApplication": true },
     "priority": "P1"
   },
@@ -67,45 +61,39 @@
   },
   {
     "name": "bancolombia",
-    "match": { "from": ["*@bancolombia.com.co", "*@grupobancolombia.com"] },
+    "match": { "from": ["*bancolombia.com.co", "*grupobancolombia.com"] },
     "actions": { "label": "Finanzas/Bancolombia", "archive": true, "markRead": true },
     "priority": "P2"
   },
   {
     "name": "factura-electronica",
-    "match": { "subjectContains": ["factura", "recibo", "pago", "nomina", "salario"], "from": ["*@dian.gov.co", "*@facturaelectronica*"] },
+    "match": { "subjectContains": ["factura", "recibo", "pago", "nomina", "salario"], "from": ["*dian.gov.co", "*facturaelectronica*"] },
     "actions": { "label": "Finanzas/Facturas", "archive": true, "markRead": true },
     "priority": "P1"
   },
   {
     "name": "compras-mercadolibre",
-    "match": { "from": ["*@mercadolibre.com.co", "*@mercadolibre.com"] },
+    "match": { "from": ["*mercadolibre.com.co", "*mercadolibre.com"] },
     "actions": { "label": "Compras/MercadoLibre", "archive": true, "markRead": true },
     "priority": "P2"
   },
   {
     "name": "compras-amazon",
-    "match": { "from": ["*@amazon.com", "*@amazon.com.co"] },
+    "match": { "from": ["*amazon.com", "*amazon.com.co"] },
     "actions": { "label": "Compras/Amazon", "archive": true, "markRead": true },
     "priority": "P2"
   },
   {
     "name": "github-notificaciones",
-    "match": { "from": ["*@github.com", "notifications@github.com"] },
+    "match": { "from": ["*github.com", "notifications@github.com"] },
     "actions": { "label": "Leer/GitHub", "archive": true, "markRead": true },
     "priority": "P2"
   },
   {
     "name": "newsletters",
-    "match": { "from": ["*@medium.com", "*@substack.com", "*@youtube.com", "*@openai.com"] },
+    "match": { "from": ["*medium.com", "*substack.com", "*youtube.com", "*openai.com"] },
     "actions": { "label": "Leer/Newsletters", "archive": true, "markRead": true },
     "priority": "P3"
-  },
-  {
-    "name": "claro-pagos",
-    "match": { "fromContains": ["claro.com", "claro"], "anyWord": ["paga", "factura", "recibo", "vencimiento"] },
-    "actions": { "label": "Finanzas/Claro", "archive": true, "markRead": true },
-    "priority": "P1"
   },
   {
     "name": "security-alerts",
@@ -115,25 +103,25 @@
   },
   {
     "name": "spam-laboral-pandape",
-    "match": { "from": ["*@pandape.com", "*@magneto365.com", "*@peaku.co", "*@talent.com", "*@elempleo.com"] },
+    "match": { "from": ["*pandape.com", "*magneto365.com", "*peaku.co", "*talent.com", "*elempleo.com"] },
     "actions": { "label": "Trabajo/Plataformas", "archive": true, "markRead": true },
     "priority": "P2"
   },
   {
     "name": "didi-conductor",
-    "match": { "from": ["*@didiglobal.com", "*@didimobility.com", "*@didi*"], "anyWord": ["recibo", "ganancias", "viaje", "conductor", "balance", "retiro"] },
+    "match": { "from": ["*didiglobal.com", "*didimobility.com", "*didi*"], "anyWord": ["recibo", "ganancias", "viaje", "conductor", "balance", "retiro"] },
     "actions": { "label": "Finanzas/DiDi", "archive": true, "markRead": true, "logToLedger": true },
     "priority": "P1"
   },
   {
     "name": "uber-conductor",
-    "match": { "from": ["*@uber.com"], "anyWord": ["recibo", "ganancias", "viaje", "conductor", "balance", "pago"] },
+    "match": { "from": ["*uber.com"], "anyWord": ["recibo", "ganancias", "viaje", "conductor", "balance", "pago"] },
     "actions": { "label": "Finanzas/Uber", "archive": true, "markRead": true, "logToLedger": true },
     "priority": "P1"
   },
   {
     "name": "epm-servicios",
-    "match": { "from": ["*@epm.com.co", "*factura@epm*"], "subjectContains": ["factura", "pago", "recibo", "vencimiento"] },
+    "match": { "from": ["*epm.com.co", "*factura@epm*"], "subjectContains": ["factura", "pago", "recibo", "vencimiento"] },
     "actions": { "label": "Finanzas/EPM", "archive": true, "notify": true },
     "priority": "P1"
   },

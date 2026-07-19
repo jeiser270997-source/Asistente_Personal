@@ -32,16 +32,18 @@ describe('RuleEngine', () => {
     };
     const results = re.matchAll(email);
     expect(results.length).toBeGreaterThan(0);
-    expect(results.some(r => r.label?.toLowerCase().includes('dian'))).toBe(true);
+    // FIX-013: Consolidado bajo regla gobierno-colombia-general (etiqueta "Gobierno/General")
+    expect(results.some(r => r.label?.toLowerCase().includes('gobierno'))).toBe(true);
   });
 
   it('should match email by wildcard subject pattern', () => {
     const email = {
-      from: 'info@simit.gov.co',
+      from: 'info@simit.org.co',
       subject: 'Comparendo pendiente: ABC123',
       body: 'Tiene un comparendo pendiente',
     };
     const results = re.matchAll(email);
+    // FIX-013: simit-transito ahora usa *simit.org.co en vez de *simit*
     const simitResults = results.filter(r => r.label?.toLowerCase().includes('simit'));
     expect(simitResults.length).toBeGreaterThan(0);
   });
@@ -130,7 +132,8 @@ describe('RuleEngine', () => {
       body: 'Tiene una factura pendiente',
     };
     const results = re.matchAll(email);
-    const dianResults = results.filter(r => r.label?.toLowerCase().includes('dian'));
+    // FIX-013: Consolidado bajo regla gobierno-colombia-general (etiqueta "Gobierno/General")
+    const dianResults = results.filter(r => r.label?.toLowerCase().includes('gobierno'));
     expect(dianResults.length).toBeGreaterThanOrEqual(0);
   });
 
