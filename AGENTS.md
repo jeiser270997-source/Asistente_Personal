@@ -50,7 +50,7 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 
 **Perfil técnico:** QA Automation Junior · Playwright · JS/TS · Node.js · Git · GitHub Actions · Postman · SQL
 **Stack real:** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `valibot` · `fuse.js` · `googleapis` · `cheerio`
-**Proyecto clave:** LifeOS (~~13 workflows GHA~~ → 18 procesos PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
+**Proyecto clave:** LifeOS (~~13 workflows GHA~~ → 19 procesos PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
 **CESDE:** Sábados 7am-6pm (próximo horario) · Lun/Mié/Vie 6-8pm
 **SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
 
@@ -84,6 +84,7 @@ Runtime local vía PM2 (`ecosystem.config.js`). Arrancar con `pm2 start`.
 | document-pipeline | cron | 9am COT (2pm) |
 | vehicle-manager | cron | 6am COT (11am) |
 | backup-dbs | cron (tsx) | 11pm COT (4am) |
+| pm2-health | daemon | always-on |
 
 > **⚠️ computrabajo-apply**: Opera en modo SEMI-AUTO por defecto (sin flag `--auto`).
 > Si no hay token Telegram configurado, no aplica ofertas. Nunca ejecutar con `--auto`
@@ -150,6 +151,21 @@ Auditoría de seguridad y robustez.
 **Protecciones adicionales (18/07/2026):**
 - `.gitignore` actualizado con dumps personales, diagnostics, scratch, temp, audit patches
 - 7 scripts de jobs obsoletos archivados en `scripts/jobs/_archived/`
+
+### Ronda 3 (18/07/2026 — WheelSaver deep audit + implementación)
+
+Deep audit con WheelSaver: score 92/100, ready checklist 7/7.
+
+| Fix | Descripción | Estado |
+|:---:|-------------|:------:|
+| **R3-01** | `tests/event_bus.test.js` — 27 tests: emit, retry, DLQ, backpressure, drain, metrics, idempotencia | ✅ |
+| **R3-02** | `tests/outbox_store.test.js` — 17 tests: insert, getPending, markFailed, resetStuck, moveToDlq, cleanup | ✅ |
+| **R3-03** | `docker-compose.yml` — ntfy (push notifications) + uptime-kuma (monitoreo) añadidos | ✅ |
+| **R3-04** | `data/apprise/apprise.yml` — multi-canal: Telegram + ntfy + tags críticos/info | ✅ |
+| **R3-05** | `lib/integrations/notifications.js` — triple canal: ntfy → Apprise → Telegram con envío concurrente | ✅ |
+| **R3-06** | `scripts/diagnostics/pm2_health_monitor.js` — endpoint HTTP /health + /metrics (Prometheus) para uptime-kuma | ✅ |
+| **R3-07** | `ecosystem.config.js` — proceso `pm2-health` añadido (daemon, puerto 9090) | ✅ |
+| **R3-08** | `docs/wheelsaver_deep_audit_lifeos_round3.md` — reporte consolidado del deep audit | ✅ |
 
 ## Reglas de Comportamiento
 

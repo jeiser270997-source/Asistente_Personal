@@ -153,5 +153,17 @@ module.exports = {
       cron_restart: "0 4 * * *",
       autorestart: false,
     },
+
+    // ── Monitoreo (daemon) ────────────────────────────────────────
+    {
+      name: "pm2-health",
+      script: "./scripts/diagnostics/pm2_health_monitor.js",
+      args: "--serve",
+      watch: false,
+      autorestart: true,
+      max_restarts: 5,
+      restart_delay: 10_000,
+      env: { NODE_ENV: "production" },
+    },
   ],
 };

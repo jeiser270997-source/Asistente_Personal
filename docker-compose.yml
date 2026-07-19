@@ -14,3 +14,34 @@ services:
     volumes:
       - ./:/host_data:ro
     restart: unless-stopped
+
+  # ntfy — Push notifications multi-canal (Telegram, Slack, email, etc.)
+  # Envía notificaciones al teléfono vía app ntfy (F-Droid / Play Store)
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    container_name: lifeos-ntfy
+    ports:
+      - "8080:80"
+    volumes:
+      - ntfy_data:/var/lib/ntfy
+    environment:
+      - TZ=America/Bogota
+      - NTFY_AUTH_DEFAULT_ACCESS=deny-all
+      - NTFY_ENABLE_METRICS=true
+    restart: unless-stopped
+    command:
+      - serve
+
+  # uptime-kuma — Monitoreo de servicios (scrapers, bot, dashboard, ntfy)
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: lifeos-uptime-kuma
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime_kuma_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  ntfy_data:
+  uptime_kuma_data:

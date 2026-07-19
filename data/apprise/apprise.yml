@@ -1,14 +1,30 @@
 # Apprise Configuration — LifeOS Notifications
 # Format: YAML (soportado por Apprise API)
+# Los tags permiten enrutar notificaciones por categoría
 
 tags: lifeos
 
 # Canal: Telegram
-# Usa las mismas vars de entorno que el bot existente
 urls:
   - tgram://${TELEGRAM_BOT_TOKEN}/${TELEGRAM_CHAT_ID}?format=html
 
-# Canales futuros (descomentar cuando se configuren):
-#  - mailto://usuario:password@smtp.gmail.com?from=lifeos@example.com
-#  - slack://token_aqui/TXXXXXXX/XXXXXXXXX
-#  - discord://webhook_id/webhook_token
+  # Canal: ntfy (push notifications al telefono)
+  # Instala la app ntfy en el telefono y suscribete al topic "lifeos"
+  - ntfy://lifeos:${NTFY_TOKEN}@localhost:8080/lifeos?priority=high
+
+  # Canal: Slack (descomentar cuando se configure)
+  # - slack://${SLACK_TOKEN}/TXXXXXXXX/BXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX
+
+  # Canal: Discord (descomentar cuando se configure)
+  # - discord://${DISCORD_WEBHOOK_ID}/${DISCORD_WEBHOOK_TOKEN}
+
+  # Canal: Correo (descomentar cuando se configure)
+  # - mailto://smtp.gmail.com:587?user=${EMAIL_USER}&pass=${EMAIL_PASS}&from=lifeos@jeiser.dev
+
+# Tags para enrutamiento por categoria
+tag::critical:
+  - tgram://${TELEGRAM_BOT_TOKEN}/${TELEGRAM_CHAT_ID}?format=html
+  - ntfy://lifeos:${NTFY_TOKEN}@localhost:8080/lifeos-critical?priority=max
+
+tag::info:
+  - ntfy://lifeos:${NTFY_TOKEN}@localhost:8080/lifeos-info?priority=default
