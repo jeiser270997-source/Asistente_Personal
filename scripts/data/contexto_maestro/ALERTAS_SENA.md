@@ -1,19 +1,19 @@
 # Alertas SENA - BASES DE DATOS GENERALIDADES Y SISTEMAS DE GESTION (3549155)
-> Extraido: 17/7/2026, 5:01:54 a. m.
+> Extraido: 18/7/2026, 9:31:08 a. m.
 
 ## Cronograma con Fechas
 
 ### Actividad 1
-- ðŸ”´ **Foro Temático. Reconocer las características de la evolución de las bases de datos en cada una de sus etapas** â†’ 22/06/2026 al 30/06/2026 (-17 dias)
+- ðŸ”´ **Foro Temático. Reconocer las características de la evolución de las bases de datos en cada una de sus etapas** â†’ 22/06/2026 al 30/06/2026 (-18 dias)
 
 ### Actividad 2
-- ðŸ”´ **Cuadro comparativo. Comprender los conceptos de bases de datos conceptuales** â†’ 01/07/2026 al 07/07/2026 (-10 dias)
+- ðŸ”´ **Cuadro comparativo. Comprender los conceptos de bases de datos conceptuales** â†’ 01/07/2026 al 07/07/2026 (-11 dias)
 
 ### Actividad 3
-- ðŸ”´ **Actividad interactiva. Identificar los conceptos de normalización en las bases de datos** â†’ 08/07/2026 al 20/07/2026 (3 dias)
+- ðŸ”´ **Actividad interactiva. Identificar los conceptos de normalización en las bases de datos** â†’ 08/07/2026 al 20/07/2026 (2 dias)
 
 ### Actividad 4
-- ðŸŸ¢ **Actividad interactiva. Reconocer los conceptos generales de una base de datos relacional** â†’ 21/07/2026 al 27/07/2026 (10 dias)
+- ðŸŸ¢ **Actividad interactiva. Reconocer los conceptos generales de una base de datos relacional** â†’ 21/07/2026 al 27/07/2026 (9 dias)
 
 ## Evidencias del curso
 

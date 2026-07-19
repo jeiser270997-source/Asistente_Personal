@@ -95,11 +95,44 @@ function parseJobFromEmail(subject, body) {
 
 // ── Gmail API ──
 
-async function fetchUnreadEmails(auth, hoursBack = 6) {
+// ── Gmail API Labels ──
+const labelCache = {};
+async function getOrCreateLabelId(gmail, name) {
+  if (labelCache[name]) return labelCache[name];
+  
+  try {
+    const res = await gmail.users.labels.list({ userId: 'me' });
+    const labels = res.data.labels || [];
+    const existing = labels.find(l => l.name.toLowerCase() === name.toLowerCase());
+    
+    if (existing) {
+      labelCache[name] = existing.id;
+      return existing.id;
+    }
+    
+    const created = await gmail.users.labels.create({
+      userId: 'me',
+      requestBody: {
+        name: name,
+        labelListVisibility: 'labelShow',
+        messageListVisibility: 'show'
+      }
+    });
+    labelCache[name] = created.data.id;
+    return created.data.id;
+  } catch (err) {
+    log(`Error manejando etiqueta ${name}: ${err.message}`);
+    return null;
+  }
+}
+
+// ── Gmail API Correos ──
+
+async function fetchInboxEmails(auth, hoursBack = 24) {
   const gmail = google.gmail({ version: 'v1', auth });
   const now = new Date();
   const since = new Date(now.getTime() - hoursBack * 60 * 60 * 1000);
-  const query = `in:inbox is:unread after:${Math.floor(since.getTime() / 1000)}`;
+  const query = `in:inbox after:${Math.floor(since.getTime() / 1000)}`;
 
   log(`Query: "${query}"`);
 
@@ -108,7 +141,7 @@ async function fetchUnreadEmails(auth, hoursBack = 6) {
   });
 
   const messageRefs = res.data.messages || [];
-  log(`Encontrados ${messageRefs.length} correos no leidos`);
+  log(`Encontrados ${messageRefs.length} correos en INBOX`);
 
   if (messageRefs.length === 0) return [];
 
@@ -154,10 +187,17 @@ async function getEmailBody(gmail, id) {
 
 async function summarizeEmails(emails) {
   if (emails.length === 0) return [];
-  const prompt = `Resume cada correo IMPORTANTE en UNA linea en espanol. Solo responde con un array JSON plano: [{"from":"remitente","subject":"asunto","summary":"resumen de una linea"}]
+  const prompt = `Analiza cada correo IMPORTANTE y responde estrictamente con un array JSON. Para cada correo extrae:
+- "id": El id exacto del correo.
+- "from": Remitente.
+- "subject": Asunto.
+- "summary": Resumen de 1 linea.
+- "pending_action": Qué acción debo tomar (ej. "Responder confirmando", "Pagar", "Nada"). Si no hay acción, pon null.
+- "suggested_label": Inventa una etiqueta corta (1 palabra, ej. "Finanzas", "Trabajo", "Educacion", "SENA", "Personal") que mejor categorice este correo.
+Formato obligatorio: [{"id":"...","from":"...","subject":"...","summary":"...","pending_action":"...","suggested_label":"..."}]
 
 Correos:
-${emails.map(e => `- De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
+${emails.map(e => `- ID: ${e.id} | De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
 
   const openRouterKey = process.env.OPENROUTER_API_KEY;
   const groqKey = process.env.GROQ_API_KEY;
@@ -209,13 +249,13 @@ ${emails.map(e => `- De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.sub
 async function processEmails() {
   log('Email Processor iniciado');
   const now = getColombiaNow();
-  const hoursBack = parseInt(process.env.EMAIL_SCAN_HOURS || '6', 10);
+  const hoursBack = parseInt(process.env.EMAIL_SCAN_HOURS || '24', 10);
 
   RE.start('email_processor', { hoursBack });
 
   try {
     const auth = await googleAuthorize(SCOPES);
-    const rawEmails = await fetchUnreadEmails(auth, hoursBack);
+    const rawEmails = await fetchInboxEmails(auth, hoursBack);
 
     if (rawEmails.length === 0) {
       log('Sin correos nuevos para procesar');
@@ -268,9 +308,14 @@ async function processEmails() {
           log(`❌ Error procesando adjunto: ${e.message}`);
         }
       } else {
-        log(`🔴 DELETE: ${email.subject.substring(0, 40)}`);
+        log(`🔴 BASURA (A revisar): ${email.subject.substring(0, 40)}`);
         trashCandidates.push(email.id);
-        try { await gmail.users.messages.trash({ userId: 'me', id: email.id }); } catch (e) { log(`Warning trashing email: ${e.message}`); }
+        const basuraId = await getOrCreateLabelId(gmail, 'Basura');
+        if (basuraId) {
+            try { 
+                await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['INBOX', 'UNREAD'], addLabelIds: [basuraId] } }); 
+            } catch (e) { log(`Warning moviendo a basura: ${e.message}`); }
+        }
       }
 
       // Rule Engine (para registrar postulaciones a empleos o automatizaciones extra)
@@ -298,7 +343,12 @@ async function processEmails() {
       if (action.isRejection) {
         log(`Rechazo detectado: ${email.subject}`);
         LedgerStore.emit('email_job_rejection', { subject: email.subject, from: email.from });
-        try { await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: [action.label || 'Trabajo/Rechazos'] } }); } catch (e) { log(`Warning labeling email: ${e.message}`); }
+        try { 
+            const labelId = await getOrCreateLabelId(gmail, action.label || 'Trabajo/Rechazos');
+            if (labelId) {
+                await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: [labelId] } }); 
+            }
+        } catch (e) { log(`Warning labeling email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         continue;
       }
@@ -306,7 +356,10 @@ async function processEmails() {
       if (action.archive) {
         try {
           const mod = { removeLabelIds: ['UNREAD'] };
-          if (action.label) mod.addLabelIds = [action.label];
+          if (action.label) {
+              const labelId = await getOrCreateLabelId(gmail, action.label);
+              if (labelId) mod.addLabelIds = [labelId];
+          }
           await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: mod });
           log(`Archivado: ${email.subject} -> ${action.label || '(sin etiqueta)'}`);
         } catch (e) { log(`Error archivando: ${e.message}`); }
@@ -332,23 +385,36 @@ async function processEmails() {
       if (!processedIds.includes(email.id)) processedIds.push(email.id);
     }
 
-    // Inbox Zero: Procesar correos restantes (sacar de bandeja)
+    let summaries = [];
+    if (importantEmails.length > 0) {
+      log(`Resumiendo ${importantEmails.length} correos importantes via LLM...`);
+      summaries = await summarizeEmails(importantEmails);
+    }
+    
+    const summaryMap = {};
+    for (const s of summaries) {
+       if(s.id) summaryMap[s.id] = s;
+    }
+
+    // Inbox Zero: Procesar correos restantes (sacar de bandeja y aplicar etiquetas dinámicas)
     for (const e of importantEmails) {
       try {
-        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: ['STARRED'] } });
-      } catch (e) { log(`Warning modifying important unread: ${e.message}`); }
+        const s = summaryMap[e.id];
+        const labelsToAdd = [];
+        if (s && s.suggested_label && s.suggested_label !== 'null') {
+            const labelId = await getOrCreateLabelId(gmail, s.suggested_label);
+            if (labelId) labelsToAdd.push(labelId);
+        } else {
+            labelsToAdd.push('STARRED'); // fallback
+        }
+        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: labelsToAdd } });
+      } catch (err) { log(`Warning modifying important unread: ${err.message}`); }
     }
 
     for (const e of restEmails) {
       try {
         await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'] } });
       } catch (e) { log(`Warning modifying unread: ${e.message}`); }
-    }
-
-    let summaries = [];
-    if (importantEmails.length > 0) {
-      log(`Resumiendo ${importantEmails.length} correos importantes via LLM...`);
-      summaries = await summarizeEmails(importantEmails);
     }
 
     if (processedIds.length > 500) {
@@ -358,10 +424,10 @@ async function processEmails() {
     }
 
     let report = `<b>Resumen de Correos</b>\n`;
-    report += `Escaneados: ${rawEmails.length}`;
+    report += `Escaneados: ${rawEmails.length} | Descartados a 'Basura': ${trashCandidates.length}`;
 
     if (jobAppsRegistered.length > 0) {
-      report += `\n\n<b>Postulaciones Detectadas:</b>\n`;
+      report += `\n\n<b>💼 Postulaciones Detectadas:</b>\n`;
       for (const j of jobAppsRegistered) {
         const fitIcon = j.eval?.compatible ? '✅' : '';
         report += `\n${fitIcon} <b>${escapeHTML(j.empresa)}</b> - ${escapeHTML(j.cargo || '?')}\n  ${j.plataforma} | fit: ${j.eval?.score || '?'}%`;
@@ -369,14 +435,17 @@ async function processEmails() {
     }
 
     if (summaries.length > 0) {
-      report += `\n\n<b>Importantes:</b>\n`;
+      report += `\n\n<b>📌 Importantes & Pendientes:</b>\n`;
       for (const s of summaries) {
-        report += `\n\u2022 <b>${escapeHTML(s.subject || '?')}</b>\n  ${escapeHTML(s.from || '?')}\n  ${escapeHTML(s.summary || '')}`;
+        report += `\n\u2022 <b>${escapeHTML(s.subject || '?')}</b> (${escapeHTML(s.suggested_label || 'Sin etiqueta')})\n  De: ${escapeHTML(s.from || '?')}\n  👁️ ${escapeHTML(s.summary || '')}`;
+        if (s.pending_action && s.pending_action.toLowerCase() !== 'null' && s.pending_action.toLowerCase() !== 'nada') {
+            report += `\n  <b>⚡ Acción:</b> <i>${escapeHTML(s.pending_action)}</i>`;
+        }
       }
     }
 
     if (restEmails.length > 0) {
-      report += `\n\n${restEmails.length} correos marcados como leidos (sin accion necesaria)`;
+      report += `\n\n${restEmails.length} correos secundarios sacados del inbox (Inbox Zero).`;
     }
 
     await sendTelegramMessage(truncate(report, 3500));

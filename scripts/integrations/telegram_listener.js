@@ -88,15 +88,7 @@ async function main() {
 
       // Detect job listings from WhatsApp forwarding
       if (isJobListing(text)) {
-        console.log('📋 Detectadas ofertas laborales. Parseando...');
-        const { parseJobMessage, matchJobs, generateReport } = require('../jobs/whatsapp_jobs_parser');
-        // We need to expose the private functions - use spawn instead
-        const { spawnSync } = require('child_process');
-        const parser = spawnSync('node', ['scripts/jobs/whatsapp_jobs_parser.js', text.replace(/\n/g, '\\n')], {
-          encoding: 'utf8', timeout: 30000
-        });
-        
-        // Fallback: ask LLM to extract jobs from the message
+        console.log('📋 Detectadas ofertas laborales. Parseando con LLM...');
         const context = getContextForMessage(text);
         const response = await askLLM(
           `${context}\n\nEres un asistente que analiza ofertas laborales. Extrae cada oferta y recomienda cuales aplicar segun el perfil.\nResponde con emojis 🟢/🔴 y da razones breves.`,

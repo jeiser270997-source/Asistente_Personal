@@ -11,6 +11,7 @@
     "fuse.js": "^7.4.2",
     "googleapis": "^173.0.0",
     "json-rules-engine": "^7.3.1",
+    "nodemailer": "^9.0.3",
     "openai": "^6.46.0",
     "pdf-parse": "^2.4.5",
     "playwright": "^1.61.1",
@@ -18,7 +19,7 @@
     "valibot": "^1.4.2"
   },
   "scripts": {
-    "start": "node lib/telegram.js",
+    "start": "node lib/integrations/telegram.js",
     "brain": "powershell -ExecutionPolicy Bypass -File brain.ps1",
     "sensor": "node scripts/integrations/inbox_sensor.js",
     "cleaner": "node scripts/integrations/email_processor.js",

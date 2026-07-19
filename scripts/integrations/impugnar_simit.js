@@ -106,8 +106,10 @@ Cel: +57 (el que tengas registrado)</p>
 `;
 
 async function enviarImpugnacion() {
+  const CONFIRMADO = process.argv.includes('--confirm');
+
   console.log('═══════════════════════════════════════');
-  console.log('📧 ENVIANDO RECURSO DE REPOSICION');
+  console.log(CONFIRMADO ? '📧 ENVIANDO RECURSO DE REPOSICION' : '🧪 DRY-RUN: SIMULANDO ENVIO (usa --confirm para enviar de verdad)');
   console.log(`   Comparendo: ${COMPARENDO.id}`);
   console.log(`   Placa: ${PLACA}`);
   console.log('═══════════════════════════════════════\n');
@@ -142,10 +144,14 @@ async function enviarImpugnacion() {
 
   for (const rec of recipients) {
     try {
-      console.log(`   Enviando a: ${rec.to} (${rec.label})...`);
+      console.log(`   ${CONFIRMADO ? 'Enviando a' : '[DRY-RUN] Se enviaria a'}: ${rec.to} (${rec.label})...`);
       const raw = generarMensajeCodificado(rec.to, rec.cc, subject, CUERPO_IMPUGNACION);
-      await gmail.users.messages.send({ userId: 'me', requestBody: { raw } });
-      console.log(`   ✅ Enviado a ${rec.label}`);
+      if (CONFIRMADO) {
+        await gmail.users.messages.send({ userId: 'me', requestBody: { raw } });
+        console.log(`   ✅ Enviado a ${rec.label}`);
+      } else {
+        console.log(`   🧪 [DRY-RUN] No enviado (falta --confirm)`);
+      }
       enviados++;
     } catch (err) {
       console.log(`   ⚠ ${rec.label}: ${err.message.substring(0, 60)}`);
@@ -153,7 +159,13 @@ async function enviarImpugnacion() {
     }
   }
 
-  console.log(`\n✅ ${enviados} correos enviados, ${fallidos} fallidos`);
+  console.log(`\n${CONFIRMADO ? '✅' : '🧪 [DRY-RUN]'} ${enviados} correos ${CONFIRMADO ? 'enviados' : 'simulados'}, ${fallidos} fallidos`);
+
+  if (!CONFIRMADO) {
+    console.log('\n⚠️  Este fue un DRY-RUN. Ningun correo fue enviado realmente.');
+    console.log('   Para enviar de verdad, ejecuta: node scripts/integrations/impugnar_simit.js --confirm\n');
+    return;
+  }
 
   // Registrar en memoria
   agregarHecho(

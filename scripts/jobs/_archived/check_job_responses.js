@@ -21,6 +21,7 @@ const fs   = require('node:fs');
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
 const BASE_DIR       = path.resolve(__dirname, '..', '..');
+const { escapeHTML } = require('../../lib/runtime/sanitize');
 
 // ─── Categorías con sus keywords, icono y nivel de urgencia ──────────────────
 const CATEGORIAS = [
@@ -242,8 +243,8 @@ async function main() {
   for (const a of alertas) {
     const txt =
       `${a.cat.icono} <b>[${a.cat.nombre}] ${a.cat.urgencia}</b>\n` +
-      `<b>De:</b> ${a.de.substring(0, 70)}\n` +
-      `<b>Asunto:</b> ${a.asunto.substring(0, 100)}\n\n` +
+      `<b>De:</b> ${escapeHTML(a.de).substring(0, 70)}\n` +
+      `<b>Asunto:</b> ${escapeHTML(a.asunto).substring(0, 100)}\n\n` +
       `<i>${a.cuerpo.replace(/</g, '&lt;').replace(/>/g, '&gt;').substring(0, 280)}</i>`;
     await sendTelegram(txt);
     await new Promise(r => setTimeout(r, 600));

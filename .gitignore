@@ -110,3 +110,13 @@ data/sources/sena/prompts/
 
 data/cache/repos_db.json
 etc/archived/
+inbox_dump.json
+labels_dump.json
+starred_dump.json
+simit_emails.json
+derecho_peticion_itagui.md
+scripts/diagnostics/
+scripts/scratch/
+audit_*.patch
+scripts/temp_*
+PROMPT.md

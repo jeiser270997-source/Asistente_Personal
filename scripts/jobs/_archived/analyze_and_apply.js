@@ -10,13 +10,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { askLLM } = require('../../lib/ai/llm_service');
 const { PATHS }  = require('../../lib/data/paths');
+const { escapeHTML } = require('../../lib/runtime/sanitize');
 const { chromium } = require('playwright');
 const { robustLogin } = require('./ct_login_helper');
 
 const CT_FILE   = PATHS.COMPUTRABAJO_JSON;
 const APPLY_LOG = PATHS.APLICACIONES;
 
-const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
+const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL;
+if (!CT_EMAIL) { console.error('FATAL: COMPUTRABAJO_EMAIL no está configurado en .env'); process.exit(1); }
 const CT_PASS = process.env.COMPUTRABAJO_PASS;
 const BATCH = parseInt(process.argv.find(a => a.startsWith('--batch='))?.split('=')[1] || '5');
 const DELAY_SEC = parseInt(process.argv.find(a => a.startsWith('--delay='))?.split('=')[1] || '45');
@@ -207,7 +209,7 @@ Responde SOLO JSON:
             log(`   ✅ Postulado!`);
             aplicaciones[aplicaciones.length - 1].estado = 'aplicada';
             aplicadas++;
-            try { await sendTelegram(`✅ Aplicado: ${o.titulo} — ${o.empresa || '?'}`); } catch {}
+            try { await sendTelegram(`✅ Aplicado: ${escapeHTML(o.titulo)} — ${escapeHTML(o.empresa || '?')}`); } catch {}
           } else {
             log(`   ⚠️ No se encontró botón de postular`);
             aplicaciones[aplicaciones.length - 1].estado = 'sin_boton';

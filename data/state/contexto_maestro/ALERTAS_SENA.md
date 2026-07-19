@@ -1,5 +1,5 @@
 # Alertas SENA - null
-> Actualizado: 16/7/2026, 11:27:22 a. m.
+> Actualizado: 18/7/2026, 12:05:37 p. m.
 
 ---
 **Progreso**: 0/0 completadas | 0 pendientes
