@@ -4,12 +4,12 @@
 
 .DESCRIPTION
     Crea/actualiza la tarea programada 'LifeOS_MorningRoutine' en Windows
-    Task Scheduler. Esta tarea es el núcleo de la arquitectura "Run & Die":
-    enciende la PC desde hibernación/suspensión a las 5:00 AM, ejecuta la
-    rutina matutina completa (scrapers, empleo, backups, briefing) y apaga.
+    Task Scheduler. Wake a las 5:00 AM → morning_wake.js (lean):
+    clima AHORA (Open-Meteo), PyP, caches SIMIT/SENA, briefing Telegram.
+    NO apaga la PC. NO depende de LLM free-tier.
 
     Arquitectura:
-       BIOS RTC (opcional) → Windows Task Scheduler → daily_routine.js → shutdown
+       Sleep/Wake → Task Scheduler → morning_wake.js → Telegram → fin
 
 .PARAMETER TaskName
     Nombre de la tarea en el Task Scheduler. Default: LifeOS_MorningRoutine
@@ -38,7 +38,7 @@
 [CmdletBinding()]
 param(
     [string]$TaskName = "LifeOS_MorningRoutine",
-    [string]$TaskDescription = "LifeOS — Rutina Matutina (Run & Die): scrapers SIMIT/SENA/DIAN, empleo, backups, briefing y apagado automático.",
+    [string]$TaskDescription = "LifeOS — Wake 5am lean: clima Open-Meteo, PyP, caches, briefing Telegram. Sin apagado. Sin LLM obligatorio.",
     [switch]$UnregisterExisting,
     [string]$StartAt = "05:00"
 )
@@ -69,7 +69,7 @@ if (-not $nodeCmd) {
     exit 1
 }
 $NodePath = $nodeCmd.Source
-$ScriptPath = Join-Path -Path $ProjectRoot -ChildPath "scripts\daily_routine.js"
+$ScriptPath = Join-Path -Path $ProjectRoot -ChildPath "scripts\morning_wake.js"
 
 Write-Host "📂 Directorio del proyecto:     $ProjectRoot" -ForegroundColor Cyan
 Write-Host "📌 Node.js:                     $NodePath" -ForegroundColor Cyan

@@ -49,7 +49,8 @@ function run(relPath, { tsx = false, optional = false, args = [] } = {}) {
     stdio: 'inherit',
     env: process.env,
     timeout: 300_000,
-    shell: process.platform === 'win32',
+    // shell solo para npx en Windows; node path con espacios no debe usar shell
+    shell: tsx && process.platform === 'win32',
   });
   if (r.status !== 0) {
     log(`⚠  falló (${r.status}): ${relPath} — continúo`);

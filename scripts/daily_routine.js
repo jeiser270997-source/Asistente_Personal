@@ -1,29 +1,43 @@
 /**
  * scripts/daily_routine.js
  *
- * ☀️ LIFEOS — RUTINA MATUTINA (5:00 AM)
+ * ⚠️ LEGACY / PESADO — preferir scripts/morning_wake.js a las 5am.
  *
- * Arquitectura "Run & Die": la BIOS enciende la PC → Windows arranca →
- * este script ejecuta todo secuencialmente → envía briefing a Telegram →
- * apaga la PC. Cero orphan jobs, cero procesos colgados, cero PM2.
+ * Este script lanza scrapers Playwright + briefing y opcionalmente apaga la PC.
+ * Problemas típicos: APIs free-tier (tokens), scrapers lentos post-sleep, clima engañoso.
  *
- * 🔧 Modo testing: cambiar SHUTDOWN_AFTER_RUN = false
- *
- * Dependencias:
- *   - .env con TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
- *   - playground headless: chromium, firefox o webkit
- *   - conexión a internet
+ * Flags:
+ *   --dry-run       no ejecuta
+ *   --shutdown      apaga la PC al final (opt-in; default YA NO apaga)
+ *   --no-shutdown   explícito (default)
+ *   --wake-only     delega a morning_wake.js (recomendado)
  */
 require('dotenv').config({ path: require('node:path').join(__dirname, '..', '.env') });
 
 const fs = require('node:fs');
 const path = require('node:path');
 const { execSync } = require('node:child_process');
-const { sendTelegramMessage } = require('../lib/integrations/telegram');  // ── CONFIGURACIÓN ────────────────────────────────────────────────────────────
-  const DRY_RUN = process.argv.includes('--dry-run');
-  const SHUTDOWN_AFTER_RUN = !process.argv.includes('--no-shutdown') && !DRY_RUN;
-  const SHUTDOWN_DELAY_S  = 60;     // segundos antes de apagar
-  const ROOT_DIR = path.resolve(__dirname, '..');
+const { sendTelegramMessage } = require('../lib/integrations/telegram');
+
+// Si el Task Scheduler sigue apuntando aquí, redirigir al wake lean por defecto
+if (process.argv.includes('--wake-only') || !process.argv.includes('--full-legacy')) {
+  // Allow full legacy only with --full-legacy
+  if (!process.argv.includes('--full-legacy')) {
+    console.log('[daily_routine] Redirigiendo a morning_wake.js (lean 5am). Usa --full-legacy para la rutina antigua.');
+    const r = require('node:child_process').spawnSync(
+      process.execPath,
+      [path.join(__dirname, 'morning_wake.js'), ...process.argv.slice(2).filter((a) => a !== '--wake-only')],
+      { cwd: path.resolve(__dirname, '..'), stdio: 'inherit', env: process.env }
+    );
+    process.exit(r.status ?? 0);
+  }
+}
+
+const DRY_RUN = process.argv.includes('--dry-run');
+// Default: NO apagar. Solo con --shutdown explícito.
+const SHUTDOWN_AFTER_RUN = process.argv.includes('--shutdown') && !DRY_RUN;
+const SHUTDOWN_DELAY_S = 60;
+const ROOT_DIR = path.resolve(__dirname, '..');
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 

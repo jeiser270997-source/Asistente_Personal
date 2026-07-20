@@ -42,18 +42,23 @@ async function sendTelegramMessage(text: string): Promise<void> {
   });
 }
 
-// ================= CLIMA Y UV =================
+// ================= CLIMA (Open-Meteo AHORA + horas, no solo máximo del día) =================
 async function getMedellinWeather() {
   try {
-    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=6.2518&longitude=-75.5636&daily=weathercode,precipitation_probability_max,uv_index_max&timezone=America%2FBogota');
-    const data: any = await res.json();
+    const { getMedellinWeatherDetailed } = require('../../lib/integrations/weather_client');
+    const w = await getMedellinWeatherDetailed();
+    if (!w.ok) {
+      return { probLluvia: null, uvMax: null, codigo: null, detail: w, ok: false };
+    }
     return {
-      probLluvia: data.daily.precipitation_probability_max[0],
-      uvMax: data.daily.uv_index_max[0],
-      codigo: data.daily.weathercode[0]
+      probLluvia: w.morningNext6h.rainProbMax,
+      uvMax: w.daily.uvMax,
+      codigo: w.now.code,
+      detail: w,
+      ok: true,
     };
   } catch {
-    return { probLluvia: 0, uvMax: 5, codigo: 0 };
+    return { probLluvia: null, uvMax: null, codigo: null, ok: false };
   }
 }
 
@@ -293,11 +298,24 @@ export async function runMorningBriefing(): Promise<void> {
     }
   } catch {}
 
+  // Clima honesto: inyectar bloque Open-Meteo AHORA/tarde en el fallback
+  let weatherBlock = '';
+  try {
+    const { formatWeatherMarkdown } = require('../../lib/integrations/weather_client');
+    if ((clima as any).detail) weatherBlock = formatWeatherMarkdown((clima as any).detail);
+  } catch { /* ignore */ }
+
   const fallback = buildDeterministicBriefing({
     todayIso, dayName, dayIndex, clima, festivoInfo, pypInfo, simit,
     senaPending, maintenanceAlerts: String(maintenanceAlerts || ''),
     trafficReport: String(trafficReport || ''), jobsSummary, baseTasks,
   });
+  if (weatherBlock) {
+    fallback.mensaje_telegram = fallback.mensaje_telegram.replace(
+      /🌤️ \*CLIMA\*[\s\S]*?(?=\n🚗|\n🚨|\n💼|\n🚧|\n📅|\n🎯)/,
+      weatherBlock + '\n\n'
+    );
+  }
 
   const prompt = `Eres el asistente logístico de Jeiser (LifeOS, Medellín). Tono: directo, sin adulación, datos duros.
 Contexto: conductor DiDi (meta $260k brutos/día), CESDE sábados 7:30–18:00 presencial, SENA Zajuna en curso, busca QA/soporte, NO PC 24/7 (sesión on-demand 1–2 veces al día).

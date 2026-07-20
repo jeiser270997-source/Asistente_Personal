@@ -21,6 +21,8 @@
     "start": "node scripts/session.js",
     "session": "node scripts/session.js",
     "session:fast": "node scripts/session.js --fast",
+    "morning": "node scripts/morning_wake.js",
+    "morning:full": "node scripts/morning_wake.js --full",
     "brain": "powershell -ExecutionPolicy Bypass -File brain.ps1",
     "sensor": "node scripts/integrations/inbox_sensor.js",
     "cleaner": "node scripts/integrations/email_processor.js",
