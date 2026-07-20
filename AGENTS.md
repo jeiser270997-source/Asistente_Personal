@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-20 (session on-demand; PM2 opcional; briefing fallback)
+**Última actualización:** 2026-07-20 (wake→sleep, OmniRoute gateway, pico lun 4-ago)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -94,12 +94,13 @@ npm run session          # opcional al sentarte (scrapers)
 
 | Qué | Cómo |
 |-----|------|
-| Auto | Solo `morning_wake` (Telegram). **Vuelve a sleep.** |
-| Correo / estudio | Agente DeepSeek a mano. Correo **sin** free-tier LLM. |
+| Auto | Solo `morning_wake` (Telegram). **Vuelve a sleep.** Sin LLM. |
+| Correo / estudio | Agente + **OmniRoute** (`localhost:20128`). Correo auto **sin** LLM. |
 | Calendar / alarmas | **Manual.** LifeOS no escribe Calendar. |
 | Pico y placa KEW496 | Desde **2026-08-04: LUNES 05:00–20:00** (`data/config/pico_placa.json`) |
+| Free-tier APIs | Configúralas en **OmniRoute**; LifeOS las usa vía gateway (`docs/OMNIROUTE.md`) |
 
-Detalle: `docs/FLUJO_JEISER.md` · `docs/MORNING_WAKE.md`.
+Detalle: `docs/FLUJO_JEISER.md` · `docs/MORNING_WAKE.md` · `docs/OMNIROUTE.md`.
 
 ## Comandos Rápidos (SSH / Local)
 
