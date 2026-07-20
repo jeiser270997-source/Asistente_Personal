@@ -218,29 +218,55 @@ function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, da
   ].join('\n');
 }
 
-/** Vuelve a sleep (no apagar): a las 2am hay otra actividad del usuario. */
-function goToSleep() {
-  log('Volviendo a SLEEP en 15s (Ctrl+C para cancelar)…');
+/**
+ * Vuelve a SLEEP (no apagar, no hibernar).
+ * Orden de intentos: PowerShell Suspend → rundll32 → powercfg (último).
+ */
+function goToSleep({ delaySec = 8 } = {}) {
+  const auditPath = path.join(ROOT, 'data', 'state', 'audit', 'last_morning_wake.json');
   try {
-    // Dar tiempo a que Telegram salga y logs se flushen
-    spawnSync('timeout', ['/t', '15', '/nobreak'], { shell: true, stdio: 'ignore' });
+    let prev = {};
+    if (fs.existsSync(auditPath)) prev = JSON.parse(fs.readFileSync(auditPath, 'utf8'));
+    prev.sleepAt = new Date().toISOString();
+    prev.sleepRequested = true;
+    fs.mkdirSync(path.dirname(auditPath), { recursive: true });
+    fs.writeFileSync(auditPath, JSON.stringify(prev, null, 2));
   } catch { /* ignore */ }
 
-  // Suspend (sleep), no hibernate, no shutdown
-  const ps = `
-    Add-Type -AssemblyName System.Windows.Forms;
-    [System.Windows.Forms.Application]::SetSuspendState(
-      [System.Windows.Forms.PowerState]::Suspend, $false, $false
-    ) | Out-Null
-  `;
-  const r = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', ps], {
+  log(`Volviendo a SLEEP en ${delaySec}s (no apaga; 2am sigue posible)…`);
+  try {
+    spawnSync(process.env.ComSpec || 'cmd.exe', ['/c', `timeout /t ${delaySec} /nobreak >nul`], {
+      stdio: 'ignore',
+      windowsHide: true,
+    });
+  } catch { /* ignore */ }
+
+  // 1) .NET Suspend (sleep, force=false, disableWakeEvent=false)
+  const ps = [
+    "Add-Type -AssemblyName System.Windows.Forms;",
+    "$r = [System.Windows.Forms.Application]::SetSuspendState(",
+    "  [System.Windows.Forms.PowerState]::Suspend, $false, $false);",
+    "if (-not $r) { exit 2 } else { exit 0 }",
+  ].join(' ');
+
+  let r = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-Command', ps], {
+    windowsHide: true,
+    timeout: 60_000,
+  });
+  if (r.status === 0) {
+    log('Sleep OK (System.Windows.Forms Suspend)');
+    return true;
+  }
+  log(`⚠ Forms Suspend status=${r.status}; fallback rundll32…`);
+
+  // 2) rundll32: 0=sleep not hibernate, 1=force, 0=disable wake events
+  r = spawnSync('rundll32.exe', ['powrprof.dll,SetSuspendState', '0,1,0'], {
     windowsHide: true,
     timeout: 30_000,
   });
-  if (r.status !== 0) {
-    log('⚠ Sleep vía Forms falló; intentando rundll32…');
-    spawnSync('rundll32.exe', ['powrprof.dll,SetSuspendState', '0,1,0'], { shell: true });
-  }
+  // rundll32 often returns 0 even when queued
+  log(`rundll32 sleep invocado (code=${r.status ?? 'n/a'})`);
+  return true;
 }
 
 function runOptional(rel, timeoutMs = 120_000) {
@@ -319,28 +345,47 @@ async function main() {
   console.log('\n' + msg.replace(/\*/g, '') + '\n');
   await sendTelegram(msg);
 
-  // Log local
+  // Log local (antes del sleep)
+  const audit = {
+    at: new Date().toISOString(),
+    ok: true,
+    weatherOk: !!(weather && weather.ok),
+    telegramConfigured: !!(TELEGRAM_TOKEN && CHAT_ID),
+    pypApplies: !!(pyp && pyp.applies),
+    pypMessage: pyp && pyp.message,
+    full: FULL,
+    willSleep: DO_SLEEP,
+    sleepRequested: false,
+  };
   try {
     const logDir = path.join(ROOT, 'data', 'state', 'audit');
     fs.mkdirSync(logDir, { recursive: true });
-    fs.writeFileSync(
-      path.join(logDir, 'last_morning_wake.json'),
-      JSON.stringify({ at: new Date().toISOString(), weather, pyp, full: FULL }, null, 2)
-    );
+    fs.writeFileSync(path.join(logDir, 'last_morning_wake.json'), JSON.stringify(audit, null, 2));
   } catch { /* ignore */ }
 
   if (DO_SHUTDOWN && !DRY) {
     log('Apagando en 60s (--shutdown)…');
     spawnSync('shutdown', ['/s', '/t', '60', '/c', 'LifeOS morning_wake done'], { shell: true });
   } else if (DO_SLEEP) {
-    log('Informe listo → sleep (para 2am y resto del día). --no-sleep para dejar encendida.');
-    goToSleep();
+    log('Informe listo → sleep. --no-sleep para dejar encendida.');
+    goToSleep({ delaySec: 8 });
   } else {
-    log('Listo. PC sigue encendida (--no-sleep o dry-run).');
+    log('Listo. PC sigue encendida (--no-sleep o dry-run). Sleep path NO ejecutado.');
+    log('Para producción 5am: sin flags → sleep automático.');
   }
+
+  process.exitCode = 0;
 }
 
 main().catch((e) => {
   console.error('morning_wake fatal:', e);
+  try {
+    const logDir = path.join(ROOT, 'data', 'state', 'audit');
+    fs.mkdirSync(logDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(logDir, 'last_morning_wake.json'),
+      JSON.stringify({ at: new Date().toISOString(), ok: false, error: String(e.message || e) }, null, 2)
+    );
+  } catch { /* ignore */ }
   process.exit(1);
 });
