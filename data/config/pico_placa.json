@@ -1,0 +1,21 @@
+{
+  "_comment": "Pico y placa Medellín — LifeOS. Jeiser KEW496 dígito 6.",
+  "placa_last_digit": "6",
+  "scheme_from": "2026-08-04",
+  "hours": {
+    "start": "05:00",
+    "end": "20:00"
+  },
+  "by_day": {
+    "Lunes": ["6", "9"],
+    "Martes": ["1", "4"],
+    "Miercoles": ["2", "0"],
+    "Jueves": ["3", "5"],
+    "Viernes": ["7", "8"]
+  },
+  "notes": [
+    "Desde 2026-08-04: dígito 6 = LUNES 05:00–20:00 (confirmado por Jeiser).",
+    "Antes de esa fecha se usa el esquema legacy de didi_config (6 en jueves).",
+    "Sáb/dom libre. Moto BXU28C no circular (SOAT/RTM)."
+  ]
+}

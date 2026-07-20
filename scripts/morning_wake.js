@@ -1,20 +1,20 @@
 /**
- * scripts/morning_wake.js — Rutina 5:00 AM (wake from sleep)
+ * scripts/morning_wake.js — ÚNICO proceso automático de LifeOS
  *
- * Diseñada para Task Scheduler + PC en sleep:
- *  1. Espera red (post-wake)
- *  2. Clima AHORA vs tarde (Open-Meteo, sin key)
- *  3. PyP, SIMIT/SENA/empleo desde CACHE (sin scrapers pesados por defecto)
- *  4. Briefing determinista → consola + Telegram
- *  5. NO apaga la PC. NO depende de LLM free-tier.
+ * PC en sleep → Task Scheduler 5:00 → despierta → informe Telegram → vuelve a sleep.
+ * (A las 2am hay otra actividad del usuario; la PC debe quedar en sleep, no apagada.)
+ *
+ *  1. Espera red post-wake
+ *  2. Clima AHORA (Open-Meteo, sin key, sin LLM)
+ *  3. Pico y placa (pico_placa.json — desde 2026-08-04 dígito 6 = lunes 5–20h)
+ *  4. Caches SIMIT/SENA/empleo
+ *  5. Telegram
+ *  6. Sleep de nuevo (default). --no-sleep para dejarla encendida.
  *
  * Uso:
  *   node scripts/morning_wake.js
- *   node scripts/morning_wake.js --full     # + email + scrapers ligeros (timeout)
- *   node scripts/morning_wake.js --llm      # intenta embellecer con LLM (opcional)
- *   node scripts/morning_wake.js --shutdown # apagar al final (opt-in)
- *
- * Task Scheduler: apunta aquí en vez de daily_routine.js
+ *   node scripts/morning_wake.js --no-sleep
+ *   node scripts/morning_wake.js --full   # + email reglas (sin LLM)
  */
 'use strict';
 
@@ -24,11 +24,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const { getMedellinWeatherDetailed, formatWeatherMarkdown } = require('../lib/integrations/weather_client');
+const { getPicoYPlacaStatus } = require('../lib/integrations/pico_placa');
 
 const ROOT = path.resolve(__dirname, '..');
 const FULL = process.argv.includes('--full');
 const USE_LLM = process.argv.includes('--llm');
 const DO_SHUTDOWN = process.argv.includes('--shutdown');
+const NO_SLEEP = process.argv.includes('--no-sleep');
+const DO_SLEEP = !NO_SLEEP && !DO_SHUTDOWN && !process.argv.includes('--dry-run');
 const DRY = process.argv.includes('--dry-run');
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -100,39 +103,7 @@ async function sendTelegram(text) {
 }
 
 function getPicoYPlaca() {
-  // Medellín 2026-ish digits (mismo default que briefing)
-  const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
-  const col = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
-  const dayName = days[col.getDay()];
-  const placa = (process.env.USER_PLATE || 'KEW496').replace(/\D/g, '').slice(-1) || '6';
-  let table = {
-    Lunes: ['5', '8'],
-    Martes: ['1', '4'],
-    Miercoles: ['2', '0'],
-    Jueves: ['3', '6'],
-    Viernes: ['7', '9'],
-  };
-  const picoFile = path.join(ROOT, 'data', 'pico_placa.json');
-  const didiCfg = path.join(ROOT, 'data', 'config', 'didi_config.json');
-  try {
-    if (fs.existsSync(picoFile)) table = { ...table, ...JSON.parse(fs.readFileSync(picoFile, 'utf8')) };
-    if (fs.existsSync(didiCfg)) {
-      const d = JSON.parse(fs.readFileSync(didiCfg, 'utf8'));
-      if (d.pico_y_placa_medellin) {
-        const m = d.pico_y_placa_medellin;
-        table = {
-          Lunes: m.lunes || table.Lunes,
-          Martes: m.martes || table.Martes,
-          Miercoles: m.miercoles || table.Miercoles,
-          Jueves: m.jueves || table.Jueves,
-          Viernes: m.viernes || table.Viernes,
-        };
-      }
-    }
-  } catch { /* ignore */ }
-  const rest = table[dayName] || [];
-  const applies = rest.map(String).includes(String(placa));
-  return { dayName, placa, rest, applies };
+  return getPicoYPlacaStatus();
 }
 
 function getSimitCache() {
@@ -194,28 +165,38 @@ function getTrafficHint() {
 }
 
 function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, dayName }) {
-  const pypLine = pyp.applies
-    ? `🚫 *Pico y placa APLICA* (placa …${pyp.placa}; hoy ${pyp.rest.join(' y ')}) → prioriza estudio/empleo, no DiDi carro`
-    : `✅ Pico y placa NO aplica (placa …${pyp.placa}; hoy restringen ${pyp.rest.join(' y ') || 'n/a'})`;
+  const pypLine = pyp.message || (
+    pyp.applies
+      ? `🚫 Pico y placa hoy (…${pyp.placa}) ${pyp.hours?.start || '05:00'}–${pyp.hours?.end || '20:00'}`
+      : `✅ Sin pico y placa (…${pyp.placa})`
+  );
 
   const isSat = dayName === 'Sabado';
+  const noDidiCar = pyp.applies;
   const agenda = isSat
     ? [
         '1. *CESDE 07:30–18:00* (prioridad absoluta)',
         '2. SENA solo si sobra energía',
         '3. Sin forzar DiDi',
       ]
-    : [
-        '1. Revisa SENA críticos (si hay)',
-        '2. DiDi AM fresco (si no PyP) · meta parcial',
-        '3. 10:30–15:30: *NO conducir* (calor) → estudio/correos',
-        '4. DiDi PM',
-        '5. Empleo: cola semi-auto; postular solo a mano',
-      ];
+    : noDidiCar
+      ? [
+          '1. 🚫 Hoy PyP carro — *no DiDi en Corolla* (5am–8pm)',
+          '2. SENA / estudio / correos (con agente DeepSeek si quieres)',
+          '3. Empleo: revisar cola; postular solo a mano',
+          '4. Alarmas: las pones tú (Calendar LifeOS desactivado)',
+        ]
+      : [
+          '1. SENA críticos (si hay)',
+          '2. DiDi AM fresco · meta parcial',
+          '3. 10:30–15:30: *NO conducir* (calor) → estudio',
+          '4. DiDi PM',
+          '5. Empleo semi-auto; postular solo a mano',
+        ];
 
   return [
     '☕ *LIFEOS DESPERTAR*',
-    `📅 ${dayName} ${todayIso} · 5am wake`,
+    `📅 ${dayName} ${todayIso} · auto 5am → sleep`,
     '',
     weatherMd,
     '',
@@ -230,11 +211,36 @@ function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, da
     '',
     jobs,
     '',
-    '🎯 *PLAN MAÑANA*',
+    '🎯 *PLAN*',
     ...agenda,
     '',
-    '_Datos: clima Open-Meteo (AHORA + horas). Sin LLM free-tier. PC no se apaga._',
+    '_Clima Open-Meteo · sin LLM · sin Calendar · PC vuelve a sleep._',
   ].join('\n');
+}
+
+/** Vuelve a sleep (no apagar): a las 2am hay otra actividad del usuario. */
+function goToSleep() {
+  log('Volviendo a SLEEP en 15s (Ctrl+C para cancelar)…');
+  try {
+    // Dar tiempo a que Telegram salga y logs se flushen
+    spawnSync('timeout', ['/t', '15', '/nobreak'], { shell: true, stdio: 'ignore' });
+  } catch { /* ignore */ }
+
+  // Suspend (sleep), no hibernate, no shutdown
+  const ps = `
+    Add-Type -AssemblyName System.Windows.Forms;
+    [System.Windows.Forms.Application]::SetSuspendState(
+      [System.Windows.Forms.PowerState]::Suspend, $false, $false
+    ) | Out-Null
+  `;
+  const r = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', ps], {
+    windowsHide: true,
+    timeout: 30_000,
+  });
+  if (r.status !== 0) {
+    log('⚠ Sleep vía Forms falló; intentando rundll32…');
+    spawnSync('rundll32.exe', ['powrprof.dll,SetSuspendState', '0,1,0'], { shell: true });
+  }
 }
 
 function runOptional(rel, timeoutMs = 120_000) {
@@ -326,8 +332,11 @@ async function main() {
   if (DO_SHUTDOWN && !DRY) {
     log('Apagando en 60s (--shutdown)…');
     spawnSync('shutdown', ['/s', '/t', '60', '/c', 'LifeOS morning_wake done'], { shell: true });
+  } else if (DO_SLEEP) {
+    log('Informe listo → sleep (para 2am y resto del día). --no-sleep para dejar encendida.');
+    goToSleep();
   } else {
-    log('Listo. PC sigue encendida (default). Apaga tú o usa --shutdown.');
+    log('Listo. PC sigue encendida (--no-sleep o dry-run).');
   }
 }
 

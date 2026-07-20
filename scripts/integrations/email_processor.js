@@ -224,8 +224,45 @@ async function processAttachments(gmail, email) {
   }
 }
 
+/**
+ * Resumen de correos.
+ * Default: SIN LLM free-tier (reglas + subject). Flujo Jeiser: limpiar/priorizar con agente DeepSeek a mano.
+ * Opt-in: EMAIL_USE_LLM=true + LiteLLM local (sensitive) si algún día se quiere.
+ */
+function summarizeEmailsDeterministic(emails) {
+  return emails.map((e) => {
+    const blob = `${e.from || ''} ${e.subject || ''} ${e.body || ''}`.toLowerCase();
+    let label = 'Personal';
+    let action = null;
+    if (/sena|zajuna|sofia|cesde|moodle/.test(blob)) label = 'Educacion';
+    if (/dian|muisca|tribut|renta/.test(blob)) { label = 'DIAN'; action = 'Revisar sin abrir buzón cobranzas'; }
+    if (/simit|comparendo|multa|transito|tránsito|itagui|itagüi|medellin.*movilidad/.test(blob)) {
+      label = 'Transito'; action = 'Revisar SIMIT / defensa';
+    }
+    if (/computrabajo|linkedin|empleo|vacante|hoja de vida|entrevista/.test(blob)) label = 'Trabajo';
+    if (/banco|nequi|daviplata|factura|epm|claro|pago/.test(blob)) label = 'Finanzas';
+    if (/seguridad|security|verify|código|codigo|2fa/.test(blob)) { label = 'Seguridad'; action = 'Verificar si fuiste tú'; }
+    return {
+      id: e.id,
+      from: e.from,
+      subject: e.subject,
+      summary: (e.subject || '(sin asunto)').slice(0, 120),
+      pending_action: action,
+      suggested_label: label,
+    };
+  });
+}
+
 async function summarizeEmails(emails) {
   if (emails.length === 0) return [];
+
+  // Default OFF — no gastar free-tier ni filtrar PII a cloud
+  const useLlm = process.env.EMAIL_USE_LLM === 'true';
+  if (!useLlm) {
+    log('[summarizeEmails] modo reglas (EMAIL_USE_LLM!=true) — sin API LLM');
+    return summarizeEmailsDeterministic(emails);
+  }
+
   const prompt = `Analiza cada correo IMPORTANTE y responde estrictamente con un array JSON. Para cada correo extrae:
 - "id": El id exacto del correo.
 - "from": Remitente.
@@ -238,28 +275,17 @@ Formato obligatorio: [{"id":"...","from":"...","subject":"...","summary":"...","
 Correos:
 ${emails.map(e => `- ID: ${e.id} | De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
 
-  // Single-tenant: TODO correo personal puede llevar PII (cédula, dirección, nómina).
-  // Siempre sensitive=true → proxy local / fail-closed (FIX-009 cerrado 2026-07-20).
-  const isSensitive = true;
-
+  // Si se fuerza LLM: sensitive=true (solo proxy local)
   try {
-    const res = await askLLM(prompt, [], 0.1, null, isSensitive);
+    const res = await askLLM(prompt, [], 0.1, null, true);
     const raw = (res.content || '').trim();
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) return parsed;
   } catch (err) {
-    log(`[summarizeEmails] Falló consulta unificada: ${err.message.substring(0, 100)}`);
+    log(`[summarizeEmails] LLM falló → reglas: ${err.message.substring(0, 100)}`);
   }
 
-  // Fallback determinista seguro
-  return emails.map(e => ({
-    id: e.id,
-    from: e.from,
-    subject: e.subject,
-    summary: '(resumen no disponible)',
-    pending_action: null,
-    suggested_label: 'Personal'
-  }));
+  return summarizeEmailsDeterministic(emails);
 }
 
 // ── Main ──

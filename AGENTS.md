@@ -87,20 +87,19 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 Jeiser enciende la PC 1–2 veces al día para organizar. No daemons.
 
 ```bash
-npm run morning          # 5am wake lean (Task Scheduler) — clima AHORA, PyP, caches, Telegram
-npm run session          # cuando te sientas: correo + SENA + SIMIT + empleo + briefing
-npm run session:fast     # solo briefing
-npm run briefing         # briefing sesión (con fallback)
+npm run morning          # ÚNICO auto: 5am wake → informe → sleep otra vez
+npm run morning -- --no-sleep
+npm run session          # opcional al sentarte (scrapers)
 ```
 
-| Comando | Cuándo |
-|---------|--------|
-| `npm run morning` | Auto 5am (sleep/wake). Sin LLM obligatorio. No apaga PC. |
-| `npm run session` | 1–2 veces al día, a mano, organización completa |
-| `job_loop.js --auto` | Solo postular empleo con supervisión |
+| Qué | Cómo |
+|-----|------|
+| Auto | Solo `morning_wake` (Telegram). **Vuelve a sleep.** |
+| Correo / estudio | Agente DeepSeek a mano. Correo **sin** free-tier LLM. |
+| Calendar / alarmas | **Manual.** LifeOS no escribe Calendar. |
+| Pico y placa KEW496 | Desde **2026-08-04: LUNES 05:00–20:00** (`data/config/pico_placa.json`) |
 
-Task Scheduler: ver `docs/MORNING_WAKE.md`.  
-`ecosystem.config.js` (PM2) = legacy. Si molesta: `pm2 kill`.
+Detalle: `docs/FLUJO_JEISER.md` · `docs/MORNING_WAKE.md`.
 
 ## Comandos Rápidos (SSH / Local)
 

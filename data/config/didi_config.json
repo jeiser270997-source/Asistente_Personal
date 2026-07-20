@@ -23,12 +23,14 @@
     "cierre_absoluto": "23:00"
   },
   "pico_y_placa_medellin": {
+    "_deprecated": "Usar data/config/pico_placa.json — vigente desde 2026-08-04 dígito 6 = lunes 05:00-20:00",
     "lunes": ["5", "8"],
     "martes": ["1", "4"],
     "miercoles": ["2", "0"],
     "jueves": ["3", "6"],
     "viernes": ["7", "9"]
   },
+  "pico_placa_note": "Fuente de verdad: data/config/pico_placa.json + lib/integrations/pico_placa.js",
   "extracurriculares_dominick": {
     "futbol": {
       "lugar": "Parque Comfama La Estrella",

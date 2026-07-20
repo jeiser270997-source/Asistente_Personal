@@ -7,9 +7,9 @@
  */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { createEvent } from '../integrations/gworkspace_manager';
 import { askLLM } from '../../lib/ai/llm_service';
 import { checkMaintenance } from './vehicle_manager';
+// Calendar desactivado: Jeiser pone alarmas a mano. No createEvent.
 
 // Integración de módulos de datos reales de LifeOS (Zajuna & Tráfico)
 const { getTrafficReport } = require('../../lib/integrations/tomtom_client');
@@ -89,19 +89,20 @@ function getSimitStatus(): string {
   return 'ℹ️ *SIMIT:* No se encontró información actual.';
 }
 
-// ================= PICO Y PLACA =================
-function getPicoYPlacaInfo(diaNombre: string, placaStr: string) {
-  let picoPlacaData: Record<string, string[]> = {
-    Lunes: ['1', '7'], Martes: ['0', '3'], Miercoles: ['4', '6'], Jueves: ['5', '9'], Viernes: ['2', '8']
-  };
-  if (fs.existsSync(PICO_FILE)) {
-    picoPlacaData = JSON.parse(fs.readFileSync(PICO_FILE, 'utf8'));
+// ================= PICO Y PLACA (fuente: lib/integrations/pico_placa.js) =================
+function getPicoYPlacaInfo(_diaNombre: string, _placaStr: string) {
+  try {
+    const { getPicoYPlacaStatus } = require('../../lib/integrations/pico_placa');
+    const s = getPicoYPlacaStatus();
+    return {
+      restringidas_hoy: (s.rest || []).join(' y '),
+      tiene_restriccion: !!s.applies,
+      message: s.message,
+      hours: s.hours,
+    };
+  } catch {
+    return { restringidas_hoy: 'n/a', tiene_restriccion: false, message: 'PyP n/a' };
   }
-  const restringidas = picoPlacaData[diaNombre] || [];
-  return {
-    restringidas_hoy: restringidas.join(' y '),
-    tiene_restriccion: restringidas.includes(placaStr)
-  };
 }
 
 // ================= ZAJUNA (SENA) PENDIENTS =================
@@ -361,22 +362,8 @@ Máximo 5 eventos. Si no hay LLM útil, el sistema usará un fallback.`;
   await sendTelegramMessage(parsed.mensaje_telegram);
   console.log('✅ Briefing listo (consola' + (TELEGRAM_TOKEN ? ' + Telegram' : '') + ').');
 
-  // Default: NO Calendar (sesión on-demand). Solo si DISABLE_CALENDAR_SYNC=false
-  const calendarOn = process.env.DISABLE_CALENDAR_SYNC === 'false';
-  if (!calendarOn) {
-    console.log('ℹ️  Calendar sync off (default on-demand). Activa con DISABLE_CALENDAR_SYNC=false');
-  } else if (parsed.eventos?.length) {
-    console.log(`🗓️  Sincronizando ${parsed.eventos.length} eventos...`);
-    for (const ev of parsed.eventos) {
-      try {
-        const isoStart = getIsoTime(ev.start_time);
-        const result: any = await createEvent(ev.title, isoStart, ev.duration_hours, ev.description);
-        console.log(result?.skipped ? `  skip ${ev.title}` : `  + ${ev.title} @ ${ev.start_time}`);
-      } catch (e: any) {
-        console.error(`  x ${ev.title}: ${e.message}`);
-      }
-    }
-  }
+  // Calendar: DESACTIVADO (basura / alarmas manuales). Nunca sincronizar desde briefing.
+  console.log('ℹ️  Google Calendar off — alarmas las pones tú. No se crean eventos desde LifeOS.');
 }
 
 if (require.main === module) {
