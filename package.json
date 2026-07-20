@@ -24,6 +24,8 @@
     "morning": "node scripts/morning_wake.js",
     "morning:full": "node scripts/morning_wake.js --full",
     "llm:health": "node -e \"require('./lib/ai/litellm_client').omniRouteHealth().then(h=>{console.log(JSON.stringify(h,null,2)); process.exit(h.ok?0:1)})\"",
+    "gmail:cleanup": "node scripts/maintenance/gmail_calendar_cleanup.js",
+    "gmail:cleanup:dry": "node scripts/maintenance/gmail_calendar_cleanup.js --dry-run",
     "brain": "powershell -ExecutionPolicy Bypass -File brain.ps1",
     "sensor": "node scripts/integrations/inbox_sensor.js",
     "cleaner": "node scripts/integrations/email_processor.js",

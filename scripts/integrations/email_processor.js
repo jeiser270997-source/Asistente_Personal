@@ -250,16 +250,22 @@ async function processAttachments(gmail, email) {
 function summarizeEmailsDeterministic(emails) {
   return emails.map((e) => {
     const blob = `${e.from || ''} ${e.subject || ''} ${e.body || ''}`.toLowerCase();
-    let label = 'Personal';
+    // Etiquetas canónicas (docs/GMAIL_LABELS.md)
+    let label = 'LifeOS/Importante';
     let action = null;
-    if (/sena|zajuna|sofia|cesde|moodle/.test(blob)) label = 'Educacion';
-    if (/dian|muisca|tribut|renta/.test(blob)) { label = 'DIAN'; action = 'Revisar sin abrir buzón cobranzas'; }
+    if (/sena|zajuna|sofia|moodle/.test(blob)) label = 'Educacion/SENA';
+    if (/cesde/.test(blob)) label = 'Educacion/CESDE';
+    if (/dian|muisca|tribut|renta/.test(blob)) { label = 'Gobierno/DIAN'; action = 'Revisar sin abrir buzón cobranzas'; }
     if (/simit|comparendo|multa|transito|tránsito|itagui|itagüi|medellin.*movilidad/.test(blob)) {
-      label = 'Transito'; action = 'Revisar SIMIT / defensa';
+      label = 'Gobierno/SIMIT'; action = 'Revisar SIMIT / defensa';
     }
-    if (/computrabajo|linkedin|empleo|vacante|hoja de vida|entrevista/.test(blob)) label = 'Trabajo';
-    if (/banco|nequi|daviplata|factura|epm|claro|pago/.test(blob)) label = 'Finanzas';
-    if (/seguridad|security|verify|código|codigo|2fa/.test(blob)) { label = 'Seguridad'; action = 'Verificar si fuiste tú'; }
+    if (/entrevista|interview/.test(blob)) label = 'Trabajo/Entrevistas';
+    else if (/computrabajo|linkedin|empleo|vacante|hoja de vida|postul/.test(blob)) label = 'Trabajo/Postulaciones';
+    if (/bancolombia/.test(blob)) label = 'Finanzas/Bancolombia';
+    else if (/nequi|daviplata/.test(blob)) label = 'Finanzas/Billeteras';
+    else if (/epm/.test(blob)) label = 'Finanzas/EPM';
+    else if (/banco|factura|claro|pago/.test(blob)) label = 'Finanzas/Facturas';
+    if (/seguridad|security|verify|código|codigo|2fa/.test(blob)) { label = 'Seguridad/Alerts'; action = 'Verificar si fuiste tú'; }
     return {
       id: e.id,
       from: e.from,
