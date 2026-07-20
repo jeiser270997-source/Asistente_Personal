@@ -90,3 +90,15 @@ Código: `lib/integrations/pico_placa.js`
 
 Deja **solo** `LifeOS_MorningRoutine` → `morning_wake.js` (o `daily_routine.js` que redirige).  
 Desactiva Brain_*, Correos, Heartbeat, DailyAlert, etc. (ver `docs/MORNING_WAKE.md`).
+
+## Gmail labels + Calendar (limpieza hecha)
+
+```bash
+npm run gmail:cleanup        # reorg labels + vaciar calendar primary
+npm run gmail:cleanup:dry    # simular
+```
+
+- Etiquetas canónicas: `docs/GMAIL_LABELS.md`
+- Free tiers OmniRoute (más cupo): `docs/OMNIROUTE_FREE_TIERS.md`
+- Calendar primary: se vació con `calendars.clear` (Festivos Colombia no se toca)
+- Etiqueta `Basura` eliminada → mails en `LifeOS/BajoSenal`
