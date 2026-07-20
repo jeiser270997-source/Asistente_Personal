@@ -120,3 +120,22 @@ scripts/scratch/
 audit_*.patch
 scripts/temp_*
 PROMPT.md
+
+# --- Basura local / dumps de sesión (no versionar) ---
+sofia_*
+*_html.txt
+zajuna_html.txt
+repomix_parts/
+repomix_last_run.log
+GENERARREPOMIX.BAT
+generar_repomix_*.bat
+%TEMP%*
+.freebuff/
+send_email.js
+data/estado_sena/
+data/betowa_*.json
+data/state/audit/
+data/state/bootcamp/roadmap_*.json
+scripts/data/documentos/
+scripts/data/sena/materiales/
+scripts/data/sena/materiales_index.json
