@@ -18,7 +18,9 @@
     "telegraf": "^4.16.3"
   },
   "scripts": {
-    "start": "node lib/integrations/telegram.js",
+    "start": "node scripts/session.js",
+    "session": "node scripts/session.js",
+    "session:fast": "node scripts/session.js --fast",
     "brain": "powershell -ExecutionPolicy Bypass -File brain.ps1",
     "sensor": "node scripts/integrations/inbox_sensor.js",
     "cleaner": "node scripts/integrations/email_processor.js",

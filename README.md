@@ -22,47 +22,37 @@ El sistema opera bajo un patrón de desacoplamiento limpio:
 3. Instala dependencias del dashboard: `cd dashboard && npm ci`
 4. Inicializa y migra la base de datos relacional: `npm run migrate`
 
-### Ejecución (Modo PM2 Local)
-Para arrancar toda la flota de procesos en PM2:
-```bash
-pm2 start ecosystem.config.js
-```
+### Uso diario (on-demand — **recomendado**)
 
-Para monitorear el estado de los daemons en tiempo real:
-```bash
-pm2 status
-pm2 monit
-```
-
-## Job Hunter (semi-auto)
-
-Por defecto **no postula** en Computrabajo. PM2 corre `job-loop` y `computrabajo-apply` con `--dry-run` (scrape/score/CV o reporte de cola).
+No necesitas PM2 ni dejar la PC prendida. Cuando te sientes a organizar (1–2 veces al día):
 
 ```bash
-# Solo analizar / preparar (default)
-node scripts/jobs/job_loop.js
-
-# Postular de verdad (requiere supervisión humana)
-node scripts/jobs/job_loop.js --auto
-node scripts/jobs/computrabajo_apply.js --auto
+npm run session          # correo + SENA + SIMIT + empleo (semi-auto) + briefing → termina
+npm run session:fast     # solo briefing en consola (+ Telegram si hay token)
 ```
 
-Nunca añadir `--auto` a `ecosystem.config.js` sin aprobación explícita.
+Eso es todo. Corre y sale. Sin daemons.
 
-## Calidad / gate local
+### Job Hunter (semi-auto)
+
+Por defecto **no postula**. En la sesión solo scrapea y llena cola.
 
 ```bash
-npm test                 # suite vitest
-npm run runtime:ci       # guardrail de paths
+node scripts/jobs/job_loop.js --auto   # postular solo cuando TÚ lo decidas
 ```
 
-## Modo agente (DeepSeek + herramientas)
+### PM2 (opcional / legacy)
 
-LifeOS está pensado para que un agente con herramientas lo mantenga:
+Solo si quieres Telegram always-on u otros crons. **No es el diseño actual.**  
+Apagar: `pm2 kill`. Config legacy: `ecosystem.config.js`.
 
-1. **Filtro:** si no está roto → no re-auditar; solo mantenimiento cuando haya síntoma.
-2. **Contrato:** leer `AGENTS.md` + `ESTADO_VIVO.md` al inicio de sesión.
-3. **Verificar:** tras un fix, `npm test`. Si falla un scraper, arreglar selectores; no reescribir el stack.
-4. Detalle y límites: sección *Uso con agentes* en `AGENTS.md`.
+### Calidad
 
-Estado de la última auditoría aplicada: `docs/wheelsaver_audit_lifeos_2026-07-20.md` (Ronda 6 implementada).
+```bash
+npm test
+npm run runtime:ci
+```
+
+### Agente (DeepSeek + tools)
+
+Ver `AGENTS.md` (principio 8) y `docs/AGENT_OPS.md`.

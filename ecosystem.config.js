@@ -1,3 +1,13 @@
+/**
+ * PM2 ecosystem — OPCIONAL / LEGACY
+ *
+ * Jeiser NO usa PC 24/7. El flujo canónico es on-demand:
+ *   npm run session          # al sentarte 1–2 veces al día
+ *   npm run session:fast     # solo briefing
+ *
+ * No arrancar PM2 salvo que quieras daemons (Telegram always-on).
+ * Si PM2 molesta: pm2 kill && usa solo `npm run session`.
+ */
 module.exports = {
   apps: [
     // ── Daemon (always-on) ──────────────────────────────────────

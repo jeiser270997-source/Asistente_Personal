@@ -5,16 +5,14 @@
 **Contexto:** Proyecto unipersonal, datos < 1GB, sin necesidad de concurrencia real.
 **Decisión:** SQLite con WAL. Suficiente para el volumen actual. Migrar a Postgres solo si aparecen multiples usuarios o necesidad de acceso concurrente real.
 
-## PM2 local como runtime (reemplazo de GitHub Actions)
+## Runtime on-demand (sin PM2 / sin PC 24/7) — Jul 2026
 
-**Contexto original:** El sistema usaba GitHub Actions con cron + cache (13 workflows).
-**Problema:** Cache efímero (7 días), latencia de restore, dependencia de cloud para runtime.
-**Decisión actual (Jul 2026):** PM2 en máquina local (Windows/Linux) con `ecosystem.config.js`.
-- Procesos daemon (Telegram) con autorestart.
-- Procesos cron (scrapers, healthcheck, etc.) con `cron_restart`.
-- Sin dependencia de GitHub ni Litestream.
-- Backups a Google Drive via script dedicado.
-- Si se necesita acceso remoto: Tailscale + SSH.
+**Contexto:** Jeiser trabaja DiDi; enciende la PC 1–2 veces al día para organizar. PM2 (daemons + crons) es molesto, reinicia bots en loop y exige PC prendida.
+**Decisión:** Flujo canónico = `npm run session` (Run & Die). Corre correo/SENA/SIMIT/empleo-semi/briefing y termina.
+- `npm run session:fast` = solo briefing.
+- PM2 (`ecosystem.config.js`) queda **opcional/legacy**.
+- `daily_routine.js` (apagado de PC a las 5am) también legacy; no es el default.
+- Briefing con fallback determinista si no hay LLM.
 
 ## Stores sin ORM
 

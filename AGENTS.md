@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-20 (round 6: job semi-auto + email sensitive + PII)
+**Última actualización:** 2026-07-20 (session on-demand; PM2 opcional; briefing fallback)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -82,35 +82,24 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 
 ## Automatizaciones
 
-~~13 GitHub Actions~~ eliminados Jul 2026 (deep audit).
-Runtime local vía PM2 (`ecosystem.config.js`). Arrancar con `pm2 start`.
+**Runtime canónico (Jul 2026): on-demand, sin PM2, sin PC 24/7.**
 
-| Proceso | Tipo | Schedule (UTC) |
-|---------|:----:|:--------------:|
-| jarvis-telegram | daemon | always-on |
-| brain-orchestrator | cron | 7am COT (12pm) |
-| context-engine-daily | cron | 6am COT (11am) |
-| morning-briefing | cron (tsx) | 7am COT (12pm) |
-| email-cleaner | cron | cada 3h |
-| inbox-sensor | cron | */15 min |
-| sena-scraper | cron | lun-vie 6am COT (11am) |
-| sena-tracker | cron | 7am COT (12pm) |
-| simit-checker | cron | 7am COT (12pm) |
-| dian-scraper | cron | lun 9am COT (2pm) |
-| computrabajo-scraper | cron | lun-vie 8am COT (1pm) |
-| computrabajo-apply ⚠️ | cron | lun-vie 9am COT (2pm) — **SEMI-AUTO** (`--dry-run`) |
-| job-loop ⚠️ | cron | lun-vie 10am COT (3pm) — **SEMI-AUTO** (`--dry-run`) |
-| healthcheck | cron | 8am COT (1pm) |
-| recordatorio-deepseek | cron | 6am/7pm/10pm COT |
-| document-pipeline | cron | 9am COT (2pm) |
-| vehicle-manager | cron | 6am COT (11am) |
-| backup-dbs | cron (tsx) | 11pm COT (4am) |
-| pm2-health | daemon | always-on |
+Jeiser enciende la PC 1–2 veces al día para organizar. No daemons.
 
-> **⚠️ Job Hunter (semi-auto obligatorio en PM2):**
-> - `job-loop` y `computrabajo-apply` corren con `--dry-run` por defecto (scrape/score/CV o reporte de cola; **no postulan**).
-> - LIVE solo manual con supervisión: `node scripts/jobs/job_loop.js --auto` o `node scripts/jobs/computrabajo_apply.js --auto`.
-> - Nunca añadir `--auto` a `ecosystem.config.js` sin aprobación explícita de Jeiser.
+```bash
+npm run session          # correo + SENA + SIMIT + empleo semi-auto + briefing → sale
+npm run session:fast     # solo briefing (consola + Telegram si hay token)
+npm run briefing         # alias del briefing
+```
+
+| Comando | Qué hace |
+|---------|----------|
+| `npm run session` | Rutina de sesión completa (corre y termina) |
+| `npm run session:fast` | Solo briefing |
+| `node scripts/jobs/job_loop.js --auto` | Postular (solo a mano, supervisión) |
+
+`ecosystem.config.js` (PM2) queda **opcional/legacy**. No es el flujo diario.  
+Si tienes PM2 colgado: `pm2 kill`.
 
 ## Comandos Rápidos (SSH / Local)
 

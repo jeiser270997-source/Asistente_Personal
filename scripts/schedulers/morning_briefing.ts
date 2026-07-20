@@ -1,9 +1,9 @@
 /**
  * scripts/schedulers/morning_briefing.ts
- * 
- * Orquestador Unificado de LifeOS - Sargento Logístico Matutino.
- * Combina clima, UV, Pico y Placa, SIMIT, Mantenimiento, Tráfico en tiempo real (TomTom),
- * pendientes del sistema y estado académico de Zajuna (SENA).
+ *
+ * Briefing de sesión (on-demand, 1–2 veces al día). No requiere PM2.
+ * Prioridad: SENA/CESDE → SIMIT/PyP → DiDi → empleo (semi-auto).
+ * Si el LLM falla, genera un briefing determinista (sin IA).
  */
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -146,138 +146,218 @@ function getIsoTime(hoursStr: string) {
   return d.toISOString();
 }
 
+function getJobsQueueSummary(): string {
+  try {
+    const queuePath = path.join(__dirname, '..', '..', 'data', 'jobs', 'apply_queue.json');
+    if (!fs.existsSync(queuePath)) return 'ℹ️ Sin cola de empleo (corre `npm run session` en día laboral).';
+    const raw = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
+    const list = Array.isArray(raw) ? raw : (raw.ofertas || raw.queue || []);
+    if (!list.length) return '✅ Cola de postulación vacía.';
+    const top = list.slice(0, 3).map((o: any, i: number) =>
+      `  ${i + 1}. ${o.titulo || o.title || '?'} — ${o.empresa || ''}`
+    ).join('\n');
+    return `📋 *${list.length} oferta(s) en cola (semi-auto, no se postulan solas)*\n${top}`;
+  } catch {
+    return 'ℹ️ No se pudo leer cola de empleo.';
+  }
+}
+
+/** Agenda del día sin LLM — siempre funciona offline/parcial. */
+function buildDeterministicBriefing(ctx: {
+  todayIso: string;
+  dayName: string;
+  dayIndex: number;
+  clima: { probLluvia: number; uvMax: number; codigo: number };
+  festivoInfo: { es_festivo: boolean; nombre: string };
+  pypInfo: { restringidas_hoy: string; tiene_restriccion: boolean };
+  simit: string;
+  senaPending: string;
+  maintenanceAlerts: string;
+  trafficReport: string;
+  jobsSummary: string;
+  baseTasks: any[];
+}): { mensaje_telegram: string; eventos: any[] } {
+  const { todayIso, dayName, dayIndex, clima, festivoInfo, pypInfo, simit, senaPending, maintenanceAlerts, trafficReport, jobsSummary, baseTasks } = ctx;
+  const isSat = dayIndex === 6;
+  const isSun = dayIndex === 0;
+  const uvWarn = clima.uvMax >= 7 ? ' ⚠️ Ola de calor: NO DiDi 10:30–15:30' : '';
+  const pyp = pypInfo.tiene_restriccion
+    ? `🚫 *APLICA* (restringidos: ${pypInfo.restringidas_hoy}) — plan B estudio/empleo`
+    : `✅ No aplica (restringidos: ${pypInfo.restringidas_hoy || 'n/a'})`;
+
+  let agenda = '';
+  if (isSat) {
+    agenda = [
+      '• 07:30–18:00 *CESDE presencial* (BD / Prog / Lógica) — prioridad absoluta',
+      '• Noche: solo si sobra energía → 1 evidencia SENA corta',
+      '• DiDi sábado: solo si NO hay clases o ya saliste',
+    ].join('\n');
+  } else if (isSun) {
+    agenda = [
+      '• Mañana: familiar / descanso / fútbol Dominick si aplica',
+      '• Tarde: DiDi meta parcial o estudio SENA',
+      '• Noche: preparar semana (SENA + 5 ofertas semi-auto)',
+    ].join('\n');
+  } else {
+    agenda = [
+      '• 05:00–10:30 DiDi AM (meta parcial ~$150k brutos)',
+      '• 10:30–15:30 *NO conducir* (calor) → estudio / correos / SENA / CV',
+      '• 15:30–20:00 DiDi PM',
+      '• 20:00–21:30 SENA o CESDE virtual si toca',
+      '• Empleo: revisar cola; postular solo con `job_loop --auto` a mano',
+    ].join('\n');
+  }
+
+  if (festivoInfo.es_festivo) {
+    agenda = `🎉 Festivo: ${festivoInfo.nombre}\n` + agenda + '\n• Sin colegio Dominick si aplica festivo';
+  }
+
+  const tasksLine = baseTasks.length
+    ? baseTasks.map((t: any) => `• ${t.title} (${t.type || 'tarea'})`).join('\n')
+    : '• (sin bloques en schedule.json)';
+
+  const msg = [
+    '☕ *LIFEOS BRIEFING DE SESIÓN*',
+    `📅 *${dayName}* ${todayIso}`,
+    '',
+    '🎯 *PRIORIDAD HOY (en orden)*',
+    isSat ? '1. CESDE  2. SENA si queda tiempo  3. Descanso' : '1. SENA críticos  2. Correos/organización  3. DiDi  4. Empleo semi-auto',
+    '',
+    '🌤️ *CLIMA*',
+    `• Lluvia: ${clima.probLluvia}% · UV: ${clima.uvMax}${uvWarn}`,
+    `• Pico y placa KEW496: ${pyp}`,
+    '',
+    '🚗 *SIMIT & CARRO*',
+    `• ${simit}`,
+    `• Mantenimiento: ${maintenanceAlerts || 'OK / sin alertas'}`,
+    '• Moto BXU28C: SOAT/RTM vencidos — *NO circular*',
+    '',
+    '🚨 *SENA (Zajuna)*',
+    senaPending,
+    '',
+    '💼 *EMPLEO*',
+    jobsSummary,
+    '',
+    '🚧 *TRÁFICO*',
+    String(trafficReport || 'Sin TomTom (opcional)').slice(0, 400),
+    '',
+    '📅 *AGENDA SUGERIDA*',
+    agenda,
+    '',
+    '📋 *Schedule base*',
+    tasksLine,
+    '',
+    '_Modo on-demand: sin PM2. Corre `npm run session` cuando te sientes._',
+  ].join('\n');
+
+  const eventos: any[] = [];
+  if (isSat) {
+    eventos.push({ title: '🎓 CESDE presencial', start_time: '07:30', duration_hours: 10.5, description: 'Aula 406 — BD / Prog / Lógica' });
+  } else if (!isSun && !pypInfo.tiene_restriccion) {
+    eventos.push({ title: '🚕 DiDi AM', start_time: '05:00', duration_hours: 5.5, description: 'Meta AM ~150k' });
+    eventos.push({ title: '📚 Estudio / SENA / organización', start_time: '10:30', duration_hours: 5, description: 'Sin DiDi por calor' });
+    eventos.push({ title: '🚕 DiDi PM', start_time: '15:30', duration_hours: 4.5, description: 'Meta PM' });
+  }
+
+  return { mensaje_telegram: msg, eventos };
+}
+
 // ================= MAIN RUNNER =================
 export async function runMorningBriefing(): Promise<void> {
   const now = new Date();
   const colDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Bogota' }));
   const todayIso = colDate.toISOString().split('T')[0];
   const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
-  const dayName = days[colDate.getDay()];
+  const dayIndex = colDate.getDay();
+  const dayName = days[dayIndex];
 
-  console.log(`[Briefing] Procesando día: ${dayName} (${todayIso})`);
+  console.log(`[Briefing] Sesión: ${dayName} (${todayIso})`);
 
-  // Ejecución concurrente de integraciones externas y locales
   const [clima, festivoInfo, maintenanceAlerts, trafficReport] = await Promise.all([
     getMedellinWeather(),
     checkFestivo(todayIso),
     Promise.resolve(checkMaintenance()),
-    getTrafficReport()
+    getTrafficReport().catch(() => 'TomTom no disponible'),
   ]);
 
   const pypInfo = getPicoYPlacaInfo(dayName, config.placa_vehiculo || '6');
   const simit = getSimitStatus();
   const senaPending = getZajunaPending();
+  const jobsSummary = getJobsQueueSummary();
 
   let baseTasks: any[] = [];
   try {
     if (fs.existsSync(SCHEDULE_PATH)) {
       const scheduleConfig = JSON.parse(fs.readFileSync(SCHEDULE_PATH, 'utf8'));
-      baseTasks = scheduleConfig[colDate.getDay().toString()] || [];
+      baseTasks = scheduleConfig[dayIndex.toString()] || [];
     }
   } catch {}
 
-  const prompt = `Eres el 'Sargento Financiero', el alter ego logístico, estricto y motivador de LifeOS para Jeiser (Medellín).
-Jeiser tiene gastos fijos de $1.6M mensuales (Arriendo + Servicios), debe el semestre del CESDE y gana su dinero manejando DiDi con una meta de $260,000 brutos diarios. Su meta es ser QA Automation Engineer.
+  const fallback = buildDeterministicBriefing({
+    todayIso, dayName, dayIndex, clima, festivoInfo, pypInfo, simit,
+    senaPending, maintenanceAlerts: String(maintenanceAlerts || ''),
+    trafficReport: String(trafficReport || ''), jobsSummary, baseTasks,
+  });
 
-DATOS REALES DE HOY:
-- Fecha: ${todayIso} (${dayName})
-- Vehículo Principal: Toyota Corolla 2010 (Placa: KEW496, termina en 6)
-- Vehículo Secundario (Moto): Placa BXU28C (¡SOAT y RTM vencidos! No circular bajo ninguna circunstancia o habrá inmovilización)
-- Festivo: ${festivoInfo.es_festivo ? 'SÍ (' + festivoInfo.nombre + ')' : 'NO'}.
-- Clima: ${clima.codigo >= 50 ? 'Lluvia / Tormenta' : 'Despejado/Nublado'} (Lluvia: ${clima.probLluvia}%, UV Máximo: ${clima.uvMax}).
-- Pico y Placa: Placas restringidas hoy: ${pypInfo.restringidas_hoy}. ¿Jeiser tiene restricción hoy con su carro placa KEW496?: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'}.
-- SIMIT: ${simit}
-- Tráfico Real de TomTom: 
-${trafficReport}
-- Mantenimiento Carro (Toyota Corolla): ${maintenanceAlerts || 'Ninguno'}
-- Entregas Pendientes en Zajuna (SENA):
-${senaPending}
-- Misiones Base (Agenda):
-${JSON.stringify(baseTasks, null, 2)}
+  const prompt = `Eres el asistente logístico de Jeiser (LifeOS, Medellín). Tono: directo, sin adulación, datos duros.
+Contexto: conductor DiDi (meta $260k brutos/día), CESDE sábados 7:30–18:00 presencial, SENA Zajuna en curso, busca QA/soporte, NO PC 24/7 (sesión on-demand 1–2 veces al día).
+REGLA HIERRO DIAN: no firmar 814, no pagar AG2023 por cobranzas. Moto BXU28C: no circular.
 
-INSTRUCCIONES DE PLANIFICACIÓN:
-Debes estructurar el 'mensaje_telegram' de forma extremadamente organizada y ejecutiva para que Jeiser tenga DATOS DUROS en un solo vistazo.
+DATOS DE HOY:
+- ${todayIso} ${dayName} | Festivo: ${festivoInfo.es_festivo ? festivoInfo.nombre : 'no'}
+- Clima lluvia ${clima.probLluvia}% UV ${clima.uvMax} | PyP carro termina en 6: ${pypInfo.tiene_restriccion ? 'SÍ' : 'NO'} (${pypInfo.restringidas_hoy})
+- ${simit}
+- Mantenimiento: ${maintenanceAlerts || 'n/a'}
+- Tráfico: ${String(trafficReport).slice(0, 500)}
+- SENA: ${senaPending}
+- Empleo: ${jobsSummary}
+- Agenda base: ${JSON.stringify(baseTasks)}
 
-ESTRUCTURA DEL MENSAJE TELEGRAM (Estricta, conserva los títulos y emojis):
-☕ *LIFEOS BRIEFING MATUTINO*
-📅 *Fecha:* [Día de la semana, DD de Mes de AAAA]
-
-🌤️ *CLIMA Y CONDICIONES*
-• Estado: [Estado del clima]
-• Probabilidad de Lluvia: ${clima.probLluvia}%
-• Índice UV Máximo: ${clima.uvMax} [Si es >= 7, añade una advertencia de ola de calor y enrutamiento valle]
-• Pico y Placa: [Aplica/No aplica hoy para ti]
-
-🚗 *SIMIT & MANTENIMIENTO*
-• SIMIT: [Resumen de deudas/comparendos]
-• Carro: [Alertas de mantenimiento]
-
-🚨 *ZAJUNA (SENA) PENDIENTES*
-[Inserta aquí de manera crítica y detallada las actividades y sub-evidencias pendientes de Zajuna. Si hay entregas que vencen hoy o mañana, destácalas con alarma extrema y pon su ID]
-
-🚧 *TRÁFICO EN VIVO (DiDi Hubs)*
-[Inserta el informe de tráfico de TomTom con tiempos estimados y retrasos actuales]
-
-📅 *PROGRAMACIÓN DEL DÍA POR HORAS*
-[Genera una agenda cronológica estricta y detallada de su día, por ejemplo:
- - 05:00 - 06:00: Rutina y preparación
- - 06:00 - 11:30: Turno DiDi AM (Meta: $150k)
- - 11:30 - 15:30: Descanso de Ola de calor / Almuerzo / Estudio
- - 15:30 - 21:00: Turno DiDi PM (Meta: $110k)
- - 21:00 - 22:00: Estudio Zajuna (Evidencia ID: XXX)]
-
-🎖️ *REGAÑO DEL SARGENTO FINANCIERO*
-[Aquí pones el regaño motivacional agresivo, estricto y militar, recordándole las deudas, el CESDE y DiDi. Máximo 1 párrafo de 4 líneas.]
-
-_Tus eventos de hoy ya fueron sincronizados en Google Calendar._
-
-Estructura su calendario de hoy en bloques de tiempo (máximo 5 bloques) que retornarás en el JSON.
-   - Si es festivo: el colegio de Dominick está cerrado. No agendes ir por él.
-   - Si el UV es >= 7: Oblígalo a tomar un descanso de DiDi de 11:00 AM a 3:30 PM (ola de calor) y trabajar en la tarde-noche.
-   - Si es sábado, bloquea de 07:30 AM a 06:00 PM por sus clases presenciales en el CESDE.
-   - Añade siempre: "Aplicar a 5 ofertas en Computrabajo" (1 hora).
-
-Responde EXCLUSIVAMENTE con este objeto JSON plano, sin markdown de bloques (no incluyas triple tilde invertida):
+Devuelve SOLO JSON:
 {
-  "mensaje_telegram": "[Usa la estructura estricta arriba con emojis]",
-  "eventos": [
-    { "title": "🚕 DiDi AM (Fresco)", "start_time": "06:00", "duration_hours": 5.5, "description": "Meta AM: $150k" },
-    { "title": "💻 Aplicar ofertas Computrabajo", "start_time": "12:00", "duration_hours": 1.0, "description": "QA Hunter" }
-  ]
+  "mensaje_telegram": "Markdown Telegram, secciones: PRIORIDAD | CLIMA/PyP | SIMIT | SENA | EMPLEO | AGENDA. Máx ~35 líneas. Si sábado: CESDE primero. Si UV>=7: bloquear DiDi 10:30-15:30. Sin regaños largos.",
+  "eventos": [ { "title": "...", "start_time": "HH:MM", "duration_hours": 1, "description": "..." } ]
 }
-`;
+Máximo 5 eventos. Si no hay LLM útil, el sistema usará un fallback.`;
 
+  let parsed = fallback;
   try {
-    const res = await askLLM(prompt, [], 0.3);
-    if (!res) throw new Error('askLLM no retornó respuesta');
-    const parsed = JSON.parse(res.content || '{}');
-
-    await sendTelegramMessage(parsed.mensaje_telegram);
-    console.log('✅ Briefing enviado a Telegram.');
-
-    // Sincronización condicional con Google Calendar (FIX-009)
-    if (process.env.DISABLE_CALENDAR_SYNC === 'true') {
-      console.log('ℹ️  Sincronización con Google Calendar desactivada por configuración (.env).');
-    } else if (parsed.eventos && parsed.eventos.length > 0) {
-      console.log(`🗓️  Sincronizando ${parsed.eventos.length} eventos con Google Calendar...`);
-      for (const ev of parsed.eventos) {
-        try {
-          const isoStart = getIsoTime(ev.start_time);
-          const result: any = await createEvent(ev.title, isoStart, ev.duration_hours, ev.description);
-          if (result && result.skipped) {
-            console.log(`  Skip: ${ev.title} (ya existe un evento similar)`);
-          } else {
-            console.log(`  + Sincronizado: ${ev.title} a las ${ev.start_time}`);
-          }
-        } catch (e: any) {
-          console.error(`  x Error agendando ${ev.title}: `, e.message);
-        }
+    const res = await askLLM(prompt, [], 0.2);
+    if (res?.content) {
+      const raw = (res.content || '').replace(/```json|```/g, '').trim();
+      const j = JSON.parse(raw);
+      if (j.mensaje_telegram && typeof j.mensaje_telegram === 'string') {
+        parsed = {
+          mensaje_telegram: j.mensaje_telegram,
+          eventos: Array.isArray(j.eventos) ? j.eventos : fallback.eventos,
+        };
+        console.log('[Briefing] LLM OK');
       }
     }
-
   } catch (err: any) {
-    console.error('❌ Error fatal en el briefing unificado:', err.message);
-    await sendTelegramMessage(`💥 *Error de Morning Briefing:* ${err.message}`);
+    console.warn(`[Briefing] LLM falló → fallback determinista: ${err.message?.slice(0, 100)}`);
+  }
+
+  // Siempre a consola (sesión local)
+  console.log('\n' + parsed.mensaje_telegram.replace(/\*/g, '') + '\n');
+  await sendTelegramMessage(parsed.mensaje_telegram);
+  console.log('✅ Briefing listo (consola' + (TELEGRAM_TOKEN ? ' + Telegram' : '') + ').');
+
+  // Default: NO Calendar (sesión on-demand). Solo si DISABLE_CALENDAR_SYNC=false
+  const calendarOn = process.env.DISABLE_CALENDAR_SYNC === 'false';
+  if (!calendarOn) {
+    console.log('ℹ️  Calendar sync off (default on-demand). Activa con DISABLE_CALENDAR_SYNC=false');
+  } else if (parsed.eventos?.length) {
+    console.log(`🗓️  Sincronizando ${parsed.eventos.length} eventos...`);
+    for (const ev of parsed.eventos) {
+      try {
+        const isoStart = getIsoTime(ev.start_time);
+        const result: any = await createEvent(ev.title, isoStart, ev.duration_hours, ev.description);
+        console.log(result?.skipped ? `  skip ${ev.title}` : `  + ${ev.title} @ ${ev.start_time}`);
+      } catch (e: any) {
+        console.error(`  x ${ev.title}: ${e.message}`);
+      }
+    }
   }
 }
 
