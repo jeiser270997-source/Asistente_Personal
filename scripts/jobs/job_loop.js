@@ -1,9 +1,13 @@
 /**
- * job_loop.js â€” Pipeline completo de Job Hunter
- * Loop x5: Scrape â†’ Analyze â†’ Tailor CV â†’ Apply
- * 
- * Uso: node scripts/job_loop.js [--loops=5] [--min-score=60] [--dry-run]
- *   --dry-run: analiza y genera CVs pero NO aplica
+ * job_loop.js — Pipeline completo de Job Hunter
+ * Loop x5: Scrape → Analyze → Tailor CV → Apply (solo con --auto)
+ *
+ * Uso:
+ *   node scripts/jobs/job_loop.js [--loops=5] [--min-score=40]
+ *   node scripts/jobs/job_loop.js --auto          # LIVE: postula de verdad
+ *   node scripts/jobs/job_loop.js --dry-run       # alias explícito de semi-auto (default)
+ *
+ * Política (single-tenant): SEMI-AUTO por defecto. Nunca postula sin --auto.
  */
 require('dotenv').config();
 const fs    = require('node:fs');
@@ -20,13 +24,29 @@ const CV_OUT    = PATHS.JOBS_TAILORED;
 const APPLY_LOG = PATHS.APLICACIONES;
 const JOBS_DIR  = PATHS.JOBS_DIR;
 
+/**
+ * Parsea flags de política de postulación.
+ * Default: dry-run (semi-auto). LIVE solo con --auto y sin --dry-run.
+ * @param {string[]} argv
+ * @returns {{ auto: boolean, dryRun: boolean, mode: 'SEMI-AUTO'|'LIVE' }}
+ */
+function resolveApplyPolicy(argv = process.argv) {
+  const auto = argv.includes('--auto');
+  const forcedDry = argv.includes('--dry-run');
+  const dryRun = !auto || forcedDry;
+  return {
+    auto: auto && !forcedDry,
+    dryRun,
+    mode: dryRun ? 'SEMI-AUTO' : 'LIVE',
+  };
+}
 
-const LOOPS     = parseInt((process.argv.find(a => a.startsWith('--loops=')) || '--loops=5').split('=')[1]);
-const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=40').split('=')[1]);
-const DRY_RUN   = process.argv.includes('--dry-run');
+const LOOPS     = parseInt((process.argv.find(a => a.startsWith('--loops=')) || '--loops=5').split('=')[1], 10);
+const MIN_SCORE = parseInt((process.argv.find(a => a.startsWith('--min-score=')) || '--min-score=40').split('=')[1], 10);
+const { dryRun: DRY_RUN, mode: APPLY_MODE } = resolveApplyPolicy(process.argv);
 
+// Credenciales leídas al ejecutar main (no en import — permite tests de política)
 const CT_EMAIL = process.env.COMPUTRABAJO_EMAIL;
-if (!CT_EMAIL) { console.error('FATAL: COMPUTRABAJO_EMAIL no está configurado en .env'); process.exit(1); }
 const CT_PASS  = process.env.COMPUTRABAJO_PASS;
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT  = process.env.TELEGRAM_CHAT_ID;
@@ -276,14 +296,21 @@ async function aplicar(oferta, browser) {
 
 // â”€â”€â”€ MAIN LOOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function main() {
+  if (!CT_EMAIL) {
+    console.error('FATAL: COMPUTRABAJO_EMAIL no está configurado en .env');
+    process.exit(1);
+  }
   ensureDir(CV_OUT);
   const cvBase = fs.readFileSync(CV_BASE, 'utf8');
   const aplicaciones = fs.existsSync(APPLY_LOG) ? JSON.parse(fs.readFileSync(APPLY_LOG, 'utf8')) : [];
   const yaAplicadas = new Set(aplicaciones.map(a => a.oferta_id || a.url));
 
-  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
-  log(`ðŸš€ JOB LOOP x${LOOPS} | min-score: ${MIN_SCORE} | ${DRY_RUN ? 'DRY-RUN' : 'LIVE'}`);
-  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+  log('═══════════════════════════════════════════════════');
+  log(`🚀 JOB LOOP x${LOOPS} | min-score: ${MIN_SCORE} | ${APPLY_MODE}${DRY_RUN ? ' (no postula)' : ' ⚠️ POSTULA'}`);
+  if (DRY_RUN) {
+    log('   Política: semi-auto. Para LIVE: node scripts/jobs/job_loop.js --auto');
+  }
+  log('═══════════════════════════════════════════════════');
 
   const resultados = [];
   const browser = await chromium.launch({
@@ -360,18 +387,26 @@ async function main() {
           registro.cv_path = cvPath;
           log(`       CV guardado: ${path.basename(cvPath)}`);
 
-          // Aplicar
-          log('  ðŸš€  Aplicando...');
-          const resultado = await aplicar(oferta, browser);
-          registro.estado = resultado.exito ? 'aplicado' : `error_apply: ${resultado.razon}`;
-          registro.screenshot = resultado.screenshot;
-
-          if (resultado.exito) {
-            yaAplicadas.add(oferta.id);
-            log(`       âœ… APLICADO`);
-            await sendTelegram(`\u2705 <b>Aplicaci\u00F3n enviada</b>\n${escapeHTML(oferta.titulo)} \u2014 ${escapeHTML(oferta.empresa)}\nScore: ${analisis.score}/100\n<a href="${escapeHTML(oferta.url)}">Ver oferta</a>`);
+          // Aplicar solo en LIVE (--auto). Default: encolar / notificar.
+          if (DRY_RUN) {
+            registro.estado = 'pendiente_revision';
+            log('       ⏸️  SEMI-AUTO: CV listo, NO se postuló (falta --auto)');
+            await sendTelegram(
+              `\u{1F4CB} <b>Candidato listo (semi-auto)</b>\n${escapeHTML(oferta.titulo)} \u2014 ${escapeHTML(oferta.empresa)}\nScore: ${analisis.score}/100\n<a href="${escapeHTML(oferta.url)}">Ver oferta</a>\nPara aplicar: <code>node scripts/jobs/job_loop.js --auto</code>`
+            );
           } else {
-            log(`       âš  No confirmado: ${resultado.razon}`);
+            log('  🚀  Aplicando (LIVE --auto)...');
+            const resultado = await aplicar(oferta, browser);
+            registro.estado = resultado.exito ? 'aplicado' : `error_apply: ${resultado.razon}`;
+            registro.screenshot = resultado.screenshot;
+
+            if (resultado.exito) {
+              yaAplicadas.add(oferta.id);
+              log('       ✅ APLICADO');
+              await sendTelegram(`\u2705 <b>Aplicaci\u00F3n enviada</b>\n${escapeHTML(oferta.titulo)} \u2014 ${escapeHTML(oferta.empresa)}\nScore: ${analisis.score}/100\n<a href="${escapeHTML(oferta.url)}">Ver oferta</a>`);
+            } else {
+              log(`       ⚠ No confirmado: ${resultado.razon}`);
+            }
           }
         } catch (e) {
           log(`  âš  Error tailoring/apply: ${e.message.substring(0, 80)}`);
@@ -400,30 +435,37 @@ async function main() {
 
   // RESUMEN FINAL
   const aplicadas  = resultados.filter(r => r.estado === 'aplicado');
+  const pendientes = resultados.filter(r => r.estado === 'pendiente_revision');
   const analizadas = resultados.filter(r => r.analisis);
   const descartadas = resultados.filter(r => r.estado === 'descartada');
 
-  log('\nâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
-  log('ðŸ“Š RESUMEN FINAL');
-  log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+  log('\n═══════════════════════════════════════════════════');
+  log(`📊 RESUMEN FINAL (${APPLY_MODE})`);
+  log('═══════════════════════════════════════════════════');
   log(`Total analizadas: ${analizadas.length}`);
-  log(`âœ… Aplicadas:     ${aplicadas.length}`);
-  log(`â­ Descartadas:   ${descartadas.length}`);
+  log(`✅ Aplicadas:     ${aplicadas.length}`);
+  log(`📋 Pendientes:    ${pendientes.length} (semi-auto, sin --auto)`);
+  log(`⏭ Descartadas:   ${descartadas.length}`);
   log('\nTop ofertas por score:');
   resultados
     .filter(r => r.analisis)
     .sort((a, b) => (b.analisis.score||0) - (a.analisis.score||0))
     .slice(0, 8)
     .forEach(r => {
-      const icon = r.estado === 'aplicado' ? 'âœ…' : r.estado === 'descartada' ? 'â­' : 'ðŸ“‹';
-      log(`  ${icon} [${r.analisis.score}] ${r.titulo} â€” ${r.empresa} | ${r.analisis.razon_corta}`);
+      const icon = r.estado === 'aplicado' ? '✅' : r.estado === 'pendiente_revision' ? '📋' : r.estado === 'descartada' ? '⏭' : '📄';
+      log(`  ${icon} [${r.analisis.score}] ${r.titulo} — ${r.empresa} | ${r.analisis.razon_corta}`);
     });
 
-  const msg = `\u{1F3AF} <b>Job Loop x${LOOPS} completado</b>\nAnalizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length}\n${aplicadas.map(r => `\u2705 ${escapeHTML(r.titulo)} \u2014 ${escapeHTML(r.empresa)}`).join('\n')}`;
+  const msg = `\u{1F3AF} <b>Job Loop x${LOOPS} (${APPLY_MODE})</b>\nAnalizadas: ${analizadas.length} | Aplicadas: ${aplicadas.length} | Pendientes: ${pendientes.length}\n${[...aplicadas, ...pendientes].map(r => `${r.estado === 'aplicado' ? '\u2705' : '\u{1F4CB}'} ${escapeHTML(r.titulo)} \u2014 ${escapeHTML(r.empresa)}`).join('\n')}`;
   await sendTelegram(msg);
 
-  log('\nâœ… Datos en: ' + JOBS_DIR);
+  log('\n✅ Datos en: ' + JOBS_DIR);
 }
 
-main().catch(e => { console.error('âŒ Error:', e.message); process.exit(1); });
+// Export para tests de política (sin ejecutar main)
+module.exports = { resolveApplyPolicy };
+
+if (require.main === module) {
+  main().catch(e => { console.error('❌ Error:', e.message); process.exit(1); });
+}
 

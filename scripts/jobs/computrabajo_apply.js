@@ -1,14 +1,42 @@
 // scripts/jobs/computrabajo_apply.js - v3 bulletproof (FIX-011)
+// Política: SEMI-AUTO por defecto. LIVE solo con --auto y cola no vacía.
 require("dotenv").config({ path: require('node:path').join(__dirname, '..', '..', '.env') });
 const { chromium } = require("playwright");
 const fs = require('node:fs');
+const path = require('node:path');
 const { PATHS } = require('../../lib/data/paths');
 const { robustLogin } = require('./ct_login_helper');
 
 const STATE_PATH = PATHS.COMPUTRABAJO_STATE;
+const QUEUE_PATH = PATHS.APPLY_QUEUE;
 
 function log(msg) {
   console.log(`[APPLY ${new Date().toISOString()}] ${msg}`);
+}
+
+/**
+ * Política de postulación: default dry-run; LIVE solo con --auto.
+ * @param {string[]} argv
+ */
+function resolveApplyPolicy(argv = process.argv) {
+  const auto = argv.includes('--auto');
+  const forcedDry = argv.includes('--dry-run');
+  const dryRun = !auto || forcedDry;
+  return {
+    auto: auto && !forcedDry,
+    dryRun,
+    mode: dryRun ? 'SEMI-AUTO' : 'LIVE',
+  };
+}
+
+function loadQueue() {
+  if (!fs.existsSync(QUEUE_PATH)) return [];
+  try {
+    const raw = JSON.parse(fs.readFileSync(QUEUE_PATH, 'utf8'));
+    return Array.isArray(raw) ? raw : (raw.ofertas || raw.queue || []);
+  } catch {
+    return [];
+  }
 }
 
 async function applyToOfferSafe(oferta) {
@@ -52,16 +80,18 @@ async function applyToOfferSafe(oferta) {
     ];
 
     let btn = null;
+    let clicked = false;
     for (const sel of applySelectors) {
       btn = page.locator(sel).first();
       if ((await btn.count()) > 0) {
         await btn.click();
         log(`✅ Click en botón de postulación: ${sel}`);
+        clicked = true;
         break;
       }
     }
 
-    if (!btn) {
+    if (!clicked) {
       throw new Error("Ningún selector de postulación funcionó.");
     }
 
@@ -84,7 +114,7 @@ async function applyToOfferSafe(oferta) {
           log(`✅ Confirmado con selector: ${sel}`);
           break;
         }
-      } catch {}
+      } catch { /* siguiente selector */ }
     }
 
     await page.waitForTimeout(2000);
@@ -98,4 +128,74 @@ async function applyToOfferSafe(oferta) {
   }
 }
 
-module.exports = { applyToOfferSafe };
+/**
+ * Entry point CLI/PM2. Sin --auto: solo reporta cola y sale (semi-auto).
+ */
+async function main(argv = process.argv) {
+  const policy = resolveApplyPolicy(argv);
+  const queue = loadQueue();
+
+  log(`Modo: ${policy.mode} | Cola: ${queue.length} oferta(s)`);
+
+  if (policy.dryRun) {
+    if (queue.length === 0) {
+      log('SEMI-AUTO: sin cola y sin --auto. Nada que hacer. (OK)');
+    } else {
+      log(`SEMI-AUTO: ${queue.length} pendiente(s). NO se postula sin --auto.`);
+      queue.slice(0, 5).forEach((o, i) => {
+        log(`  ${i + 1}. ${o.titulo || o.title || '?'} — ${o.url || ''}`);
+      });
+      log('Para LIVE: node scripts/jobs/computrabajo_apply.js --auto');
+    }
+    return { mode: policy.mode, applied: 0, skipped: queue.length };
+  }
+
+  // LIVE: requiere credenciales y al menos un item
+  if (!process.env.COMPUTRABAJO_EMAIL || !process.env.COMPUTRABAJO_PASS) {
+    log('❌ LIVE abortado: faltan COMPUTRABAJO_EMAIL / COMPUTRABAJO_PASS en .env');
+    process.exitCode = 1;
+    return { mode: policy.mode, applied: 0, error: 'missing_credentials' };
+  }
+
+  if (queue.length === 0) {
+    log('LIVE: cola vacía. Nada que aplicar.');
+    return { mode: policy.mode, applied: 0, skipped: 0 };
+  }
+
+  let applied = 0;
+  const remaining = [];
+  for (const oferta of queue) {
+    if (!oferta.url) {
+      log(`⏭ Sin URL, se omite: ${oferta.titulo || '?'}`);
+      continue;
+    }
+    const result = await applyToOfferSafe(oferta);
+    if (result.exito) {
+      applied += 1;
+      log(`✅ Aplicado: ${oferta.titulo}`);
+    } else {
+      remaining.push(oferta);
+      log(`⚠ Falló, se retiene en cola: ${oferta.titulo} — ${result.razon}`);
+    }
+  }
+
+  // Persistir cola residual
+  try {
+    fs.mkdirSync(path.dirname(QUEUE_PATH), { recursive: true });
+    fs.writeFileSync(QUEUE_PATH, JSON.stringify(remaining, null, 2), 'utf8');
+  } catch (e) {
+    log(`⚠ No se pudo actualizar cola: ${e.message}`);
+  }
+
+  log(`LIVE terminado. Aplicadas: ${applied} | Quedan: ${remaining.length}`);
+  return { mode: policy.mode, applied, skipped: remaining.length };
+}
+
+module.exports = { applyToOfferSafe, resolveApplyPolicy, loadQueue, main };
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(`❌ ${e.message}`);
+    process.exit(1);
+  });
+}

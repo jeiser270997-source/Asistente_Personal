@@ -49,3 +49,23 @@
 - Si no matchea → `isImportant()` clasifica como importante o basura
 - Adjuntos: extraídos a función `processAttachments()` compartida entre todos los handlers
 - `noreply`/`no-reply` eliminados de JUNK_KEYWORDS por causar falsos negativos
+
+## Job Hunter semi-auto por defecto (2026-07-20)
+
+**Contexto:** `job_loop.js` postulaba en LIVE si no se pasaba `--dry-run`. PM2 lo lanzaba sin flags → postulaciones no supervisadas. `computrabajo_apply.js` no tenía `main` (proceso PM2 no-op). La doc prometía semi-auto y el código no lo cumplía.
+**Decisión:**
+- Default = SEMI-AUTO (`dryRun=true`). LIVE solo con `--auto` explícito.
+- Si coexisten `--auto` y `--dry-run`, gana dry-run (fail-safe).
+- PM2 (`ecosystem.config.js`) pasa `args: "--dry-run"` a `job-loop` y `computrabajo-apply`.
+- Nunca poner `--auto` en ecosystem sin aprobación humana.
+- Tests de política en `tests/job_apply_policy.test.js`.
+
+## Email LLM always sensitive (FIX-009, 2026-07-20)
+
+**Contexto:** Heurística de keywords dejaba pasar correos con PII genérica (nómina, cédula, CESDE) a proveedores cloud.
+**Decisión:** Single-tenant → `summarizeEmails` siempre llama `askLLM(..., sensitive=true)`. Costo de proxy local irrelevante frente a filtrar PII personal.
+
+## Filtro anti-ciclo de auditoría + ops con agentes (2026-07-20)
+
+**Contexto:** Ciclo vicioso de auditorías (R1–R6) sin síntoma nuevo; riesgo de sobre-ingeniería y churn.
+**Decisión:** Principio 8 en AGENTS.md — si no está roto y cumple función, solo mantenimiento. Nueva ronda solo con fallo real, regresión de tests o requisito explícito de Jeiser. Operación con DeepSeek V4 Flash + tools documentada en `docs/AGENT_OPS.md`: viable con frenos (tests, semi-auto, scope mínimo).

@@ -90,11 +90,9 @@
 1. **Importar .ics a Google Calendar** — `data/artifacts/cesde_introductorio_julio2026.ics` (Revisar si falta alguna clase).
 *Nota: Excel SENA aprobado (falta bajar certificado). El gap 2022-2024 se cubre con DiDi y estudios autónomos (vibecoding).*
 
-## 🔑 Credenciales (referencia — almacenadas en .env / gestor de contraseñas)
-- **SENA Moodle:** Usuario `1019156838` — contraseña en gestor de contraseñas
-- **DIAN MUISCA:** Usuario `1019156838` — contraseña en gestor de contraseñas
-- **Computrabajo:** `jeiser270997@gmail.com` — contraseña en gestor de contraseñas
-- **Placa:** KEW496 · CC: 1019156838
+## 🔑 Credenciales (referencia — solo en .env / gestor de contraseñas)
+- **SENA Moodle / DIAN MUISCA / Computrabajo / CC / placas:** ver `.env` y gestor de contraseñas.
+- **No versionar** usuarios, cédula, emails ni contraseñas en este archivo.
 
 ## 🏗️ Upgrade LifeOS Jul 2026 — WheelSaver Audit
 

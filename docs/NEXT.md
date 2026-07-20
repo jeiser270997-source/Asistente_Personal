@@ -1,5 +1,15 @@
 # Proximo paso
 
+> **Filtro (2026-07-20):** Ronda 6 cerrada (semi-auto jobs, email sensitive, tests).  
+> No abrir otra auditoría general sin síntoma. Esta lista es backlog, no obligación.
+
+## 0. En uso diario (no es deuda bloqueante)
+
+- PM2 con job-loop / computrabajo-apply en `--dry-run`
+- LIVE solo: `node scripts/jobs/job_loop.js --auto` con supervisión
+- Gate: `npm test` + `npm run runtime:ci`
+- Agentes: ver `docs/AGENT_OPS.md`
+
 ## 1. Feedback loop para aplicaciones
 
 Cuando llegue respuesta (email de rechazo/entrevista), actualizar el scoring para aprender.

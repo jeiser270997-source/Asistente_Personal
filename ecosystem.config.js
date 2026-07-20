@@ -94,18 +94,21 @@ module.exports = {
       autorestart: false,
     },
 
-    // Computrabajo auto-apply — lun-vie 9am Colombia (2pm UTC)
+    // Computrabajo apply — SEMI-AUTO (sin --auto: solo reporta cola, no postula)
+    // LIVE solo manual: pm2 start ... -- --auto  o  node scripts/jobs/computrabajo_apply.js --auto
     {
       name: "computrabajo-apply",
       script: "./scripts/jobs/computrabajo_apply.js",
+      args: "--dry-run",
       cron_restart: "0 14 * * 1-5",
       autorestart: false,
     },
 
-    // Job loop — lun-vie 10am Colombia (3pm UTC)
+    // Job loop — SEMI-AUTO por defecto (scrape + score + CV; NO postula sin --auto)
     {
       name: "job-loop",
       script: "./scripts/jobs/job_loop.js",
+      args: "--dry-run",
       cron_restart: "0 15 * * 1-5",
       autorestart: false,
     },

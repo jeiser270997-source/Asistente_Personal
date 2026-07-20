@@ -33,3 +33,36 @@ Para monitorear el estado de los daemons en tiempo real:
 pm2 status
 pm2 monit
 ```
+
+## Job Hunter (semi-auto)
+
+Por defecto **no postula** en Computrabajo. PM2 corre `job-loop` y `computrabajo-apply` con `--dry-run` (scrape/score/CV o reporte de cola).
+
+```bash
+# Solo analizar / preparar (default)
+node scripts/jobs/job_loop.js
+
+# Postular de verdad (requiere supervisión humana)
+node scripts/jobs/job_loop.js --auto
+node scripts/jobs/computrabajo_apply.js --auto
+```
+
+Nunca añadir `--auto` a `ecosystem.config.js` sin aprobación explícita.
+
+## Calidad / gate local
+
+```bash
+npm test                 # suite vitest
+npm run runtime:ci       # guardrail de paths
+```
+
+## Modo agente (DeepSeek + herramientas)
+
+LifeOS está pensado para que un agente con herramientas lo mantenga:
+
+1. **Filtro:** si no está roto → no re-auditar; solo mantenimiento cuando haya síntoma.
+2. **Contrato:** leer `AGENTS.md` + `ESTADO_VIVO.md` al inicio de sesión.
+3. **Verificar:** tras un fix, `npm test`. Si falla un scraper, arreglar selectores; no reescribir el stack.
+4. Detalle y límites: sección *Uso con agentes* en `AGENTS.md`.
+
+Estado de la última auditoría aplicada: `docs/wheelsaver_audit_lifeos_2026-07-20.md` (Ronda 6 implementada).

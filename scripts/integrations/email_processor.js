@@ -238,14 +238,11 @@ Formato obligatorio: [{"id":"...","from":"...","subject":"...","summary":"...","
 Correos:
 ${emails.map(e => `- ID: ${e.id} | De: ${e.from} | Asunto: ${e.subject} | Cuerpo: ${e.body.substring(0, 500)}`).join('\n')}`;
 
-  // Detección heurística de PII o contenido financiero/legal (FIX-001)
-  const isSensitive = emails.some(e => {
-    const txt = `${e.from} ${e.subject} ${e.body || ''}`.toLowerCase();
-    return /dian|simit|comparendo|multa|bancolombia|nequi|daviplata|juridico|embargo|coactivo|deuda|fiscalia/i.test(txt);
-  });
+  // Single-tenant: TODO correo personal puede llevar PII (cédula, dirección, nómina).
+  // Siempre sensitive=true → proxy local / fail-closed (FIX-009 cerrado 2026-07-20).
+  const isSensitive = true;
 
   try {
-    // Uso del servicio unificado con bandera de sensibilidad (fail-closed local-only activo)
     const res = await askLLM(prompt, [], 0.1, null, isSensitive);
     const raw = (res.content || '').trim();
     const parsed = JSON.parse(raw);

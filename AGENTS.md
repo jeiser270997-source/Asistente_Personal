@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-19 (round 4: email processor fixes)
+**Última actualización:** 2026-07-20 (round 6: job semi-auto + email sensitive + PII)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -10,6 +10,27 @@
 5. **Un origen de verdad.** No duplicar estado; usar `lib/data/paths.js` como acceso centralizado.
 6. **La IA es un amplificador, no un requisito.** El sistema debe funcionar aunque el LLM esté deshabilitado.
 7. **Single-Tenant Absoluto (NO SaaS).** Este sistema es personal y exclusivo para Jeiser.
+8. **Filtro anti-ciclo de auditoría.** Si no está roto y cumple su función → solo mantenimiento. No re-auditar por deporte. Nueva ronda solo con: fallo real, regresión de tests, o cambio de requisito de Jeiser.
+
+## Uso con agentes (DeepSeek V4 Flash + herramientas)
+
+**Modelo operativo (Jul 2026):** Jeiser abre un agente, activa DeepSeek V4 Flash, y pide usar herramientas del repo (leer código, correr tests, arreglar). Si algo se daña, el mismo agente repara.
+
+| Qué sí | Qué no |
+|--------|--------|
+| Fallo de scraper / test rojo / proceso PM2 caído | "Audita todo otra vez" sin síntoma |
+| `npm test` + fix puntual | Reescribir arquitectura sin bug |
+| Ajustar selectores o reglas JSON | Añadir frameworks "por si acaso" |
+| Commit de fix verificado | Refactor cosmético masivo |
+
+**Gate antes de tocar código:**
+1. ¿Hay error reproducible o test fallando? → arreglar.
+2. ¿Solo "mejoraría"? → NO, es mantenimiento diferible.
+3. Tras fix: `npm test` (y `npm run runtime:ci` si tocó paths/stores).
+
+**Optimizado para agentes:** sí a nivel de contrato (AGENTS.md, paths canónicos, fail-closed, tests de política, semi-auto jobs). No es a prueba de alucinaciones: DeepSeek puede romper scrapers o inventar deps — el freno es tests + no poner `--auto` en PM2 + principio 8.
+
+**DeepSeek horario:** preferir valle (11pm–8am COT) para tokens baratos; fuera de valle el runtime LifeOS usa fallbacks. El *agente de coding* con DeepSeek es independiente del horario del `llm_service` de producción.
 
 ## Arquitectura general (patrón LifeOS)
 
@@ -49,7 +70,7 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 *Datos personales detallados en `data/state/contexto_maestro/ESTADO_VIVO.md`*
 
 **Perfil técnico:** QA Automation Junior · Playwright · JS/TS · Node.js · Git · GitHub Actions · Postman · SQL
-**Stack real:** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `valibot` · `fuse.js` · `googleapis` · `cheerio`
+**Stack real:** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `fuse.js` · `googleapis` · `cheerio`
 **Proyecto clave:** LifeOS (~~13 workflows GHA~~ → 19 procesos PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
 **CESDE:** Sábados 7am-6pm (próximo horario) · Lun/Mié/Vie 6-8pm
 **SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
@@ -77,8 +98,8 @@ Runtime local vía PM2 (`ecosystem.config.js`). Arrancar con `pm2 start`.
 | simit-checker | cron | 7am COT (12pm) |
 | dian-scraper | cron | lun 9am COT (2pm) |
 | computrabajo-scraper | cron | lun-vie 8am COT (1pm) |
-| computrabajo-apply ⚠️ | cron | lun-vie 9am COT (2pm) |
-| job-loop | cron | lun-vie 10am COT (3pm) |
+| computrabajo-apply ⚠️ | cron | lun-vie 9am COT (2pm) — **SEMI-AUTO** (`--dry-run`) |
+| job-loop ⚠️ | cron | lun-vie 10am COT (3pm) — **SEMI-AUTO** (`--dry-run`) |
 | healthcheck | cron | 8am COT (1pm) |
 | recordatorio-deepseek | cron | 6am/7pm/10pm COT |
 | document-pipeline | cron | 9am COT (2pm) |
@@ -86,9 +107,10 @@ Runtime local vía PM2 (`ecosystem.config.js`). Arrancar con `pm2 start`.
 | backup-dbs | cron (tsx) | 11pm COT (4am) |
 | pm2-health | daemon | always-on |
 
-> **⚠️ computrabajo-apply**: Opera en modo SEMI-AUTO por defecto (sin flag `--auto`).
-> Si no hay token Telegram configurado, no aplica ofertas. Nunca ejecutar con `--auto`
-> sin supervisión humana. Política: modo semi-auto siempre, full-auto solo con aprobación explícita.
+> **⚠️ Job Hunter (semi-auto obligatorio en PM2):**
+> - `job-loop` y `computrabajo-apply` corren con `--dry-run` por defecto (scrape/score/CV o reporte de cola; **no postulan**).
+> - LIVE solo manual con supervisión: `node scripts/jobs/job_loop.js --auto` o `node scripts/jobs/computrabajo_apply.js --auto`.
+> - Nunca añadir `--auto` a `ecosystem.config.js` sin aprobación explícita de Jeiser.
 
 ## Comandos Rápidos (SSH / Local)
 
@@ -191,6 +213,16 @@ Auditoría de clasificación de correos y refactorización.
 | **R4-03** [MEDIUM] | `email_processor.js`: Refactor — lógica de descarga de adjuntos extraída a función compartida `processAttachments()`. Ahora se llama desde `action.archive`, `action.notify` y fallback `isImportant()`. Antes solo se ejecutaba en el fallback. | ✅ |
 | **R4-04** [LOW] | `brain_orchestrator.js`: Keywords sincronizadas con `email_processor.js` + eliminar encoding roto en patrones regex. | ✅ |
 | **R4-05** [LOW] | `docs/DECISIONS.md`: Add entry about email classifier ordering. | ✅ |
+
+### Ronda 6 (20/07/2026 — Job semi-auto + PII + deuda operativa)
+
+| Fix | Prioridad | Descripción | Estado |
+|:---:|:---------:|-------------|:-----:|
+| **R6-01** | 🔴 CRITICAL | `job_loop.js`: default SEMI-AUTO; LIVE solo con `--auto`; PM2 con `--dry-run` | ✅ |
+| **R6-02** | 🔴 CRITICAL | `computrabajo_apply.js`: entrypoint `main` + misma política; deja de ser no-op en PM2 | ✅ |
+| **R6-03** | 🔴 HIGH | `email_processor.js`: `sensitive=true` siempre al resumir con LLM (FIX-009) | ✅ |
+| **R6-04** | 🟠 MEDIUM | PII redactada en `ESTADO_VIVO.md` (credenciales → .env) | ✅ |
+| **R6-05** | 🔵 LOW | `valibot` eliminado (0 imports); tests de política en `tests/job_apply_policy.test.js` | ✅ |
 
 ## Reglas de Comportamiento
 
