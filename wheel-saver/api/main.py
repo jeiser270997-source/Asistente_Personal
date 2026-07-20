@@ -58,7 +58,12 @@ async def root(token: str = Depends(require_auth)):
 
 @app.get("/health")
 async def health(db: aiosqlite.Connection = Depends(get_db)):
-    """Healthcheck simple."""
+    """Healthcheck simple.
+    NOTA: Este endpoint NO tiene autenticación intencionadamente para
+    permitir healthchecks de uptime-kuma/escalas de monitoreo interno
+    sin token. Solo expone el conteo total de repos indexados.
+    Ver FIX-105.
+    """
     stats = await get_stats_async(db)
     return {"status": "ok", "version": "3.0.0", "repos": stats["total_repos"]}
 

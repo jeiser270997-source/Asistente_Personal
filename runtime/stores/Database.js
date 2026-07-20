@@ -9,10 +9,17 @@ const MIGRATIONS_DIR = path.resolve(__dirname, '..', 'migrations');
 let db = null;
 
 /**
- * FIX-013: Retry wrapper para SQLITE_BUSY con exponential backoff.
+ * FIX-013/103: Retry wrapper para SQLITE_BUSY.
  * Cuando múltiples procesos PM2 escriben concurrentemente, SQLite
  * puede lanzar SQLITE_BUSY incluso con WAL + busy_timeout.
- * Este wrapper reintenta automáticamente con backoff.
+ * 
+ * FIX-103: Eliminado el busy-wait síncrono que bloqueaba el event loop.
+ * Ahora se confía en SQLite's busy_timeout interno (5000ms) para manejar
+ * la espera a nivel nativo. Si aún así se produce SQLITE_BUSY (poco probable
+ * con busy_timeout=5000), se reintenta sin bloqueo activo.
+ * 
+ * Para escrituras concurrentes reales, usar WriteQueue.enqueue()
+ * que serializa las operaciones dentro del mismo proceso.
  */
 function withRetry(fn, maxRetries = 3) {
   let lastError;
@@ -23,12 +30,14 @@ function withRetry(fn, maxRetries = 3) {
       lastError = err;
       if (err.message && (err.message.includes('SQLITE_BUSY') || err.code === 'SQLITE_BUSY')) {
         if (attempt < maxRetries) {
-          const delay = Math.min(500 * Math.pow(2, attempt), 4000);
+          const delay = Math.min(100 * Math.pow(2, attempt), 1000);
           console.warn(`[DB] SQLITE_BUSY (intento ${attempt + 1}/${maxRetries}), esperando ${delay}ms...`);
-          // Sleep síncrono: bloquea el event loop pero es necesario para better-sqlite3
-          const start = Date.now();
-          while (Date.now() - start < delay) {
-            // busy-wait — única opción en API síncrona
+          // FIX-103: Sleep ligero vía Atomics.wait (no bloquea tanto como busy-wait puro)
+          // pero la verdadera espera la maneja SQLite internamente con busy_timeout=5000
+          try { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, delay); } catch {
+            // Fallback: bucle corto si Atomics.wait no está disponible (Node < 8.10 o sin --harmony-sharedarraybuffer)
+            const deadline = Date.now() + delay;
+            while (Date.now() < deadline);
           }
           continue;
         }
@@ -38,6 +47,33 @@ function withRetry(fn, maxRetries = 3) {
     }
   }
   throw lastError;
+}
+
+/**
+ * FIX-103: Versión asíncrona de withRetry para usar con WriteQueue o código async.
+ * Usa setTimeout (no bloqueante) para el backoff.
+ */
+function withRetryAsync(fn, maxRetries = 3) {
+  return new Promise((resolve, reject) => {
+    const attempt = (n) => {
+      Promise.resolve().then(() => {
+        try { resolve(fn()); }
+        catch (err) {
+          if (err.message && (err.message.includes('SQLITE_BUSY') || err.code === 'SQLITE_BUSY')) {
+            if (n < maxRetries) {
+              const delay = Math.min(100 * Math.pow(2, n), 1000);
+              console.warn(`[DB] SQLITE_BUSY (intento ${n + 1}/${maxRetries}), esperando ${delay}ms (async)...`);
+              setTimeout(() => attempt(n + 1), delay);
+              return;
+            }
+            console.error(`[DB] SQLITE_BUSY agotado tras ${maxRetries} reintentos`);
+          }
+          reject(err);
+        }
+      });
+    };
+    attempt(0);
+  });
 }
 
 function getDb() {
@@ -97,4 +133,4 @@ function close() {
   if (db) { db.close(); db = null; }
 }
 
-module.exports = { getDb, close };
+module.exports = { getDb, close, withRetry, withRetryAsync };

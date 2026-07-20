@@ -1,6 +1,47 @@
+// ─── FIX-102: Gestión de token de autenticación ───────────────────────────
 const API_BASE = "http://127.0.0.1:8000";
+const STORAGE_KEY = "wheelsaver_token";
+
+function getToken() {
+    return localStorage.getItem(STORAGE_KEY) || "";
+}
+
+function setToken(token) {
+    localStorage.setItem(STORAGE_KEY, token);
+}
+
+function getHeaders() {
+    const headers = { "Content-Type": "application/json" };
+    const token = getToken();
+    if (token) {
+        headers["x-wheelsaver-token"] = token;
+    }
+    return headers;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Mostrar/ocultar input de token según si ya hay uno guardado
+    const tokenInput = document.getElementById("token-input");
+    const currentToken = getToken();
+    if (currentToken) {
+        tokenInput.value = currentToken;
+        document.getElementById("token-status").textContent = "✅ Token configurado";
+    } else {
+        document.getElementById("token-status").textContent = "⚠️ Sin token — las llamadas a la API fallarán si hay autenticación";
+    }
+
+    document.getElementById("btn-save-token").addEventListener("click", () => {
+        const token = tokenInput.value.trim();
+        if (token) {
+            setToken(token);
+            document.getElementById("token-status").textContent = "✅ Token guardado";
+            loadStats(); // Recargar para verificar que funciona
+        } else {
+            localStorage.removeItem(STORAGE_KEY);
+            document.getElementById("token-status").textContent = "⚠️ Token eliminado";
+        }
+    });
+
     loadStats();
 
     document.getElementById("search-form").addEventListener("submit", (e) => {
@@ -13,11 +54,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+async function apiFetch(url, options = {}) {
+    const res = await fetch(url, {
+        ...options,
+        headers: { ...getHeaders(), ...options.headers }
+    });
+    if (res.status === 401) {
+        document.getElementById("token-status").textContent = "❌ Token inválido — actualiza el token en el panel superior";
+        throw new Error("No autorizado (401) — verifica el token de API");
+    }
+    if (!res.ok) throw new Error(`API Error: ${res.status}`);
+    return res.json();
+}
+
 async function loadStats() {
     try {
-        const res = await fetch(`${API_BASE}/stats`);
-        if (!res.ok) throw new Error("API Error");
-        const stats = await res.json();
+        const stats = await apiFetch(`${API_BASE}/stats`);
         
         document.getElementById("stat-repos").textContent = stats.total_repos.toLocaleString();
         document.getElementById("stat-langs").textContent = stats.languages;
@@ -47,9 +99,7 @@ async function performSearch() {
         let url = `${API_BASE}/search?q=${encodeURIComponent(q)}&limit=${limit}`;
         if (lang) url += `&language=${encodeURIComponent(lang)}`;
 
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("API Error");
-        const data = await res.json();
+        const data = await apiFetch(url);
 
         data.repos.forEach(repo => {
             const tr = document.createElement("tr");
@@ -84,9 +134,7 @@ async function performSearch() {
 
 async function triggerScrape() {
     try {
-        const res = await fetch(`${API_BASE}/scrape?min_stars=500`, { method: "POST" });
-        if (!res.ok) throw new Error("Error en API");
-        const data = await res.json();
+        const data = await apiFetch(`${API_BASE}/scrape?min_stars=500`, { method: "POST" });
         alert("Scraping iniciado en background: " + data.message);
     } catch(err) {
         alert("Error: " + err.message);

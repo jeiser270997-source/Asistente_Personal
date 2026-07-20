@@ -1,3 +1,18 @@
+# FIX-104: Cifrado age para proteger datos financieros/legales/psicológicos en reposo.
+# La clave privada la detecta Litestream automáticamente desde la variable de
+# entorno LITESTREAM_AGE_KEY. NO uses `identity` con la clave inline — Litestream
+# espera un PATH de archivo ahí, no el contenido. Usar la env var es más seguro.
+#
+# Generar par de claves:
+#   age-keygen -o /etc/litestream/key.txt
+#   cat /etc/litestream/key.txt  # ← esto es LITESTREAM_AGE_KEY
+#   age-keygen -y /etc/litestream/key.txt  # ← esto es LITESTREAM_AGE_RECIPIENT
+age:
+  recipient: ${LITESTREAM_AGE_RECIPIENT}
+  # NOTA: identity no necesita configurarse aquí explícitamente.
+  # Litestream lee LITESTREAM_AGE_KEY del entorno automáticamente.
+  # Si prefieres un archivo: identity: /etc/litestream/key.txt
+
 dbs:
   - path: data/memoria_hipocampo.db
     replicas:
