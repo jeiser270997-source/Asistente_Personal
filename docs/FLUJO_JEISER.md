@@ -29,18 +29,24 @@ node scripts/morning_wake.js --no-sleep   # prueba sin dormir
 | Postular empleo | `node scripts/jobs/job_loop.js --auto` (a mano) |
 | Alarmas | **Manual** en el teléfono / reloj — Calendar LifeOS apagado |
 
-## ¿Free-tier LLM para correo?
+## ¿Free-tier LLM / OmniRoute?
 
-**No es necesario.** Default: `EMAIL_USE_LLM` apagado → clasificación por reglas (SENA, DIAN, SIMIT, trabajo…).  
-El resumen “inteligente” lo haces con **DeepSeek en el agente** cuando te conectas.
+| Qué | Necesario |
+|-----|-----------|
+| **Wake 5am** | No LLM. Solo Open-Meteo + Telegram + caches |
+| **Correo auto** | No LLM (`EMAIL_USE_LLM=false`). Reglas. |
+| **Agente / estudio / “ayúdame con X”** | **Sí → OmniRoute** (`localhost:20128`, ya con tus APIs free) |
+| LifeOS scoring/briefing con IA | Si OmniRoute está up, LifeOS lo usa solo |
 
-| API free | ¿LifeOS la necesita? |
-|----------|----------------------|
-| OpenRouter / Groq / etc. | **No** para wake ni correo default |
-| Open-Meteo | **Sí** (clima 5am, sin key) |
-| Telegram Bot | **Sí** (recibir el informe) |
-| Google Calendar | **No** — desactivado |
-| TomTom | Opcional; si no hay key, heurística |
+Detalle: `docs/OMNIROUTE.md`
+
+| API | ¿Para qué? |
+|-----|------------|
+| **OmniRoute** | Gateway de tus free tiers (agente + LLM opcional LifeOS) |
+| Open-Meteo | Clima 5am (sin key) |
+| Telegram | Informe matutino |
+| Google Calendar | **No** — alarmas manuales |
+| TomTom | Opcional |
 
 Opt-in correo con LLM local: `EMAIL_USE_LLM=true` + LiteLLM (sensitive).
 
