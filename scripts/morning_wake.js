@@ -88,13 +88,20 @@ async function sendTelegram(text) {
       const body = await res.text().catch(() => '');
       log(`Telegram HTTP ${res.status}: ${body.slice(0, 120)}`);
       // retry without markdown
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+      const res2 = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chat_id: CHAT_ID, text: text.replace(/[*_`]/g, '').slice(0, 4000) }),
         signal: AbortSignal.timeout(15_000),
       });
+      if (!res2.ok) {
+        log(`Telegram fallback también falló: ${res2.status}`);
+        return false;
+      }
+      log('Telegram OK (texto plano)');
+      return true;
     }
+    log('Telegram OK (Markdown)');
     return true;
   } catch (e) {
     log(`Telegram error: ${e.message}`);
