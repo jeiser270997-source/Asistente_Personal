@@ -23,7 +23,7 @@ node scripts/morning_wake.js --no-sleep   # prueba sin dormir
 
 | Quieres… | Haces… |
 |----------|--------|
-| Limpiar / priorizar correos | Abres agente DeepSeek + tools; o `node scripts/integrations/email_processor.js` (solo reglas, **sin LLM free-tier**) |
+| Limpiar / priorizar correos | Agente DeepSeek; o `email_processor.js` en **modo seguro** (solo etiquetas, **no borra**, inbox intacto). Ver abajo. |
 | Estudiar CESDE/SENA | Agente + skills tutor |
 | Organizar el día | `npm run session` o solo agente |
 | Postular empleo | `node scripts/jobs/job_loop.js --auto` (a mano) |
@@ -48,7 +48,25 @@ Detalle: `docs/OMNIROUTE.md`
 | Google Calendar | **No** — alarmas manuales |
 | TomTom | Opcional |
 
-Opt-in correo con LLM local: `EMAIL_USE_LLM=true` + LiteLLM (sensitive).
+### Gmail: ¿borra correos importantes?
+
+**Default actual (fail-safe):**
+
+| Acción | ¿Qué pasa? |
+|--------|------------|
+| Importante (SENA, DIAN, multa…) | Etiqueta + ⭐ estrella. **Sigue en inbox** |
+| Bajo señal / “basura” | Etiqueta `LifeOS/BajoSenal`. **No trash, sigue en inbox** |
+| Postulación Computrabajo | Etiqueta `Trabajo/Postulaciones`. **Ya no va a papelera** |
+| Borrado permanente | **Nunca** (`users.messages.delete` no se usa) |
+
+Opt-in agresivo (solo si lo pides):
+- `EMAIL_INBOX_ZERO=true` — saca de bandeja al etiquetar  
+- `EMAIL_ALLOW_TRASH=true` — permite papelera (recuperable 30 días)  
+- `EMAIL_USE_LLM=true` — resúmenes con OmniRoute/LLM (PII: cuidado)
+
+**OmniRoute en correo:** opcional para *resumir* mejor; **no** hace el filtrado más seguro que las reglas. El riesgo de perder mail no es el LLM, era el `trash` + sacar del inbox. Eso ya se cerró.
+
+El **wake 5am no toca Gmail**.
 
 ## Pico y placa (KEW496 → 6)
 

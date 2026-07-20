@@ -24,8 +24,26 @@ const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
 const SCOPES = ['https://mail.google.com/'];
 
+// ── Política de seguridad Gmail (fail-safe) ─────────────────────────────
+// Default: NUNCA trash/delete. Solo etiquetas. El inbox no se vacía solo.
+// EMAIL_INBOX_ZERO=true  → saca de INBOX al etiquetar (inbox zero agresivo)
+// EMAIL_ALLOW_TRASH=true → permite papelera (recuperable 30d) — desaconsejado
+const INBOX_ZERO = process.env.EMAIL_INBOX_ZERO === 'true';
+const ALLOW_TRASH = process.env.EMAIL_ALLOW_TRASH === 'true';
+
 function ensureDir(p) {
   if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true });
+}
+
+/** Etiqueta un mensaje. Por defecto NO lo saca del inbox ni lo borra. */
+async function safeLabel(gmail, id, labelName, { removeInbox = INBOX_ZERO, markRead = true } = {}) {
+  const labelId = await getOrCreateLabelId(gmail, labelName);
+  const mod = { addLabelIds: [], removeLabelIds: [] };
+  if (labelId) mod.addLabelIds.push(labelId);
+  if (markRead) mod.removeLabelIds.push('UNREAD');
+  if (removeInbox) mod.removeLabelIds.push('INBOX');
+  if (!mod.addLabelIds.length && !mod.removeLabelIds.length) return;
+  await gmail.users.messages.modify({ userId: 'me', id, resource: mod });
 }
 
 function log(msg) {
@@ -341,7 +359,16 @@ async function processEmails() {
           jobAppsRegistered.push({ ...parsed, plataforma: action.label, eval: result.evaluacion });
           log(`Postulacion registrada: ${parsed.empresa} - ${parsed.cargo} fit: ${result.evaluacion?.score || '?'}%`);
         }
-        try { await gmail.users.messages.trash({ userId: 'me', id: email.id }); log(`Correo de postulacion eliminado: ${email.subject}`); } catch (e) { log(`Warning trashing email: ${e.message}`); }
+        // NUNCA trash por defecto (antes iba a papelera y se perdían confirmaciones)
+        try {
+          await safeLabel(gmail, email.id, action.label || 'Trabajo/Postulaciones');
+          if (ALLOW_TRASH) {
+            await gmail.users.messages.trash({ userId: 'me', id: email.id });
+            log(`⚠ Postulación a papelera (EMAIL_ALLOW_TRASH): ${email.subject}`);
+          } else {
+            log(`Postulación etiquetada (inbox intacto): ${email.subject}`);
+          }
+        } catch (e) { log(`Warning labeling job email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         LedgerStore.emit('email_job_application', { empresa: parsed.empresa, cargo: parsed.cargo, plataforma: action.label });
         continue;
@@ -350,28 +377,20 @@ async function processEmails() {
       if (action.isRejection) {
         log(`Rechazo detectado: ${email.subject}`);
         LedgerStore.emit('email_job_rejection', { subject: email.subject, from: email.from });
-        try { 
-            const labelId = await getOrCreateLabelId(gmail, action.label || 'Trabajo/Rechazos');
-            if (labelId) {
-                await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: [labelId] } }); 
-            }
+        try {
+          await safeLabel(gmail, email.id, action.label || 'Trabajo/Rechazos');
         } catch (e) { log(`Warning labeling email: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         continue;
       }
 
       if (action.archive) {
-        // Procesar adjuntos antes de archivar
+        // "archive" en modo seguro = etiquetar + marcar leído; NO saca de inbox salvo EMAIL_INBOX_ZERO
         await processAttachments(gmail, email);
         try {
-          const mod = { removeLabelIds: ['UNREAD'] };
-          if (action.label) {
-              const labelId = await getOrCreateLabelId(gmail, action.label);
-              if (labelId) mod.addLabelIds = [labelId];
-          }
-          await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: mod });
-          log(`Archivado: ${email.subject} -> ${action.label || '(sin etiqueta)'}`);
-        } catch (e) { log(`Error archivando: ${e.message}`); }
+          await safeLabel(gmail, email.id, action.label || 'LifeOS/Archivo');
+          log(`Etiquetado (safe): ${email.subject} -> ${action.label || 'LifeOS/Archivo'}`);
+        } catch (e) { log(`Error etiquetando: ${e.message}`); }
         if (!processedIds.includes(email.id)) processedIds.push(email.id);
         ruleActions.push(action);
         if (action.logToLedger) LedgerStore.emit('email_archived', { subject: email.subject, from: email.from, label: action.label });
@@ -422,14 +441,12 @@ async function processEmails() {
           } catch {}
         }
       } else {
-        log(`🔴 BASURA (Sin regla ni keyword): ${email.subject.substring(0, 40)}`);
+        // No es "borrar": solo etiqueta LifeOS/BajoSenal. Sigue en inbox salvo EMAIL_INBOX_ZERO.
+        log(`⚪ Bajo señal (sin keyword importante): ${email.subject.substring(0, 40)}`);
         trashCandidates.push(email.id);
-        const basuraId = await getOrCreateLabelId(gmail, 'Basura');
-        if (basuraId) {
-            try { 
-                await gmail.users.messages.modify({ userId: 'me', id: email.id, resource: { removeLabelIds: ['INBOX', 'UNREAD'], addLabelIds: [basuraId] } }); 
-            } catch (e) { log(`Warning moviendo a basura: ${e.message}`); }
-        }
+        try {
+          await safeLabel(gmail, email.id, 'LifeOS/BajoSenal', { removeInbox: INBOX_ZERO, markRead: false });
+        } catch (e) { log(`Warning label BajoSenal: ${e.message}`); }
         restEmails.push(email);
       }
       if (!processedIds.includes(email.id)) processedIds.push(email.id);
@@ -446,25 +463,34 @@ async function processEmails() {
        if(s.id) summaryMap[s.id] = s;
     }
 
-    // Inbox Zero: Procesar correos restantes (sacar de bandeja y aplicar etiquetas dinámicas)
+    // Importantes: etiquetar + estrella. NO sacar de inbox salvo EMAIL_INBOX_ZERO.
     for (const e of importantEmails) {
       try {
         const s = summaryMap[e.id];
-        const labelsToAdd = [];
-        if (s && s.suggested_label && s.suggested_label !== 'null') {
-            const labelId = await getOrCreateLabelId(gmail, s.suggested_label);
-            if (labelId) labelsToAdd.push(labelId);
-        } else {
-            labelsToAdd.push('STARRED'); // fallback
-        }
-        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'], addLabelIds: labelsToAdd } });
-      } catch (err) { log(`Warning modifying important unread: ${err.message}`); }
+        const name = (s && s.suggested_label && s.suggested_label !== 'null')
+          ? s.suggested_label
+          : 'LifeOS/Importante';
+        await safeLabel(gmail, e.id, name, { removeInbox: INBOX_ZERO, markRead: true });
+        // Estrella para que no se pierdan en el ruido
+        await gmail.users.messages.modify({
+          userId: 'me',
+          id: e.id,
+          resource: { addLabelIds: ['STARRED'] },
+        });
+      } catch (err) { log(`Warning modifying important: ${err.message}`); }
     }
 
-    for (const e of restEmails) {
-      try {
-        await gmail.users.messages.modify({ userId: 'me', id: e.id, resource: { removeLabelIds: ['UNREAD', 'INBOX'] } });
-      } catch (e) { log(`Warning modifying unread: ${e.message}`); }
+    // Bajo señal: ya etiquetados arriba; no tocar más el inbox
+    if (INBOX_ZERO) {
+      for (const e of restEmails) {
+        try {
+          await gmail.users.messages.modify({
+            userId: 'me',
+            id: e.id,
+            resource: { removeLabelIds: ['UNREAD', 'INBOX'] },
+          });
+        } catch (err) { log(`Warning inbox-zero rest: ${err.message}`); }
+      }
     }
 
     if (processedIds.length > 500) {
@@ -474,7 +500,8 @@ async function processEmails() {
     }
 
     let report = `<b>Resumen de Correos</b>\n`;
-    report += `Escaneados: ${rawEmails.length} | Descartados a 'Basura': ${trashCandidates.length}`;
+    report += `Escaneados: ${rawEmails.length} | Bajo señal (etiquetados, NO borrados): ${trashCandidates.length}`;
+    report += `\nModo: ${INBOX_ZERO ? 'inbox-zero' : 'seguro (inbox intacto)'} | trash=${ALLOW_TRASH ? 'ON' : 'OFF'} | LLM=${process.env.EMAIL_USE_LLM === 'true' ? 'ON' : 'OFF'}`;
 
     if (jobAppsRegistered.length > 0) {
       report += `\n\n<b>💼 Postulaciones Detectadas:</b>\n`;
