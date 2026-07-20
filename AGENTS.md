@@ -87,19 +87,20 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 Jeiser enciende la PC 1–2 veces al día para organizar. No daemons.
 
 ```bash
-npm run session          # correo + SENA + SIMIT + empleo semi-auto + briefing → sale
-npm run session:fast     # solo briefing (consola + Telegram si hay token)
-npm run briefing         # alias del briefing
+npm run morning          # 5am wake lean (Task Scheduler) — clima AHORA, PyP, caches, Telegram
+npm run session          # cuando te sientas: correo + SENA + SIMIT + empleo + briefing
+npm run session:fast     # solo briefing
+npm run briefing         # briefing sesión (con fallback)
 ```
 
-| Comando | Qué hace |
-|---------|----------|
-| `npm run session` | Rutina de sesión completa (corre y termina) |
-| `npm run session:fast` | Solo briefing |
-| `node scripts/jobs/job_loop.js --auto` | Postular (solo a mano, supervisión) |
+| Comando | Cuándo |
+|---------|--------|
+| `npm run morning` | Auto 5am (sleep/wake). Sin LLM obligatorio. No apaga PC. |
+| `npm run session` | 1–2 veces al día, a mano, organización completa |
+| `job_loop.js --auto` | Solo postular empleo con supervisión |
 
-`ecosystem.config.js` (PM2) queda **opcional/legacy**. No es el flujo diario.  
-Si tienes PM2 colgado: `pm2 kill`.
+Task Scheduler: ver `docs/MORNING_WAKE.md`.  
+`ecosystem.config.js` (PM2) = legacy. Si molesta: `pm2 kill`.
 
 ## Comandos Rápidos (SSH / Local)
 

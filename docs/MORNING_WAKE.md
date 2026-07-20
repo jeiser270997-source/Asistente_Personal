@@ -42,22 +42,55 @@ Flags:
 - `--llm` — intenta embellecer (si free-tier truena, se ignora)
 - `--shutdown` — apagar PC (opt-in; **default no apaga**)
 
-## Actualizar Task Scheduler
+## Actualizar Task Scheduler (hazlo una vez en el PC real)
 
-Como Admin:
+Tu tarea actual (diagnosticada):
+
+```
+LifeOS_MorningRoutine  →  5:00 AM
+  node.exe scripts\daily_routine.js
+  Start in: E:\PROYECTOS\Mis_Proyectos\Asistente_Personal
+```
+
+### Opción A — script (Admin)
 
 ```powershell
-cd E:\PROYECTOS\Mis_Proyectos\Asistente_Personal   # o tu ruta real
-# tras git pull
+cd E:\PROYECTOS\Mis_Proyectos\Asistente_Personal
+git pull
+npm ci
 powershell -ExecutionPolicy Bypass -File scripts\setup_wakeup_routine.ps1 -UnregisterExisting
 ```
 
-O edita la tarea `LifeOS_MorningRoutine`:
-- Programa: `node.exe`
-- Argumentos: `scripts\morning_wake.js`
-- Inicio en: carpeta del repo **con .env**
-- Wake to run: ON
-- **No** “stop if runs longer than…” demasiado corto (mín 30 min)
+### Opción B — a mano (taskschd.msc)
+
+1. Abre **Programador de tareas** → `LifeOS_MorningRoutine`
+2. Acciones → Editar:
+   - Programa: `C:\Program Files\nodejs\node.exe`
+   - Argumentos: `scripts\morning_wake.js`
+   - Iniciar en: `E:\PROYECTOS\Mis_Proyectos\Asistente_Personal` (donde está el `.env`)
+3. Condiciones → ☑ **Reactivar el equipo para ejecutar esta tarea**
+4. Configuración → si falla, reintentar cada 10 min, hasta 2 veces
+
+### Opción C — sin tocar la tarea
+
+`daily_routine.js` **ya redirige** a `morning_wake.js` por defecto (salvo `--full-legacy`).  
+Con `git pull` en esa carpeta, mañana a las 5am ya usa el wake lean.
+
+### Basura de tareas a desactivar
+
+En taskschd.msc → clic derecho → **Deshabilitar** (no borrar si no estás seguro):
+
+| Tarea | Por qué sobra |
+|-------|----------------|
+| `LifeOS_Brain_Morning` | Ruta vieja / error |
+| `LifeOS_BrainOrchestrator` (×3) | Ruido 6/13/20h |
+| `LifeOS_Brain_Correos` (×3) | Duplicado |
+| `Jeiser_Brain_Orchestrator` | Legacy |
+| `LifeOS_DailyAlert` | Extra |
+| `LifeOS_AgentHeartbeat` | Extra |
+
+**Deja solo:** `LifeOS_MorningRoutine` (5am).  
+Organización diurna: `npm run session` cuando te sientes.
 
 ## Qué info necesitas a las 5am (perfil Jeiser)
 
