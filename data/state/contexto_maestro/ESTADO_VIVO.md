@@ -1,5 +1,5 @@
 # ESTADO VIVO (Perfil Maestro de Jeiser)
-**Última actualización:** 2026-07-13 (actualización contexto SIMIT — 3 multas detalladas, C29 Itagüí pagada, C14 Itagüí cobro coactivo)
+**Última actualización:** 2026-07-21 (auditoría Gmail completa + scraper Itagüí — respuesta Itagüí C14 leída, C14 confirmada pagada, DP calibración C29 radicado HOY)
 
 ## 👤 Identidad
 - **Nombre:** Jeiser Abraham Gutierrez Torres
@@ -28,9 +28,12 @@
 - **DIAN AG2025:** Declaración de renta presentada en 2026. (Ojo: esto generó actividad en el MUISCA, reforzar regla de no abrir el buzón de notificaciones).
 - **UGPP 2023:** Cerrado favorable 12/06/2026.
 - **SIMIT — Total deuda:** ~$1.862.535 (3 multas activas en sistema, **verificado por scraper**)
-  - 🔵 **Multa Medellín** — Pendiente pago (Verificado por scraper Medellín: 1 sola multa por $658.364). No se ha pagado porque Medellín no embarga rápido.
-  - 🟠 **Multa Itagüí #1** — ✅ **YA PAGADA.** Itagüí embargó y cobró. Sigue apareciendo en SIMIT por demora.
-  - ⛔ **Multa Itagüí #2 (Nueva)** — **Peligro de embargo.** (Scraper Itagüí arreglado: superado bug de truncamiento por símbolo '#' en el .env). Estrategia activa: Derecho de petición radicado 02/07/2026. Frena embargos temporalmente. Posible victoria por Silencio Administrativo el ~24 de julio. SIMIT (Martha) pide oficio para descargarla.
+  - 🔵 **C29 Medellín #0000679154** — $656,044. Pendiente pago. Sin defensa aplicada aún.
+  - 🟠 **C14 Itagüí #0000430265** — ✅ **YA PAGADA.** Confirmado por scraper Itagüí (no aparece en portal). Pero sigue en SIMIT. Itagüí respondió PQRSDF el 25 Jun NEGANDO descargue con info desactualizada (dijo que se adeudaba). FCM (Martha Mirian) pidió oficio de tránsito para nulidad.
+  - ⛔ **C29 Itagüí #0000838097** — $635,860 → $644,105 con intereses. **Peligro de embargo.** Estrategia activa:
+    - Recurso reposición radicado 06/07/2026 (AI26070618195823). Silencio Adm positivo ~24-26 Jul.
+    - DP certificado calibración radicado HOY 21 Jul (AI26072102803271).
+    - DP enviado en cuerpo del email (18 Jul), NO como PDF adjunto. Rh: no cumpla formato FCM.
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
 - **Denuncia Moto BXU28C:** NUNC 110016102535202609577 (abuso de confianza) — Fiscalía 11, radicada 20/05/2026. Consultar estado: https://www.fiscalia.gov.co/colombia/servicios-de-informacion-al-ciudadano/consultas/
 - **Denuncia NUNC 110016102838202604358:** Caso separado — Fiscalía 68 U. Intervención Temprana Bogotá. 21/05/2026: sin avances sustanciales. Contacto: fis68loctempranabog@fiscalia.gov.co
@@ -88,6 +91,9 @@
 
 ## ⚠️ Pendientes
 1. **Importar .ics a Google Calendar** — `data/artifacts/cesde_introductorio_julio2026.ics` (Revisar si falta alguna clase).
+2. **C14 — Limpiar SIMIT:** Buscar comprobante de pago en historial del portal Itagüí y enviarlo a SIMIT para que descarguen el fantasma.
+3. **C29 Itagüí — Silencio Adm:** Preparar seguimiento ~24-26 Jul si no responden al recurso reposición.
+4. **C29 Medellín — Pendiente defensa:** Sin acción aún. Decidir estrategia.
 *Nota: Excel SENA aprobado (falta bajar certificado). El gap 2022-2024 se cubre con DiDi y estudios autónomos (vibecoding).*
 
 ## 🔑 Credenciales (referencia — solo en .env / gestor de contraseñas)
