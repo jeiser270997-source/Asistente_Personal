@@ -8,20 +8,22 @@
 3. **Configuración antes que código.** Las reglas viven en JSON, no en ifs dispersos.
 4. **Medir antes de optimizar.** Toda automatización debe producir métricas.
 5. **Un origen de verdad.** No duplicar estado; usar `lib/data/paths.js` como acceso centralizado.
-6. **La IA es un amplificador, no un requisito.** El sistema debe funcionar aunque el LLM esté deshabilitado.
-7. **Single-Tenant Absoluto (NO SaaS).** Este sistema es personal y exclusivo para Jeiser.
+6. **El Sistema es el Cuerpo, el Agente es el Cerebro.** LifeOS funciona determinísticamente como un cuerpo autónomo local. Al no existir APIs de LLM gratuitas/continuas para procesos en segundo plano 24/7, la inteligencia interactiva y el razonamiento analítico los aporta el Agente de IA (Antigravity, OpenCode, etc.) impulsado por modelos como **DeepSeek V4 Flash** al iniciar una sesión interactiva.
+7. **Single-Tenant Absoluto (NO SaaS).** Este sistema es personal y exclusivo para Jeiser. Cero sobre-ingeniería para escalabilidad multi-usuario o microservicios innecesarios.
 8. **Filtro anti-ciclo de auditoría.** Si no está roto y cumple su función → solo mantenimiento. No re-auditar por deporte. Nueva ronda solo con: fallo real, regresión de tests, o cambio de requisito de Jeiser.
 
-## Uso con agentes (DeepSeek V4 Flash + herramientas)
+## Modelo Operativo "Cuerpo & Cerebro" (Agentes + DeepSeek V4 Flash)
 
-**Modelo operativo (Jul 2026):** Jeiser abre un agente, activa DeepSeek V4 Flash, y pide usar herramientas del repo (leer código, correr tests, arreglar). Si algo se daña, el mismo agente repara.
+**Concepto Clave:**
+- **LifeOS = El Cuerpo:** Contiene la estructura física (scripts Node.js/TypeScript, base de datos SQLite WAL `data/memoria_hipocampo.db`, Rule Engine determinista, Event Bus con Transactional Outbox, scrapers Playwright/Cheerio y notificaciones). Se ejecuta localmente on-demand (`npm run morning`, `npm run session`) sin requerir llamadas de pago a LLM 24/7.
+- **Agente de IA = El Cerebro:** Dado que no se cuenta con APIs gratis de LLM en producción continua, la inteligencia interactiva reside en el agente (ej. Antigravity o OpenCode CLI con DeepSeek V4 Flash). Al abrir una sesión, el agente actua como el cerebro que habita el cuerpo: lee `ESTADO_VIVO.md`, consulta memorias en SQLite, ejecuta `npm test`, repara scrapers y responde a las necesidades de Jeiser.
 
-| Qué sí | Qué no |
-|--------|--------|
-| Fallo de scraper / test rojo / proceso PM2 caído | "Audita todo otra vez" sin síntoma |
-| `npm test` + fix puntual | Reescribir arquitectura sin bug |
-| Ajustar selectores o reglas JSON | Añadir frameworks "por si acaso" |
-| Commit de fix verificado | Refactor cosmético masivo |
+| Qué sí hace el Agente | Qué no hace |
+|-----------------------|-------------|
+| Diagnóstico activo + fix puntual tras fallo reproducible | "Auditar por deporte" sin síntoma ni bug |
+| Correr `npm test` y mantener 100% tests verdes | Añadir frameworks/microservicios "por si acaso" |
+| Ajustar selectores CSS/XPath o reglas JSON deterministas | Reescribir arquitecturas estables que ya funcionan |
+| Commits limpios con verificación empírica previa | Refactors cosméticos masivos que metan deuda técnica |
 
 **Gate antes de tocar código:**
 1. ¿Hay error reproducible o test fallando? → arreglar.
@@ -81,27 +83,63 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 - Hustler pragmático: trabaja en DiDi, estudia CESDE/SENA y programa infraestructura compleja
 - Trato: comunicación técnica directa, cero explicaciones básicas
 
-## Automatizaciones
+## Conexiones y APIs Disponibles (Herramientas del Cuerpo)
 
-**Runtime canónico (Jul 2026): on-demand, sin PM2, sin PC 24/7.**
+LifeOS cuenta con integraciones locales y servicios conectados sin depender de suscripciones LLM de pago:
 
-Jeiser enciende la PC 1–2 veces al día para organizar. No daemons.
+| API / Integración | Propósito y Uso | Modo |
+|-------------------|-----------------|------|
+| **Gmail API** (`googleapis`) | Leer, clasificar, etiquetar correos y ejecutar Inbox Zero | Interactivo / Script determinista |
+| **Google Calendar API** | Consultar agenda, horarios CESDE, clases SENA y bloques de trabajo | Interactivo / Script |
+| **Telegram Bot API** (`telegraf`) | Envío de notificaciones matutinas, briefs y alertas urgentes | Salida de alertas |
+| **Scrapers (Playwright / Cheerio)** | Extracción de datos en SIMIT (multas), SENA Zajuna (tareas), Computrabajo (QA jobs) y DIAN | Interactivo / Script |
+| **Persistencia SQLite WAL** | Memoria continua de hechos, aplicaciones y casos (`data/memoria_hipocampo.db`) | Local continuo |
+| **ntfy / Apprise** | Notificaciones push de alta prioridad en dispositivos | Salida de notificaciones |
+
+## Capacidades: ¿Qué puede hacer el Agente en Sesión?
+
+Cuando Jeiser inicia una sesión interactiva (Antigravity / OpenCode + DeepSeek V4 Flash), el Agente actúa como el **Cerebro Activo** y puede:
+
+1. **Gestión de Correo (Gmail):** Procesar la bandeja de entrada, mover promociones a spam, filtrar notificaciones importantes de SENA/DIAN y aplicar `EMAIL_INBOX_ZERO=true`.
+2. **Organización de Calendario y Agenda:** Revisar horarios, verificar choques entre estudio CESDE (Sábados/Noches), clases SENA y jornadas de conducción DiDi.
+3. **Estudio Interactivo & Bootcamp QA Personalizado:**
+   - Guiar la ruta de aprendizaje de **QA Automation Junior** (28 semanas: Playwright, TS, Postman, SQL, Docker).
+   - Utilizar la **Técnica Feynman** y preguntas socráticas para resolver dudas, repasar bases de datos Zajuna y realizar talleres.
+4. **Búsqueda Laboral & Tailoring de CV:** Analizar ofertas de empleo QA en Colombia, calcular match empírico (`scorer.js`) y adaptar el CV para cada postulación.
+5. **Diagnóstico y Reparación de Código:** Correr `npm test`, arreglar scrapers caídos por cambio de HTML y mantener el proyecto en 100% verde.
+
+## Únicas Automatizaciones en Segundo Plano (Strictly Deterministic — SIN LLM)
+
+Para evitar alucinaciones, cuotas caídas de APIs gratis, costos y errores por respuestas variables, **las automatizaciones en background son 100% determinísticas (Zero LLM)** y sencillas:
 
 ```bash
-npm run morning          # ÚNICO auto: 5am wake → informe → sleep otra vez
-npm run morning -- --no-sleep
-npm run session          # opcional al sentarte (scrapers)
+npm run morning          # Ejecución matutina automática
+npm run session          # Sesión local programada
 ```
 
-| Qué | Cómo |
-|-----|------|
-| Auto | Solo `morning_wake` (Telegram). **Vuelve a sleep.** Sin LLM. |
-| Correo / estudio | Agente + **OmniRoute** (`localhost:20128`). Correo auto **sin** LLM. |
-| Calendar / alarmas | **Manual.** LifeOS no escribe Calendar. |
-| Pico y placa KEW496 | Desde **2026-08-04: LUNES 05:00–20:00** (`data/config/pico_placa.json`) |
-| Free-tier APIs | Configúralas en **OmniRoute**; LifeOS las usa vía gateway (`docs/OMNIROUTE.md`) |
+| Horario | Función Automática | LLM Usado | Canal |
+|---------|--------------------|-----------|-------|
+| **05:00 AM / 06:00 AM** | **Briefing Matutino:** Pico y Placa (KEW496), clima, estado de clases SENA/CESDE y tareas del día | ❌ NINGUNO (Reglas JSON / SQL) | Telegram |
+| **08:15 AM** | **Briefing de Inicio de Trabajo:** Recordatorio de arranque de jornada laboral/estudio | ❌ NINGUNO (Reglas deterministas) | Telegram |
 
-Detalle: `docs/FLUJO_JEISER.md` · `docs/MORNING_WAKE.md` · `docs/OMNIROUTE.md`.
+> ⚠️ **REGLA INQUEBRANTABLE:** Ninguna automatización de fondo (cron/background) debe depender de llamadas a APIs de LLM gratuitas. Todo el background debe ser determinista, rápido, liviano y cero fallos.
+
+## Catálogo de Skills Disponibles
+
+| Skill | Función y Uso |
+|-------|---------------|
+| **qa_bootcamp** | Tutoría socrática especializada en QA Automation, Playwright, TS y roadmap de 28 semanas. |
+| **tutor** | Explicación académica mediante la Técnica Feynman (simplificar conceptos complejos). |
+| **career-qa** / **job_hunter** | Estrategia laboral QA, optimización de perfil, simulación de entrevistas y tailoring de CV. |
+| **finanzas_didi** | Control presupuestal para ingresos DiDi, deudas tributarias DIAN y metas de ahorro. |
+| **transito-colombia-defensa** | Asesoría legal en tránsito colombiano, derechos en retenes e impugnación de fotomultas SIMIT. |
+| **tributaria-colombia-defensa** | Defensa y seguimiento de obligaciones tributarias persona natural ante la DIAN (UVT 2026). |
+| **anti-sycophancy** | Sinceridad radical (cero adulación, prioriza la verdad objetiva). |
+| **buen_gusto** | Filtro anti-slop para garantizar comunicación pulida, profesional y estética. |
+| **ciberseguridad** | Buenas prácticas de seguridad en software bajo estándares MITRE/NIST. |
+| **memory-engine** | Gestión de persistencia semántica y contextual en la DB SQLite. |
+
+## Automatizaciones CLI
 
 ## Comandos Rápidos (SSH / Local)
 

@@ -5,13 +5,11 @@
 const path = require('node:path');
 const fs = require('node:fs');
 
-// Mock LLM to avoid real API calls
-// Variable con prefijo 'mock' para que vitest la hoistee correctamente
-const mockAskLLM = vi.fn().mockResolvedValue({
+const llmService = require('../lib/ai/llm_service');
+vi.spyOn(llmService, 'askLLM').mockResolvedValue({
   content: JSON.stringify({ alignmentScore: 7, strengths: ['XP'], weaknesses: [], redFlags: [], reasoning: 'test' }),
   usage: { total_tokens: 50 },
 });
-vi.mock('../lib/ai/llm_service', () => ({ askLLM: mockAskLLM }));
 
 // Mock reader to return test weights
 vi.mock('../lib/data/reader', () => ({

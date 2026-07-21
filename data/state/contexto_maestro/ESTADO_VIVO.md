@@ -16,48 +16,42 @@
 - **Estilo preferido:** Respuestas cortas, directas, sin adulación. Si está equivocado, decirlo.
 - **Filosofía:** Verdad radical. Cero rodeos.
 
-## 💰 Financiero
+## 💰 Financiero y Vehículo (Toyota Corolla KEW496)
 - **Ingreso actual:** Conductor DiDi (Meta: $260,000 COP brutos / $200,000 netos diarios)
 - **Gastos Fijos Detectados:** Arriendo ($1,300,000) + Servicios EPM (~$308,000). Total base mensual: ~$1.6M
-- **Estrategia DiDi:** Turnos fraccionados (AM 5:00-10:30 y PM 15:30-20:00). 
-  - Regla estricta: NO CONDUCIR de 10:30 AM a 3:30 PM por ola de calor.
-  - Carro: Toyota Corolla 2010 ([REDACTED - Ver .env]) - Rendimiento 8 km/L.
-  - Táctica: Viajes menores a 20 min, zonas planas, maximizar bonos nocturnos.
-- **Deuda DIAN AG2023:** ~$9.8M vencida. **REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.** Prescripción ~09/2029.
+- **Métricas de Operación y Gasolina (KEW496):**
+  - **Gasolina:** Galón entre $16.000 y $16.500 COP. Tanqueo de $30.000 COP rinde 60 km.
+  - **Costo de combustible por km:** **$500 COP / km**.
+  - **Cobro de referencia por km:** **$2.000 COP / km**.
+  - **Ganancia Neta por km:** **$1.500 COP / km** (Margen del 75%).
+  - **Estrategia DiDi:** **Viajes cortos exclusivamente** (máximo 20 minutos totales entre recogida y entrega, zonas planas, evitar trancones).
+  - **Horario estricto:** Turnos AM (05:00-10:30) y PM (15:30-20:00). **Prohibido conducir entre 10:30 AM y 3:30 PM** por ola de calor.
+- **Deuda DIAN AG2023:** ~$9.8M vencida. **REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.** Prescripcion ~09/2029.
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
-- **DIAN AG2025:** Declaración de renta presentada en 2026. (Ojo: esto generó actividad en el MUISCA, reforzar regla de no abrir el buzón de notificaciones).
-- **UGPP 2023:** Cerrado favorable 12/06/2026.
-- **SIMIT — Total deuda:** ~$1.862.535 (3 multas activas en sistema, **verificado por scraper**)
-  - 🔵 **C29 Medellín #0000679154** — $656,044. Pendiente pago. Sin defensa aplicada aún.
-  - 🟠 **C14 Itagüí #0000430265** — ✅ **YA PAGADA.** Confirmado por scraper Itagüí (no aparece en portal). Pero sigue en SIMIT. Itagüí respondió PQRSDF el 25 Jun NEGANDO descargue con info desactualizada (dijo que se adeudaba). FCM (Martha Mirian) pidió oficio de tránsito para nulidad.
-  - ⛔ **C29 Itagüí #0000838097** — $635,860 → $644,105 con intereses. **Peligro de embargo.** Estrategia activa:
-    - Recurso reposición radicado 06/07/2026 (AI26070618195823). Silencio Adm positivo ~24-26 Jul.
-    - DP certificado calibración radicado HOY 21 Jul (AI26072102803271).
-    - DP enviado en cuerpo del email (18 Jul), NO como PDF adjunto. Rh: no cumpla formato FCM.
+- **SIMIT — Total deuda:** ~$1.867.199 (3 multas activas en sistema, **verificado en tiempo real 21/07/2026**)
+  - 🟡 **C29 Medellín #0000679154** — $658,900 COP ($572.628 + intereses $86.272). Pendiente pago.
+  - 🟢 **C14 Itagüí #0000430265** — ✅ **ANULADO POR ITAGÜÍ.** PDF de solicitud enviado a Martha (FCM/SIMIT) el 21/07/2026 para descargue en portal nacional.
+  - ⛔ **C29 Itagüí #0000838097** — $639,018 COP ($705,380 proyectado). **Recurso de reposición + DP calibración DEI radicado (AI26072102803271). PDF oficial enviado a FCM/SIMIT.**
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
-- **Denuncia Moto BXU28C:** NUNC 110016102535202609577 (abuso de confianza) — Fiscalía 11, radicada 20/05/2026. Consultar estado: https://www.fiscalia.gov.co/colombia/servicios-de-informacion-al-ciudadano/consultas/
-- **Denuncia NUNC 110016102838202604358:** Caso separado — Fiscalía 68 U. Intervención Temprana Bogotá. 21/05/2026: sin avances sustanciales. Contacto: fis68loctempranabog@fiscalia.gov.co
 
 ## 🎓 Académico / Educativo
 - **Institución principal:** CESDE, Medellín — **Beca 70%**
 - **Técnico Laboral en Desarrollo de Software (CESDE):** Presencial (Aula 406)
-  - 📅 **Sábados:**
-    - 07:30 - 10:30: Gestión de Bases de Datos
-    - 10:30 - 15:00: Introducción a la Programación
-    - 15:00 - 18:00: Lógica de Programación
-  - 🌐 **Virtual:** Cátedra Ser Emprendedor (Sin horario fijo)
+  - 📅 **Sábados (07:30 a 18:00):** Gestión de BD, Intro Programación, Lógica.
   - 📌 *Inicia:* Sábado 25 de julio de 2026
-- **SENA — Bases de Datos:** (ficha 3549155, Zajuna) ✅ AA1 + AA2 entregadas. AA3 en curso (08-20 Jul)
-- **SENA — Excel:** Plataforma Zajuna — pendiente confirmar nombre exacto
+- **SENA Virtual (Estrategia 4 cursos simultáneos máximo):**
+  1. 🟢 **Ficha 3565476 (NUEVO - En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Bienvenida recibida 21/07/2026. Conferencia Web Zoom: Mié 22/07 5:00 PM).
+  2. 🟢 **Ficha 3549155 (En Formación):** *Bases de Datos Generalidades y Sistemas de Gestión* (Zajuna).
+  3. 🟡 **Ficha 2459016 (Preinscrito):** *Construcción de Bases de Datos con MySQL*.
+  4. 🟡 **Ficha 2253040 (Preinscrito):** *Variables y Estructuras de Control en Python*.
+  5. 🏆 **Ficha 3510166 (Certificado/Aprobado):** *Excel 2016*.
 
-## 💼 Laboral
-- **Estado:** Búsqueda activa QA/Tech en Medellín + remoto
-- **Disponibilidad:** Lunes–Viernes tiempo completo
-- **Aplicaciones enviadas hoy (07/07/2026):**
-  - ✅ Comfenalco Antioquia — Auxiliar Soporte Técnico ($1.800.000)
-  - ✅ C.I ESLOP SAS — Auxiliar TI ($2.000.000)
-- **CV base:** `data/artifacts/jobs/cv_jeiser.html`
-- **CV optimizado soporte TI:** `data/artifacts/jobs/cv_jeiser_soporte_ti.pdf` ← usar para roles soporte/sistemas
+## 💼 Laboral & Estrategia de Postulaciones
+- **Estado:** Búsqueda activa QA Automation / Soporte TI.
+- **Política de Postulación:** **100% MANUAL por Jeiser.**
+  - El scraper de background busca vacantes en Computrabajo y calcula el score.
+  - En el briefing de las 8:15 AM se le envían las 2-3 mejores vacantes con score > 65/100 para que Jeiser ingrese y aplique manualmente.
+  - Cero auto-apply ciego para evitar quemar postulaciones con CVs no alineados.
 - **Scraper:** `scripts/revisar_ofertas.js` ✅ funciona (login OAuth + scoring DeepSeek)
 - **Auto-apply:** `scripts/computrabajo_apply.js` ✅ funciona (login + preguntas selección)
 
