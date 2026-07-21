@@ -33,8 +33,9 @@
     "runtime:ci": "node scripts/diagnostics/runtime-audit.js --ci",
     "migrate": "node runtime/migrate.js",
     "briefing": "tsx scripts/schedulers/morning_briefing.ts",
-    "alarms": "tsx scripts/set_alarms.ts",
     "backup": "tsx scripts/maintenance/backup_dbs.ts",
+    "scheduler:clean": "powershell -ExecutionPolicy Bypass -File scripts/maintenance/clean_scheduler.ps1",
+
     "wheel:search": "node scripts/integrations/wheel_saver.js search",
     "wheel:stats": "node scripts/integrations/wheel_saver.js stats",
     "wheel:top": "node scripts/integrations/wheel_saver.js top",
