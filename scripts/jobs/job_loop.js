@@ -17,7 +17,7 @@ const { askLLM } = require('../../lib/ai/llm_service');
 const { PATHS }  = require('../../lib/data/paths');
 const { escapeHTML } = require('../../lib/runtime/sanitize');
 const { chromium } = require('playwright');
-const { robustLogin } = require('./ct_login_helper');
+const { robustLogin, createLoggedInContext } = require('./ct_login_helper');
 
 const CV_BASE   = PATHS.CV_BASE;
 const CV_OUT    = PATHS.JOBS_TAILORED;
@@ -68,11 +68,18 @@ async function sendTelegram(text) {
 // â”€â”€â”€ SCRAPE LISTA DE OFERTAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function scrapeOfertasList() {
   const SEARCHES = [
+    // Tech / QA
     'soporte-tecnico-software',
     'auxiliar-sistemas',
+    'auxiliar-de-sistemas',
+    'auxiliar-ti',
+    'auxiliar-soporte',
+    'auxiliar-tecnico',
     'mesa-de-ayuda',
     'helpdesk',
     'soporte-nivel-1',
+    'soporte-tecnico',
+    'soporte-it',
     'mesa-ayuda-sistemas',
     'tester-manual-software',
     'analista-qa-software',
@@ -81,6 +88,23 @@ async function scrapeOfertasList() {
     'practicante-qa',
     'qa-trainee',
     'software-qa-analyst',
+    // Tech general
+    'auxiliar-mantenimiento',
+    'tecnico-sistemas',
+    'tecnologo-sistemas',
+    'tecnico-en-sistemas',
+    'tecnico-ti',
+    'tecnico-soporte',
+    'tecnico-informatico',
+    'auxiliar-informatica',
+    'analista-soporte',
+    'soporte-usuario',
+    'service-desk',
+    'soporte-software',
+    'soporte-hardware',
+    'monitoreo-sistemas',
+    'operador-sistemas',
+    'it-support',
   ];
   const { chromium: _c } = require('playwright');
   const browser = await chromium.launch({ headless: true });
@@ -108,11 +132,15 @@ async function scrapeOfertasList() {
             if (!titleEl) return;
             const titulo = clean(titleEl.textContent || titleEl.getAttribute('title'));
             if (NON_TECH.test(titulo)) return; // filtrar no-tech
+            // Buscar URL directa de postulación (elemento con data-href-offer-apply)
+            const applyEl = card.querySelector('[data-href-offer-apply]');
+            const applyUrl = applyEl?.getAttribute('data-href-offer-apply') || '';
             results.push({
               titulo,
               empresa: clean(card.querySelector('p[title], [class*="company"]')?.getAttribute('title') || card.querySelector('p[title], [class*="company"]')?.textContent),
               lugar:   clean(card.querySelector('[class*="city"], [class*="location"]')?.textContent),
               url:     titleEl.href || '',
+              apply_url: applyUrl,
               id:      (titleEl.href || '').match(/oferta-([\w-]+)/)?.[1] || Math.random().toString(36).slice(2),
             });
           });
@@ -243,58 +271,174 @@ INSTRUCCIONES:
   return (res.content || '').replace(/```markdown|```/g, '').trim();
 }
 
-// â”€â”€â”€ APLICAR OFERTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-async function aplicar(oferta, browser) {
-  if (DRY_RUN) { log('  [dry-run] Saltando aplicaciÃ³n'); return { exito: false, razon: 'dry-run' }; }
+// ═══════════ APLICAR OFERTA ══════════════════════════════════════════════════════════
+// Flujo directo: usa la apply_url (data-href-offer-apply) del scraper si existe.
+// Si no, navega a la oferta y clickea Aplicar → Enviar mi HdV.
 
-  const ctx  = await browser.newContext({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36' });
+async function aplicar(oferta, browser) {
+  if (DRY_RUN) { log('  [dry-run] Saltando aplicación'); return { exito: false, razon: 'dry-run' }; }
+
+  const ctx  = await createLoggedInContext(browser);
   const page = await ctx.newPage();
   try {
-    // Login
-    await page.goto('https://candidato.co.computrabajo.com/acceso/', { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await robustLogin(page, CT_EMAIL, CT_PASS);
-    await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
-
-    // Navegar a oferta
-    await page.goto(oferta.url, { waitUntil: 'domcontentloaded', timeout: 15000 });
-    await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
-
-    // BotÃ³n postularme
-    const btnSelectors = [
-      'a:has-text("Aplicar")', 'button:has-text("Aplicar")',
-      'button:has-text("Postularme")', 'button:has-text("Postular")',
-      'a:has-text("Postularme")', 'a:has-text("Postular")',
-      '.js-apply-btn', '[data-qa="applyButton"]', '.b_primary.tiny',
-    ];
-    let clicked = false;
-    for (const sel of btnSelectors) {
-      try { await page.click(sel, { timeout: 3000 }); clicked = true; break; } catch (e) { log(`  [debug] btn no matchea: ${sel}`); }
-    }
-
-    if (!clicked) {
+    const loginOk = await robustLogin(page, CT_EMAIL, CT_PASS);
+    if (!loginOk) {
       await ctx.close();
-      return { exito: false, razon: 'BotÃ³n postularme no encontrado' };
+      return { exito: false, razon: 'No se pudo iniciar sesión' };
     }
 
-    await page.waitForLoadState('networkidle', { timeout: 4000 }).catch(() => {});
-    const confirmado = await page.evaluate(() => {
-      const texto = document.body.innerText;
-      const exito = /postulaci[oó]n exitosa|aplicaci[oó]n exitosa|has sido postulado|postulaci[oó]n enviada|registrad[ao]/i.test(texto);
-      const error = /ya (te has|has) postulado|no se pudo|no fue posible|error al (postular|enviar)|ha sido registrada previamente|ya aplicaste a esta oferta/i.test(texto);
-      return exito && !error;
-    });
+    // ── ESTRATEGIA 1: URL directa de apply (data-href-offer-apply) ──
+    if (oferta.apply_url) {
+      const fullApplyUrl = oferta.apply_url.startsWith('http')
+        ? oferta.apply_url
+        : `https://candidato.co.computrabajo.com${oferta.apply_url}`;
+      log(`  [apply] 🚀 Intentando URL directa: ${fullApplyUrl.substring(0, 80)}...`);
+      try {
+        const resp = await page.goto(fullApplyUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+        await page.waitForTimeout(4000);
+        // Verificar si la página indica que ya aplicó o es éxito
+        const texto = await page.evaluate(() => document.body.innerText);
+        if (resp && resp.status() !== 404 && !/página no encontrada|no disponible|error 404/i.test(texto)) {
+          log('  [apply] ✅ URL directa cargada correctamente');
+        } else {
+          log('  [apply] ⚠ URL directa devolvió 404 — usando flujo alternativo');
+          throw new Error('direct-url-404');
+        }
+      } catch {
+        // Fallback: navegar a la página de la oferta y clickear
+        log('  [apply] 🌐 Fallback a página de oferta...');
+        await page.goto(oferta.url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+        await page.waitForTimeout(3000);
+
+        // Cerrar banner de cookies
+        try {
+          const cookieBtn = page.locator('#cookie-banner button, button:has-text("Aceptar"), .cc-btn:has-text("Aceptar"), #cookiesjsv2-accept').first();
+          if (await cookieBtn.count() > 0 && await cookieBtn.isVisible().catch(() => false)) {
+            await cookieBtn.click({ timeout: 3000, force: true });
+            await page.waitForTimeout(1000);
+            log('  [apply] 🍪 Banner de cookies cerrado');
+          }
+        } catch {}
+
+        // Click "Aplicar"
+        const aplicarBtn = page.locator('a.b_primary:has-text("Aplicar"), button:has-text("Aplicar"), a:has-text("Postularme"), button:has-text("Postularme")').first();
+        if (await aplicarBtn.count() > 0 && await aplicarBtn.isVisible().catch(() => false)) {
+          await aplicarBtn.click({ timeout: 5000 });
+          log('  [apply] 🖱️ Click en Aplicar');
+          await page.waitForTimeout(4000);
+
+          // Click "Enviar mi HdV" — nativo + dispatchEvent
+          for (let i = 0; i < 5; i++) {
+            const hdvBtn = page.locator('a:has-text("Enviar mi HdV"), button:has-text("Enviar mi HdV")').first();
+            if (await hdvBtn.count() > 0 && await hdvBtn.isVisible().catch(() => false)) {
+              await hdvBtn.click({ timeout: 3000, force: true });
+              log('  [apply] ✅ "Enviar mi HdV" clickeado');
+              break;
+            }
+            const hdvOk = await page.evaluate(() => {
+              for (const el of document.querySelectorAll('a, button')) {
+                if (/Enviar mi HdV/i.test(el.textContent || '') && el.offsetParent !== null) {
+                  el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window, clientX: 100, clientY: 100 }));
+                  return true;
+                }
+              }
+              return false;
+            });
+            if (hdvOk) { log('  [apply] ✅ Enviar mi HdV (dispatchEvent)'); break; }
+            await page.waitForTimeout(1000);
+          }
+        } else {
+          log('  [apply] ⚠ No se encontró botón Aplicar');
+        }
+      }
+    } else {
+      // ── ESTRATEGIA 2: Sin apply_url → flujo por página de oferta ──
+      log('  [apply] 🌐 Sin apply_url, navegando a la oferta...');
+      await page.goto(oferta.url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      await page.waitForTimeout(3000);
+      try {
+        const cookieBtn = page.locator('#cookie-banner button, button:has-text("Aceptar"), .cc-btn:has-text("Aceptar"), #cookiesjsv2-accept').first();
+        if (await cookieBtn.count() > 0 && await cookieBtn.isVisible().catch(() => false)) {
+          await cookieBtn.click({ timeout: 3000, force: true }); await page.waitForTimeout(1000);
+        }
+      } catch {}
+      const aplicarBtn = page.locator('a.b_primary:has-text("Aplicar"), button:has-text("Aplicar"), a:has-text("Postularme"), button:has-text("Postularme")').first();
+      if (await aplicarBtn.count() > 0 && await aplicarBtn.isVisible().catch(() => false)) {
+        await aplicarBtn.click({ timeout: 5000 });
+        await page.waitForTimeout(4000);
+        for (let i = 0; i < 5; i++) {
+          const hdvBtn = page.locator('a:has-text("Enviar mi HdV"), button:has-text("Enviar mi HdV")').first();
+          if (await hdvBtn.count() > 0 && await hdvBtn.isVisible().catch(() => false)) {
+            await hdvBtn.click({ timeout: 3000, force: true }); break;
+          }
+          const hdvOk = await page.evaluate(() => {
+            for (const el of document.querySelectorAll('a, button')) {
+              if (/Enviar mi HdV/i.test(el.textContent || '') && el.offsetParent !== null) {
+                el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window, clientX: 100, clientY: 100 }));
+                return true;
+              }
+            }
+            return false;
+          });
+          if (hdvOk) break;
+          await page.waitForTimeout(1000);
+        }
+      }
+    }
+
+    // Esperar AJAX y verificar en /candidate/match
+    await page.waitForTimeout(3000);
+    log('  [apply] 🔍 Verificando en /candidate/match...');
+    await page.goto('https://candidato.co.computrabajo.com/candidate/match', { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {});
+    await page.waitForTimeout(4000);
+
+    const matchResult = await page.evaluate((titulo, empresa) => {
+      const body = document.body.innerText;
+      const bodyLower = body.toLowerCase();
+      const matchStr = titulo.substring(0, 25).toLowerCase();
+      const empresaStr = (empresa || '').substring(0, 20).toLowerCase();
+
+      // Buscar líneas que contengan el título (o parte de él)
+      const lineas = body.split('\n').filter(l => l.toLowerCase().includes(matchStr));
+
+      // Buscar indicador explícito de "Postulado" o "Aplicado"
+      const tienePostulado = /postulado|aplicado|inscrito/i.test(body);
+      const postuladoCerca = lineas.some(l => /postulado|aplicado|inscrito/i.test(l));
+
+      return {
+        encontrado: lineas.length > 0,
+        postulado: tienePostulado,
+        postuladoCerca: postuladoCerca,
+        lineas: lineas.slice(0, 4).map(l => l.trim().substring(0, 120)),
+      };
+    }, oferta.titulo, oferta.empresa);
 
     const shot = path.join(JOBS_DIR, `apply_${oferta.id}_${Date.now()}.png`);
-    await page.screenshot({ path: shot });
+    await page.screenshot({ path: shot }).catch(() => {});
+
+    if (matchResult.encontrado && matchResult.postulado) {
+      log(`  [apply] ✅ Postulación CONFIRMADA — "Postulado" encontrado en match`);
+      if (matchResult.lineas.length > 0) log(`       └─ ${matchResult.lineas[0]}`);
+      await ctx.close();
+      return { exito: true, razon: 'Postulación CONFIRMADA — Postulado ✓', postulado: true, screenshot: shot };
+    }
+
+    if (matchResult.encontrado) {
+      log(`  [apply] ⚠ La oferta aparece en match pero sin marca "Postulado" explícita`);
+      if (matchResult.lineas.length > 0) log(`       └─ ${matchResult.lineas[0]}`);
+      await ctx.close();
+      return { exito: true, razon: 'Oferta visible en match (sin Postulado explícito)', postulado: matchResult.postuladoCerca, screenshot: shot };
+    }
+
+    log('  [apply] ❌ No apareció en match');
     await ctx.close();
-    return { exito: confirmado, razon: confirmado ? 'PostulaciÃ³n enviada' : 'No confirmado', screenshot: shot };
+    return { exito: false, razon: 'No confirmado en match', postulado: false, screenshot: shot };
+
   } catch (e) {
     await ctx.close();
     return { exito: false, razon: e.message.substring(0, 80) };
   }
 }
-
-// â”€â”€â”€ MAIN LOOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function main() {
   if (!CT_EMAIL) {
     console.error('FATAL: COMPUTRABAJO_EMAIL no está configurado en .env');
@@ -324,8 +468,8 @@ async function main() {
     // PASO 1: Scrape
     log('ðŸ“¡ [1/4] Scraping Computrabajo...');
     const ofertas = await scrapeOfertasList();
-    const UBICACIONES_OK  = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo/i;
-    const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa marta/i;
+    const UBICACIONES_OK  = /medell[ií]n|antioquia|remoto|remote|virtual|home.?office|teletrabajo|estrella|itag[ií]|envigado|sabaneta|bello|riv[ií]|valle.aburr[aá]/i;
+    const UBICACIONES_NOK = /bogot[aá]|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta|ibagu[eé]|santa.marta/i;
 
     const nuevas = ofertas.filter(o => {
       if (yaAplicadas.has(o.id)) return false;
