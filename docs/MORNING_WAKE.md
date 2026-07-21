@@ -110,3 +110,8 @@ npm run session
 ```
 
 Ahí sí scrapers y organización completa.
+
+## Actualización 2026-07-21 (Tráfico TomTom y Estrategia DiDi)
+- **Festivos dinámicos:** Integración de la API de Nager.Date para detectar festivos nacionales y anticipar puentes festivos en la estrategia de conducción.
+- **Divisas y Lectura:** Monitoreo diario de la TRM (USD/COP) para costear llamadas de IA y extracción síncrona del post número 1 de Hacker News.
+- **Estrategia de Movilidad:** Lógica determinista que cruza el retraso por tráfico de TomTom y el clima de Open-Meteo para calcular la eficiencia de la jornada (horas requeridas para la meta de .000 COP) y recomendar las mejores zonas.

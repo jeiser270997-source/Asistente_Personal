@@ -1,4 +1,4 @@
-/**
+﻿/**
  * scripts/morning_wake.js — ÚNICO proceso automático de LifeOS
  *
  * PC en sleep → Task Scheduler 5:00 → despierta → informe Telegram → vuelve a sleep.
@@ -113,15 +113,25 @@ function getPicoYPlaca() {
   return getPicoYPlacaStatus();
 }
 
+function getPlateDigit() {
+  const pypPath = path.join(ROOT, 'data', 'pico_placa.json');
+  try {
+    if (fs.existsSync(pypPath)) {
+      return JSON.parse(fs.readFileSync(pypPath, 'utf8')).placa_last_digit || '6';
+    }
+  } catch {}
+  return '6';
+}
+
 function getSimitCache() {
   const p = path.join(ROOT, 'data', 'cache', 'simit_multas.json');
   try {
     if (!fs.existsSync(p)) return 'ℹ️ SIMIT: sin cache (corre scraper en sesión diurna si necesitas fresco)';
     const j = JSON.parse(fs.readFileSync(p, 'utf8'));
     if (j.total_deuda_activa > 0) {
-      return `⚠️ SIMIT deuda activa: $${Number(j.total_deuda_activa).toLocaleString('es-CO')}`;
+      return `⚠️ SIMIT deudor activo: $${Number(j.total_deuda_activa).toLocaleString('es-CO')}`;
     }
-    return '✅ SIMIT: sin deuda en último cache';
+    return '✅ SIMIT: sin deudas en último cache';
   } catch {
     return 'ℹ️ SIMIT: cache ilegible';
   }
@@ -152,8 +162,16 @@ function getJobsHint() {
   }
 }
 
-function getTrafficHint() {
-  // Sin TomTom key no inventamos. Heurística DiDi Medellín.
+async function getTrafficHint() {
+  if (process.env.TOMTOM_API_KEY) {
+    try {
+      const { getTrafficReport } = require('../lib/integrations/tomtom_client');
+      const report = await getTrafficReport();
+      return report;
+    } catch (e) {
+      return `🚧 *TRÁFICO:* Error cargando reporte en vivo (${e.message})`;
+    }
+  }
   const hour = Number(
     new Date().toLocaleString('en-US', { timeZone: 'America/Bogota', hour: 'numeric', hour12: false })
   );
@@ -165,13 +183,165 @@ function getTrafficHint() {
   } else {
     lines.push('• Fuera de pico típico; valida Waze al salir si hay lluvia');
   }
-  if (!process.env.TOMTOM_API_KEY) {
-    lines.push('• TomTom no configurado — no hay tiempos en vivo (OK, es opcional)');
-  }
+  lines.push('• TomTom no configurado — no hay tiempos en vivo (OK, es opcional)');
   return lines.join('\n');
 }
 
-function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, dayName }) {
+async function getDynamicHoliday(todayIso) {
+  try {
+    const year = todayIso.split('-')[0];
+    const res = await fetch(`https://date.nager.at/api/v3/publicholidays/${year}/CO`, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const holidays = await res.json();
+      
+      // 1. ¿Hoy es festivo?
+      const todayHoliday = holidays.find(h => h.date === todayIso);
+      
+      // 2. ¿Hay festivos en los próximos 7 días?
+      const today = new Date(todayIso + 'T00:00:00-05:00');
+      const limit = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+      
+      const nextHolidays = holidays.filter(h => {
+        const hDate = new Date(h.date + 'T00:00:00-05:00');
+        return hDate > today && hDate <= limit;
+      });
+
+      return {
+        today: todayHoliday ? todayHoliday.localName : null,
+        upcoming: nextHolidays.map(h => ({ name: h.localName, date: h.date }))
+      };
+    }
+  } catch {}
+  return { today: null, upcoming: [] };
+}
+
+async function getTrm() {
+  try {
+    const res = await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const data = await res.json();
+      return data.usd?.cop ? Math.round(data.usd.cop) : null;
+    }
+  } catch {}
+  return null;
+}
+
+async function getHnTopPost() {
+  try {
+    const topRes = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json', { signal: AbortSignal.timeout(5000) });
+    if (topRes.ok) {
+      const [topId] = await topRes.json();
+      const detailRes = await fetch(`https://hacker-news.firebaseio.com/v0/item/${topId}.json`, { signal: AbortSignal.timeout(5000) });
+      if (detailRes.ok) {
+        const topPost = await detailRes.json();
+        return { title: topPost.title, url: topPost.url || `https://news.ycombinator.com/item?id=${topId}` };
+      }
+    }
+  } catch {}
+  return null;
+}
+
+function getQuincenaSignal(date) {
+  const day = date.getDate();
+  const esQuincena = (day >= 14 && day <= 17) || (day >= 29) || (day <= 2);
+  if (esQuincena) {
+    return '• 💵 *Efecto Quincena:* Mayor liquidez en Medellín. Los usuarios pagan tarifas dinámicas más fácil. Prioriza viajes con multiplicador.';
+  }
+  return '• 📉 *Fin de Quincena:* Presupuestos ajustados. Los usuarios cuidan más el bolsillo; prefiere volumen rápido y no rechaces tarifas aceptables.';
+}
+
+function getEstiTime(delay, isRaining) {
+  const meta = 260000;
+  let ratePerHour = 30000;
+  
+  if (delay >= 12 && isRaining) {
+    ratePerHour = 20000; // colapso total
+  } else if (delay >= 12) {
+    ratePerHour = 24000; // taco pesado
+  } else if (isRaining) {
+    ratePerHour = 32000; // alta demanda sin congestión en tu ruta habitual
+  } else {
+    ratePerHour = 30000;
+  }
+  
+  return {
+    hours: (meta / ratePerHour).toFixed(1),
+    rate: ratePerHour
+  };
+}
+
+async function getDidiStrategy(dayIndex, pyp, weather, upcomingHolidays) {
+  const placa = getPlateDigit();
+  const colDate = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  
+  // Sábado: CESDE
+  if (dayIndex === 6) {
+    return '🎓 *ESTRATEGIA DIDI SÁBADO:* Hoy priorizas CESDE presencial de 7:30 AM a 6:00 PM. No programes turnos DiDi; descansa o haz viajes cortos de regreso si te queda energía.';
+  }
+  
+  // Domingo: Familiar
+  if (dayIndex === 0) {
+    return '⚽ *ESTRATEGIA DIDI DOMINGO:* Mañana familiar y fútbol de Dominick. DiDi opcional en la tarde-noche si deseas complementar la meta semanal.';
+  }
+
+  // Si tiene Pico y Placa hoy (lunes)
+  if (pyp.applies) {
+    return `🚫 *ESTRATEGIA DIDI:* Hoy tienes Pico y Placa (placa …${placa}). El Corolla no puede circular de 5:00 AM a 8:00 PM. Aprovecha el bloque libre para estudiar SENA/bootcamp o adelantar tareas.`;
+  }
+
+  // Días de semana sin Pico y Placa (Martes - Viernes)
+  let tomtomMetrics = null;
+  if (process.env.TOMTOM_API_KEY) {
+    try {
+      const { getRouteMetrics, HUBS } = require('../lib/integrations/tomtom_client');
+      tomtomMetrics = await getRouteMetrics(HUBS.LA_ESTRELLA, HUBS.EL_POBLADO);
+    } catch {}
+  }
+
+  const isRaining = weather?.now?.rainLikely || (weather?.now?.precipMm > 0);
+  const delay = (tomtomMetrics && tomtomMetrics.ok) ? (tomtomMetrics.delayMin || 0) : 0;
+  
+  const qSignal = getQuincenaSignal(colDate);
+  const est = getEstiTime(delay, isRaining);
+
+  const lines = ['🚕 *ESTRATEGIA DIDI (Salida 8:30 AM desde Villa Eloisa)*'];
+
+  if (isRaining) {
+    lines.push('• ☔ *Día lluvioso:* La demanda de viajes cortos en el sur (Sabaneta, Itagüí, Envigado) subirá fuerte. Quédate en zonas residenciales. Conduce con cuidado y evita deprimidos inundables.');
+  } else {
+    lines.push('• ☀️ *Clima seco:* Demanda normal.');
+  }
+
+  // Analizar tráfico real de TomTom
+  if (tomtomMetrics && tomtomMetrics.ok) {
+    if (delay >= 12) {
+      lines.push(`• 🔴 *Congestión alta:* Retraso de +${delay} min hacia El Poblado. Evita subir por la Regional o Av. El Poblado (tacos críticos en La Frontera y Aguacatala). Quédate en el sur: Sabaneta (sector Mayorca / Parque) o Envigado (Viva / Parque) buscando viajes locales.`);
+    } else {
+      lines.push(`• 🟢 *Tránsito fluido:* Solo +${delay} min de retraso a El Poblado. Al salir del colegio, enrútate directo hacia El Poblado (Milla de Oro / San Fernando Plaza) por Av. Las Vegas o Regional para capturar la salida de ejecutivos y de citas de media mañana.`);
+    }
+  } else {
+    lines.push('• ℹ️ Quédate en el sur: Sabaneta (sector Mayorca/Parque) y Envigado (Viva) son excelentes zonas a las 8:30 AM para evitar los tacos de la Regional.');
+  }
+
+  lines.push(qSignal);
+  
+  // Alerta si hay festivo cercano en el horizonte
+  if (upcomingHolidays && upcomingHolidays.length > 0) {
+    upcomingHolidays.forEach(h => {
+      const [y, m, d] = h.date.split('-');
+      lines.push(`• 📅 *Festivo en el horizonte:* "${h.name}" el ${d}/${m}. Prepárate para tarifas altas de retorno de puente.`);
+    });
+  }
+
+  lines.push(`• ⏱️ *Eficiencia:* Meta ($260K) requerirá aprox *${est.hours} horas* de conducción hoy (rendimiento est: $${est.rate.toLocaleString('es-CO')}/h).`);
+
+  // Recomendación de zonas a evitar
+  lines.push('• ⚠️ *Zonas a evitar:* Evita el centro de Medellín si no te lleva un viaje largo bien pagado (retorno lento por taco a las 9 AM). Cuidado con los nuevos puntos de fotomultas en la Regional de Envigado (límite 80 km/h) y Las Palmas (60 km/h).');
+
+  return lines.join('\n');
+}
+
+function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, dayName, holidayName, trmVal, hnPost, didiStrategy }) {
   const pypLine = pyp.message || (
     pyp.applies
       ? `🚫 Pico y placa hoy (…${pyp.placa}) ${pyp.hours?.start || '05:00'}–${pyp.hours?.end || '20:00'}`
@@ -201,9 +371,21 @@ function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, da
           '5. Empleo semi-auto; postular solo a mano',
         ];
 
-  return [
+  const dateHeader = holidayName
+    ? `📅 ${dayName} ${todayIso} · 🎉 Festivo: ${holidayName} · auto 5am → sleep`
+    : `📅 ${dayName} ${todayIso} · auto 5am → sleep`;
+
+  const trmSection = trmVal
+    ? `• 💵 TRM hoy: $${trmVal.toLocaleString('es-CO')} COP`
+    : null;
+
+  const readSection = hnPost
+    ? `📖 *LEER HOY*\n• [HN] [${hnPost.title}](${hnPost.url})`
+    : null;
+
+  const lines = [
     '☕ *LIFEOS DESPERTAR*',
-    `📅 ${dayName} ${todayIso} · auto 5am → sleep`,
+    dateHeader,
     '',
     weatherMd,
     '',
@@ -211,6 +393,13 @@ function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, da
     `• ${pypLine}`,
     '• Moto BXU28C: SOAT/RTM vencidos — *NO circular*',
     `• ${simit}`,
+  ];
+
+  if (trmSection) {
+    lines.push(trmSection);
+  }
+
+  lines.push(
     '',
     traffic,
     '',
@@ -218,17 +407,24 @@ function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, da
     '',
     jobs,
     '',
+    didiStrategy,
+    ''
+  );
+
+  if (readSection) {
+    lines.push(readSection, '');
+  }
+
+  lines.push(
     '🎯 *PLAN*',
     ...agenda,
     '',
-    '_Clima Open-Meteo · sin LLM · sin Calendar · PC vuelve a sleep._',
-  ].join('\n');
+    '_Clima Open-Meteo · sin LLM · sin Calendar · PC vuelve a sleep._'
+  );
+
+  return lines.join('\n');
 }
 
-/**
- * Vuelve a SLEEP (no apagar, no hibernar).
- * Orden de intentos: PowerShell Suspend → rundll32 → powercfg (último).
- */
 function goToSleep({ delaySec = 8 } = {}) {
   const auditPath = path.join(ROOT, 'data', 'state', 'audit', 'last_morning_wake.json');
   try {
@@ -248,7 +444,6 @@ function goToSleep({ delaySec = 8 } = {}) {
     });
   } catch { /* ignore */ }
 
-  // 1) .NET Suspend (sleep, force=false, disableWakeEvent=false)
   const ps = [
     "Add-Type -AssemblyName System.Windows.Forms;",
     "$r = [System.Windows.Forms.Application]::SetSuspendState(",
@@ -266,12 +461,10 @@ function goToSleep({ delaySec = 8 } = {}) {
   }
   log(`⚠ Forms Suspend status=${r.status}; fallback rundll32…`);
 
-  // 2) rundll32: 0=sleep not hibernate, 1=force, 0=disable wake events
   r = spawnSync('rundll32.exe', ['powrprof.dll,SetSuspendState', '0,1,0'], {
     windowsHide: true,
     timeout: 30_000,
   });
-  // rundll32 often returns 0 even when queued
   log(`rundll32 sleep invocado (code=${r.status ?? 'n/a'})`);
   return true;
 }
@@ -318,6 +511,7 @@ async function main() {
   const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
   const dayName = days[col.getDay()];
   const todayIso = col.toISOString().split('T')[0];
+  const dayIndex = col.getDay();
 
   log('Clima Open-Meteo…');
   const weather = await getMedellinWeatherDetailed();
@@ -327,11 +521,35 @@ async function main() {
   const simit = getSimitCache();
   const sena = getSenaHint();
   const jobs = getJobsHint();
-  const traffic = getTrafficHint();
+  const traffic = await getTrafficHint();
 
-  let msg = buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, dayName });
+  // Nuevos checks dinámicos
+  log('Consultando APIs dinámicas externas...');
+  const holidayInfo = await getDynamicHoliday(todayIso);
+  const holidayName = holidayInfo.today;
+  const upcomingHolidays = holidayInfo.upcoming;
 
-  // LLM opcional — si free-tier truena, se ignora
+  const trmVal = await getTrm();
+  const hnPost = await getHnTopPost();
+  
+  // Estrategia DiDi adaptada al sur, clima y festivos cercanos
+  const didiStrategy = await getDidiStrategy(dayIndex, pyp, weather, upcomingHolidays);
+
+  let msg = buildMessage({
+    weatherMd,
+    pyp,
+    simit,
+    sena,
+    jobs,
+    traffic,
+    todayIso,
+    dayName,
+    holidayName,
+    trmVal,
+    hnPost,
+    didiStrategy
+  });
+
   if (USE_LLM) {
     try {
       const { askLLM } = require('../lib/ai/llm_service');
@@ -352,7 +570,6 @@ async function main() {
   console.log('\n' + msg.replace(/\*/g, '') + '\n');
   await sendTelegram(msg);
 
-  // Log local (antes del sleep)
   const audit = {
     at: new Date().toISOString(),
     ok: true,
