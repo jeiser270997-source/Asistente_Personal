@@ -40,7 +40,7 @@
   - 📅 **Sábados (07:30 a 18:00):** Gestión de BD, Intro Programación, Lógica.
   - 📌 *Inicia:* Sábado 25 de julio de 2026
 - **SENA Virtual (Estrategia 4 cursos simultáneos máximo):**
-  1. 🟢 **Ficha 3565476 (NUEVO - En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Bienvenida recibida 21/07/2026. Conferencia Web Zoom: Mié 22/07 5:00 PM).
+  1. 🟢 **Ficha 3565476 (NUEVO - En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Bienvenida recibida 21/07/2026. 📅 Agendado en Google Calendar para Mié 22/07 5:00 PM con aviso 1h antes + Link Zoom).
   2. 🟢 **Ficha 3549155 (En Formación):** *Bases de Datos Generalidades y Sistemas de Gestión* (Zajuna).
   3. 🟡 **Ficha 2459016 (Preinscrito):** *Construcción de Bases de Datos con MySQL*.
   4. 🟡 **Ficha 2253040 (Preinscrito):** *Variables y Estructuras de Control en Python*.
