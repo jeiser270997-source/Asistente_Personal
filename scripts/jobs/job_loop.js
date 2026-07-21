@@ -392,11 +392,9 @@ async function aplicar(oferta, browser) {
     await page.goto('https://candidato.co.computrabajo.com/candidate/match', { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {});
     await page.waitForTimeout(4000);
 
-    const matchResult = await page.evaluate((titulo, empresa) => {
+    const matchResult = await page.evaluate(({ titulo, empresa }) => {
       const body = document.body.innerText;
-      const bodyLower = body.toLowerCase();
       const matchStr = titulo.substring(0, 25).toLowerCase();
-      const empresaStr = (empresa || '').substring(0, 20).toLowerCase();
 
       // Buscar líneas que contengan el título (o parte de él)
       const lineas = body.split('\n').filter(l => l.toLowerCase().includes(matchStr));
@@ -411,7 +409,7 @@ async function aplicar(oferta, browser) {
         postuladoCerca: postuladoCerca,
         lineas: lineas.slice(0, 4).map(l => l.trim().substring(0, 120)),
       };
-    }, oferta.titulo, oferta.empresa);
+    }, { titulo: oferta.titulo, empresa: oferta.empresa });
 
     const shot = path.join(JOBS_DIR, `apply_${oferta.id}_${Date.now()}.png`);
     await page.screenshot({ path: shot }).catch(() => {});

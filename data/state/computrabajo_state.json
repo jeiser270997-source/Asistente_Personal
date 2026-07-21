@@ -1,38 +1,8 @@
 {
   "cookies": [
     {
-      "name": "oiA71ABB329A1E8CD961373E686DCF3405",
-      "value": "",
-      "domain": ".co.computrabajo.com",
-      "path": "/",
-      "expires": 1784092361,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "ct_consent",
-      "value": "1",
-      "domain": ".co.computrabajo.com",
-      "path": "/",
-      "expires": 1815627461,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "ut",
-      "value": "000A2D187ED7F43D72AFD8FBBEC367F430A9F6351C1DE431404586AF87BA67046F8B860725B02980",
-      "domain": ".co.computrabajo.com",
-      "path": "/",
-      "expires": 1815627461.951722,
-      "httpOnly": true,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
       "name": "ASP.NET_SessionId",
-      "value": "wx5chaq3rdhmir5ofzku5j1p",
+      "value": "g1kyhkmwiad415z4ygl0quom",
       "domain": "candidato.co.computrabajo.com",
       "path": "/",
       "expires": -1,
@@ -41,51 +11,71 @@
       "sameSite": "Lax"
     },
     {
-      "name": "_pcid",
-      "value": "%7B%22browserId%22%3A%22mrllzqogsezgzyg2%22%2C%22_t%22%3A%22n7a0x80k%7Cmrllzqok%22%7D",
+      "name": "lout",
+      "value": "true",
       "domain": ".computrabajo.com",
       "path": "/",
-      "expires": 1818219462,
+      "expires": 1784684104.944506,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": ".AspNetCore.Antiforgery.m2ARh48k1Nc",
+      "value": "CfDJ8NtdWzfNEyFLg79vWmwhHDu0ju7CjiqCGEfY_i0bLtg9xkBWe6VKct9qzMLaLe65pE94jtm1_WIqpub6Xgh5qy37sKaBy1Q-3fotwGbp0KhqFFzhmSe8PRxTHl62Fy9ouXyzwEWu8-FacAalwEmwzJE",
+      "domain": "secure.computrabajo.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "_pcid",
+      "value": "%7B%22browserId%22%3A%22mrtze8jlckqb8bwb%22%2C%22_t%22%3A%22n7iebpvo%7Cmrtze8jo%22%7D",
+      "domain": ".computrabajo.com",
+      "path": "/",
+      "expires": 1818725703,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "_pctx",
-      "value": "%7Bu%7DN4IgrgzgpgThIC4B2YA2qA05owMoBcBDfSREQpAeyRCwgEt8oBJAE0RXSwH18ykA7IQAMADwAcw1AB8AtjHQAvAI6VUIAL5A",
+      "value": "%7Bu%7DN4IgrgzgpgThIC4B2YA2qA05owMoBcBDfSREQpAeyRCwgEt8oBJAE0RXSwH18ykA7PSgAjAA4A3MQB8AtjHwAvKAA4AVmJABfIA",
       "domain": ".computrabajo.com",
       "path": "/",
-      "expires": 1818219462,
+      "expires": 1818725703,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "CLID",
-      "value": "75b09e38446744aea72ad36515d05e29.20260715.20270715",
+      "value": "9f764fb65db9447ba123451b0fae2e23.20260721.20270721",
       "domain": "www.clarity.ms",
       "path": "/",
-      "expires": 1815627462.459952,
+      "expires": 1816133703.291509,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "_clck",
-      "value": "170rh5a%5E2%5Eg7r%5E0%5E2387",
+      "value": "rynsj%5E2%5Eg7x%5E0%5E2393",
       "domain": ".computrabajo.com",
       "path": "/",
-      "expires": 1815627462,
+      "expires": 1816133703,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "MUID",
-      "value": "08B222CD676F669727E3355A66C067CC",
+      "value": "2271B81E024C660123BFAF8303E36753",
       "domain": ".bing.com",
       "path": "/",
-      "expires": 1817787463.55735,
+      "expires": 1818293704.383749,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -95,17 +85,17 @@
       "value": "0",
       "domain": ".c.bing.com",
       "path": "/",
-      "expires": 1784696263.557402,
+      "expires": 1785202504.383818,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "SRM_B",
-      "value": "08B222CD676F669727E3355A66C067CC",
+      "value": "2271B81E024C660123BFAF8303E36753",
       "domain": ".c.bing.com",
       "path": "/",
-      "expires": 1817787463.557422,
+      "expires": 1818293704.383842,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -122,10 +112,10 @@
     },
     {
       "name": "MUID",
-      "value": "08B222CD676F669727E3355A66C067CC",
+      "value": "2271B81E024C660123BFAF8303E36753",
       "domain": ".clarity.ms",
       "path": "/",
-      "expires": 1817787463.653291,
+      "expires": 1818293704.493143,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -135,7 +125,7 @@
       "value": "0",
       "domain": ".c.clarity.ms",
       "path": "/",
-      "expires": 1784696263.653326,
+      "expires": 1785202504.493235,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -145,54 +135,24 @@
       "value": "0",
       "domain": ".c.clarity.ms",
       "path": "/",
-      "expires": 1784092063.653342,
+      "expires": 1784598304.493272,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
-    },
-    {
-      "name": "popup_offerid_1",
-      "value": "A71ABB329A1E8CD961373E686DCF3405|ListOffers-Score6-1",
-      "domain": ".computrabajo.com",
-      "path": "/",
-      "expires": 1784177863,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "lout",
-      "value": "true",
-      "domain": ".computrabajo.com",
-      "path": "/",
-      "expires": 1784177870.738575,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": ".AspNetCore.Antiforgery.m2ARh48k1Nc",
-      "value": "CfDJ8NtdWzfNEyFLg79vWmwhHDvyAx3hcfHGPKmVDQrVHHyt7IRZCjILXQa5rbhwn4kKBRf_75sK3iC1HXBHxf80O6OJLuaBbkDUtZ73a83RFRXTSZ6wL_-MwkaITG4hbTzXJxMnK-7XQ4alr_yVtexJCs0",
-      "domain": "secure.computrabajo.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": false,
-      "sameSite": "Strict"
     },
     {
       "name": "g_state",
-      "value": "{\"i_l\":0,\"i_ll\":1784091470867,\"i_b\":\"8M9j9IylzWvPXbRbROxdekdOgPRGi3xlfpURS7QuOM4\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1784091470867}",
+      "value": "{\"i_l\":0,\"i_ll\":1784597705084,\"i_b\":\"pKRLDw4GntGs052y59yBmIO/X5TF+nyQTA+sEtr7Kzk\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1784597705084}",
       "domain": "secure.computrabajo.com",
       "path": "/",
-      "expires": 1799643470,
+      "expires": 1800149705,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "idsrv.session",
-      "value": "9E1B7FD00323256CF40A302D55DCFCAC",
+      "value": "0F1832D0FDD2E7390A2E1EECA44ECB8D",
       "domain": "secure.computrabajo.com",
       "path": "/",
       "expires": -1,
@@ -202,37 +162,37 @@
     },
     {
       "name": "AWSALB",
-      "value": "SNYLr7M7f347WsRPDUB+mXURvAll4RfperxQYEsRjWhS4ggiZV023lFW3IcdetVL7oVNh63q46su91tPyusM5HWdQKlyDmB4egNTW0mWS93Rh2nrVjTWlZ5/i6Oa",
+      "value": "nJq+Cf9CdLaC/YAkDOib9z7VuPYEYf3SsukXC8flaj18UXIsktcEgWTJOgDBx9qkWsdPftb+wNy+LT7GBCroBHZrI8oHE2UACdKa550jS/TEQmWljnC2HIoVsFHh",
       "domain": "secure.computrabajo.com",
       "path": "/",
-      "expires": 1784696272.828598,
+      "expires": 1785202510.761881,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "AWSALBCORS",
-      "value": "SNYLr7M7f347WsRPDUB+mXURvAll4RfperxQYEsRjWhS4ggiZV023lFW3IcdetVL7oVNh63q46su91tPyusM5HWdQKlyDmB4egNTW0mWS93Rh2nrVjTWlZ5/i6Oa",
+      "value": "nJq+Cf9CdLaC/YAkDOib9z7VuPYEYf3SsukXC8flaj18UXIsktcEgWTJOgDBx9qkWsdPftb+wNy+LT7GBCroBHZrI8oHE2UACdKa550jS/TEQmWljnC2HIoVsFHh",
       "domain": "secure.computrabajo.com",
       "path": "/",
-      "expires": 1784696272.828697,
+      "expires": 1785202510.762005,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "idsrv",
-      "value": "CfDJ8NtdWzfNEyFLg79vWmwhHDvuXDqmh9SRPWcZua8g5BhfASU8TwxzMogq8h4d1E8r8tXl6MjYxaVYJaZT1sZD21jgqs0OCUd8T0-bIg3PXxKCnVpVvM5kTdXdAAOqzWXckUXX_YevlD8EsqBPh5f6KqUswyKUKHqO8HFhjrdEVi9UuovtPVe_D2YzJYYFYl4QUn7dIxTthLruvSjk5XACHD1LDktssnxbUMahnyNSYKP0xFEDvQ1M7xUK3bduFRSru_ce6x1uCJEP6ys3Ar4KZoj5FDkveaJ1e2YioyNfKlPlWJOrAnhMZhd1j5Ip1WZUR3CWjvWx3CU_XGpPZiYeyG-p-b8XZKqyk1ljlL9mKTAwYQ-T7PYriKMS3NBqWK-cfSwJwIeOnLYwRNkov_EJdlN7MkDpr49HqYdEMhacbKJ64glkgi5BJvcTEQTv71JyVokSOy7XsWJygKgnHluVRFd7zS4ab_kf8QO8ngo7-NITjSOBeHCh44Xj0VQHcYpbQS7tko_peMvuskpNMC1pgIt7cMI7bsUxpBXCt93AqpU34rXC26dmUIGcgKkKOFMouADPtvQ_BD-HXZpHwsMJVCbpLQSIyDo0it8BaXhWqI8ZMFkgHJ8TsQcxRr3JUl6ZONyncdxVAShufDkWD967-Vg1ZT_EppcnPLESsf4qlimjo5bCwowgHO_dNIFjMUdUGVyIyYKnNbaem-7W3J_JwrZ66IAeynKD8WYIkch9pj2aOY3fvlEggVfSoqBYOnQBzo5t1J8RkLWxxSc5o5qTP93zAnLhdIkHD--733EmcL4M-gzDorhnYmUsI4lkj8FOVIU_odHhO1qJtXWZZ7WqOU1DB44aI_SlYWsEa6qiOG6-vIuV91wziGWCOE8mk0shYf-58bafT0osQnTs6a8ELPAQi-VzXExu1yVn_0LgLyKmgP_VDWrDsEwqcqNbbWOgB5UtAOeDt5XLXv4yvcU8U5wr8co9GF9soG3xKM6E446TEorDbxynsPH_gR7hkfuUv4lidsaEW0r11CeI5c7tWz-Wk9V3N-3kOkX6dB4MEo8acAMPwhikM6Yt3H1A4wfCqinI8IRJ-DoossvPfQlSqsCZbORLB7g1sJ6STe-S65wWmDRVgbhRyzD7BgGJsRPbdQ",
+      "value": "CfDJ8NtdWzfNEyFLg79vWmwhHDsvKLWmAGv2WX4hGFc9CdhO_Gtc6iywczhQWb4qaAZFEkd1nypUCptuT_fsmm1xG6jWPCvl-e-nSndOau1idYEfHCM1YkFIGnPwZpwD55BnwFA2uQy9mxHel5Bkc_MkS2Iq6Io5tL4RjTpV-bMvssHL86NU2Le_A-jdzSbigGkAPQbPS5oZZmBfbj3hqffopkh134h4tYrwCty6u6wsFj60yvaemr4eLb8jmeXsuqtblEViCbaoaDREUcUX3w-Fszu-2wCUHGjNnUZqiokF1MDnYbNiaA-FDGlzfgaUmZFnA12Qu3YMoJNwua_gQ0qHDv7QlnLW5IlhAlwQcnvzg2TCSL9Z8oeSZipngk-xcl_iN8QrNimtwyqPDUTXsChIn3MxCbphyIxkh7pb_b9Wg4LrqlnZjX2c_h_9FJWdTi5BZhkNOP12Bg9oKmlCq0a7I3WXJL_MVNmRoP4IQv9QGnJ4u3Sbf7U2od4yzgH7ZBWjedq0AEEY_wZCzoW-f_O5i9rBvRqSg_cAr0afRr14F0r_z9FchqjUfUvC1CTH1oayXEFXA2e4xU40fFHj92S75dNyEHpZxu5MbipZqct2QC4DAo8au_GWPNBAKwN5j05gnSuEQa-WVAp2lGh3cjXqnnowzhy_Fpco2R5m2aVfXGTOLYY5JU0WbzCe4dhFOHN4HKewUtB6aibKmGsaT13mNKa3Ev_Xq63a9UE5Jnj9jnK1LAPVJ7_seQYBKFXl_az6WzyAYuiDIMdPPxK7jw0Fb-N6Cxra0T34eU88T_e8qDYfiYkpzt6XnXqnOjm734vrv9lkOJU3O5R5FYoUW1XREGAN64PxqxPGXyyVipCH75e5zZN9_OyWFJWQvgwB1al5w_u5zT6ENWqC_lFVkR723rN-_DA0yej4ZxJjJeY8zvfR9aB1vJctUGlvwLyCyp-zC0J0lbFQapLzyYfJMpMamVOvnn7r96GNVlxN4_oFnK4KucaL5xlxdKmqZ5hMH3VCqnbkdNiI9feiwFQARQYomGA36-Zhjh3sGviICPvJIESlF04e38c6rZszUXKGxoMp0msPTcgn1s_J-YxUEpMQ5zMk5q5YwUHOl2MHs9Q-Xpbf3dKJf8zjjcWMnAi4Y2eolA",
       "domain": "secure.computrabajo.com",
       "path": "/",
-      "expires": 1786683472.828757,
+      "expires": 1787189710.762111,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "AspNet.SharedCookie",
-      "value": "7j9GPPjxTfAemheoDlvwNGnfisfLVNtzK-TRN7PixmA_QffdEf8ptpCoxvmrbMrZJe2QQJ7AJsGqL-FsfmWEFF1PYNveoefuTnd5kN9J_yggcqWNHRXBw-TNsxhRkLLadmDJ_eESNL96vRidWGzmACMOHinaO1ZRFOOILwU4s3U9W59HyBA0sT2-fLAo20s7oklnG9wPjgBC5KFIIQ1bSr4wnqNa07xNOhtMmvy9ocnr2uu_ESdQIauq-7QGqCzKli77emmZoy3jgQIgSRk--MBSXD9OCiYwQa0bon0xFMBOLQjPEcFCcg5h0vgSogFtX115eGB5KOhCpkWnh1LRgyssV2v9Uc7PDuhUTP1vBIWUBmsTH7ukJ6jMNaBDxcvFwyx_FThXZQddPDVwBJc6gpY0QOeLkfqGrL-10pBKynINevTkEmwZ-ZC-dl7iIKhpcL-wCS1xI4OTgCJKZnnc_f8xkjcSj1P-eK_X0Oa02pO80h_kdmjGXQOnP7MZva1IgrJSpSGb5-kJiXSNGwz6xYwmUFqTJi1Xit-KKfq69VjihXFcYg9ow_Se_SGrXgojfOLlsm58LlmRv9c1u3YiKZj6570dkfJshlGp6-7RMaBEYpoGxqAmwRIhQy1Ply0sBWIANcy01cJOlymE_fe2EHY3a-Snnz-7H_4c9FnmTUnx674ts5xoRMBIe1TWz4L0KgUnOYv7txpIfctn-LruFhnQyGjQnfpUqXpeUzy2lmAl1hCHJhJao9HQFw6TEOvBwKFzfiGlAm_dp7nOCwEng7dklpseGH3YpNG7ZjO4aQjLfTlUUPnwGXRN0SSXtxQMsAPu_nz9Trn9MSLErHfq4VeJsuMmtFp75LAyjBEya1KgEnridzL6kyaaxkD8oBEYii3wIjPvQS_awdZMxtCaoj1ntT7dukW4woHO4kV1UwJwpK_HE6apaEO4K68yLXj4aC1BHq0rIAPjl0VfNddzh-vo4ddUaPMqiaQnzKoh56gL9VX3uYNTwDrz3BtjDWRB1iUVlQdj6NlX9gObHBX_rLLE-QugnEFAlozQpiPUMDSNCfETjsONAvmbRa49h8z2VxgHG9DC1O36iJvP6Z2EhR1uKJEnBa_tgYFqYbLr7x-9InQe0VmJlTy0wTFqFssiUn10p6JOX47vqcHZTV2B-qM93El-i9z7r87C_TGCT_K4eFEMiS-IkSmGvi1yPCFySRRyiBwQNAufZzU_CuWukhMTxk3iwTUtNbvsSRlDxHsRPU8JAxyWjIF3up8dUrgG2cIbPf30dVWCFZCzyL17c2CDSXigDNFNoSjpAWcmDSNjfKZqW7GrgGlXBdVzYoe2citj6MZBYx_YjkZYm4cQmvugxEkgt3IkQRYye1hRYEA2LTIuphLHazXolIh6vTX2RL9GuXYHTg4xdOYo-NfZC-KR7a2IOfTU18NT82jFKvKYhrXRj1GkV5YU_KC_Hc5M_ADiYTmJQG0RBEI3JhPifTTTKJaC6PSODCQnBHifPSeu45ooKLrfq-L_eYTMPBrlBZkFsVEZLG4_hnP305_4g_iI2e2g-MOA3dBHzNgaCDgdhcPvE5k-zfxZsgtX8WhiAZpGh6rzKhDXu7j8VpjbT8zMF-pHXFIFcbapFcSIWwi3_gQSfBrOlES4z4J-HgI4jDUJwZkl_wz-N0akDanzhixNw30RNSz6LIyWWK_9tRK2OW8JNvCDnUBCVZQGWJqs5fOhfhszSFgli5pW2A-U7-5NUdgcMor7v8HHMYP2q_wiC0FM2EwWJhHSusZW08WtGTByU_w8FAm8a5YtJH7hRmZ3MXGSyhNNHBE7p7ni55KaV_YprbzgmM4Oqg9LN1QMLRukVcS8E9CC-tfvEA92qd_KHatQSX9uqrQUd45hv8AZTfmj2Y-yM3Dw0GVsksg_RaPEyoj1RWicQoA1ZbiwuTNvhh9CHzFwRJ9-lD0MpXq5MmiKVeelPwY2xq9fkEuS7E5OdOagr8zlR2zuIdedLLVK5M7mUmusOezFtM3g_x878Vj_q676zsqqba4-Mr9TsaGaSX6mph9KCmhmumTTYHNOFeKZ-MmBr72qkIqVwpJcApIUpGqXpIOyxG7-mBLtXEF9lLCGTNrT5gTMifZMR18ZkObsAi-1tV5jNxWk5KUd1RIfCOSXTgxLANaDTgOyrOIWog",
+      "value": "VvyUZ382k_NmxSlmsMgyI5po2JfaOqybk5Mimq7H6kROLPKkT6M_2j09nWtRIswXkARG3caD4wukNXvChrzRmXBnP4qIe7sGxwRJKCE3ZWHz5gpaWAO9MMoxVfKO_nUK5pQEM3Aj-Ci6jiXyChCPd_VJkkyZEBE0GxAls3N7eh3aaNhRi56Ve-sOGVyPVhrkfEtasPtkzGp84WgkJju7MDPXzNWwUh4uLcuOsjX8QrrxAO9moKH5002Q6a_cEt6StqVF0lZt_xJ9jCZEL68ubIWKE0AKPNX4MHKZtUBBUMm5TJo1XeQ5AzNT18GnOxJNg-P0ccs-COFMdhA2vJsj4P597udx2eKL7KjP1Pl7LaknAyJWYF93sv1wosH9sMpQyTiXffnq8-BE98I7-LqNnMviDah6Ue9ei4P8nCz7hMvFgDizhj9nQo2FWZ4Z4bU9Ql6-RWhZVnYVds8VFE4Y0c4kYBRcfooH4CRLEfjKVA-gEZ7cnE3R5Ohdw1hkm0-HwbIX-RfZgdThU3DgSOyFpMh0GBvuNumi-vS8_nC-_Ya1fnFOm2njsCxuIgsH_0WHmrgTm6T5X5UvAnLifveUvW8gDR9rmT3ljDX0mcqXQaLJlwg7dcBrWVWoC3y97B9u8itol03acx-SVCnj22IruBucFj4NwHh1DqF0lDs7DBGPy5h-uKHo6VpVezvTAZhyXSv0fB5BROg29fv8n_SJkHIeyoZMK3RTDlCBTnRqyFus_J1NanE7j3KXa0G6At0B02yQvuAJpnzg5mofFTOLm40Q-T9kx7DoBImH_boSAKRTA95CotGzH6pEr-6wmuaNYpr38DAMUFwYouxWDdTSCGgEGSw0fgD_pZC58HLFCCpemBzlJseb18E6_iwRDZrdSyK9CJNgB1vnsfmoh2oer9yE9EZAz3kb10gBHhS6dhVvp5cYDxSuATSx83Q9c8pDLOtGzFVC6ZPiBQIxwJhMnArP1Tg0WgPtuC-lZWluVI8dm2pcNutMcbMx-QvqEj-L0F-qzpiSKH_ybmpI9RjenjqLuMnCyRv-t5xOyTD8HSA1hh5JiRdpOHV3ITjPBhHdil3RBurOy-dLzVqWJfXtHHdkC5GSgoumR7CudWNo6Ow98wnObMnpgodjwG2jQA8zYe_R5JvV6Lw_-a118VLz4_U3eg8yumr6yVY3kFhlg0NPNr0IT5wJU8v0-PLTS3bKwfXUewgF7i8iIdWffAD7STUCju6RfDzvX34KP0h0PiQwd7Iqz7jGDi3Ab6LvDFPhZbOF89VaN5bhdKOR-GcvfgF-GU6GeRch04Ib1mHY16N68MGY6Yr14prd9xE7j0K8Swco9MaPieaa087a22mlmilGelhDg-uZF3HyFoE-gE4O3f1GmJouFmH-6ddDDISL16Kd3fcGDoAWCyHrYz9hFULXp7Y789cKTIuIKngahlNHzT88pf3xhYgtDAapXtgl3-5WRrZZgfLk741Jll_RoVJoZO1Rkj4cbX0ex0xRlCjb6xXp1Xtmxv_w411LsC80T6s0FD8BAdmeQDAszEaAOUTKPIRhuk1T4r8P1T21VpkCLJ9EW9xvj-PFaKbBUJZ_eUIoSQP2YISgQt2obEpa3TM5BkrSwG_kZ0Qpk-YtuXJME2hARHlcG0Gu_9pgsicRrWQhZtapXYUjkbFy9AM521K-iEh5Oj1QAefe1-wjej0qzyeA3m8IH5NdRNujFDnhrTfnrI10qXS2ok2ciCftYmvKZmoIzyWvQXcQUfqUj1Zo3RO5JUmtnTMb0LIKvB2TG9qR9A6UnnjsBTSGFMG03h0t9fYAQ7BQkKHQnrMUoRyfvJxrcLS82m7isBGr_QyR4Hv9XKs-RYgQXqH-FnXA4YjVlPUGm34d97hoo01uAylBuvCgOiBRtBThXjPh9Xb8gxTjLRu3LplYzMb3CBd2E6ICiYtwvlpU6kohHPFiLyJdW952C8fIUP03c-CWXNdMuAWt5PjhSIeea52IHCjSx7PcmOY9dcBgMtFPDRKK_X2XDGsIUhZmUTTmq0YVFuPFvqMWwQRpXP-9VlnlOT9IZfm1Swza7PMn1t1U-RFaYNaUfndZoI87K37tqG01y07nthbqpN94ygaT2UrthERB2fikAfEeVEAHTSRIzOgdypwI9nhcudARXH4mPBoNW2dGg_YPHb_oBUdmP6DWJfFnBe-dc4Y",
       "domain": "candidato.co.computrabajo.com",
       "path": "/",
       "expires": -1,
@@ -245,17 +205,17 @@
       "value": "cvp=100&cdet=True&cdst=True&cdft=True&hcl=False&lcvu=0001-01-01 00:00:00&cdvp=False&cddt=False",
       "domain": ".co.computrabajo.com",
       "path": "/",
-      "expires": 1799643473.201886,
+      "expires": 1800149711.187646,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "ncac",
-      "value": "value=F1915CB2332982E411E35FECE6DBE374A5CA3502FF85460F",
+      "value": "value=F1915CB2332982E40BAB85B740A78A8AD832102D1892C1CE",
       "domain": ".co.computrabajo.com",
       "path": "/",
-      "expires": 1818651473.201917,
+      "expires": 1819157711.187678,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -265,7 +225,7 @@
       "value": "i=3F8C93C9E98E2ABE61373E686DCF3405&c=8865808C00B8619E61373E686DCF3405&e=6AAAD04D0BB17AA29A50BE8698A0896DB5778FBAD250659661373E686DCF3405&p=61898B99412A8D1E7298B3EF3EADB6&n=Jeiser Gutierrez&t=logos/candidates/2026/03/19/2054417768744thumbnail.jpeg&hc=false&nm=0",
       "domain": ".co.computrabajo.com",
       "path": "/",
-      "expires": 1799643473.201943,
+      "expires": 1800149711.187717,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
@@ -275,24 +235,14 @@
       "value": "359DAB3353663B85",
       "domain": ".co.computrabajo.com",
       "path": "/",
-      "expires": 1784177873.350526,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "gnoma_work_shown",
-      "value": "469814F59E4D6F04",
-      "domain": ".co.computrabajo.com",
-      "path": "/",
-      "expires": 1785301074.350553,
+      "expires": 1784684110.906931,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "__RequestVerificationToken",
-      "value": "aHhb6GjdMri1agJOhIGYtdmTKuQqthRi0lXb8DMKDA6hcgj0deBSoPHtapxFkNI3VVJ_XYRy-4XPervo9hajOSj0fqY1",
+      "value": "Ln9hsIr58XBzs91LSqsP4bLK9Z7eA9tUU-TYY56jSTPzPKTfEJ_sOKDCppwFEin6FBt7DMbpzgrTtb7KQNzoVh059QE1",
       "domain": "candidato.co.computrabajo.com",
       "path": "/",
       "expires": -1,
@@ -301,31 +251,11 @@
       "sameSite": "Lax"
     },
     {
-      "name": "AWSALB",
-      "value": "ibEdzzreoAwGBMpyU3ZnuFLH5itsu+wStnFT5kpNbUnmrphc6KbLi+se7MH/gQ3kLE+vG3FnfUI0w+2NzymEG5L7/L/iGA7EiSTCyzDFtyZSgmTaYHq2fjwkE/nx",
-      "domain": "candidato.co.computrabajo.com",
-      "path": "/",
-      "expires": 1784696275.44587,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "AWSALBCORS",
-      "value": "ibEdzzreoAwGBMpyU3ZnuFLH5itsu+wStnFT5kpNbUnmrphc6KbLi+se7MH/gQ3kLE+vG3FnfUI0w+2NzymEG5L7/L/iGA7EiSTCyzDFtyZSgmTaYHq2fjwkE/nx",
-      "domain": "candidato.co.computrabajo.com",
-      "path": "/",
-      "expires": 1784696275.445959,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
       "name": "_pprv",
-      "value": "eyJjb25zZW50Ijp7IjAiOnsibW9kZSI6Im9wdC1pbiJ9LCIxIjp7Im1vZGUiOiJvcHQtaW4ifSwiMiI6eyJtb2RlIjoib3B0LWluIn0sIjMiOnsibW9kZSI6Im9wdC1pbiJ9LCI0Ijp7Im1vZGUiOiJvcHQtaW4ifSwiNSI6eyJtb2RlIjoib3B0LWluIn0sIjYiOnsibW9kZSI6Im9wdC1pbiJ9LCI3Ijp7Im1vZGUiOiJvcHQtaW4ifX0sInB1cnBvc2VzIjpudWxsLCJfdCI6Im43YTB4ODBqfG1ybGx6cW9qIn0%3D",
+      "value": "eyJjb25zZW50Ijp7IjAiOnsibW9kZSI6Im9wdC1pbiJ9LCIxIjp7Im1vZGUiOiJvcHQtaW4ifSwiMiI6eyJtb2RlIjoib3B0LWluIn0sIjMiOnsibW9kZSI6Im9wdC1pbiJ9LCI0Ijp7Im1vZGUiOiJvcHQtaW4ifSwiNSI6eyJtb2RlIjoib3B0LWluIn0sIjYiOnsibW9kZSI6Im9wdC1pbiJ9LCI3Ijp7Im1vZGUiOiJvcHQtaW4ifX0sInB1cnBvc2VzIjpudWxsLCJfdCI6Im43aWVicHZufG1ydHplOGpuIn0%3D",
       "domain": ".computrabajo.com",
       "path": "/",
-      "expires": 1818219462,
+      "expires": 1818725703,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
@@ -335,17 +265,37 @@
       "value": "%7B%22id%22%3A%22computrabajo-1-3F8C93C9E98E2ABE61373E686DCF3405%22%2C%22category%22%3A%22candidate%22%7D",
       "domain": "candidato.co.computrabajo.com",
       "path": "/",
-      "expires": 1818219475,
+      "expires": 1818725713,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
     },
     {
+      "name": "AWSALB",
+      "value": "ksW7O8MEb3QQQaMgUoWXGB3kIsBVKud7/cDMNToOIKBEI/Z34G1Fz4Dg4ts+b06ZVF+jQqngVO0nEXLvx6rghsEAi0QEI/xCZuHRbpale7TzYLPSp+26REyrKvja",
+      "domain": "candidato.co.computrabajo.com",
+      "path": "/",
+      "expires": 1785202513.927775,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AWSALBCORS",
+      "value": "ksW7O8MEb3QQQaMgUoWXGB3kIsBVKud7/cDMNToOIKBEI/Z34G1Fz4Dg4ts+b06ZVF+jQqngVO0nEXLvx6rghsEAi0QEI/xCZuHRbpale7TzYLPSp+26REyrKvja",
+      "domain": "candidato.co.computrabajo.com",
+      "path": "/",
+      "expires": 1785202513.927852,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
       "name": "_clsk",
-      "value": "1saqwrv%5E1784091475792%5E4%5E0%5El.clarity.ms%2Fcollect",
+      "value": "1ku616m%5E1784597714241%5E4%5E0%5El.clarity.ms%2Fcollect",
       "domain": ".computrabajo.com",
       "path": "/",
-      "expires": 1784177875,
+      "expires": 1784684114,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
