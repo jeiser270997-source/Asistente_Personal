@@ -19,6 +19,7 @@ data/*.db
 data/pending.json.migrated
 # [PERMITIDO GITHUB] data/contexto_vital.json
 data/telegram_state.json
+scripts/data/telegram_state.json
 
 # --- Tokens OAuth ---
 .google_token.json

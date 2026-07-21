@@ -1,117 +1,61 @@
-# Despertar 5:00 AM (PC en sleep)
+# Despertar (PC en sleep)
 
-## Qué tienes hoy (diagnosticado en tu PC)
+## Estado actual (Jul 2026 — post-limpieza)
 
-| Tarea | Hora | Qué corre | Problema |
-|-------|------|-----------|----------|
-| **LifeOS_MorningRoutine** | **5:00** | `daily_routine.js` (antes pesado + apagaba) | Scrapers + LLM free-tier + clima “día completo” |
-| LifeOS_Brain_Morning | 6:30 | `run_brain.bat` → brain_orchestrator | Ruta vieja, last result error |
-| LifeOS_BrainOrchestrator ×3 | 6/13/20 | brain_orchestrator | Ruido |
-| LifeOS_Brain_Correos ×3 | 8/12/17 | run_brain.bat | Duplicado |
-| LifeOS_DailyAlert | 7:00 | ? | Extra |
+| Tarea | Hora | Script | 
+|-------|------|--------|
+| **LifeOS_MorningRoutine** | **5:00 AM** | `morning_wake.js` (lean, sin LLM) ✅ |
+| **LifeOS_PreDepartureRoutine** | **8:15 AM** | `morning_wake.js` (briefing DiDi) ✅ |
 
-**Recomendación:** deja **solo** `LifeOS_MorningRoutine` → `morning_wake.js`. Desactiva el resto si no los usas.
+**Tareas zombies eliminadas:** `LifeOS_Brain_Morning`, `LifeOS_BrainOrchestrator`, `LifeOS_Brain_Correos`, `LifeOS_DailyAlert`, `LifeOS_AgentHeartbeat`, `Jeiser_Brain_Orchestrator`
 
-## Por qué el clima mentía
+**PM2:** Vacío (0 procesos). Ya no hay daemons.
+**Scripts legacy:** Archivados en `_archived/`.
+**Telegram:** Unidireccional (solo envía mensajes).
 
-Antes se usaba `precipitation_probability_max` del **día entero** + weathercode diario.  
-A las 5am el modelo puede decir “100% lluvia hoy” aunque **ahora** esté soleado (la lluvia es a la tarde).
-
-**Ahora (Open-Meteo, gratis, sin key):**
-- **AHORA** — current: temp, código, si está lloviendo
-- **Próximas 6h** — probabilidad por hora
-- **Tarde 12–18h** — separado
-- El “máx del día” solo como referencia, no como veredicto
-
-## Por qué fallaban las APIs free
-
-- LLM (OpenRouter/Groq/etc.): 402/429/tokens → el wake **ya no depende del LLM**
-- TomTom: key opcional; si no hay, heurística de picos DiDi (no inventa minutos)
-- Scrapers Playwright a las 5am post-sleep: lentos/fallan → **fuera del default**
-
-## Comando canónico 5am
+## Flujo canónico
 
 ```bash
-node scripts/morning_wake.js
-# o
-npm run morning
+npm run morning              # 5am (Task Scheduler) / 8:15am → briefing → sleep
+npm run session              # cuando te sientas (scrapers + briefing)
 ```
 
-Flags:
-- `--full` — también email + sena tracker (con timeout)
-- `--llm` — intenta embellecer (si free-tier truena, se ignora)
-- `--shutdown` — apagar PC (opt-in; **default no apaga**)
+## Por qué el clima ya no miente
 
-## Actualizar Task Scheduler (hazlo una vez en el PC real)
+Antes se usaba `precipitation_probability_max` del **día entero**. A las 5am el modelo podía decir "100% lluvia hoy" aunque estuviera soleado.
 
-Tu tarea actual (diagnosticada):
+**Ahora (Open-Meteo, gratis, sin key):**
+- **AHORA** — temp, código, si está lloviendo
+- **Próximas 6h** — probabilidad por hora
+- **Tarde 12–18h** — separado
 
-```
-LifeOS_MorningRoutine  →  5:00 AM
-  node.exe scripts\daily_routine.js
-  Start in: E:\PROYECTOS\Mis_Proyectos\Asistente_Personal
-```
+## Qué info da el wake (sin LLM)
 
-### Opción A — script (Admin)
+- 🌤️ Clima ahora + próximas 6h (Open-Meteo)
+- 🚗 Pico y placa KEW496 + SIMIT desde cache
+- 📰 TRM + Hacker News top post
+- 🚕 Estrategia DiDi (tráfico TomTom si hay API, sino heurística)
+- 📋 SENA críticos desde alertas + cola de empleo
+- 🎯 Plan del día
+
+## Actualizar Task Scheduler (una vez en PC nuevo)
 
 ```powershell
+# Como Admin:
 cd E:\PROYECTOS\Mis_Proyectos\Asistente_Personal
-git pull
-npm ci
 powershell -ExecutionPolicy Bypass -File scripts\setup_wakeup_routine.ps1 -UnregisterExisting
 ```
 
-### Opción B — a mano (taskschd.msc)
+O manual: `taskschd.msc` → crear tarea → `node.exe scripts\morning_wake.js`
+- ✅ Reactivar el equipo
+- ✅ Sin límite de tiempo
 
-1. Abre **Programador de tareas** → `LifeOS_MorningRoutine`
-2. Acciones → Editar:
-   - Programa: `C:\Program Files\nodejs\node.exe`
-   - Argumentos: `scripts\morning_wake.js`
-   - Iniciar en: `E:\PROYECTOS\Mis_Proyectos\Asistente_Personal` (donde está el `.env`)
-3. Condiciones → ☑ **Reactivar el equipo para ejecutar esta tarea**
-4. Configuración → si falla, reintentar cada 10 min, hasta 2 veces
-
-### Opción C — sin tocar la tarea
-
-`daily_routine.js` **ya redirige** a `morning_wake.js` por defecto (salvo `--full-legacy`).  
-Con `git pull` en esa carpeta, mañana a las 5am ya usa el wake lean.
-
-### Basura de tareas a desactivar
-
-En taskschd.msc → clic derecho → **Deshabilitar** (no borrar si no estás seguro):
-
-| Tarea | Por qué sobra |
-|-------|----------------|
-| `LifeOS_Brain_Morning` | Ruta vieja / error |
-| `LifeOS_BrainOrchestrator` (×3) | Ruido 6/13/20h |
-| `LifeOS_Brain_Correos` (×3) | Duplicado |
-| `Jeiser_Brain_Orchestrator` | Legacy |
-| `LifeOS_DailyAlert` | Extra |
-| `LifeOS_AgentHeartbeat` | Extra |
-
-**Deja solo:** `LifeOS_MorningRoutine` (5am).  
-Organización diurna: `npm run session` cuando te sientes.
-
-## Qué info necesitas a las 5am (perfil Jeiser)
-
-| Sí | No |
-|----|-----|
-| Clima **ahora** + si llueve en la mañana DiDi | “Día lluvioso” genérico del máximo diario |
-| Pico y placa KEW496 | Tráfico inventado sin API |
-| SIMIT desde cache | Scrape DIAN completo |
-| SENA críticos desde alertas | Auto-apply empleo |
-| Plan: DiDi AM / bloque calor / CESDE sáb | Regaños largos de LLM |
-| Telegram corto | Apagar PC sin que lo pidas |
-
-## Sesión diurna (cuando te sientas)
+## Sesión diurna
 
 ```bash
-npm run session
+npm run session              # scrapers + organización + briefing
+npm run session -- --fast    # solo briefing
 ```
 
-Ahí sí scrapers y organización completa.
-
-## Actualización 2026-07-21 (Tráfico TomTom y Estrategia DiDi)
-- **Festivos dinámicos:** Integración de la API de Nager.Date para detectar festivos nacionales y anticipar puentes festivos en la estrategia de conducción.
-- **Divisas y Lectura:** Monitoreo diario de la TRM (USD/COP) para costear llamadas de IA y extracción síncrona del post número 1 de Hacker News.
-- **Estrategia de Movilidad:** Lógica determinista que cruza el retraso por tráfico de TomTom y el clima de Open-Meteo para calcular la eficiencia de la jornada (horas requeridas para la meta de .000 COP) y recomendar las mejores zonas.
+---
+*Última actualización: 2026-07-21 · Post-limpieza (PM2 vacío, scripts archivados, Telegram unidireccional)*

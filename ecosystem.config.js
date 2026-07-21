@@ -1,168 +1,27 @@
 /**
- * PM2 ecosystem — OPCIONAL / LEGACY
+ * PM2 ecosystem — REFERENCIA (no usar en producción)
  *
- * Jeiser NO usa PC 24/7. El flujo canónico es on-demand:
- *   npm run session          # al sentarte 1–2 veces al día
- *   npm run session:fast     # solo briefing
+ * ══════════════════════════════════════════════════════════
+ *  LifeOS YA NO USA PM2 PARA CRON JOBS.
+ * ══════════════════════════════════════════════════════════
  *
- * No arrancar PM2 salvo que quieras daemons (Telegram always-on).
+ * Flujo canónico actual (Jul 2026):
+ *   npm run morning          # 5am wake → briefing → sleep (vía Task Scheduler)
+ *   npm run session          # on-demand, 1–2 veces al día
+ *   npm run session --fast   # solo briefing rápido
+ *
+ * Task Scheduler (Windows) — las únicas tareas activas:
+ *   - LifeOS_MorningRoutine        → 5:00 AM  → morning_wake.js
+ *   - LifeOS_PreDepartureRoutine    → 8:15 AM  → morning_wake.js
+ *
+ * PM2 solo se usa si quieres el health monitor HTTP (uptime-kuma):
+ *   pm2 start ecosystem.config.js --only pm2-health
+ *
  * Si PM2 molesta: pm2 kill && usa solo `npm run session`.
  */
 module.exports = {
   apps: [
-    // ── NOTA: ya no hay daemons always-on ──────────────────────
-    // jarvis-telegram eliminado (bidireccional ya no se necesita).
-    // LifeOS es unidireccional: solo envía mensajes a Telegram vía sendTelegramMessage().
-    // Los cron jobs pueden activarse con PM2 si se desea, pero el flujo canónico
-    // es on-demand: npm run session  |  npm run morning
-
-    // ── Cron jobs (restart on schedule, exit after run) ────────
-
-    // Brain orchestrator — diario 7am Colombia (12pm UTC)
-    {
-      name: "brain-orchestrator",
-      script: "./scripts/schedulers/brain_orchestrator.js",
-      cron_restart: "0 12 * * *",
-      autorestart: false,
-    },
-
-    // Context engine — diario 6am Colombia (11am UTC)
-    {
-      name: "context-engine-daily",
-      script: "./scripts/schedulers/context_engine_daily.js",
-      cron_restart: "0 11 * * *",
-      autorestart: false,
-    },
-
-    // Morning briefing — diario 7am Colombia (12pm UTC)
-    {
-      name: "morning-briefing",
-      script: "./scripts/schedulers/morning_briefing.ts",
-      exec_interpreter: "tsx",
-      cron_restart: "0 12 * * *",
-      autorestart: false,
-    },
-
-    // Email cleaner — cada 3h
-    {
-      name: "email-cleaner",
-      script: "./scripts/integrations/email_processor.js",
-      cron_restart: "0 */3 * * *",
-      autorestart: false,
-    },
-
-    // Inbox sensor — cada 15 min
-    {
-      name: "inbox-sensor",
-      script: "./scripts/integrations/inbox_sensor.js",
-      cron_restart: "*/15 * * * *",
-      autorestart: false,
-    },
-
-    // SENA scraper — lun-vie 6am Colombia (11am UTC)
-    {
-      name: "sena-scraper",
-      script: "./scripts/integrations/moodle_sena_scraper.js",
-      cron_restart: "0 11 * * 1-5",
-      autorestart: false,
-    },
-
-    // SENA tracker — diario 7am Colombia (12pm UTC)
-    {
-      name: "sena-tracker",
-      script: "./scripts/integrations/moodle_sena_tracker.js",
-      cron_restart: "0 12 * * *",
-      autorestart: false,
-    },
-
-    // SIMIT checker — diario 7am Colombia (12pm UTC)
-    {
-      name: "simit-checker",
-      script: "./scripts/integrations/simit_scraper.js",
-      cron_restart: "0 12 * * *",
-      autorestart: false,
-    },
-
-    // DIAN scraper — lunes 9am Colombia (2pm UTC)
-    {
-      name: "dian-scraper",
-      script: "./scripts/integrations/dian_scraper.js",
-      cron_restart: "0 14 * * 1",
-      autorestart: false,
-    },
-
-    // Computrabajo scraper — lun-vie 8am Colombia (1pm UTC)
-    {
-      name: "computrabajo-scraper",
-      script: "./scripts/jobs/computrabajo_scraper.js",
-      cron_restart: "0 13 * * 1-5",
-      autorestart: false,
-    },
-
-    // Computrabajo apply — SEMI-AUTO (sin --auto: solo reporta cola, no postula)
-    // LIVE solo manual: pm2 start ... -- --auto  o  node scripts/jobs/computrabajo_apply.js --auto
-    {
-      name: "computrabajo-apply",
-      script: "./scripts/jobs/computrabajo_apply.js",
-      args: "--dry-run",
-      cron_restart: "0 14 * * 1-5",
-      autorestart: false,
-    },
-
-    // Job loop — SEMI-AUTO por defecto (scrape + score + CV; NO postula sin --auto)
-    {
-      name: "job-loop",
-      script: "./scripts/jobs/job_loop.js",
-      args: "--dry-run",
-      cron_restart: "0 15 * * 1-5",
-      autorestart: false,
-    },
-
-    // Healthcheck — diario 8am Colombia (1pm UTC)
-    {
-      name: "healthcheck",
-      script: "./scripts/diagnostics/healthcheck.js",
-      cron_restart: "0 13 * * *",
-      autorestart: false,
-    },
-
-    // Recordatorio DeepSeek — 6am/7pm/10pm Colombia
-    // 6am Colombia = 11am UTC
-    // 7pm Colombia = 0am UTC (next day)
-    // 10pm Colombia = 3am UTC (next day)
-    {
-      name: "recordatorio-deepseek",
-      script: "./scripts/integrations/recordatorio_deepseek.js",
-      cron_restart: "0 11,0,3 * * *",
-      autorestart: false,
-    },
-
-    // Document pipeline — diario 9am Colombia (2pm UTC)
-    {
-      name: "document-pipeline",
-      script: "./scripts/maintenance/document_pipeline.js",
-      cron_restart: "0 14 * * *",
-      autorestart: false,
-    },
-
-    // Vehicle manager — diario 6am Colombia (11am UTC)
-    {
-      name: "vehicle-manager",
-      script: "./scripts/schedulers/vehicle_manager.js",
-      cron_restart: "0 11 * * *",
-      autorestart: false,
-    },
-
-    // Backups DB — diario 11pm Colombia (4am UTC)
-    {
-      name: "backup-dbs",
-      script: "./scripts/maintenance/backup_dbs.ts",
-      exec_interpreter: "tsx",
-      cron_restart: "0 4 * * *",
-      autorestart: false,
-    },
-
-    // ── Monitoreo (daemon) ────────────────────────────────────────
+    // ── Health monitor HTTP (opcional, para uptime-kuma) ──────
     {
       name: "pm2-health",
       script: "./scripts/diagnostics/pm2_health_monitor.js",
