@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-20 (wake→sleep, OmniRoute gateway, pico lun 4-ago)
+**Última actualización:** 2026-07-21 (+🐘 Facebook repo hunter, job_loop fix, email inbox-zero)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -108,11 +108,17 @@ Detalle: `docs/FLUJO_JEISER.md` · `docs/MORNING_WAKE.md` · `docs/OMNIROUTE.md`
 # Correos
 node scripts/integrations/email_processor.js
 
+# Inbox zero (marca leídos + etiqueta + saca del inbox)
+EMAIL_INBOX_ZERO=true node scripts/integrations/email_processor.js
+
 # SENA
 node scripts/integrations/moodle_sena_tracker.js ver
 
 # SIMIT
 node scripts/integrations/simit_scraper.js
+
+# Facebook Repo Hunter (midudev, mouredev, theaiempire)
+node scripts/integrations/facebook_scraper.js
 
 # Audit
 node scripts/diagnostics/runtime-audit.js

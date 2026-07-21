@@ -41,6 +41,14 @@ Por defecto **no postula**. En la sesión solo scrapea y llena cola.
 node scripts/jobs/job_loop.js --auto   # postular solo cuando TÚ lo decidas
 ```
 
+### Facebook Repo Hunter
+
+Scrapea páginas públicas de Facebook (midudev, mouredev, theaiempire) buscando posts con links a GitHub/GitLab/Bitbucket. Extrae URLs reales del wrapper `l.php?u=` de Facebook.
+
+```bash
+node scripts/integrations/facebook_scraper.js
+```
+
 ### PM2 (opcional / legacy)
 
 Solo si quieres Telegram always-on u otros crons. **No es el diseño actual.**  
