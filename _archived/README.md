@@ -24,6 +24,7 @@
 |---------|-----------------|
 | `set_alarms.ts` | ADB no configurado en esta PC, alarmas se ponen manualmente |
 | `daily_routine.js` | Legacy — redirigía a `morning_wake.js`. Reemplazado por `npm run morning` |
+| `telegram_listener.js` | Bot bidireccional eliminado. LifeOS ahora solo envía mensajes vía `sendTelegramMessage()` |
 
 ## Flujo canónico actual
 

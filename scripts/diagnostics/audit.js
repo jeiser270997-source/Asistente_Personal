@@ -3,7 +3,7 @@ const path = require('path');
 
 const scripts = [
   'scripts/integrations/email_processor.js',
-  'scripts/integrations/telegram_listener.js',
+  // 'scripts/integrations/telegram_listener.js',  // REMOVED -- archivado, unidireccional
   // 'scripts/maintenance/reflexion_nocturna.js',  // REMOVED — código muerto
   'scripts/schedulers/brain_orchestrator.js',
   'scripts/integrations/moodle_sena_scraper.js',

@@ -29,11 +29,10 @@ const HEALTH_PORT = 9090;
 const CHECK_INTERVAL_MS = 60_000;
 
 // Procesos cuyo fallo es crítico (notificar inmediatamente)
-const CRITICAL_PROCESSES = ['jarvis-telegram'];
+const CRITICAL_PROCESSES = [];
 
 // Todos los procesos esperados
 const EXPECTED_PROCESSES = [
-  'jarvis-telegram',
   'brain-orchestrator',
   'context-engine-daily',
   'morning-briefing',

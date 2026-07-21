@@ -16,7 +16,6 @@ La DB se restauraba/guardaba usando `actions/cache`.
        │
   PM2 (ecosystem.config.js)
        │
-  ├── jarvis-telegram        → daemon (always-on)
   ├── brain-orchestrator     → cron 7am
   ├── context-engine-daily   → cron 6am
   ├── morning-briefing       → cron 7am

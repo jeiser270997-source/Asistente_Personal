@@ -44,7 +44,8 @@ Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y
 ## Arquitectura (Julio 2026)
 
 ```
-📱 Telegram (local via PM2) ← → 🖥️ Local Runtime (PM2 / Task Scheduler)
+📱 Telegram → 🖥️ Local Runtime (on-demand: npm run session)
+  (solo envía mensajes, ya no escucha comandos)
                                          ↓
                           🧠 DeepSeek V4 Flash / Gemini / OpenRouter (multi-proveedor)
                                          ↓

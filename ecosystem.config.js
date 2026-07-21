@@ -10,16 +10,11 @@
  */
 module.exports = {
   apps: [
-    // ── Daemon (always-on) ──────────────────────────────────────
-    {
-      name: "jarvis-telegram",
-      script: "./scripts/integrations/telegram_listener.js",
-      watch: false,
-      autorestart: true,
-      max_restarts: 10,
-      restart_delay: 5000,
-      env: { NODE_ENV: "production" },
-    },
+    // ── NOTA: ya no hay daemons always-on ──────────────────────
+    // jarvis-telegram eliminado (bidireccional ya no se necesita).
+    // LifeOS es unidireccional: solo envía mensajes a Telegram vía sendTelegramMessage().
+    // Los cron jobs pueden activarse con PM2 si se desea, pero el flujo canónico
+    // es on-demand: npm run session  |  npm run morning
 
     // ── Cron jobs (restart on schedule, exit after run) ────────
 
