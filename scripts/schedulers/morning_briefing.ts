@@ -107,41 +107,54 @@ function getPicoYPlacaInfo(_diaNombre: string, _placaStr: string) {
 
 // ================= ZAJUNA (SENA) PENDIENTS =================
 function getZajunaPending(): string {
+  const lines: string[] = [];
   try {
+    // 1. Cargar Anuncios y Conferencias Web (Zoom / Alertas Sena)
+    const alertasPath = path.join(__dirname, '..', '..', 'data', 'state', 'contexto_maestro', 'ALERTAS_SENA.md');
+    if (fs.existsSync(alertasPath)) {
+      const content = fs.readFileSync(alertasPath, 'utf8');
+      const alertLines = content.split('\n').filter(l => l.trim().startsWith('- 🟢') || l.trim().startsWith('- 📢'));
+      if (alertLines.length > 0) {
+        lines.push('📢 *ANUNCIOS Y CLASES SENA DE LA SEMANA:*');
+        alertLines.forEach(al => lines.push(`  ${al.trim()}`));
+        lines.push('');
+      }
+    }
+
+    // 2. Cargar Entregas y Actividades de Cursos (Scrum + BD)
     const senaData = SeguimientoStore.get();
     if (senaData && senaData.actividades) {
-      const lines: string[] = [];
       const hoy = new Date();
       const manana = new Date(hoy);
       manana.setDate(manana.getDate() + 1);
       const mananaStr = manana.toISOString().split('T')[0];
 
+      lines.push('📚 *ACTIVIDADES Y TAREAS ZAJUNA:*');
+      let count = 0;
       for (const [key, act] of Object.entries(senaData.actividades)) {
         const actividad: any = act;
         const incomplete = (actividad.evidencias || []).filter((e: any) => !e.completado);
         if (incomplete.length > 0) {
+          count++;
           const limitStr = actividad.fecha_limite ? ` (Vence: ${actividad.fecha_limite})` : '';
-          
-          // Detectar vencimientos críticos (hoy o mañana)
           const esCritico = actividad.fecha_limite && (
             actividad.fecha_limite === hoy.toISOString().split('T')[0] ||
             actividad.fecha_limite === mananaStr
           );
           const prefix = esCritico ? '🚨🔴 *CRÍTICO*' : '📌';
-          
-          lines.push(`${prefix} *${actividad.nombre}*${limitStr}`);
+          lines.push(` ${prefix} *${actividad.nombre}*${limitStr}`);
           incomplete.forEach((e: any) => {
             const idInfo = e.id ? ` (ID: ${e.id})` : '';
-            lines.push(`  - [ ] _${e.nombre}_${idInfo}`);
+            lines.push(`   - [ ] _${e.nombre}_${idInfo}`);
           });
         }
       }
-      return lines.length > 0 ? lines.join('\n') : '✅ Sin entregas pendientes en Zajuna.';
+      if (count === 0) lines.push('  ✅ Sin entregas pendientes en Zajuna.');
     }
   } catch (e: any) {
     console.warn(`[Briefing] Error leyendo ZajunaStore: ${e.message}`);
   }
-  return 'ℹ️ No se pudieron cargar los datos de Zajuna.';
+  return lines.length > 0 ? lines.join('\n') : '✅ Sin novedades ni tareas pendientes en Zajuna.';
 }
 
 // ================= FECHA HELPER =================

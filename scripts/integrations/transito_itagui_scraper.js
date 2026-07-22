@@ -161,9 +161,22 @@ async function main() {
     process.exit(1);
   }
 
-  const browser = await chromium.launch({ headless: false });
-  const page = await browser.newPage();
-  
+  const isHeadless = process.env.HEADLESS !== 'false';
+  const browser = await chromium.launch({
+    headless: isHeadless,
+    args: ['--disable-blink-features=AutomationControlled', '--no-sandbox']
+  });
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    viewport: { width: 1280, height: 800 },
+    locale: 'es-CO',
+    timezoneId: 'America/Bogota'
+  });
+  const page = await context.newPage();
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+  });
+
   try {
     const data = await scrapeItagui(page);
     if (!data) throw new Error('No se pudo extraer la info');
