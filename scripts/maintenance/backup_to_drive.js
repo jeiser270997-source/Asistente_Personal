@@ -8,7 +8,10 @@ const VIDEO_FILE_ID = '1_5vVY6dWudA4mPUTXVCW2kdyZR-dOZD2';
 const FILES_TO_BACKUP = [
   { path: path.join(__dirname, '..', '..', 'data', 'memoria_hipocampo.db'), name: `memoria_hipocampo_${new Date().toISOString().slice(0,10)}.db` },
   { path: path.join(__dirname, '..', '..', 'data', 'state', 'contexto_maestro', 'ESTADO_VIVO.md'), name: `ESTADO_VIVO_${new Date().toISOString().slice(0,10)}.md` },
-  { path: path.join(__dirname, '..', '..', 'data', 'sena', 'scrum', 'curso_scrum_estructura.json'), name: `curso_scrum_estructura_${new Date().toISOString().slice(0,10)}.json` }
+  { path: path.join(__dirname, '..', '..', 'data', 'sena', 'scrum', 'curso_scrum_estructura.json'), name: `curso_scrum_estructura_${new Date().toISOString().slice(0,10)}.json` },
+  { path: path.join(__dirname, '..', '..', 'data', 'sources', 'sena', 'evidencias', 'Evidencia_AA2_Cuadro_Comparativo.pdf'), name: `Evidencia_AA2_Cuadro_Comparativo.pdf` },
+  { path: path.join(__dirname, '..', '..', 'data', 'sources', 'sena', 'evidencias', 'Evidencia_AA2_Taller_Colegio_San_Jorge.pdf'), name: `Evidencia_AA2_Taller_Colegio_San_Jorge.pdf` },
+  { path: path.join(__dirname, '..', '..', 'data', 'sources', 'sena', 'evidencias', 'Evidencia_AA3_Normalizacion_San_Jorge.pdf'), name: `Evidencia_AA3_Normalizacion_San_Jorge.pdf` }
 ];
 
 async function runBackupAndCleanVideo() {
