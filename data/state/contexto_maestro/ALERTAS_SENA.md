@@ -7,7 +7,7 @@
   - **Instructora:** Ayda Andrea Franco Villamil.
   - **Enlace Zoom:** https://us05web.zoom.us/j/82908688091 (ID: 829 0868 8091 | Clave: Ab0M6s).
 - 📚 **Estructura del Curso Scrum (Ficha 3565476):**
-  - `AA1-EV01`: Informe de historias de usuario que representan los requerimientos del cliente.
+  - `AA1-EV01`: Informe de historias de usuario que representan los requerimientos del cliente. **(📅 Meta de entrega: Viernes 24 de Julio | Plazo máximo con plazo de gracia instructora: Lunes 27 de Julio)**.
   - `AA2-EV01`: Estudio de caso, asignando roles y ciclo de vida.
   - `AA3-EV01`: Mapa conceptual sobre artefactos, planeación, ejecución y revisión del sprint.
   - `AA4-EV01`: Informe de estudio de caso, asignando actividades Scrum y diferencias con Kanban.
