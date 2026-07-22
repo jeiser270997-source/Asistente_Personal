@@ -89,16 +89,16 @@ function getSimitStatus(): string {
   return 'ℹ️ *SIMIT:* No se encontró información actual.';
 }
 
-// ================= PICO Y PLACA (fuente: lib/integrations/pico_placa.js) =================
-function getPicoYPlacaInfo(_diaNombre: string, _placaStr: string) {
+async function getPicoYPlacaInfo(_diaNombre: string, _placaStr: string) {
   try {
-    const { getPicoYPlacaStatus } = require('../../lib/integrations/pico_placa');
-    const s = getPicoYPlacaStatus();
+    const { getLivePicoYPlacaStatus } = require('../../lib/integrations/pico_placa');
+    const s = await getLivePicoYPlacaStatus();
     return {
       restringidas_hoy: (s.rest || []).join(' y '),
       tiene_restriccion: !!s.applies,
       message: s.message,
       hours: s.hours,
+      source: s.source || 'local',
     };
   } catch {
     return { restringidas_hoy: 'n/a', tiene_restriccion: false, message: 'PyP n/a' };
@@ -299,7 +299,7 @@ export async function runMorningBriefing(): Promise<void> {
     getTrafficReport().catch(() => 'TomTom no disponible'),
   ]);
 
-  const pypInfo = getPicoYPlacaInfo(dayName, config.placa_vehiculo || '6');
+  const pypInfo = await getPicoYPlacaInfo(dayName, config.placa_vehiculo || '6');
   const simit = getSimitStatus();
   const senaPending = getZajunaPending();
   const jobsSummary = getJobsQueueSummary();
