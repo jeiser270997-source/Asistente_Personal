@@ -14,6 +14,21 @@ function log(msg) {
   console.log(`[${new Date().toISOString()}] ${msg}`);
 }
 
+const SCRUM_MODULES = [
+  { id: '7973538', title: 'Diseño_Curricular', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973538` },
+  { id: '7973539', title: 'Informacion_del_Programa', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973539` },
+  { id: '7973541', title: 'Documentos_de_Interes', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973541` },
+  { id: '7973547', title: 'Cronograma_Scrum', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973547` },
+  { id: '7973550', title: 'Guia_de_Aprendizaje_1', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973550` },
+  { id: '7973551', title: 'Componente_Formativo_1_Scrum_Caracteristicas', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973551` },
+  { id: '7973552', title: 'AA1-EV01_Historias_de_Usuario', url: `${BASE_URL}/zajuna/mod/assign/view.php?id=7973552` },
+  { id: '7973553', title: 'AA2-EV01_Estudio_de_Caso_Roles', url: `${BASE_URL}/zajuna/mod/assign/view.php?id=7973553` },
+  { id: '7973554', title: 'Componente_Formativo_2_Planeacion_Agil', url: `${BASE_URL}/zajuna/mod/page/view.php?id=7973554` },
+  { id: '7973555', title: 'AA3-EV01_Mapa_Conceptual_Artefactos', url: `${BASE_URL}/zajuna/mod/assign/view.php?id=7973555` },
+  { id: '7973556', title: 'AA4-EV01_Scrum_vs_Kanban', url: `${BASE_URL}/zajuna/mod/assign/view.php?id=7973556` },
+  { id: '8005430', title: 'Subir_Documento_Identidad', url: `${BASE_URL}/zajuna/mod/assign/view.php?id=8005430` }
+];
+
 async function downloadFile(page, fileUrl, destPath) {
   try {
     const result = await page.evaluate(async (url) => {
@@ -35,7 +50,7 @@ async function downloadFile(page, fileUrl, destPath) {
 }
 
 async function main() {
-  log('🚀 Iniciando Descargador de Materiales de Scrum (Ficha 3565476)...');
+  log('🚀 Descargando TODOS los módulos y materiales del curso de Scrum (Ficha 3565476)...');
 
   const browser = await chromium.launch({
     headless: true,
@@ -56,108 +71,89 @@ async function main() {
   });
 
   log('🔑 Autenticando en SENA Zajuna...');
-  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => {});
   await page.waitForTimeout(2000);
 
-  const select = page.locator('select[name="typeDocument"]').first();
-  if (await select.isVisible()) await select.selectOption('CC');
-
+  await page.selectOption('select[name="typeDocument"]', 'CC').catch(() => {});
   await page.fill('input[name="document"]', USER);
   await page.fill('input[name="password"]', PASS);
 
-  await page.evaluate(() => {
-    const form = document.querySelector('form[action*="singIn"], form[action*="login"], form');
-    if (form) form.submit();
-  });
+  const btn = await page.$('button[name="form_login_user"]');
+  if (btn) {
+    await page.evaluate(() => {
+      const modal = document.querySelector('#connection-guard-modal');
+      if (modal) modal.remove();
+    }).catch(() => {});
 
-  await page.waitForTimeout(5000);
-  log('📌 Autenticación lista. Buscando curso de Scrum...');
-
-  // Navegar a mis cursos
-  await page.goto(`${BASE_URL}/zajuna/my/courses.php`, { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {});
-  await page.waitForTimeout(4000);
-
-  // Localizar enlace del curso de Scrum
-  const courseLinks = await page.evaluate(() => {
-    const anchors = Array.from(document.querySelectorAll('a[href*="course/view.php"]'));
-    return anchors.map(a => ({ text: a.innerText.replace(/\s+/g, ' ').trim(), href: a.href }));
-  });
-
-  const scrumCourse = courseLinks.find(c => c.text.toLowerCase().includes('scrum') || c.text.includes('3565476'));
-  const targetUrl = scrumCourse ? scrumCourse.href : `${BASE_URL}/zajuna/course/view.php?id=121953`;
-
-  log(`📚 Navegando al curso Scrum: ${targetUrl}`);
-  await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {}),
+      page.evaluate(b => b.click(), btn).catch(() => btn.click({ force: true }))
+    ]);
+  } else {
+    await page.keyboard.press('Enter');
+    await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {});
+  }
   await page.waitForTimeout(3000);
 
-  // Extraer todos los recursos descargables
-  const resources = await page.evaluate(() => {
-    const links = Array.from(document.querySelectorAll('a[href*="resource"], a[href*="folder"], a[href*="file.php"], a[href*="pluginfile.php"], a[href*=".pdf"], a[href*="mod/page"]'));
-    return links.map(l => ({ text: l.innerText.replace(/\s+/g, ' ').trim(), href: l.href }));
-  });
+  const downloadedList = [];
 
-  log(`🔎 Se encontraron ${resources.length} enlace(s) a recursos en la página principal del curso.`);
+  for (let i = 0; i < SCRUM_MODULES.length; i++) {
+    const mod = SCRUM_MODULES[i];
+    log(`[${i+1}/${SCRUM_MODULES.length}] Escaneando módulo: "${mod.title}" (${mod.id})...`);
 
-  const downloadedFiles = [];
+    await page.goto(mod.url, { waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {});
+    await page.waitForTimeout(2000);
 
-  for (let i = 0; i < resources.length; i++) {
-    const r = resources[i];
-    if (!r.href || r.href.includes('#')) continue;
+    // Save page HTML/Text content for offline reference
+    const pageText = await page.evaluate(() => document.body.innerText);
+    fs.writeFileSync(path.join(OUT_DIR, `${mod.title}_contenido.txt`), pageText, 'utf8');
 
-    let filename = path.basename(new URL(r.href).pathname).split('?')[0];
-    if (!filename || filename.length < 3) {
-      const cleanName = (r.text || `material_${i+1}`).replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 50);
-      filename = `${cleanName}.pdf`;
-    }
-    if (!filename.includes('.')) filename += '.pdf';
+    // Extract all downloadable PDF or resource links on this module page
+    const fileLinks = await page.evaluate(() => {
+      const links = Array.from(document.querySelectorAll('a[href*="file.php"], a[href*="pluginfile.php"], a[href*=".pdf"], a[href*="Repositorio"], iframe[src*=".pdf"], iframe[src*="Repositorio"]'));
+      return links.map(l => l.href || l.src).filter(Boolean);
+    });
 
-    const destPath = path.join(OUT_DIR, filename);
-    log(`[${i+1}/${resources.length}] Descargando: "${filename}"...`);
+    const uniqueLinks = Array.from(new Set(fileLinks));
+    log(`   Encontrados ${uniqueLinks.length} archivo(s) en ${mod.title}`);
 
-    const bytes = await downloadFile(page, r.href, destPath);
-    if (bytes) {
-      const kb = Math.round(bytes / 1024);
-      log(`   ✓ Guardado (${kb} KB): ${filename}`);
-      downloadedFiles.push({ name: filename, size_kb: kb, url: r.href });
-    } else {
-      log(`   ℹ️ El enlace es página o recurso dinámico, extrayendo contenido de vista...`);
-      // Si es una subpágina, visitarla para buscar archivos embebidos
-      try {
-        await page.goto(r.href, { waitUntil: 'domcontentloaded', timeout: 15000 });
-        await page.waitForTimeout(1500);
-        const subLinks = await page.evaluate(() => {
-          return Array.from(document.querySelectorAll('a[href*="file.php"], a[href*="pluginfile.php"], a[href*=".pdf"]')).map(a => a.href);
-        });
-        for (const sl of subLinks) {
-          const subName = path.basename(new URL(sl).pathname).split('?')[0] || `sub_resource_${Date.now()}.pdf`;
-          const subDest = path.join(OUT_DIR, subName);
-          const subBytes = await downloadFile(page, sl, subDest);
-          if (subBytes) {
-            const kb = Math.round(subBytes / 1024);
-            log(`   ✓ Embebido Guardado (${kb} KB): ${subName}`);
-            downloadedFiles.push({ name: subName, size_kb: kb, url: sl });
-          }
-        }
-      } catch (e) {}
+    for (let j = 0; j < uniqueLinks.length; j++) {
+      const link = uniqueLinks[j];
+      let filename = path.basename(new URL(link).pathname).split('?')[0];
+      if (!filename || filename.length < 3 || !filename.includes('.')) {
+        filename = `${mod.title}_recurso_${j+1}.pdf`;
+      }
+
+      const destPath = path.join(OUT_DIR, filename);
+      const bytes = await downloadFile(page, link, destPath);
+      if (bytes) {
+        const kb = Math.round(bytes / 1024);
+        log(`   ✓ Guardado (${kb} KB): ${filename}`);
+        downloadedList.push({ modulo: mod.title, archivo: filename, size_kb: kb, url: link });
+      }
     }
   }
 
-  // Guardar índice final
+  // Summary
   const summary = {
-    curso: 'Formación en Scrum (Ficha 3565476)',
+    curso: 'APLICACION DEL MARCO DE TRABAJO SCRUM PARA PROYECTOS DE DESARROLLO DE SOFTWARE (3565476)',
     fecha_descarga: new Date().toISOString(),
-    total_archivos: downloadedFiles.length,
-    archivos: downloadedFiles
+    modulos_procesados: SCRUM_MODULES.length,
+    archivos_descargados: downloadedList.length,
+    lista_archivos: downloadedList
   };
 
-  fs.writeFileSync(path.join(OUT_DIR, '..', 'materiales_index.json'), JSON.stringify(summary, null, 2), 'utf8');
-
-  log(`\n✅ DESCARGA COMPLETADA: ${downloadedFiles.length} archivo(s) guardados en data/sena/scrum/materiales/`);
+  fs.writeFileSync(path.join(OUT_DIR, '..', 'materiales_index_completo.json'), JSON.stringify(summary, null, 2), 'utf8');
+  log(`\n==================================================`);
+  log(`✅ DESCARGA COMPLETA FINALIZADA!`);
+  log(`📦 Se procesaron ${SCRUM_MODULES.length} módulos y se descargaron los archivos en:`);
+  log(`📂 ${OUT_DIR}`);
+  log(`==================================================\n`);
 
   await browser.close();
 }
 
 main().catch(err => {
-  log(`❌ Error fatal: ${err.message}`);
+  log(`❌ Error: ${err.message}`);
   process.exit(1);
 });
