@@ -1,5 +1,5 @@
 # Life OS - Segundo Cerebro de Jeiser v2.5
-**Última actualización:** 2026-07-21 (Paradigma Cuerpo & Cerebro + Scorer Fix + AGENTS.md unificado)
+**Última actualización:** 2026-07-21 (+🐘 Facebook repo hunter, job_loop fix, email inbox-zero)
 
 ## Principios de diseño (constitución del proyecto)
 
@@ -16,7 +16,7 @@
 
 **Concepto Clave:**
 - **LifeOS = El Cuerpo:** Contiene la estructura física (scripts Node.js/TypeScript, base de datos SQLite WAL `data/memoria_hipocampo.db`, Rule Engine determinista, Event Bus con Transactional Outbox, scrapers Playwright/Cheerio y notificaciones). Se ejecuta localmente on-demand (`npm run morning`, `npm run session`) sin requerir llamadas de pago a LLM 24/7.
-- **Agente de IA = El Cerebro:** Dado que no se cuenta con APIs gratis de LLM en producción continua, la inteligencia interactiva reside en el agente (ej. Antigravity o OpenCode CLI con DeepSeek V4 Flash). Al abrir una sesión, el agente actúa como el cerebro que habita el cuerpo: lee `ESTADO_VIVO.md`, consulta memorias en SQLite, ejecuta `npm test`, repara scrapers y responde a las necesidades de Jeiser.
+- **Agente de IA = El Cerebro:** Dado que no se cuenta con APIs gratis de LLM en producción continua, la inteligencia interactiva reside en el agente (ej. Antigravity o OpenCode CLI con DeepSeek V4 Flash). Al abrir una sesión, el agente actua como el cerebro que habita el cuerpo: lee `ESTADO_VIVO.md`, consulta memorias en SQLite, ejecuta `npm test`, repara scrapers y responde a las necesidades de Jeiser.
 
 | Qué sí hace el Agente | Qué no hace |
 |-----------------------|-------------|
@@ -25,10 +25,31 @@
 | Ajustar selectores CSS/XPath o reglas JSON deterministas | Reescribir arquitecturas estables que ya funcionan |
 | Commits limpios con verificación empírica previa | Refactors cosméticos masivos que metan deuda técnica |
 
+**Gate antes de tocar código:**
+1. ¿Hay error reproducible o test fallando? → arreglar.
+2. ¿Solo "mejoraría"? → NO, es mantenimiento diferible.
+3. Tras fix: `npm test` (y `npm run runtime:ci` si tocó paths/stores).
+
+**Optimizado para agentes:** sí a nivel de contrato (AGENTS.md, paths canónicos, fail-closed, tests de política, semi-auto jobs). No es a prueba de alucinaciones: DeepSeek puede romper scrapers o inventar deps — el freno es tests + no poner `--auto` en PM2 + principio 8.
+
+**DeepSeek horario:** preferir valle (11pm–8am COT) para tokens baratos; fuera de valle el runtime LifeOS usa fallbacks. El *agente de coding* con DeepSeek es independiente del horario del `llm_service` de producción.
+
+## Arquitectura general (patrón LifeOS)
+
 ```
-📱 Telegram (solo notif) ← → ☁️ GitHub Actions (12 workflows, ubuntu-22.04)
+Fuente → Normalizer → Rule Engine → {conocido → Action | ambiguo → LLM}
+                                         → Event Bus → Persistencia → Métricas
+```
+
+Este patrón aplica a: Gmail, Calendar, SENA, DIAN, SIMIT, finanzas, Telegram, y futuros módulos.
+
+## Arquitectura (Julio 2026)
+
+```
+📱 Telegram → 🖥️ Local Runtime (on-demand: npm run session)
+  (solo envía mensajes, ya no escucha comandos)
                                          ↓
-                          🧠 DeepSeek V4 Flash (único LLM, horario valle)
+                          🧠 DeepSeek V4 Flash / Gemini / OpenRouter (multi-proveedor)
                                          ↓
               ┌──────────────────────────┼──────────────────────────┐
               ▼                          ▼                          ▼
@@ -38,16 +59,9 @@
               │                          │                 Auto-apply + CV tailor
               └──────────────────────────┼──────────────────────────┘
                                          ▼
-              ┌──────────── 🧠 Arquitectura Lobular ────────────────┐
-              │  Frontal (orquestador) │ Temporal (RAG + memoria)   │
-              │  Parietal (tools)      │ Occipital (visual/docs)    │
-              │  Hipotálamo (autonomía Tamagotchi)                  │
-              └─────────────────────────────────────────────────────┘
-                                         ↓
               ┌──────────── 💾 Memoria Persistente ─────────────────┐
-              │  SQLite: memoria_hipocampo.db (infinita)            │
-              │  JSON: data/memoria/hechos.json (estructurada)      │
-              │  MD: data/state/contexto_maestro/ESTADO_VIVO.md (perfil)  │
+              │  SQLite: data/memoria_hipocampo.db (infinita)        │
+              │  MD: data/state/contexto_maestro/ESTADO_VIVO.md     │
               └─────────────────────────────────────────────────────┘
                                          ↓
          ⚖ Tributaria v6  │  🚦 Transito v1  │  🎯 Bootcamp QA  │  💼 Job Hunter
@@ -55,26 +69,19 @@
 
 ## CONTEXTO RÁPIDO — Leer al inicio de cada sesión
 
-**Jeiser Abraham Gutierrez Torres** · CC 1019156838 · +57 304 461 5613
-Medellín, Colombia · jeiser270997@gmail.com · Conductor DiDi → busca trabajo QA Tech
+**Jeiser** · Medellín, Colombia · Conductor DiDi → busca trabajo QA Automation Junior
+*Datos personales detallados en `data/state/contexto_maestro/ESTADO_VIVO.md`*
 
-**Perfil técnico:** QA Automation Junior · Playwright · JS · Node.js · Git · GitHub Actions · Postman · SQL
-**Proyecto clave:** LifeOS (11 workflows en producción, scraping SIMIT/SENA/DIAN/CT, LLM integration)
-**Mejor match laboral:** Software QA Analyst 55-65/100 · Gap único: 1 año exp formal
-**CESDE:** Sábados 7am-6pm (próximo horario) · actual Lun/Mié/Vie 6-8pm
+**Perfil técnico:** QA Automation Junior · Playwright · JS/TS · Node.js · Git · GitHub Actions · Postman · SQL
+**Stack real:** `better-sqlite3` · `openai` · `playwright` · `telegraf` · `json-rules-engine` · `fuse.js` · `googleapis` · `cheerio`
+**Proyecto clave:** LifeOS (~~13 workflows GHA~~ → 19 procesos PM2 local, scraping SIMIT/SENA/DIAN/CT, LLM multi-proveedor)
+**CESDE:** Sábados 7am-6pm (próximo horario) · Lun/Mié/Vie 6-8pm
 **SENA:** Bases de Datos (Zajuna) + Excel (Zajuna) — ambos en curso
 
-**Perfil Psicológico y Operativo (SRE Mindset):**
-- **Nivel real:** Falso Junior (Aplica a QA Automation Junior pero diseña arquitectura Cloud/SRE).
-- **Mindset:** Hustler pragmático. Trabaja en DiDi, estudia CESDE/SENA y programa infraestructura compleja. Odia el trabajo manual.
-- **Trato requerido:** Comunicación técnica directa, cero explicaciones básicas. Fomentar su marketing personal para potenciar su transición laboral.
-
-**⚠️ PENDIENTES ACTIVOS:**
-1. Experiencia laboral anterior de Jeiser — NO registrada. Preguntar.
-2. SENA Excel — confirmar nombre exacto del curso para el CV.
-3. ✅ Fix login Computrabajo — Resuelto (Flujo 2 pasos implementado).
-4. DIAN obligaciones detalle — navegar Dashboard por clicks (no URL directa).
-5. SENA Actividad 2 — Cuadro Comparativo + Taller (vence 07/07/2026 ⚠️ HOY).
+**Perfil:**
+- Falso Junior — aplica a QA Automation Junior pero diseña arquitectura Cloud/SRE
+- Hustler pragmático: trabaja en DiDi, estudia CESDE/SENA y programa infraestructura compleja
+- Trato: comunicación técnica directa, cero explicaciones básicas
 
 ## Conexiones y APIs Disponibles (Herramientas del Cuerpo)
 
@@ -132,62 +139,125 @@ npm run session          # Sesión local programada
 | **ciberseguridad** | Buenas prácticas de seguridad en software bajo estándares MITRE/NIST. |
 | **memory-engine** | Gestión de persistencia semántica y contextual en la DB SQLite. |
 
-## Scripts Job Hunter (NEW — 2026-07-06)
-
-```bash
-# Scraping diario Computrabajo
-node scripts/computrabajo_scraper.js
-
-# Pipeline completo: scrape→analiza→tailoring (dry-run)
-node scripts/job_loop.js --loops=3 --min-score=40 --dry-run
-
-# Auto-apply (requiere fix login CT)
-node scripts/computrabajo_apply.js --auto
-
-# CV personalizado para oferta específica
-node scripts/cv_tailorer.js <url_oferta>
-
-# DIAN extracción exhaustiva
-node scripts/dian_scraper.js
-
-# Backup DBs a Google Drive
-npm run backup
-```
+## Automatizaciones CLI
 
 ## Comandos Rápidos (SSH / Local)
 
 ```bash
 # Correos
-node scripts/email_processor.js
+node scripts/integrations/email_processor.js
+
+# Inbox zero (marca leídos + etiqueta + saca del inbox)
+EMAIL_INBOX_ZERO=true node scripts/integrations/email_processor.js
 
 # SENA
-node scripts/moodle_sena_tracker.js ver
+node scripts/integrations/moodle_sena_tracker.js ver
 
 # SIMIT
-node scripts/simit_scraper.js
+node scripts/integrations/simit_scraper.js
+
+# Facebook Repo Hunter (midudev, mouredev, theaiempire)
+node scripts/integrations/facebook_scraper.js
+
+# Audit
+node scripts/diagnostics/runtime-audit.js
+
+# Healthcheck
+node scripts/diagnostics/healthcheck.js
 
 # Memoria
-node -e "const m=require('./lib/memory_engine'); console.log(JSON.stringify(m.getResumenMemoria(),null,2))"
+node -e "const m=require('./lib/memory/memory_engine'); console.log(JSON.stringify(m.getResumenMemoria(),null,2))"
 
-# Audit completo
-node scripts/audit.js
+# Backup DBs
+npm run backup
 
-# Reflexión nocturna (manual)
-node scripts/reflexion_nocturna.js
-
-# Briefing Matutino (Local - Requiere USB)
+# Briefing Matutino
 npm run briefing
 ```
 
-## Auditoría (08/07/2026)
+## Auditorías
 
-- **Sintaxis**: ✅ 0 errores. CI/CD reforzado con `npx tsc --noEmit` para archivos TS.
-- **TypeScript**: ✅ `morning_briefing.ts` y `set_alarms.ts` refactorizados corriendo vía `tsx`.
-- **Workflows**: ✅ 12 activos, todos ubuntu-22.04. Auditados y testeados en local.
-- **SIMIT Scraper**: ✅ Bug de variable vacía (`curr.multas` vs `curr.detalle.multas`) corregido. Cero falsas "Multas Resueltas".
-- **Brain Orchestrator**: ✅ Rutas absolutas (`BASE_DIR`) corregidas, ya logra procesar correos del SIMIT exitosamente.
-- **Backups**: ✅ Tarea automatizada para comprimir `.db` y `.json` y moverlos a Google Drive (`G:\My Drive\LifeOS_Backups\`).
-- **Fixes**: ✅ Login Computrabajo arreglado (flujo 2 pasos y detección anti-trampas implementada).
+### Ronda 1 (15/07/2026 — deep audit completo)
+
+Deep audit ejecutado: score 48→72+ con fixes aplicados.
+- **F01**: Path memoria_hipocampo.db unificado → `data/` (canónico)
+- **F02**: OpenRouter 402 mitigado (max_tokens dinámico 400-1200)
+- **F03**: Healthcheck reescrito con PATHS canónicos (9 checks, no scripts/data)
+- **F04**: Fail-closed en scorer — LLM caído = score 0, no auto-apply
+- **F06**: Gitignore + untrack litestream leftovers
+- **F07**: SENA scraper selectores más resilientes + syntax fix
+- **F08**: scripts/data/ archivado a etc/archived/
+- **F09/F10**: Docs honestos, PII removida de system prompt global
+- **O1**: SENA syntax `})await` corregido
+- **O2**: Fail-closed real en 4 scripts de jobs (scraper, apply, job_loop, cv_tailorer)
+- **O4**: 13 workflows GHA eliminados
+
+### Ronda 2 (18/07/2026 — seguridad, permisos, event bus, dashboard)
+
+Auditoría de seguridad y robustez.
+- **FIX-001** [CRITICAL] — SSRF en `crawl4ai_client.js`: validación `isPrivateIp()` + `isUrlSafe()`. ✅
+- **FIX-002** [CRITICAL] — `opencode.json`: permisos granulares (`*: deny`) con allowlist. ✅
+- **FIX-003** [CRITICAL] — `.claude/settings.local.json`: retirados patrones git del allowlist. ✅
+- **FIX-004** [HIGH] — Event bus conectado a Transactional Outbox (`OutboxStore.insert()`). ✅
+- **FIX-005** [LOW] — `bus.drain()` antes de `process.exit()` en jarvis/context. ✅
+- **FIX-006** [MEDIUM] — Dashboard API: error sanitizado vs `error.message` crudo. ✅
+- **FIX-007** [MEDIUM] — `frontal.js`: `JSON.parse` de tool-call envuelto en try/catch. ✅
+- **FIX-008** [LOW] — IPv6 `::` añadido a bloqueo en `isPrivateIp()`. ✅
+- **FIX-009** [MEDIUM] — 🔲 Pendiente: `email_processor.js` envía correos al LLM sin `sensitive=true`.
+
+**Protecciones adicionales (18/07/2026):**
+- `.gitignore` actualizado con dumps personales, diagnostics, scratch, temp, audit patches
+- 7 scripts de jobs obsoletos archivados en `scripts/jobs/_archived/`
+
+### Ronda 3 (18/07/2026 — WheelSaver deep audit + implementación)
+
+Deep audit con WheelSaver: score 92/100, ready checklist 7/7.
+
+| Fix | Descripción | Estado |
+|:---:|-------------|:------:|
+| **R3-01** | `tests/event_bus.test.js` — 27 tests: emit, retry, DLQ, backpressure, drain, metrics, idempotencia | ✅ |
+| **R3-02** | `tests/outbox_store.test.js` — 17 tests: insert, getPending, markFailed, resetStuck, moveToDlq, cleanup | ✅ |
+| **R3-03** | `docker-compose.yml` — ntfy (push notifications) + uptime-kuma (monitoreo) añadidos | ✅ |
+| **R3-04** | `data/apprise/apprise.yml` — multi-canal: Telegram + ntfy + tags críticos/info | ✅ |
+| **R3-05** | `lib/integrations/notifications.js` — triple canal: ntfy → Apprise → Telegram con envío concurrente | ✅ |
+| **R3-06** | `scripts/diagnostics/pm2_health_monitor.js` — endpoint HTTP /health + /metrics (Prometheus) para uptime-kuma | ✅ |
+| **R3-07** | `ecosystem.config.js` — proceso `pm2-health` añadido (daemon, puerto 9090) | ✅ |
+| **R3-08** | `docs/wheelsaver_deep_audit_lifeos_round3.md` — reporte consolidado del deep audit | ✅ |
+
+### Ronda 5 (19/07/2026 — Fase 2: Migración, tests seguros, WheelSaver, documentación)
+
+Auditoría de deuda técnica y saneamiento general.
+
+| Fix | Prioridad | Descripción | Estado |
+|:---:|:---------:|-------------|:-----:|
+| **FIX-016** | 🔴 HIGH | `runtime/migrate.js`: Unificar DB_PATH del migrador standalone con el canónico `data/memoria_hipocampo.db` vía `process.env.LIFEOS_DB_PATH` | ✅ |
+| **FIX-017** | 🟠 MEDIUM | `scripts/daily_routine.js`: Args `--dry-run` y `--no-shutdown` para testear rutina sin apagar el host físico | ✅ |
+| **FIX-018** | 🟠 MEDIUM | `lib/integrations/wheel_saver_client.js`: Guardas en 6 entrypoints + caché operacional (`_isOperationalCached`) para evitar llamadas con DB vacía | ✅ |
+| **FIX-019** | 🔵 LOW | `README.md` + `dashboard/README.md`: Reemplazar templates heredados (Litestream, create-next-app) con documentación real de LifeOS | ✅ |
+
+**Validación:** 87/87 tests exitosos. Sin regresiones.
+
+### Ronda 4 (19/07/2026 — Email Processor fixes + refactor)
+
+Auditoría de clasificación de correos y refactorización.
+
+| Fix | Descripción | Estado |
+|:---:|-------------|:------:|
+| **R4-01** [CRITICAL] | `email_processor.js`: Reorden del loop — `ruleEngine.matchAll()` ejecutado PRIMERO, `isImportant()` después. Antes isImportant() movía correos a Basura antes de que el rule_engine los clasificara (ej: Confirmación matrícula SENA perdida). | ✅ |
+| **R4-02** [HIGH] | `email_processor.js`: Eliminados `'noreply'`/`'no-reply'` de `JUNK_KEYWORDS`. Causaban falsos negativos en alertas legítimas (Google Security, SENA, etc.). | ✅ |
+| **R4-03** [MEDIUM] | `email_processor.js`: Refactor — lógica de descarga de adjuntos extraída a función compartida `processAttachments()`. Ahora se llama desde `action.archive`, `action.notify` y fallback `isImportant()`. Antes solo se ejecutaba en el fallback. | ✅ |
+| **R4-04** [LOW] | `brain_orchestrator.js`: Keywords sincronizadas con `email_processor.js` + eliminar encoding roto en patrones regex. | ✅ |
+| **R4-05** [LOW] | `docs/DECISIONS.md`: Add entry about email classifier ordering. | ✅ |
+
+### Ronda 6 (20/07/2026 — Job semi-auto + PII + deuda operativa)
+
+| Fix | Prioridad | Descripción | Estado |
+|:---:|:---------:|-------------|:-----:|
+| **R6-01** | 🔴 CRITICAL | `job_loop.js`: default SEMI-AUTO; LIVE solo con `--auto`; PM2 con `--dry-run` | ✅ |
+| **R6-02** | 🔴 CRITICAL | `computrabajo_apply.js`: entrypoint `main` + misma política; deja de ser no-op en PM2 | ✅ |
+| **R6-03** | 🔴 HIGH | `email_processor.js`: `sensitive=true` siempre al resumir con LLM (FIX-009) | ✅ |
+| **R6-04** | 🟠 MEDIUM | PII redactada en `ESTADO_VIVO.md` (credenciales → .env) | ✅ |
+| **R6-05** | 🔵 LOW | `valibot` eliminado (0 imports); tests de política en `tests/job_apply_policy.test.js` | ✅ |
 
 ## Reglas de Comportamiento
 
@@ -195,5 +265,5 @@ npm run briefing
 - **Anti-adulación**: Prohibido "esto es oro puro", "excelente pregunta", etc.
 - **Prioriza la verdad** sobre la validación emocional.
 - **DeepSeek**: Solo usar en horario valle (11pm–8am Colombia). Fuera usar fallback.
-- **Al inicio de sesión**: Leer ESTADO_VIVO.md primero, luego responder.
+- **Al inicio de sesión**: Leer `ESTADO_VIVO.md` primero, luego responder.
 - **Regla GitHub**: Si existe repo en GitHub para la tarea, usarlo. Inventar solo si no existe.

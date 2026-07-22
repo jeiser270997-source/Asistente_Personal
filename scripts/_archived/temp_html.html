@@ -1,0 +1,141 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; color: #333; }
+  h1 { color: #008800; font-size: 24px; text-align: center; }
+  h2 { color: #222; border-bottom: 2px solid #008800; padding-bottom: 5px; margin-top: 30px; }
+  h3 { color: #444; }
+  strong { color: #000; }
+  hr { border: 0; border-top: 1px solid #ccc; margin: 30px 0; }
+  pre { background: #f4f4f4; padding: 15px; border-radius: 5px; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background-color: #f2f2f2; }
+</style>
+</head>
+<body>
+
+<h1>SERVICIO NACIONAL DE APRENDIZAJE — SENA</h1>
+<div style="text-align: center; font-weight: bold;">Formación profesional integral</div>
+
+<h2>Actividad de Aprendizaje 3</h2>
+<strong>Determinar una base de datos teniendo en cuenta las reglas de normalización.</strong><br>
+<em>Evidencia: Documento - Aplicar la técnica de normalización a una base de datos en una empresa.</em><br><br>
+
+<strong>Programa de formación:</strong> Bases de Datos: Generalidades y Sistemas de Gestión<br>
+<strong>Ficha:</strong> 3549155<br>
+<strong>Aprendiz:</strong> Jeiser Abraham Gutiérrez Torres<br>
+<strong>Instructor:</strong> Rafael Neftalí Lizcano Reyes<br>
+
+<hr>
+
+<h2>Parte 1. Reflexión: ¿Cuál es la importancia de la normalización en una base de datos?</h2>
+La normalización es el proceso técnico mediante el cual se organiza la información de un modelo de datos para eliminar redundancias y prevenir <strong>anomalías de inserción, actualización y eliminación</strong>. Su importancia, desde la perspectiva de un Arquitecto de Datos, se resume en cuatro puntos clave:
+<ol>
+<li><strong>Integridad de los datos</strong>: al garantizar que cada dato se almacene una única vez.</li>
+<li><strong>Eficiencia en el almacenamiento</strong>: al eliminar la redundancia, se reduce el espacio en disco.</li>
+<li><strong>Facilidad de mantenimiento</strong>: un modelo normalizado permite que los cambios estructurales se realicen en un solo lugar.</li>
+<li><strong>Escalabilidad y claridad del modelo relacional</strong>: al definir claramente las claves primarias (PK) y foráneas (FK), el modelo refleja fielmente las reglas de negocio.</li>
+</ol>
+<p>En síntesis, normalizar no es un requisito académico aislado: es la base técnica que garantiza que la información del Colegio San Jorge sea <strong>confiable, consistente y mantenible</strong> en el tiempo.</p>
+
+<hr>
+
+<h2>Parte 2. Análisis de la Base de Datos Actual (Actividad 2)</h2>
+Estas son las tablas planas originales:
+<ul>
+<li><strong>Profesores</strong>: cod_profesor, nombres, apellidos, documento, genero, direccion, telefono, correo, fecha_nacimiento, titulo_academico, cod_curso_dirige</li>
+<li><strong>Estudiantes</strong>: cod_estudiante, nombres, apellidos, documento_id, genero, fecha_nacimiento, edad, direccion, telefono_contacto, correo, cod_curso</li>
+<li><strong>Materias</strong>: cod_materia, nombre_materia, descripcion, intensidad_horaria, area_conocimiento</li>
+<li><strong>Cursos</strong>: cod_curso, nombre_curso, grado, grupo, jornada, año_lectivo, capacidad_maxima</li>
+<li><strong>Asignación_Materias_Curso</strong>: cod_curso, cod_materia, cod_profesor, dia_semana, hora_inicio, hora_fin, salon</li>
+</ul>
+
+<h3>Diagnóstico técnico</h3>
+<table>
+<tr><th>Hallazgo</th><th>Tabla afectada</th><th>Tipo de problema</th></tr>
+<tr><td>El atributo <code>edad</code> puede calcularse a partir de <code>fecha_nacimiento</code></td><td>Estudiantes</td><td><strong>Dependencia transitiva</strong> (viola 3FN): la clave determina <code>fecha_nacimiento</code>, y <code>fecha_nacimiento</code> "determina" <code>edad</code>.</td></tr>
+<tr><td>El atributo <code>cod_curso_dirige</code> mezcla dos roles distintos del profesor</td><td>Profesores</td><td>Problema de <strong>diseño semántico</strong>: el atributo describe realmente una propiedad del curso.</td></tr>
+<tr><td>No existe una clave primaria explícita en asignación</td><td>Asignación_Materias_Curso</td><td>Riesgo de <strong>duplicidad de registros</strong>.</td></tr>
+<tr><td><code>cod_profesor</code> depende solo de (cod_curso, cod_materia), pero convive con atributos de horario</td><td>Asignación_Materias_Curso</td><td><strong>Dependencia parcial</strong> (viola 2FN).</td></tr>
+</table>
+<p>En conclusión: el modelo de la Actividad 2 <strong>cumple parcialmente la 1FN</strong>, pero <strong>viola la 2FN y la 3FN</strong>.</p>
+
+<hr>
+
+<h2>Parte 3. Normalización Paso a Paso</h2>
+
+<h3>🔹 Primera Forma Normal (1FN)</h3>
+<strong>Regla:</strong> cada columna debe contener valores atómicos, no debe haber grupos de datos repetidos.
+<ul>
+<li>Se confirma que todos los atributos actuales ya son atómicos.</li>
+<li>Se define formalmente la clave primaria de cada tabla base: cod_profesor, cod_estudiante, cod_materia, cod_curso.</li>
+<li>En <strong>Asignación_Materias_Curso</strong> se establece la clave compuesta: (cod_curso, cod_materia, dia_semana, hora_inicio).</li>
+</ul>
+<p><strong>El modelo cumple 1FN.</strong></p>
+
+<h3>🔹 Segunda Forma Normal (2FN)</h3>
+<strong>Regla:</strong> además de cumplir 1FN, todo atributo que no sea clave debe depender de <strong>toda</strong> la clave primaria.
+<ul>
+<li>En la tabla de asignación, <code>cod_profesor</code> depende únicamente de (cod_curso, cod_materia), mientras que <code>hora_fin</code> y <code>salon</code> dependen de la clave completa. Esta es una <strong>dependencia parcial</strong>.</li>
+<li>Se descompone en dos: <strong>Asignacion_Docente</strong> y <strong>Horario_Clase</strong>.</li>
+</ul>
+<p><strong>El modelo cumple 2FN.</strong></p>
+
+<h3>🔹 Tercera Forma Normal (3FN)</h3>
+<strong>Regla:</strong> ningún atributo no clave puede depender de otro atributo no clave (dependencia transitiva).
+<ul>
+<li>Se <strong>elimina el atributo <code>edad</code></strong> de Estudiantes, porque depende transitivamente de <code>fecha_nacimiento</code>.</li>
+<li>Se <strong>reubica <code>cod_curso_dirige</code></strong>: en lugar de ser un atributo de Profesores, se convierte en <code>cod_profesor_director</code> dentro de Cursos.</li>
+</ul>
+<p><strong>El modelo cumple 3FN.</strong></p>
+
+<hr>
+
+<h2>Parte 4. Estructura Final (Diccionario de Datos)</h2>
+
+<h3>Tabla: Profesores</h3>
+<ul>
+<li>cod_profesor <strong>(PK)</strong></li>
+<li>nombres, apellidos, documento, genero, direccion, telefono, correo, fecha_nacimiento, titulo_academico</li>
+</ul>
+
+<h3>Tabla: Cursos</h3>
+<ul>
+<li>cod_curso <strong>(PK)</strong></li>
+<li>nombre_curso, grado, grupo, jornada, año_lectivo, capacidad_maxima</li>
+<li>cod_profesor_director <strong>(FK &rarr; Profesores)</strong></li>
+</ul>
+
+<h3>Tabla: Estudiantes</h3>
+<ul>
+<li>cod_estudiante <strong>(PK)</strong></li>
+<li>nombres, apellidos, documento_id, genero, fecha_nacimiento, direccion, telefono_contacto, correo</li>
+<li>cod_curso <strong>(FK &rarr; Cursos)</strong></li>
+</ul>
+
+<h3>Tabla: Materias</h3>
+<ul>
+<li>cod_materia <strong>(PK)</strong></li>
+<li>nombre_materia, descripcion, intensidad_horaria, area_conocimiento</li>
+</ul>
+
+<h3>Tabla: Asignacion_Docente</h3>
+<ul>
+<li>cod_curso <strong>(PK, FK &rarr; Cursos)</strong></li>
+<li>cod_materia <strong>(PK, FK &rarr; Materias)</strong></li>
+<li>cod_profesor <strong>(FK &rarr; Profesores)</strong></li>
+</ul>
+
+<h3>Tabla: Horario_Clase</h3>
+<ul>
+<li>cod_curso <strong>(PK, FK)</strong></li>
+<li>cod_materia <strong>(PK, FK)</strong></li>
+<li>dia_semana <strong>(PK)</strong></li>
+<li>hora_inicio <strong>(PK)</strong></li>
+<li>hora_fin, salon</li>
+</ul>
+
+</body>
+</html>
