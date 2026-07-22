@@ -1,0 +1,16 @@
+Actúa como un experto en redacción de documentos técnicos y metodología Scrum bajo el estándar de Normas APA 7.ª edición.
+
+Tengo el siguiente borrador completo para la entrega de mi Actividad de Aprendizaje 1 (AA1-EV01): "Informe de historias de usuario que representan los requerimientos del cliente" para el curso del SENA (Ficha 3565476).
+
+Por favor, formatea y genera el documento final completo listo para exportar a PDF con las siguientes pautas de presentación:
+1. Aplica la estructura estricta de portada APA 7ª edición (Título en negrita, Nombre del Aprendiz: Jeiser Abraham Gutiérrez Torres, Nombre de la Instructora: Ayda Andrea Franco Villamil, Ficha: 3565476, Institución: SENA).
+2. Genera los títulos organizados en Nivel 1 (Centrado y negrita), Nivel 2 (Alineado a la izquierda en negrita) y Nivel 3.
+3. Formatea la Matriz de Historias de Usuario (US-01 a US-05) en tablas limpias con sus Criterios de Aceptación (Gherkin: Given-When-Then), Prioridad MoSCoW y Puntos de Historia.
+4. Conserva el contenido técnico intacto enfocado en la plataforma de pruebas automatizadas (QA-Hub).
+5. Incluye la lista de referencias en orden alfabético con sangría francesa conforme a APA 7.
+
+Aquí está el borrador:
+
+---
+[COPIAR Y PEGAR AQUÍ EL CONTENIDO DE: data/sena/scrum/entregables/borrador_AA1_EV01.md]
+---
