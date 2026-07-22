@@ -1,0 +1,59 @@
+{
+  "curso": "APLICACIÓN DEL MARCO DE TRABAJO SCRUM PARA PROYECTOS DE DESARROLLO DE SOFTWARE",
+  "ficha": "3565476",
+  "codigo": "P_22810043_V_3565476_R_76_C_9227",
+  "ultima_actualizacion": "2026-07-22T17:48:00-05:00",
+  "actividades_iniciales": [
+    {
+      "nombre": "Actualización datos personales",
+      "tipo": "Pagina"
+    },
+    {
+      "nombre": "Foro Social",
+      "tipo": "Foro"
+    },
+    {
+      "nombre": "Subir imagen de documento de identificacion por las 2 caras",
+      "tipo": "Evidencia",
+      "apertura": "2026-07-16T00:00:00",
+      "cierre": "2026-07-24T00:00:00",
+      "estado": "PENDIENTE_CRITICO"
+    }
+  ],
+  "componentes_formativos": [
+    {
+      "nombre": "Guía de Aprendizaje 1",
+      "tipo": "Guia"
+    },
+    {
+      "nombre": "Scrum, descripciones y características.",
+      "tipo": "ComponenteFormativo"
+    },
+    {
+      "nombre": "Planeación, ejecución y desarrollos ágiles",
+      "tipo": "ComponenteFormativo"
+    }
+  ],
+  "evidencias_evaluativas": [
+    {
+      "id": "AA1-EV01",
+      "nombre": "Informe de historias de usuario que representan los requerimientos del cliente",
+      "codigo_evidencia": "AA1-EV01"
+    },
+    {
+      "id": "AA2-EV01",
+      "nombre": "Estudio de caso, asignando roles y ciclo de vida",
+      "codigo_evidencia": "AA2-EV01"
+    },
+    {
+      "id": "AA3-EV01",
+      "nombre": "Mapa conceptual sobre artefactos, planeación, ejecución y revisión del sprint",
+      "codigo_evidencia": "AA3-EV01"
+    },
+    {
+      "id": "AA4-EV01",
+      "nombre": "Informe de estudio de caso, asignando actividades Scrum y diferencias con Kanban",
+      "codigo_evidencia": "AA4-EV01"
+    }
+  ]
+}
