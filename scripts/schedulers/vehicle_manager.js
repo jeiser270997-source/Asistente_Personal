@@ -47,18 +47,7 @@ function checkMaintenance() {
     state.ultimo_lavado = today.toISOString().split('T')[0];
   }
 
-  // Chequeo 3: Mantenimiento Personal / Barbería (Zero-Thinking)
-  // Pico y Placa del 6 es el Miercoles (dia 3)
-  const diaSemana = today.getDay();
-  const lastCorte = new Date(state.ultimo_corte_cabello || "2026-06-20");
-  const diffCorte = Math.floor((today - lastCorte) / (1000 * 60 * 60 * 24));
-  
-  if (diffCorte >= 12 && diaSemana === 3) { // Miercoles
-    alerts.push("🧔🏻‍♂️ <b>MANTENIMIENTO PERSONAL:</b> Hoy es Miércoles (Pico y Placa). No puedes trabajar en DiDi. Tienes ORDEN DIRECTA de ir a San Antonio de Prado a las 10:00 AM o 2:00 PM a recortar barba y desvanecer laterales. Cero excusas.");
-    state.ultimo_corte_cabello = today.toISOString().split('T')[0];
-  }
-
-  // Chequeo 4: Gasolina (Día 1 del mes)
+  // Chequeo 3: Gasolina (Día 1 del mes)
   if (today.getDate() === 1) {
     alerts.push("⛽ <b>ACTUALIZACIÓN FINANCIERA:</b> Hoy es día 1. Revisa si MinEnergia subió la gasolina. Si subió, ajusta tu gasto diario de $60.000 en el archivo didi_config.json.");
   }
