@@ -65,7 +65,11 @@ async function checkNetwork(domain, url) {
     if (!ips || ips.length === 0) throw new Error('DNS desalineado');
 
     // 2. Ping de respuesta rápida
-    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(TIMEOUT_MS) });
+    const headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36' };
+    let res = await fetch(url, { method: 'HEAD', headers, signal: AbortSignal.timeout(TIMEOUT_MS) }).catch(() => null);
+    if (!res || !res.ok) {
+      res = await fetch(url, { method: 'GET', headers, signal: AbortSignal.timeout(TIMEOUT_MS) });
+    }
     const latency = Date.now() - start;
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
