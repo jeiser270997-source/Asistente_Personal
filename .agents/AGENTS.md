@@ -11,6 +11,7 @@
 6. **El Sistema es el Cuerpo, el Agente es el Cerebro.** LifeOS funciona determinísticamente como un cuerpo autónomo local. Al no existir APIs de LLM gratuitas/continuas para procesos en segundo plano 24/7, la inteligencia interactiva y el razonamiento analítico los aporta el Agente de IA (Antigravity, OpenCode, etc.) impulsado por modelos como **DeepSeek V4 Flash** al iniciar una sesión interactiva.
 7. **Single-Tenant Absoluto (NO SaaS).** Este sistema es personal y exclusivo para Jeiser. Cero sobre-ingeniería para escalabilidad multi-usuario o microservicios innecesarios.
 8. **Filtro anti-ciclo de auditoría.** Si no está roto y cumple su función → solo mantenimiento. No re-auditar por deporte. Nueva ronda solo con: fallo real, regresión de tests, o cambio de requisito de Jeiser.
+9. **Normas APA (7ma Edición) Globales.** Todo documento, informe académico, guía de estudio, resumen o entregable SENA/CESDE generado por el Agente debe cumplir con el estándar APA 7ª edición (estructura formal de títulos Nivel 1-3, citas parentéticas/narrativas `(Autor, Año)`, tablas con título descriptivo en cursiva y sección de Referencias alfabética).
 
 ## Modelo Operativo "Cuerpo & Cerebro" (Agentes + DeepSeek V4 Flash)
 
