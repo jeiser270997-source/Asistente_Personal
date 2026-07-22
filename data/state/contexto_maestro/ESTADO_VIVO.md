@@ -39,8 +39,11 @@
 - **Técnico Laboral en Desarrollo de Software (CESDE):** Presencial (Aula 406)
   - 📅 **Sábados (07:30 a 18:00):** Gestión de BD, Intro Programación, Lógica.
   - 📌 *Inicia:* Sábado 25 de julio de 2026
-- **SENA Virtual (Estrategia 4 cursos simultáneos máximo):**
-  1. 🟢 **Ficha 3565476 (NUEVO - En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Bienvenida recibida 21/07/2026. 📅 Agendado en Google Calendar para Mié 22/07 5:00 PM con aviso 1h antes + Link Zoom).
+- **SENA Virtual (Estrategia 4 cursos simultáneos máximo — Modo "Carpintería/Delegado & Dominio Rápido"):**
+  - **Estrategia SENA:** El Agente asume la carpintería pesada (formato PDF, APA 7, estructura formal) cumpliendo exactamente lo que exige la guía de aprendizaje sin relleno superfluo.
+  - **Ficha de Dominio de Tema (Cheat Sheet de Defensa):** Con cada entregable SENA, el Agente le genera a Jeiser una ficha de 1 página con los conceptos clave, decisiones tomadas y respuestas preparadas para que domine el tema en 5 minutos y pueda defender el trabajo ante la instructora con solidez.
+  - **Foco Principal:** 100% de la energía de estudio interactivo y mental de Jeiser está concentrada en su **Bootcamp Personalizado de QA Automation Junior** (Playwright, TS, Postman, SQL, Docker).
+  1. 🟢 **Ficha 3565476 (En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Bienvenida recibida 21/07/2026. 📅 Conferencia Web Mié 22/07 5:00 PM Zoom. Entregables AA1-AA4 en proceso de borrador).
   2. 🟢 **Ficha 3549155 (En Formación):** *Bases de Datos Generalidades y Sistemas de Gestión* (Zajuna).
   3. 🟡 **Ficha 2459016 (Preinscrito):** *Construcción de Bases de Datos con MySQL*.
   4. 🟡 **Ficha 2253040 (Preinscrito):** *Variables y Estructuras de Control en Python*.
