@@ -15,14 +15,18 @@
 - **Filosofía:** Verdad radical. Cero rodeos.
 
 ## 💰 Financiero y Vehículo (Toyota Corolla KEW496)
-- **Ingreso actual:** Conductor DiDi (Meta: $260,000 COP brutos / $200,000 netos diarios)
-- **Gastos Fijos Detectados:** Arriendo ($1,300,000) + Servicios EPM (~$308,000). Total base mensual: ~$1.6M
+- **Ingreso actual:** Conductor DiDi + Uber Fill-In (Meta: $270.000 COP brutos / $200.000 netos diarios)
+- **Tesis Atómica de Ingresos (2026-07-23):**
+  - **Caja Chica Diaria:** DiDi + Uber Fill-In ($200K netos/día libres de gasolina).
+  - **Puente de Estabilidad:** Mesa de Ayuda / Soporte TI Part-Time Remoto ($1.8M – $2.5M COP + prestaciones de ley).
+  - **Vehículo de Libertad:** QA Automation Junior ($3.0M – $4.5M+ COP / USD remoto).
+- **Gastos Fijos Detectados:** Arriendo ($1.300.000) + Servicios EPM (~$308.000) + EPS ($200.000) + Escuela ($180.000). Total base mensual: ~$2.03M
 - **Métricas de Operación y Gasolina (KEW496):**
   - **Gasolina:** Galón entre $16.000 y $16.500 COP. Tanqueo de $30.000 COP rinde 60 km.
   - **Costo de combustible por km:** **$500 COP / km**.
   - **Cobro de referencia por km:** **$2.000 COP / km**.
   - **Ganancia Neta por km:** **$1.500 COP / km** (Margen del 75%).
-  - **Estrategia DiDi:** **Viajes cortos exclusivamente** (máximo 20 minutos totales entre recogida y entrega, zonas planas, evitar trancones).
+  - **Estrategia DiDi:** **Viajes cortos exclusivamente** + **Uber Fill-In en horas valle**. (inDrive descartado por riesgo/regateo).
   - **Horario estricto:** Turnos AM (05:00-10:30) y PM (15:30-20:00). **Prohibido conducir entre 10:30 AM y 3:30 PM** por ola de calor.
 - **Deuda DIAN AG2023:** ~$9.8M vencida. **REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.** Prescripcion ~09/2029.
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
