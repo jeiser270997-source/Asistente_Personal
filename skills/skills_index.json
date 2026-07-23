@@ -7,11 +7,25 @@
     "path": ".agents/skills/anti-sycophancy/SKILL.md"
   },
   {
+    "id": "anti_estafa",
+    "name": "anti_estafa",
+    "description": "Detector de patrones fraudulentos. Activa cuando Jeiser menciona oportunidad sospechosa, oferta rara, inversion, me contactaron, o cualquier propuesta que pide dinero o datos.",
+    "type": "agent_skill",
+    "path": ".agents/skills/anti_estafa/SKILL.md"
+  },
+  {
     "id": "archify",
     "name": "archify",
     "description": "Generador de diagramas de arquitectura avanzados (Mermaid).",
     "type": "agent_skill",
     "path": ".agents/skills/archify/SKILL.md"
+  },
+  {
+    "id": "arte_de_la_guerra",
+    "name": "arte_de_la_guerra",
+    "description": "Estrategia y negociacion basada en Sun Tzu. Activa cuando Jeiser habla de competir, negociar salario, conflicto laboral, o decidir si postularse.",
+    "type": "agent_skill",
+    "path": ".agents/skills/arte_de_la_guerra/SKILL.md"
   },
   {
     "id": "backup-automator",
@@ -63,6 +77,20 @@
     "path": ".agents/skills/ciberseguridad/SKILL.md"
   },
   {
+    "id": "consejero_personal",
+    "name": "consejero_personal",
+    "description": "Orquestador de consejo personal. Activa cuando Jeiser pide consejo, segunda opinion, o ayuda para pensar una decision.",
+    "type": "agent_skill",
+    "path": ".agents/skills/consejero_personal/SKILL.md"
+  },
+  {
+    "id": "constancia_disciplina",
+    "name": "constancia_disciplina",
+    "description": "Sistemas sobre motivacion. Activa cuando Jeiser dice no tengo ganas, perdi ritmo, vacio, no quiero. Da siguiente paso minimo viable, no predica.",
+    "type": "agent_skill",
+    "path": ".agents/skills/constancia_disciplina/SKILL.md"
+  },
+  {
     "id": "content-pipeline",
     "name": "content-pipeline",
     "description": "Analista y optimizador del pipeline de YouTube automation (faceless-storyteller-bot). Activa cuando Jeiser habla de YouTube, canal, videos, scripts, contenido, o el bot storyteller.",
@@ -77,11 +105,25 @@
     "path": ".agents/skills/docker-qa/SKILL.md"
   },
   {
+    "id": "estoicismo",
+    "name": "estoicismo",
+    "description": "Marco emocional estoico. Activa cuando Jeiser expresa estres, ansiedad, miedo, frustracion, tristeza. No promete calma. Ensenia a separar lo que depende de el de lo que no.",
+    "type": "agent_skill",
+    "path": ".agents/skills/estoicismo/SKILL.md"
+  },
+  {
     "id": "extractor",
     "name": "extractor",
     "description": "Extractor de contexto v9. Comprime conversaciones completas en bloques estructurados MD preservando estado, decisiones y contexto crítico entre IAs. Activa cuando se necesita resumir, extraer, o comprimir contexto de sesiones largas.",
     "type": "agent_skill",
     "path": ".agents/skills/extractor/SKILL.md"
+  },
+  {
+    "id": "family_first",
+    "name": "family_first",
+    "description": "Filtro de decisiones contra metas familiares. Activa cuando Jeiser enfrenta una decision grande (cambio de trabajo, mudanza, compra importante, compromiso de tiempo).",
+    "type": "agent_skill",
+    "path": ".agents/skills/family_first/SKILL.md"
   },
   {
     "id": "finanzas_didi",
@@ -133,6 +175,13 @@
     "path": ".agents/skills/last30days/SKILL.md"
   },
   {
+    "id": "libros_crecimiento",
+    "name": "libros_crecimiento",
+    "description": "Recomienda libros segun tema. NO los resume salvo pedido explicito. Mantiene biblioteca curada en sources.md. Anti atajo: te dice leer, no te da la version corta.",
+    "type": "agent_skill",
+    "path": ".agents/skills/libros_crecimiento/SKILL.md"
+  },
+  {
     "id": "modo_diario",
     "name": "modo_diario",
     "description": "Modo de escucha sin filtros. Activa cuando Jeiser dice \"modo diario\", \"necesito hablar\", \"desahogarme\", \"pensar en voz alta\" o cuando detecta alta carga emocional sin pedir consejo explícito.",
@@ -166,6 +215,13 @@
     "description": "Tutor socrático especializado en QA Automation, SRE y Backend para la ruta de aprendizaje personalizada de Jeiser.",
     "type": "agent_skill",
     "path": ".agents/skills/qa_bootcamp/SKILL.md"
+  },
+  {
+    "id": "reglas_de_murphy",
+    "name": "reglas_de_murphy",
+    "description": "Gestion de fracaso y riesgo. Activa cuando algo sale mal (postmortem), cuando Jeiser evalua riesgo antes de comprometerse, o cuando necesita plan B.",
+    "type": "agent_skill",
+    "path": ".agents/skills/reglas_de_murphy/SKILL.md"
   },
   {
     "id": "second-brain-health",

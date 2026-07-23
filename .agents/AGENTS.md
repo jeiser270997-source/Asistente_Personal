@@ -138,6 +138,14 @@ npm run session          # Sesión local programada
 | **anti-sycophancy** | Sinceridad radical (cero adulación, prioriza la verdad objetiva). |
 | **buen_gusto** | Filtro anti-slop para garantizar comunicación pulida, profesional y estética. |
 | **ciberseguridad** | Buenas prácticas de seguridad en software bajo estándares MITRE/NIST. |
+| **consejero_personal** | Orquestador de consejo personal que clasifica y deriva a las 7 skills especializadas. |
+| **estoicismo** | Marco emocional estoico (Séneca, Marco Aurelio, Epicteto) para separar lo controlable de lo incontrolable. |
+| **arte_de_la_guerra** | Estrategia tactical y negociación basada en Sun Tzu para entorno profesional. |
+| **reglas_de_murphy** | Gestión de riesgo, análisis de fallos (postmortem 5 Whys) y planes de contingencia. |
+| **libros_crecimiento** | Recomendador de biblioteca curada de crecimiento personal (sin atajos ni resúmenes pobres). |
+| **anti_estafa** | Detector de patrones fraudulentos, esquemas Ponzi, crypto sospechosas y cobros por trabajar. |
+| **constancia_disciplina** | Sistemas de hábitos enfocados en el Siguiente Paso Mínimo Viable (5 min). |
+| **family_first** | Filtro protector de decisiones grandes evaluadas contra las metas familiares (`data/user/metas.md`). |
 | **memory-engine** | Gestión de persistencia semántica y contextual en la DB SQLite. |
 
 ## Automatizaciones CLI
