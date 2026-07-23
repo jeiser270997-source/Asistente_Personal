@@ -146,6 +146,15 @@ npm run session          # Sesión local programada
 | **anti_estafa** | Detector de patrones fraudulentos, esquemas Ponzi, crypto sospechosas y cobros por trabajar. |
 | **constancia_disciplina** | Sistemas de hábitos enfocados en el Siguiente Paso Mínimo Viable (5 min). |
 | **family_first** | Filtro protector de decisiones grandes evaluadas contra las metas familiares (`data/user/metas.md`). |
+| **bufete_top** | Orquestador legal central que deriva consultas jurídicas a tributaria, tránsito o laboral. |
+| **laboral_colombia** | Derecho laboral colombiano (CST, liquidaciones, despidos, prima, cesantías). |
+| **mintic_oportunidades** | Rastreador y guía de becas y convocatorias MinTIC (TalentoTech, SENA-MinTIC, Sofka). |
+| **programas_gobierno_colombia** | Guía de subsidios sociales (Renta Ciudadana, Devolución IVA, Mi Casa Ya, Comfama). |
+| **migracion_internacional** | Visas tech y movilidad laboral (Canadá Express Entry, España Nómada Digital, Alemania). |
+| **trabajo_remoto_exterior** | Trabajo remoto USD/EUR (Deel, Wise, W-8BEN, exención IVA exportación servicios). |
+| **inversion_colombiano_exterior** | Inversión internacional y cobertura cambial (IBKR, ETFs acumulativos VWRA/CSPX). |
+| **estudio_estrategico** | Metodología de aprendizaje acelerado (Anki, Feynman, Pomodoro) para CESDE/SENA. |
+| **carrera_qa_senior** | Roadmap de 28 semanas a QA Senior / Automation Architect (Playwright, K6, Docker, CI/CD). |
 | **memory-engine** | Gestión de persistencia semántica y contextual en la DB SQLite. |
 
 ## Automatizaciones CLI

@@ -9,7 +9,7 @@
   {
     "id": "anti_estafa",
     "name": "anti_estafa",
-    "description": "Detector de patrones fraudulentos. Activa cuando Jeiser menciona oportunidad sospechosa, oferta rara, inversion, me contactaron, o cualquier propuesta que pide dinero o datos.",
+    "description": "Detector de patrones fraudulentos v2. Activa cuando Jeiser menciona oportunidad sospechosa, oferta rara, inversion, me contactaron, o cualquier propuesta que pide dinero o datos.",
     "type": "agent_skill",
     "path": ".agents/skills/anti_estafa/SKILL.md"
   },
@@ -49,11 +49,25 @@
     "path": ".agents/skills/buen_gusto/SKILL.md"
   },
   {
+    "id": "bufete_top",
+    "name": "bufete_top",
+    "description": "Orquestador legal central. Deriva consultas juridicas a tributaria, transito, laboral_colombia o defensa legal.",
+    "type": "agent_skill",
+    "path": ".agents/skills/bufete_top/SKILL.md"
+  },
+  {
     "id": "career-qa",
     "name": "career-qa",
     "description": "Mentor de carrera QA. Activa cuando Jeiser habla de linkedin, cv, postulaciones, entrevistas, salarios, o estrategia laboral en QA.",
     "type": "agent_skill",
     "path": ".agents/skills/career-qa/SKILL.md"
+  },
+  {
+    "id": "carrera_qa_senior",
+    "name": "carrera_qa_senior",
+    "description": "Tutoría y ruta de evolución profesional de QA Automation Junior a QA Senior / Automation Architect (roadmap 28 semanas).",
+    "type": "agent_skill",
+    "path": ".agents/skills/carrera_qa_senior/SKILL.md"
   },
   {
     "id": "caveman",
@@ -112,6 +126,13 @@
     "path": ".agents/skills/estoicismo/SKILL.md"
   },
   {
+    "id": "estudio_estrategico",
+    "name": "estudio_estrategico",
+    "description": "Sistema de aprendizaje acelerado para CESDE y SENA (Técnica Feynman, Repetición Espaciada Anki, Pomodoro).",
+    "type": "agent_skill",
+    "path": ".agents/skills/estudio_estrategico/SKILL.md"
+  },
+  {
     "id": "extractor",
     "name": "extractor",
     "description": "Extractor de contexto v9. Comprime conversaciones completas en bloques estructurados MD preservando estado, decisiones y contexto crítico entre IAs. Activa cuando se necesita resumir, extraer, o comprimir contexto de sesiones largas.",
@@ -147,6 +168,13 @@
     "path": ".agents/skills/ingeniero_avanzado/SKILL.md"
   },
   {
+    "id": "inversion_colombiano_exterior",
+    "name": "inversion_colombiano_exterior",
+    "description": "Guía de inversión internacional y protección cambiaria (Interactive Brokers, ETF acumulativos VWRA/CSPX, cobertura en USD).",
+    "type": "agent_skill",
+    "path": ".agents/skills/inversion_colombiano_exterior/SKILL.md"
+  },
+  {
     "id": "job-filter-jeiser",
     "name": "job-filter-jeiser",
     "description": ">",
@@ -168,6 +196,13 @@
     "path": ".agents/skills/karpathy_guidelines/SKILL.md"
   },
   {
+    "id": "laboral_colombia",
+    "name": "laboral_colombia",
+    "description": "Asesoría en derecho laboral colombiano (CST, contratos, liquidación, despidos, prima, cesantías, acoso Ley 1010).",
+    "type": "agent_skill",
+    "path": ".agents/skills/laboral_colombia/SKILL.md"
+  },
+  {
     "id": "last30days",
     "name": "last30days",
     "description": "Investigador y sintetizador web (X, Reddit, HN, Polymarket, Noticias).",
@@ -180,6 +215,20 @@
     "description": "Recomienda libros segun tema. NO los resume salvo pedido explicito. Mantiene biblioteca curada en sources.md. Anti atajo: te dice leer, no te da la version corta.",
     "type": "agent_skill",
     "path": ".agents/skills/libros_crecimiento/SKILL.md"
+  },
+  {
+    "id": "migracion_internacional",
+    "name": "migracion_internacional",
+    "description": "Estrategia de migración internacional y visas para perfiles tech (Canadá Express Entry, España Nómada Digital, Alemania Chance Karte).",
+    "type": "agent_skill",
+    "path": ".agents/skills/migracion_internacional/SKILL.md"
+  },
+  {
+    "id": "mintic_oportunidades",
+    "name": "mintic_oportunidades",
+    "description": "Rastreador y guía de becas y programas del Ministerio TIC de Colombia (TalentoTech, Colombia TI, Sofka, Sena-MinTIC).",
+    "type": "agent_skill",
+    "path": ".agents/skills/mintic_oportunidades/SKILL.md"
   },
   {
     "id": "modo_diario",
@@ -201,6 +250,13 @@
     "description": "Estrategia, ejecución y planificación de proyectos (PM Skills).",
     "type": "agent_skill",
     "path": ".agents/skills/product_manager/SKILL.md"
+  },
+  {
+    "id": "programas_gobierno_colombia",
+    "name": "programas_gobierno_colombia",
+    "description": "Guía de programas sociales y subsidios del Gobierno Colombiano (Renta Ciudadana, Devolución IVA, Mi Casa Ya, Cajas de Compensación).",
+    "type": "agent_skill",
+    "path": ".agents/skills/programas_gobierno_colombia/SKILL.md"
   },
   {
     "id": "psicologo",
@@ -259,16 +315,23 @@
     "path": ".agents/skills/think-opa/SKILL.md"
   },
   {
+    "id": "trabajo_remoto_exterior",
+    "name": "trabajo_remoto_exterior",
+    "description": "Guía de trabajo remoto internacional en USD/EUR (plataformas Deel, Wise, Payoneer, contratos Contractor W-8BEN, impuestos DIAN exportación de servicios).",
+    "type": "agent_skill",
+    "path": ".agents/skills/trabajo_remoto_exterior/SKILL.md"
+  },
+  {
     "id": "transito-colombia-defensa",
     "name": "transito-colombia-defensa",
-    "description": "Defensa legal en transito colombiano para conductores de plataforma (Didi/Uber) y particulares. Impugnacion de fotomultas, derechos en retenes, procedimientos SIMIT.",
+    "description": "Defensa legal en tránsito colombiano para conductores de plataforma (DiDi/Uber) y particulares. Impugnación de fotomultas SIMIT, caducidad Art. 161 CNT, revocatoria.",
     "type": "agent_skill",
     "path": ".agents/skills/transito/SKILL.md"
   },
   {
     "id": "tributaria-colombia-defensa",
     "name": "tributaria-colombia-defensa",
-    "description": "Skill de defensa tributaria para personas naturales en Colombia ante la DIAN.",
+    "description": "Defensa y seguimiento de obligaciones tributarias persona natural ante la DIAN (UVT 2026, Prescripción ET Art. 817).",
     "type": "agent_skill",
     "path": ".agents/skills/tributaria/SKILL.md"
   },
