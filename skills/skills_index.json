@@ -1,339 +1,373 @@
-{
-  "skills": [
-    {
-      "id": "tributaria",
-      "type": "js",
-      "nombre": "Tributaria Colombia",
-      "keywords": ["dian", "rut", "impuestos", "declaracion de renta", "retefuente", "iva", "facturacion", "sanciones", "requerimiento", "embargo", "cobro coactivo", "exogena", "contador", "pre-litigio", "nulidad", "firmeza", "compensacion"],
-      "prioridad": 10
-    },
-    {
-      "id": "laboral",
-      "type": "js",
-      "nombre": "Busqueda Laboral",
-      "keywords": ["trabajo", "empleo", "vacante", "postulacion", "curriculum", "entrevista", "computrabajo", "linkedin", "contrato", "salario", "solvo", "concentrix"],
-      "prioridad": 8
-    },
-    {
-      "id": "legal",
-      "type": "js",
-      "nombre": "Legal Colombia",
-      "keywords": ["fiscalia", "denuncia", "nuc", "citacion", "juzgado", "abogado", "tutela", "contrato"],
-      "prioridad": 9
-    },
-    {
-      "id": "finanzas",
-      "type": "js",
-      "nombre": "Finanzas Personales",
-      "keywords": ["epm", "banco", "bancolombia", "nequi", "daviplata", "tarjeta", "prestamo", "credito", "deuda", "ahorro", "presupuesto", "nomina", "pago", "recibo"],
-      "prioridad": 7
-    },
-    {
-      "id": "estudio",
-      "type": "js",
-      "nombre": "Estudio SENA/CESDE",
-      "keywords": ["sena", "cesde", "clase", "taller", "tarea", "curso", "programa", "formacion", "certificado", "ficha", "instructor", "horario"],
-      "prioridad": 8
-    },
-    {
-      "id": "salud",
-      "type": "js",
-      "nombre": "Salud y Bienestar",
-      "keywords": ["eps", "cita medica", "medicamento", "salud", "doctor", "hospital", "clinica", "examen", "formula", "sintomas"],
-      "prioridad": 6
-    },
-    {
-      "id": "bootcamp_qa",
-      "type": "js",
-      "nombre": "Bootcamp QA Automation",
-      "keywords": ["bootcamp", "estudiar", "aprender", "playwright", "cypress", "vitest", "testing", "qa", "automation", "ejercicio", "practica", "tarea", "entregable", "semana", "fase", "progreso", "portfolio", "entrevista", "cv", "linkedin", "trabajo", "empleo", "carrera", "typescript", "javascript", "fundamentos", "mentoria"],
-      "prioridad": 10
-    },
-    {
-      "id": "transito",
-      "type": "js",
-      "nombre": "Transito Colombia - Defensa Legal",
-      "keywords": ["transito", "comparendo", "multa", "fotomulta", "simit", "didi", "uber", "conductor", "plataforma", "reten", "agente", "policia", "velocidad", "c29", "c14", "soat", "tecnomecanica", "ley 1843", "fotodeteccion", "dei", "senalizacion", "notificacion fisica", "impugnar", "recurso reposicion", "prescripcion"],
-      "prioridad": 10
-    },
-    {
-      "id": "tributaria_md",
-      "type": "md",
-      "nombre": "Defensa Tributaria DIAN",
-      "ruta": ".agents/skills/tributaria/SKILL.md",
-      "version": "6.0",
-      "keywords": ["dian", "rut", "impuestos", "declaracion de renta", "retefuente", "iva", "requerimiento", "embargo", "cobro coactivo", "exogena", "sanciones", "contador", "art 26 et", "pre-litigio", "nulidad", "firma digital", "fee", "reforma tributaria", "sancion", "firmeza", "compensacion"],
-      "prioridad": 10
-    },
-    {
-      "id": "extractor_md",
-      "type": "md",
-      "nombre": "Extractor de Contexto v9",
-      "ruta": ".agents/skills/extractor/SKILL.md",
-      "version": "9.0",
-      "keywords": ["extractor", "contexto", "extraer", "analisis", "confianza", "verificacion"],
-      "prioridad": 9
-    },
-    {
-      "id": "softball_md",
-      "type": "md",
-      "nombre": "Manager Softball Índer Envigado 2026",
-      "ruta": ".agents/skills/softball/SKILL.md",
-      "version": "3.0",
-      "keywords": ["softball", "inder", "envigado", "beisbol", "manager", "equipo", "entrenamiento", "torneo", "jugador", "lineup", "pitcheo"],
-      "prioridad": 7
-    },
-    {
-      "id": "caveman_md",
-      "type": "md",
-      "nombre": "Caveman Ultra-Compressed Mode",
-      "ruta": ".agents/skills/caveman/SKILL.md",
-      "version": "1.0",
-      "keywords": ["caveman", "cavernicola", "ultra compressed", "minimo", "compacto", "tokens"],
-      "prioridad": 5
-    },
-    {
-      "id": "ingeniero_md",
-      "type": "md",
-      "nombre": "Ingeniero / CTO / Arquitecto",
-      "ruta": ".agents/skills/ingeniero/SKILL.md",
-      "version": "1.0",
-      "keywords": ["arquitecto", "cto", "ingeniero senior", "full stack", "arquitectura", "codigo", "desarrollo", "software", "programacion", "sistema"],
-      "prioridad": 8
-    },
-    {
-      "id": "job_filter_md",
-      "type": "md",
-      "nombre": "Filtro de Ofertas Laborales Jeiser",
-      "ruta": ".agents/skills/job-filter/SKILL.md",
-      "version": "1.0",
-      "keywords": ["filtro", "oferta", "trabajo", "jeiser", "aplicar", "empleo"],
-      "prioridad": 9
-    },
-    {
-      "id": "bill_manager_md",
-      "type": "md",
-      "nombre": "Gestor de Pagos y Suscripciones",
-      "ruta": ".agents/skills/bill-manager/SKILL.md",
-      "version": "1.0",
-      "keywords": ["epm", "claro", "recibo", "suscripcion", "pago", "factura", "gasto", "presupuesto", "ahorro", "netflix", "spotify"],
-      "prioridad": 8
-    },
-    {
-      "id": "backup_automator_md",
-      "type": "md",
-      "nombre": "Backup Automático y Protección de Datos",
-      "ruta": ".agents/skills/backup-automator/SKILL.md",
-      "version": "1.0",
-      "keywords": ["backup", "respaldo", "seguridad", "copia", "perder datos", "git push", "duplicati", "git commit"],
-      "prioridad": 7
-    },
-    {
-      "id": "think_opa_md",
-      "type": "md",
-      "nombre": "Motor de Políticas de Decisión",
-      "ruta": ".agents/skills/think-opa/SKILL.md",
-      "version": "1.0",
-      "keywords": ["decision", "politica", "regla", "prioridad", "think", "planificar", "que hacer hoy", "jarvis", "automatizar"],
-      "prioridad": 10
-    },
-    {
-      "id": "typescript_tutor_md",
-      "type": "md",
-      "nombre": "TypeScript Tutor para QA",
-      "ruta": ".agents/skills/typescript-tutor/SKILL.md",
-      "version": "1.0",
-      "keywords": ["typescript", "types", "interfaces", "ts", "tipado", "javascript", "playwright typescript"],
-      "prioridad": 9
-    },
-    {
-      "id": "docker_qa_md",
-      "type": "md",
-      "nombre": "Docker para QA Automation",
-      "ruta": ".agents/skills/docker-qa/SKILL.md",
-      "version": "1.0",
-      "keywords": ["docker", "contenedor", "docker-compose", "devops", "ci cd", "contenedores tests"],
-      "prioridad": 7
-    },
-    {
-      "id": "sql_testing_md",
-      "type": "md",
-      "nombre": "SQL para Testing de Bases de Datos",
-      "ruta": ".agents/skills/sql-testing/SKILL.md",
-      "version": "1.0",
-      "keywords": ["sql", "base de datos", "query", "select", "join", "database testing", "postgresql", "sqlite"],
-      "prioridad": 8
-    },
-    {
-      "id": "career_qa_md",
-      "type": "md",
-      "nombre": "Mentor de Carrera QA",
-      "ruta": ".agents/skills/career-qa/SKILL.md",
-      "version": "1.0",
-      "keywords": ["linkedin", "cv", "entrevista", "trabajo", "salario", "empleo qa", "postulacion", "carrera", "curriculum"],
-      "prioridad": 10
-    },
-    {
-      "id": "anti_sycophancy_md",
-      "type": "sistema",
-      "nombre": "Anti-Sycophancy (Anti-Alucinación)",
-      "ruta": ".agents/skills/anti-sycophancy/SKILL.md",
-      "version": "1.0",
-      "keywords": ["verdad", "alucinacion", "sycophancy", "mentira", "falso", "comprobar", "verificar", "evidencia", "claim", "hecho", "duda", "certeza"],
-      "prioridad": 9
-    },
-    {
-      "id": "archify_md",
-      "type": "sistema",
-      "nombre": "Archify (Diagramas de Arquitectura)",
-      "ruta": ".agents/skills/archify/SKILL.md",
-      "version": "1.0",
-      "keywords": ["arquitectura", "diagrama", "mermaid", "archify", "visual", "flujo", "componente", "dependencia", "estructura"],
-      "prioridad": 7
-    },
-    {
-      "id": "buen_gusto_md",
-      "type": "sistema",
-      "nombre": "Buen Gusto (Filtro Anti-Slop)",
-      "ruta": ".agents/skills/buen_gusto/SKILL.md",
-      "version": "1.0",
-      "keywords": ["estilo", "redaccion", "anti-slop", "refinado", "hemingway", "sinceridad", "directo"],
-      "prioridad": 8
-    },
-    {
-      "id": "caveman_system_md",
-      "type": "sistema",
-      "nombre": "Caveman (Sistema)",
-      "ruta": ".agents/skills/caveman/SKILL.md",
-      "version": "1.0",
-      "keywords": ["caveman", "cavernicola", "ultra compressed", "minimo", "compacto", "tokens"],
-      "prioridad": 5
-    },
-    {
-      "id": "cerebro_md",
-      "type": "sistema",
-      "nombre": "Cerebro (Orquestador)",
-      "ruta": ".agents/skills/cerebro/SKILL.md",
-      "version": "1.0",
-      "keywords": ["cerebro", "orquestador", "asistente", "briefing", "resumen", "prioridades"],
-      "prioridad": 10
-    },
-    {
-      "id": "ciberseguridad_md",
-      "type": "sistema",
-      "nombre": "Oficial de Ciberseguridad",
-      "ruta": ".agents/skills/ciberseguridad/SKILL.md",
-      "version": "1.0",
-      "keywords": ["ciberseguridad", "seguridad", "mitre", "nist", "ssrf", "tokens", "secrets", "allowlist"],
-      "prioridad": 8
-    },
-    {
-      "id": "content_pipeline_md",
-      "type": "sistema",
-      "nombre": "Content Pipeline",
-      "ruta": ".agents/skills/content-pipeline/SKILL.md",
-      "version": "1.0",
-      "keywords": ["youtube", "bot", "storyteller", "horror", "ffmpeg", "video", "pipeline", "scraped"],
-      "prioridad": 7
-    },
-    {
-      "id": "karpathy_guidelines_md",
-      "type": "sistema",
-      "nombre": "Principios de Karpathy",
-      "ruta": ".agents/skills/karpathy_guidelines/SKILL.md",
-      "version": "1.0",
-      "keywords": ["karpathy", "guidelines", "principles", "simplicity", "surgical", "think", "code"],
-      "prioridad": 8
-    },
-    {
-      "id": "last30days_md",
-      "type": "sistema",
-      "nombre": "Last 30 Days (Investigación Web)",
-      "ruta": ".agents/skills/last30days/SKILL.md",
-      "version": "1.0",
-      "keywords": ["investigacion", "buscar", "tendencias", "noticias", "polymarket", "reddit", "x"],
-      "prioridad": 7
-    },
-    {
-      "id": "modo_diario_md",
-      "type": "sistema",
-      "nombre": "Modo Diario",
-      "ruta": ".agents/skills/modo_diario/SKILL.md",
-      "version": "1.0",
-      "keywords": ["diario", "escucha", "desahogo", "emocional", "estres", "hablar", "conversar"],
-      "prioridad": 9
-    },
-    {
-      "id": "personal_dashboard_md",
-      "type": "sistema",
-      "nombre": "Personal Dashboard",
-      "ruta": ".agents/skills/personal-dashboard/SKILL.md",
-      "version": "1.0",
-      "keywords": ["dashboard", "status", "resumen", "agenda", "didi", "sena", "cesde", "legal", "finanzas"],
-      "prioridad": 10
-    },
-    {
-      "id": "product_manager_md",
-      "type": "sistema",
-      "nombre": "Product Manager",
-      "ruta": ".agents/skills/product_manager/SKILL.md",
-      "version": "1.0",
-      "keywords": ["pm", "product manager", "strategy", "mvp", "rice", "roadmap", "prd"],
-      "prioridad": 8
-    },
-    {
-      "id": "psicologo_md",
-      "type": "sistema",
-      "nombre": "Consejero Psicológico (Satori)",
-      "ruta": ".agents/skills/psicologo/SKILL.md",
-      "version": "1.0",
-      "keywords": ["consejeria", "psicologia", "filosofia", "emocion", "ansiedad", "estres", "reflexion", "ifs", "estoico", "budismo", "jung", "sabiduria", "terapia", "bienestar emocional"],
-      "prioridad": 9
-    },
-    {
-      "id": "second_brain_health_md",
-      "type": "sistema",
-      "nombre": "Second Brain Health",
-      "ruta": ".agents/skills/second-brain-health/SKILL.md",
-      "version": "1.0",
-      "keywords": ["salud", "sueño", "cafe", "ejercicio", "estres", "pantalla", "alimentacion", "cronotipo"],
-      "prioridad": 8
-    },
-    {
-      "id": "skill_auditor_md",
-      "type": "sistema",
-      "nombre": "Skill Auditor",
-      "ruta": ".agents/skills/skill-auditor/SKILL.md",
-      "version": "1.0",
-      "keywords": ["audit", "security", "privacidad", "secrets", "tokens", "pii"],
-      "prioridad": 8
-    },
-    {
-      "id": "wheel_overengineered_md",
-      "type": "sistema",
-      "nombre": "Wheel Overengineered",
-      "ruta": ".agents/skills/wheel_overengineered/SKILL.md",
-      "version": "1.0",
-      "keywords": ["overengineering", "sobreingenieria", "abstraccion", "abstracciones", "simplificar", "complejidad"],
-      "prioridad": 7
-    },
-    {
-      "id": "wheel_ready_md",
-      "type": "sistema",
-      "nombre": "Wheel Ready",
-      "ruta": ".agents/skills/wheel_ready/SKILL.md",
-      "version": "1.0",
-      "keywords": ["ready", "checklist", "testing", "ci", "docker", "auth", "logging"],
-      "prioridad": 7
-    },
-    {
-      "id": "wheel_swap_md",
-      "type": "sistema",
-      "nombre": "Wheel Swap",
-      "ruta": ".agents/skills/wheel_swap/SKILL.md",
-      "version": "1.0",
-      "keywords": ["swap", "reemplazo", "alternativa", "libreria", "github", "boilerplate"],
-      "prioridad": 8
-    }
-  ]
-}
+[
+  {
+    "id": "anti-sycophancy",
+    "name": "anti-sycophancy",
+    "description": "Anti-Alucinación, Anti-Adulación y Sinceridad Absoluta.",
+    "type": "agent_skill",
+    "path": ".agents/skills/anti-sycophancy/SKILL.md"
+  },
+  {
+    "id": "archify",
+    "name": "archify",
+    "description": "Generador de diagramas de arquitectura avanzados (Mermaid).",
+    "type": "agent_skill",
+    "path": ".agents/skills/archify/SKILL.md"
+  },
+  {
+    "id": "backup-automator",
+    "name": "backup-automator",
+    "description": "Gestor de backups automáticos para LifeOS, credenciales, documentos y skills. Activa cuando Jeiser habla de backups, copias de seguridad, respaldos, perder datos, o seguridad de archivos.",
+    "type": "agent_skill",
+    "path": ".agents/skills/backup-automator/SKILL.md"
+  },
+  {
+    "id": "bill-manager",
+    "name": "bill-manager",
+    "description": "Gestor de suscripciones, recibos y pagos fijos. Activa cuando Jeiser habla de EPM, Claro, seguros, Netflix, Spotify, suscripciones, recibos mensuales, o pagos recurrentes.",
+    "type": "agent_skill",
+    "path": ".agents/skills/bill-manager/SKILL.md"
+  },
+  {
+    "id": "buen_gusto",
+    "name": "buen_gusto",
+    "description": "Filtro Anti-Slop para respuestas con excelente redacción y estilo refinado.",
+    "type": "agent_skill",
+    "path": ".agents/skills/buen_gusto/SKILL.md"
+  },
+  {
+    "id": "career-qa",
+    "name": "career-qa",
+    "description": "Mentor de carrera QA. Activa cuando Jeiser habla de linkedin, cv, postulaciones, entrevistas, salarios, o estrategia laboral en QA.",
+    "type": "agent_skill",
+    "path": ".agents/skills/career-qa/SKILL.md"
+  },
+  {
+    "id": "caveman",
+    "name": "caveman",
+    "description": ">",
+    "type": "agent_skill",
+    "path": ".agents/skills/caveman/SKILL.md"
+  },
+  {
+    "id": "cerebro",
+    "name": "cerebro",
+    "description": "Segundo Cerebro / Life OS Manager.",
+    "type": "agent_skill",
+    "path": ".agents/skills/cerebro/SKILL.md"
+  },
+  {
+    "id": "ciberseguridad",
+    "name": "ciberseguridad",
+    "description": "Habilidades de ciberseguridad estructuradas bajo marcos MITRE y NIST.",
+    "type": "agent_skill",
+    "path": ".agents/skills/ciberseguridad/SKILL.md"
+  },
+  {
+    "id": "content-pipeline",
+    "name": "content-pipeline",
+    "description": "Analista y optimizador del pipeline de YouTube automation (faceless-storyteller-bot). Activa cuando Jeiser habla de YouTube, canal, videos, scripts, contenido, o el bot storyteller.",
+    "type": "agent_skill",
+    "path": ".agents/skills/content-pipeline/SKILL.md"
+  },
+  {
+    "id": "docker-qa",
+    "name": "docker-qa",
+    "description": "Tutor de Docker para QA Automation. Activa cuando Jeiser pregunta sobre contenedores, Docker, docker-compose, o testing en entornos aislados.",
+    "type": "agent_skill",
+    "path": ".agents/skills/docker-qa/SKILL.md"
+  },
+  {
+    "id": "extractor",
+    "name": "extractor",
+    "description": "Extractor de contexto v9. Comprime conversaciones completas en bloques estructurados MD preservando estado, decisiones y contexto crítico entre IAs. Activa cuando se necesita resumir, extraer, o comprimir contexto de sesiones largas.",
+    "type": "agent_skill",
+    "path": ".agents/skills/extractor/SKILL.md"
+  },
+  {
+    "id": "finanzas_didi",
+    "name": "finanzas_didi",
+    "description": "Control financiero personalizado para Jeiser como conductor Didi + estudiante. Activa cuando habla de gastos, ingresos Didi, deuda DIAN, ahorro, o presupuesto mensual.",
+    "type": "agent_skill",
+    "path": ".agents/skills/finanzas_didi/SKILL.md"
+  },
+  {
+    "id": "ingeniero",
+    "name": "ingeniero",
+    "description": "Arquitecto de Software, CTO e Ingeniero Full Stack Senior. Prácticas de ingeniería de producción, diseño de sistemas, y mentoría técnica. Activa cuando Jeiser habla de arquitectura, código, sistemas, o necesita diseño técnico.",
+    "type": "agent_skill",
+    "path": ".agents/skills/ingeniero/SKILL.md"
+  },
+  {
+    "id": "ingeniero_avanzado",
+    "name": "ingeniero_avanzado",
+    "description": "Prácticas de ingeniería de grado de producción para agentes de código.",
+    "type": "agent_skill",
+    "path": ".agents/skills/ingeniero_avanzado/SKILL.md"
+  },
+  {
+    "id": "job-filter-jeiser",
+    "name": "job-filter-jeiser",
+    "description": ">",
+    "type": "agent_skill",
+    "path": ".agents/skills/job-filter/SKILL.md"
+  },
+  {
+    "id": "job_hunter",
+    "name": "job_hunter",
+    "description": "Sistema de búsqueda de empleo QA/Tech en Colombia. Activa cuando Jeiser habla de buscar trabajo, revisar ofertas, preparar entrevistas, actualizar CV o seguimiento de aplicaciones.",
+    "type": "agent_skill",
+    "path": ".agents/skills/job_hunter/SKILL.md"
+  },
+  {
+    "id": "karpathy_guidelines",
+    "name": "karpathy_guidelines",
+    "description": "Principios de Andrej Karpathy para agentes de código — Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven. Activa cuando el agente va a escribir código complejo o refactorizar.",
+    "type": "agent_skill",
+    "path": ".agents/skills/karpathy_guidelines/SKILL.md"
+  },
+  {
+    "id": "last30days",
+    "name": "last30days",
+    "description": "Investigador y sintetizador web (X, Reddit, HN, Polymarket, Noticias).",
+    "type": "agent_skill",
+    "path": ".agents/skills/last30days/SKILL.md"
+  },
+  {
+    "id": "modo_diario",
+    "name": "modo_diario",
+    "description": "Modo de escucha sin filtros. Activa cuando Jeiser dice \"modo diario\", \"necesito hablar\", \"desahogarme\", \"pensar en voz alta\" o cuando detecta alta carga emocional sin pedir consejo explícito.",
+    "type": "agent_skill",
+    "path": ".agents/skills/modo_diario/SKILL.md"
+  },
+  {
+    "id": "personal-dashboard",
+    "name": "personal-dashboard",
+    "description": "Dashboard personal unificado. Activa cuando Jeiser pide /status, \"cómo va todo\", \"resumen\", \"dashboard\", o quiere ver el estado general de su vida en un glance.",
+    "type": "agent_skill",
+    "path": ".agents/skills/personal-dashboard/SKILL.md"
+  },
+  {
+    "id": "product_manager",
+    "name": "product_manager",
+    "description": "Estrategia, ejecución y planificación de proyectos (PM Skills).",
+    "type": "agent_skill",
+    "path": ".agents/skills/product_manager/SKILL.md"
+  },
+  {
+    "id": "psicologo",
+    "name": "psicologo",
+    "description": "Consejero Psicológico (Satori/Mindfulness) para aliviar estrés.",
+    "type": "agent_skill",
+    "path": ".agents/skills/psicologo/SKILL.md"
+  },
+  {
+    "id": "qa_bootcamp",
+    "name": "qa_bootcamp",
+    "description": "Tutor socrático especializado en QA Automation, SRE y Backend para la ruta de aprendizaje personalizada de Jeiser.",
+    "type": "agent_skill",
+    "path": ".agents/skills/qa_bootcamp/SKILL.md"
+  },
+  {
+    "id": "second-brain-health",
+    "name": "second-brain-health",
+    "description": "Tracking integrado de salud física y mental conectado al segundo cerebro. Activa cuando Jeiser habla de sueño, estrés, café, alimentación, ejercicio, energía, o agotamiento.",
+    "type": "agent_skill",
+    "path": ".agents/skills/second-brain-health/SKILL.md"
+  },
+  {
+    "id": "skill-auditor",
+    "name": "skill-auditor",
+    "description": "Auditor de seguridad para skills del agente. Inspirado en NVIDIA SkillSpector. Activa cuando Jeiser pide auditar skills, revisar seguridad, o verificar datos expuestos en los agentes.",
+    "type": "agent_skill",
+    "path": ".agents/skills/skill-auditor/SKILL.md"
+  },
+  {
+    "id": "softball",
+    "name": "softball",
+    "description": "Manager Assistant de Softball Índer Envigado 2026. Estrategia, estadísticas, lineup, motivación, y gestión de equipo. Activa cuando Jeiser habla de softball, torneos, partidos, alineaciones, o jugadores.",
+    "type": "agent_skill",
+    "path": ".agents/skills/softball/SKILL.md"
+  },
+  {
+    "id": "sql-testing",
+    "name": "sql-testing",
+    "description": "Tutor de SQL para QA Automation. Activa cuando Jeiser pregunta sobre bases de datos, consultas SQL, testing de DB, o necesita validar datos en pruebas.",
+    "type": "agent_skill",
+    "path": ".agents/skills/sql-testing/SKILL.md"
+  },
+  {
+    "id": "think-opa",
+    "name": "think-opa",
+    "description": "Motor de políticas de decisión inspirado en Open Policy Agent (11,951⭐). Mejora la lógica de think.js con reglas declarativas. Activa cuando Jeiser habla de decisiones, política de prioridad, reglas de negocio, o automatización de criterios.",
+    "type": "agent_skill",
+    "path": ".agents/skills/think-opa/SKILL.md"
+  },
+  {
+    "id": "transito-colombia-defensa",
+    "name": "transito-colombia-defensa",
+    "description": "Defensa legal en transito colombiano para conductores de plataforma (Didi/Uber) y particulares. Impugnacion de fotomultas, derechos en retenes, procedimientos SIMIT.",
+    "type": "agent_skill",
+    "path": ".agents/skills/transito/SKILL.md"
+  },
+  {
+    "id": "tributaria-colombia-defensa",
+    "name": "tributaria-colombia-defensa",
+    "description": "Skill de defensa tributaria para personas naturales en Colombia ante la DIAN.",
+    "type": "agent_skill",
+    "path": ".agents/skills/tributaria/SKILL.md"
+  },
+  {
+    "id": "tutor",
+    "name": "tutor",
+    "description": "Tutor Académico usando la Técnica de Feynman (CESDE/SENA).",
+    "type": "agent_skill",
+    "path": ".agents/skills/tutor/SKILL.md"
+  },
+  {
+    "id": "typescript-tutor",
+    "name": "typescript-tutor",
+    "description": "Tutor de TypeScript orientado a QA Automation. Activa cuando Jeiser pregunta sobre TypeScript, tipos, interfaces, o necesita escribir código TS para tests.",
+    "type": "agent_skill",
+    "path": ".agents/skills/typescript-tutor/SKILL.md"
+  },
+  {
+    "id": "vehicle-manager",
+    "name": "vehicle-manager",
+    "description": "Tracking de mantenimiento y documentación para flota personal (Vehículo Principal + Vehículo Secundario). Activa cuando Jeiser habla de carro, moto, SOAT, tecnomecánica, mantenimiento, gasolina, aceite, llantas, o impuestos vehiculares.",
+    "type": "agent_skill",
+    "path": ".agents/skills/vehicle-manager/SKILL.md"
+  },
+  {
+    "id": "Wheel Overengineered Audit",
+    "name": "Wheel Overengineered Audit",
+    "description": "Evalúa un proyecto en busca de sobre-ingeniería, abstracciones innecesarias, complejidad injustificada y código que podría simplificarse sin perder funcionalidad.",
+    "type": "agent_skill",
+    "path": ".agents/skills/wheel_overengineered/SKILL.md"
+  },
+  {
+    "id": "wheel-ready",
+    "name": "wheel-ready",
+    "description": "Escanea un proyecto y genera un checklist de lo que le falta (testing, CI, auth, monitoreo, etc.) usando la base de datos de WheelSaver.",
+    "type": "agent_skill",
+    "path": ".agents/skills/wheel_ready/SKILL.md"
+  },
+  {
+    "id": "WheelSaver Auditor",
+    "name": "WheelSaver Auditor",
+    "description": "Audita el proyecto actual, lee los requerimientos y busca en la base de datos local (top_repos.db) los repositorios de GitHub más populares que podrían servir como librerías o herramientas para evitar reinventar la rueda.",
+    "type": "agent_skill",
+    "path": ".agents/skills/wheel_saver/SKILL.md"
+  },
+  {
+    "id": "wheel-swap",
+    "name": "wheel-swap",
+    "description": "Cuando el usuario esta codeando algo manualmente, busca si ya existe una libreria que lo haga mejor, mas rapido y con menos bugs.",
+    "type": "agent_skill",
+    "path": ".agents/skills/wheel_swap/SKILL.md"
+  },
+  {
+    "id": "bootcamp_qa",
+    "name": "bootcamp_qa",
+    "description": "Skill ejecutable JS bootcamp_qa.js",
+    "type": "executable_js",
+    "path": "skills/bootcamp_qa.js"
+  },
+  {
+    "id": "context_sync",
+    "name": "context_sync",
+    "description": "Skill ejecutable JS context_sync.js",
+    "type": "executable_js",
+    "path": "skills/context_sync.js"
+  },
+  {
+    "id": "cv_generate",
+    "name": "cv_generate",
+    "description": "Skill ejecutable JS cv_generate.js",
+    "type": "executable_js",
+    "path": "skills/cv_generate.js"
+  },
+  {
+    "id": "estudio",
+    "name": "estudio",
+    "description": "Skill ejecutable JS estudio.js",
+    "type": "executable_js",
+    "path": "skills/estudio.js"
+  },
+  {
+    "id": "finanzas",
+    "name": "finanzas",
+    "description": "Skill ejecutable JS finanzas.js",
+    "type": "executable_js",
+    "path": "skills/finanzas.js"
+  },
+  {
+    "id": "job_apply",
+    "name": "job_apply",
+    "description": "Skill ejecutable JS job_apply.js",
+    "type": "executable_js",
+    "path": "skills/job_apply.js"
+  },
+  {
+    "id": "job_apply_ct",
+    "name": "job_apply_ct",
+    "description": "Skill ejecutable JS job_apply_ct.js",
+    "type": "executable_js",
+    "path": "skills/job_apply_ct.js"
+  },
+  {
+    "id": "job_match",
+    "name": "job_match",
+    "description": "Skill ejecutable JS job_match.js",
+    "type": "executable_js",
+    "path": "skills/job_match.js"
+  },
+  {
+    "id": "laboral",
+    "name": "laboral",
+    "description": "Skill ejecutable JS laboral.js",
+    "type": "executable_js",
+    "path": "skills/laboral.js"
+  },
+  {
+    "id": "legal",
+    "name": "legal",
+    "description": "Skill ejecutable JS legal.js",
+    "type": "executable_js",
+    "path": "skills/legal.js"
+  },
+  {
+    "id": "router",
+    "name": "router",
+    "description": "Skill ejecutable JS router.js",
+    "type": "executable_js",
+    "path": "skills/router.js"
+  },
+  {
+    "id": "salud",
+    "name": "salud",
+    "description": "Skill ejecutable JS salud.js",
+    "type": "executable_js",
+    "path": "skills/salud.js"
+  },
+  {
+    "id": "transito",
+    "name": "transito",
+    "description": "Skill ejecutable JS transito.js",
+    "type": "executable_js",
+    "path": "skills/transito.js"
+  },
+  {
+    "id": "tributaria",
+    "name": "tributaria",
+    "description": "Skill ejecutable JS tributaria.js",
+    "type": "executable_js",
+    "path": "skills/tributaria.js"
+  },
+  {
+    "id": "wheel_saver",
+    "name": "wheel_saver",
+    "description": "Skill ejecutable JS wheel_saver.js",
+    "type": "executable_js",
+    "path": "skills/wheel_saver.js"
+  }
+]

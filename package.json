@@ -20,6 +20,7 @@
   "scripts": {
     "start": "node scripts/session.js",
     "session": "node scripts/session.js",
+    "skills:reindex": "node scripts/dev/reindex_skills.js",
     "session:fast": "node scripts/session.js --fast",
     "morning": "node scripts/morning_wake.js",
     "morning:full": "node scripts/morning_wake.js --full",
@@ -48,10 +49,10 @@
     "test:scrapers": "node scripts/diagnostics/scraper_health.js"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
+    "@types/node": "^20.12.7",
     "ts-node": "^10.9.2",
     "tsx": "^4.23.0",
-    "typescript": "^7.0.2",
-    "vitest": "^4.1.10"
+    "typescript": "^5.4.5",
+    "vitest": "^2.1.8"
   }
 }
