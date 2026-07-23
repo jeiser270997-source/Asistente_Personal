@@ -22,7 +22,7 @@ const RE = require('../../lib/runtime/resume_engine');
 
 const BASE_DIR = path.resolve(__dirname, '..');
 const LOG_DIR = path.join(BASE_DIR, 'logs');
-const SCOPES = ['https://mail.google.com/'];
+const SCOPES = ['https://www.googleapis.com/auth/gmail.modify'];
 
 // ── Política de seguridad Gmail (fail-safe) ─────────────────────────────
 // Default: NUNCA trash/delete. Solo etiquetas. El inbox no se vacía solo.
