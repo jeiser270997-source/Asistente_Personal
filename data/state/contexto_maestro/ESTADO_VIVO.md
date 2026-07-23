@@ -5,9 +5,7 @@
 - **Nombre:** Jeiser Abraham Gutierrez Torres
 - **CC:** [REDACTED - Ver .env]
 - **Teléfono:** [REDACTED - Ver .env]
-- **Email:** [REDACTED - Ver .env]
-- **Ubicación:** [REDACTED - Ver .env]
-- **Dispositivo Principal:** Samsung Galaxy S23 Ultra (Android / One UI)
+- **Ubicación Física Real:** Urb. Villa Eloísa, Bloque 25, Apto 102, Barrio La Triana, La Estrella (límite Itagüí), Antioquia · **Referencia:** Cerca al Colegio Consejo Municipal de Itagüí · **Nomenclatura EPM (Predial):** CR 65 C CL 70 A SUR - 35 (Interior 106) · Contrato EPM: 9639981
 - **Acceso al sistema:** SSH vía Tailscale → OpenCode (interacción directa)
 - **Canal Telegram:** Activo (algunos workflows desactivados por errores puntuales)
 
@@ -30,8 +28,8 @@
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
 - **SIMIT — Total deuda:** ~$1.867.199 (3 multas activas en sistema, **verificado en tiempo real 21/07/2026**)
   - 🟡 **C29 Medellín #0000679154** — $658,900 COP ($572.628 + intereses $86.272). Pendiente pago.
-  - 🟢 **C14 Itagüí #0000430265** — ✅ **ANULADO POR ITAGÜÍ.** PDF de solicitud enviado a Martha (FCM/SIMIT) el 21/07/2026 para descargue en portal nacional.
-  - ⛔ **C29 Itagüí #0000838097** — $639,018 COP ($705,380 proyectado). **Recurso de reposición + DP calibración DEI radicado (AI26072102803271). PDF oficial enviado a FCM/SIMIT.**
+  - 🟢 **C14 Itagüí #0000430265** — ✅ **PAGADO (Por embargo de cuenta bancaria).** PDF con comprobante de pago enviado a Martha (FCM/SIMIT) el 21/07/2026 para que ejecuten el descargue definitivo en el portal SIMIT.
+  - ⛔ **C29 Itagüí #0000838097** — $639,018 COP ($705,380 proyectado). **Respuesta PQR 26070618195823 leída 23/07: Itagüí negó revocatoria. En espera de respuesta a DP Calibración radicado 21/07 (AI26072102803271).**
 - **Vehículos:** KEW496 (Toyota Corolla 2010, SOAT hasta 31-Dic-2026) · BXU28C (moto — SOAT y RTM vencidos, NO circular)
 
 ## 🎓 Académico / Educativo
