@@ -26,12 +26,6 @@ const TARGETS = {
     selector: 'select[name="typeDocument"], input[name="document"]',
     jobName: 'sena_scraper'
   },
-  DIAN: {
-    domain: 'muisca.dian.gov.co',
-    url: 'https://muisca.dian.gov.co/WebIdentidadLogin/',
-    selector: 'input[name="numDocumento"], input[type="password"]',
-    jobName: 'dian_scraper'
-  },
   COMPUTRABAJO: {
     domain: 'co.computrabajo.com',
     url: 'https://candidato.co.computrabajo.com/acceso/',

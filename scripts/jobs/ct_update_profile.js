@@ -15,7 +15,7 @@ const { chromium } = require('playwright');
 const { robustLogin } = require('./ct_login_helper');
 const fs = require('node:fs');
 
-const CT_EMAIL  = process.env.COMPUTRABAJO_EMAIL || 'jeiser270997@gmail.com';
+const CT_EMAIL  = process.env.COMPUTRABAJO_EMAIL || process.env.USER_EMAIL;
 const CT_PASS   = process.env.COMPUTRABAJO_PASS;
 const HEADLESS  = !process.argv.includes('--visible');
 const DRY_RUN   = process.argv.includes('--dry-run');

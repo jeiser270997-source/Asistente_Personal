@@ -95,14 +95,16 @@ Itagui, Antioquia</p>
 </ul>
 
 <h3>NOTIFICACIONES</h3>
-<p>Recibire notificaciones en la direccion registrada en el RUNT (${DIRECCION}) y en el correo electronico <strong>jeiser270997@gmail.com</strong>.</p>
-
-<p>Cordialmente,</p>
-
-<p><strong>${NOMBRE}</strong><br>
-CC ${CC}<br>
-jeiser270997@gmail.com<br>
-Cel: +57 (el que tengas registrado)</p>
+<p>Recibire notificaciones en la direccion registrada en el RUNT (${DIRECCION}) y en el correo electronico <strong>${EMAIL}</strong>.</p>
+<br><br>
+<p>Atentamente,</p>
+<br><br>
+<strong>${NOMBRE}</strong><br>
+C.C. ${CC}<br>
+Tel: ${TELEFONO}<br>
+${EMAIL}<br>
+${DIRECCION}
+</p>
 `;
 
 async function enviarImpugnacion() {

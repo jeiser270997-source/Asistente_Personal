@@ -49,13 +49,13 @@ Estos datos están en el sistema y las skills NO deben revelarlos en prompts pú
 
 | Dato | Ubicación | Nivel |
 |------|-----------|-------|
-| CC: 1019156838 | ESTADO_VIVO.md, DIAN | 🔴 Crítico |
-| Placa KEW496 | ESTADO_VIVO.md, transito | 🟠 Alto |
-| Placa BXU28C | ESTADO_VIVO.md | 🟠 Alto |
-| Dirección: Villa Eloisa Bloque 25 Apto 102 | ESTADO_VIVO.md | 🟠 Alto |
-| Teléfono: +57 304 461 5613 | ESTADO_VIVO.md | 🟠 Alto |
-| Email: jeiser270997@gmail.com | Múltiples archivos | 🟡 Medio |
-| Deuda DIAN: ~$9.8M | ESTADO_VIVO.md, finanzas_didi | 🟡 Medio |
+| CC / Documento Identidad | ESTADO_VIVO.md, DIAN | 🔴 Crítico |
+| Placa Vehicular Principal | ESTADO_VIVO.md, transito | 🟠 Alto |
+| Placa Vehicular Secundario | ESTADO_VIVO.md | 🟠 Alto |
+| Dirección Residencial | ESTADO_VIVO.md | 🟠 Alto |
+| Teléfono Personal | ESTADO_VIVO.md | 🟠 Alto |
+| Email Principal | Múltiples archivos | 🟡 Medio |
+| Obligaciones Tributarias | ESTADO_VIVO.md, finanzas_didi | 🟡 Medio |
 | Contraseñas (SENA, DIAN, Computrabajo) | ESTADO_VIVO.md | 🔴 Crítico |
 
 ## Instrucciones para el agente
