@@ -169,6 +169,15 @@ async function fetchInboxEmails(auth, hoursBack = 24) {
   for (const ref of messageRefs) {
     if (processed.includes(ref.id)) {
       log(`Saltando ya procesado: ${ref.id}`);
+      if (INBOX_ZERO) {
+        try {
+          await gmail.users.messages.modify({
+            userId: 'me', id: ref.id,
+            resource: { removeLabelIds: ['INBOX', 'UNREAD'] }
+          });
+          log(`  📥 Archivado (Inbox Zero): ${ref.id}`);
+        } catch (e) {}
+      }
       continue;
     }
     const detail = await gmail.users.messages.get({
