@@ -22,13 +22,16 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Reindex Skills
         run: npm run skills:reindex
 
       - name: Run Test Suite
+        env:
+          CI: 'true'
         run: npm test
 
       - name: Run Runtime CI Audit
         run: npm run runtime:ci
+
