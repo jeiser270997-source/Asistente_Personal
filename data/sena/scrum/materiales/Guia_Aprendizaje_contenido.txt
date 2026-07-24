@@ -1,0 +1,620 @@
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+PROCESO DE GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL  
+GUÍA DE APRENDIZAJE 
+ 
+ 
+1. IDENTIFICACIÓN DE LA GUÍA DE APRENDIZAJE 
+ 
+● Denominación del programa de formación: Aplicación del marco de trabajo Scrum para proyectos 
+de desarrollo de software. 
+● Código del programa de formación: 22810043. 
+● Competencia: 220501098 - Controlar la calidad del servicio de software  de acuerdo con los 
+estándares técnicos. 
+● Resultados de aprendizaje: 
+ 
+✔ 220501098-01 - Identificar los requerimientos del cliente en el proceso de desarrollo software 
+de acuerdo a las historias de usuarios. 
+✔ 220501098-02 - Validar las actividades y los productos de desarrollo de acuerdo con lo 
+establecido en el marco de trabajo Scrum. 
+✔ 220501098-03 - Implementar el proceso de desarrollo de acuerdo con lo establecido en el marco 
+de trabajo Scrum. 
+✔ 220501098-04 - Evaluar los planes de mejora de acuerdo con los resultados del proceso de 
+validación. 
+ 
+● Duración de la guía: 48 horas. 
+ 
+ 
+2. PRESENTACIÓN 
+ 
+Estimado aprendiz, el SENA le da una cordial bienvenida a su formación y le presenta a continuación una 
+guía de aprendizaje, donde se podrá orientar para el desarrollo de las actividades relacionadas con los 
+estándares y requisitos para la aplicación de la metodología Scrum para proyectos de desarrollo de 
+software, buscando fortalecer la apropiación de conocimientos referentes al programa de formación. 
+ 
+De igual forma, el desarrollo del contenido le direccionará hacia el conocimiento y las destrezas necesarias 
+en el manejo de la metodología Scrum. Esta se desarrolla de acuerdo con los requerimientos y necesidades 
+recolectadas con los clientes o usuarios que requieren un producto de software, relacionando siempre las 
+reglas del negocio a seguir y logrando satisfacer las necesidades de la organización. 
+ 
+ 
+3. FORMULACIÓN DE LAS ACTIVIDADES DE APRENDIZAJE 
+ 
+Como requisito para el desarrollo del presente programa de formación, es importante que se reconozca el 
+espacio de trabajo, junto con las posibilidades que tiene para interactuar, comunicar, visualizar y poder 
+utilizar las herramientas necesarias en el Lea rning Management System, LMS, desde el rol de aprendiz. 
+Además, lo invitamos a realizar las siguientes acciones:
+ 
+  
+• Actualización de los datos personales. 
+• Realice la presentación en el foro social de acuerdo con las indicaciones de su instructor. 
+• Leer el documento Información del programa, le permitirá reconocer los objetivos, las actividades 
+y la metodología que se llevará a cabo en el curso. 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+• Leer el documento Cronograma, le permitirá comprender l a planeación diseñada para lograr de 
+manera secuencial los objetivos del curso. Tenga en cuenta que entender los pasos y reconocer las 
+actividades a realizar le permitirá tener un estimado del tiempo de dedicación y, así, planear el 
+cumplimiento de los requisitos de acuerdo con su tiempo disponible. 
+• Leer el presente documento Guía de aprendizaje, le orientará en el desarrollo de las actividades. 
+ 
+En este apartado se describirán las actividades de aprendizaje para la competencia Controlar la calidad 
+del servicio de software de acuerdo con los estándares técnicos. Para cada una de las actividades se 
+detallan las evidencias que se deben entregar. 
+ 
+En el siguiente cuadro se observa para la competencia, el momento y las evidencias a entregar según las 
+actividades de aprendizaje asociadas a la competencia durante las cuatro semanas planeadas para esta 
+guía: 
+ 
+Semanas  
+Semana 1 Semana 2 Semana 3 Semana 4 
+Competencia 
+220201095 
+Informe de historias 
+de usuario que 
+representan los 
+requerimientos del 
+cliente. AA1-EV01. 
+      
+Estudio de caso, asignando roles y 
+ciclo de vida. AA2-EV01.     
+    Mapa conceptual 
+sobre artefactos, 
+planeación, 
+ejecución y 
+revisión del sprint. 
+AA3-Ev01. 
+  
+    Informe de estudio de caso, asignando 
+actividades Scrum y diferencias con 
+Kanban. AA4-EV01. 
+Horas por 
+semana 12 12 12 12 
+ 
+ 
+3.1. Actividad Inicial de reflexión 
+ 
+Antes de iniciar con el estudio de los componentes formativos y el desarrollo de las actividades de este 
+programa, se invita a consultar el video que se propone a continuación y a resolver lo que se solicita: 
+ 
+Video “Qué son las metodologías ágiles” https://www.youtube.com/watch?v=j8hNLrnhzFo 
+ 
+a. Responda lo siguiente con la mayor honestidad: 
+ 
+✔ ¿Qué nivel de responsabilidad tiene en el presente con el desarrollo tecnológico del país y con  la 
+promoción de las personas y equipos de trabajo? 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+✔ A partir del video y desde su experiencia previa encuentre tres razones fundamentales por las 
+cuales debe capacitarse en la “Aplicación del marco de trabajo Scrum para proyectos de 
+desarrollo de software”. 
+✔ Visualice las acciones y actitudes que después de terminar el estudio de este programa aplicará 
+en los equipos de trabajo y proyectos donde haya de participar (o donde ya está participando). 
+ 
+Nota: la idea es que reflexione en torno a estos cuestionamientos y aunque no sean calificables 
+serán el insumo para poder dar respuesta a lo que se solicita en las demás evidencias. 
+ 
+b. Siga estos pasos: 
+ 
+● Identifique en esta guía los cuatro Resultados de aprendiza je del programa; intente una 
+comprensión conceptual de los mismos; esto le ayudará a estar más y mejor familiarizado con el 
+proceso. 
+● Comprométase a participar en todos los espacios posibles de comunicación: foros, chats , entre 
+otros.  
+ 
+3.2. Actividades de aprendizaje de la competencia Controlar la calidad del servicio de software  de 
+acuerdo con los estándares técnicos (220501098) 
+  
+Las actividades de aprendizaje de la presente competencia le permitirán, en primera instancia, reconocer 
+y apropiarse de elementos y generalidades para la mejora de su quehacer en la industria del desarrollo de 
+software. Posteriormente, se entregarán elementos para afianzar su comprensión de las estrategias para 
+la entrega de resultados oportunos y tangibles, respuestas ágiles y flexibles en la gestión de proyectos de 
+software. 
+ 
+Finalmente, se revisarán conceptos y aspectos necesarios para la potenciación d e sus competencias de 
+trabajo en equipo, su adaptación a cualquier empresa del sector de la industria del desarrollo de software  
+y su configuración como agente protagonista del crecimiento tecnológico del país.  
+ 
+3.2.1. Actividad de aprendizaje AA1. Identi ficar y priorizar los requerimientos del cliente con base 
+en las historias de usuario. 
+ 
+Esta actividad de aprendizaje se enfoca en la elaboración pertinente de los informes de historias de 
+usuarios, los cuales recogen y representan los requerimientos, necesidades y exigencias del cliente para 
+el proceso de desarrollo del producto de software.  
+ 
+Duración: 10 horas. 
+ 
+Materiales de formación a consultar:  para desarrollar esta actividad adecuadamente se recomienda 
+revisar los contenidos presentados en el componente formativo “ Scrum, descripciones y 
+características”. Igualmente, es necesario evaluar el material complementario presentado en el 
+componente formativo. 
+ 
+Evidencias: a continuación, se describen las acciones y la correspondiente evidencia que conforma la 
+actividad de aprendizaje: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+o Evidencia AA1-EV01. Informe de historias de usuario que representan los requerimientos del 
+cliente. 
+ 
+Teniendo en cuenta las características y requerimientos de la metodología Scrum  elabore un informe con 
+los requerimientos pertinentes al estudio de caso siguiente: 
+ 
+ 
+ 
+Tenga en cuenta: 
+ 
+✔ Redactar cada una de las historias de usuario y conformar el product backlog. 
+✔ Priorizar el product backlog. 
+  
+Nota: 
+Las historias de usuario son las comentadas por el cliente, en este caso el Rector. 
+La agrupación de las historias de usuario son el  backlog, podría ser la V1.  Mirar en el componente 
+formativo el product backlog. 
+ 
+A manera de ejemplo podría tomar este primer requerimiento para ir agrupando el product backlog V1. 
+ 
+Ejemplo: 
+Requerimiento: 
+Debe permitir la matrícula del estudiante al técnico elegido. 
+Estudio de caso “Colegio Formación del Mañana” 
+ 
+Se lleva a cabo una reunión con un cliente, Rector de una institución educativa, donde necesita registrar 
+los estudiantes de cinco cursos técnicos de formación, jornadas diurna y nocturna. 
+ 
+El Rector requiere los siguientes servicios en la aplicación, donde debe: 
+ 
+Permitir certificar al estudiante cuando termine de aprobar todos los semestres. 
+Permitir la cancelación de matrícula del estudiante. 
+Permitir certificar el semestre al estudiante cuando cumpla con la aprobación de las materias. 
+Mostrar el estudiante en el técnico matriculado. 
+Mostrar las materias o pénsum académico del técnico elegido. 
+Mostrar los horarios para los técnicos. 
+Permitir la matrícula del estudiante al técnico elegido. 
+Corresponder las materias con los horarios de los técnicos. 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+ 
+ 
+Descripción del ejemplo: 
+ 
+HU01: Historia de usuario uno. 
+Usuario: Persona encargada o rol de usuario en el sistema. 
+Visualizar: corresponde a la correcta funcionalidad de la aplicación, pertinente al requerimiento. 
+Condiciones: podrían ser estas y más, dependiendo de la integralidad de la aplicación y profesionalismo 
+del desarrollador. 
+ 
+Video ayuda: 
+https://www.youtube.com/watch?v=8G_OoQLc-ak&ab_channel=JoinAcademia 
+ 
+Lineamientos generales para la entrega de la evidencia: 
+ 
+o Productos a entregar:  un documento donde se relacione la conformación del product backlog  
+priorizado, descrito y en orden como se debe desarrollar la aplicación. 
+o Extensión: mínimo 8 páginas, una por cada requerimiento. 
+o Formato: PDF. 
+o Para hacer el envío de la evidencia remítase al área de la actividad correspondiente y acceda al 
+espacio Informe de historias de usuario que representan los requerimientos del cliente. AA1-
+EV01. 
+ 
+ 
+3.2.2 Actividad de aprendizaje AA2. Relacionar roles de usuarios, de acuerdo al ciclo de vida Scrum. 
+ 
+A través de esta actividad de aprendizaje se favorecerá la asimilación de conceptos y acciones 
+relacionadas con el ciclo de vida dentro de la metodología, sus fases, los planteamientos propios de cada 
+fase y las incumbencias de los roles dentro del proceso. 
+ 
+HU01 – Matrícula 
+ 
+Usuario: secretaria. 
+ 
+Visualizar 1: Logo y colores Institucionales. 
+ 
+Visualizar 2: Casillas de matrícula. 
+ 
+Visualizar 3: Registro exitoso en el Técnico. 
+ 
+Condiciones: 
+* Que el alumno quede registrado en el Técnico. 
+* Que el alumno pueda ser consultado por cédula o 
+número de ID y por el curso Técnico. 
+* Que el usuario (secretaria) pueda cancelar su 
+matrícula en el sistema. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+Duración: 14 horas. 
+ 
+Materiales de formación a consultar:  para desarrollar esta actividad adecuadamente se recomienda 
+revisar los contenidos presentados en el componente formativo “Scrum , descripciones y 
+características”. 
+ 
+Evidencias: a continuación, se describen las acciones y la correspondiente evidencia que conforma la 
+actividad de aprendizaje: 
+ 
+● Evidencia AA2-EV01. Estudio de caso, asignando roles y ciclo de vida. 
+ 
+Teniendo en cuenta el estudio de caso anterior y lo desarrollado en dicha evidencia (Informe de historias 
+de usuario que representan los requerimientos del cliente. AA1 -EV01) realice un documento con la 
+asignación de roles y ciclo de vida, con las siguientes características: 
+ 
+✔ Imaginar un equipo de desarrollo. 
+✔ Describir y relacionar según el estudio de caso, el ciclo de vida, describiendo cómo aplicaría los roles y 
+artefactos del proyecto y del sprint. 
+ 
+Lineamientos generales para la entrega de la evidencia: 
+ 
+o Productos a entregar: un documento donde se relacione la descripción de los roles y artefactos, 
+según el estudio de caso. 
+o Extensión: libre 
+o Formato: PDF. 
+o Para hacer el envío de la evidencia remítase al área de la actividad correspondiente y acceda al 
+espacio Estudio de caso, asignando roles y ciclo de vida. AA2-EV01. 
+ 
+3.2.3. Actividad de aprendizaje AA3. Diferenciar los artefactos y características Scrum para 
+garantizar transparencia, productividad y calidad. 
+ 
+Para mejor asimilación del sprint , esta actividad de aprendizaje le aportará una concepción amplia y 
+práctica de las acciones propias de la planeación, la ejecución y la revisión del mismo. Además, la 
+identificación y vinculación de artefactos al proceso. 
+  
+Duración: 10 horas. 
+ 
+Materiales de formación a consultar:  para desarrollar esta actividad adecuadamente se recomienda 
+revisar los contenidos presentados en el componente formativo “Planeación, ejecución y desarrollos 
+ágiles”. 
+ 
+Evidencias: a continuación, se describen las acciones y la correspondiente evidencia que conforma la 
+actividad de aprendizaje: 
+ 
+● Evidencia AA3-EV01. Mapa conceptual sobre artefactos, planeación, ejecución y revisión del 
+sprint. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+Ahora que ya ha desarrollado las historias de usuario y su asignación de roles de ciclos de vida, teniendo 
+la misma relación temática y procedimental, es momento de tratar aspectos de los artefactos, planeación, 
+ejecución y revisión del sprint , por lo que se requiere realizar un mapa conceptual acompañado de un 
+informe previo, siguiendo estos pasos: 
+ 
+1. Genere un documento tipo informe de un caso hipotético donde: 
+ 
+✔ Escriba una lista de trabajo ordenada por prioridades, de acuerdo con los requerimientos de un cliente 
+hipotético. (Backlog). 
+✔ Establezca un objetivo claro y concreto para el sprint , acorde al backlog y redacte un plan de acción 
+para el incremento del producto, especificando tiempos, actividades y responsabilidades del 
+Development Team (sprint backlog). 
+✔ Desarrolle un informe del proceso de trabajo indicando: 
+⮚ El cómo, cuándo y dónde del daily meeting. 
+⮚ Los avances y logros del equipo: describa el review meeting. 
+⮚ Los hallazgos del burndown chart: los cumplimientos o incumplimientos del equipo de trabajo 
+(tenga en cuenta los artefactos y actividades Scrum que deben aplicarse). 
+⮚ Los resultados del sprint retrospective: las conclusiones de la reunión de evaluación al final del 
+sprint o ciclo de trabajo. 
+✔ Finalmente y antes de elaborar el mapa conceptual, describa cómo se desarrollará en ese caso 
+hipotético el seguimiento al proceso de desarrollo. 
+ 
+2. Realice el mapa conceptual en el que condensará el informe anteriormente generado, el cual deberá 
+tener las siguientes características: 
+ 
+✔ Relacione todos los artefactos vistos. 
+✔ Estructure el mapa conceptual sin dejar de lado la definición de cada concepto utilizado en el mismo. 
+✔ Instale para mejorar la estructura de su mapa: 
+⮚ Un concepto principal. 
+⮚ Conceptos complementarios clave. 
+⮚ Definiciones. 
+⮚ Relaciones entre conceptos. 
+⮚ Organización de conceptos y líneas. 
+✔ Relacione las actividades Scrum (sprint, planning, review). 
+✔ Analice su mapa conceptual para identificar si es comprensible y coherente. 
+ 
+Lineamientos generales para la entrega de la evidencia: 
+ 
+o Productos a entregar:  un documento donde relacione la descripción de los artefactos y las 
+actividades Scrum y un mapa conceptual en el que condense el informe o documento del caso 
+hipotético, relacionando los artefactos y las actividades Scrum. 
+o Extensión: máximo 3 páginas que incluyan ambos procesos. 
+o Formato: PDF. 
+o Para hacer el envío de la evidencia remítase al área de la actividad correspondiente y acceda al 
+espacio Mapa conceptual sobre artefactos, planeación, ejecución y revisión del sprint. AA3-
+EV01. 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+3.2.4. Actividad de aprendizaje AA4. Relacionar las actividades Scrum y Kanban, estableciendo 
+diferencias y utilidades de ambas metodologías. 
+ 
+La asignación de actividades y la aplicación del método Kanban son el aporte fundamental de esta actividad 
+de aprendizaje. Pues, se podrá asimilar mejor las similitudes y diferencias de Scrum y Kanban, a la vez de 
+reconocer la manera de articular acciones de los dos métodos en el proceso de desarrollo de software  y 
+en el fortalecimiento de los equipos de trabajo. 
+ 
+Duración: 14 horas. 
+ 
+Materiales de formación a consultar:  para desarrollar esta actividad adecuadamente se recomienda 
+revisar los contenidos presentados en el componente formativo “Planeación, ejecución y desarrollos 
+ágiles”. 
+ 
+Evidencias: a continuación, se describen las acciones y la correspondiente evidencia que conforma la 
+actividad de aprendizaje: 
+ 
+● Evidencia AA4-EV01. Informe de estudio de caso, asignando actividades Scrum y diferencias 
+con Kanban. 
+ 
+Ya llegó al final de este camino formativo, abarcando diversos procedimientos metodológicos, ahora es 
+momento de implementar acciones de mejora; por ello, teniendo en cuenta el estudio de caso “ Colegio 
+Formación del Mañana” y la el aboración del product backlog , junto con los roles creados, realice lo 
+siguiente: 
+  
+ Parte 1: 
+ 
+✔ Relacione y describa los sprint  que se deben tener en cuenta: sprint planning, daily meeting, sprint 
+review. 
+ 
+Parte 2: 
+ 
+✔ Realice en un tablero Kanban. 
+✔ Seleccione cuatro requerimientos de los que se hayan solicitado.  
+✔ Posiciónelos en las columnas y describa sus procesos hasta finalizarlos según Kanban. 
+ 
+Video ayuda: 
+https://www.youtube.com/watch?v=I-H-WXAX_oM  
+ 
+Lineamientos generales para la entrega de la evidencia: 
+ 
+o Productos a entregar:  un documento donde se relacione la información de los sprint  en el 
+desarrollo de la aplicación y la descripción del tablero Kanban con cuatro requerimientos. 
+o Extensión: mínimo 10 páginas en total, describiendo los sprint y el tablero Kanban. 
+o Formato: PDF. 
+Para hacer el envío de la evidencia remítase al área de la actividad correspondiente y acceda al 
+espacio Informe de estudio de caso, asignando actividades Scrum y diferencias con Kanban. 
+AA4-EV01. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+4. ACTIVIDADES DE EVALUACIÓN 
+ 
+Evidencias de Aprendizaje Criterios de Evaluación 
+Técnicas e 
+Instrumentos de 
+Evaluación 
+ 
+Evidencia de producto: 
+ 
+Informe de historias de usuario que 
+representan los requerimientos del 
+cliente. AA1-EV01. 
+Identifica y prioriza  los requerimientos 
+del cliente utilizando como herramienta 
+las historias de usuario. 
+ 
+Aplica técnicas de valoración de 
+historias de usuarios que de valor al 
+proyecto. 
+Lista de chequeo: 
+ 
+IE-AA1-EV01. 
+ 
+Evidencia de conocimiento:  
+ 
+Estudio de caso, asignando roles y 
+ciclo de vida. AA2-EV01. 
+Asigna los roles del marco de trabajo 
+Scrum 
+a los miembros del equipo de 
+acuerdo con los requerimientos del 
+proyecto. 
+Lista de chequeo: 
+ 
+IE-AA2-EV01. 
+ 
+Evidencia de producto:  
+ 
+Mapa conceptual sobre artefactos, 
+planeación, ejecución y revisión del 
+sprint. AA3-EV01. 
+Estructura el product backlog  de 
+acuerdo con los requerimientos del 
+cliente.  
+ 
+Implementa el sprint backlog de 
+acuerdo con las competencias de los 
+integrantes del Development Team,  la 
+priorización de cada historia y los 
+tiempos requeridos.  
+ 
+Documenta el proceso de desarrollo de 
+acuerdo con los resultados del sprint, 
+daily meeting, review meeting, burn 
+down chart y sprint retrospective. 
+ 
+Utiliza el product backlog y el sprint 
+backlog para hacer el seguimiento del 
+proceso de desarrollo. 
+Lista de chequeo: 
+ 
+IE-AA3-EV01.  
+Evidencia de desempeño: 
+ 
+Informe de estudio de caso, 
+asignando actividades Scrum y 
+diferencias con Kanban. AA4-EV01. 
+Implementa acciones de mejora para el 
+proceso de acuerdo con los resultados 
+de daily. 
+Lista de chequeo: 
+ 
+IE-AA4-EV01. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+5. GLOSARIO DE TÉRMINOS 
+ 
+Ágiles: filosofía que propone una forma distinta de trabajar y de organizarse, de tal forma que cada 
+proyecto se desintegra para lograr desarrollarlo. 
+ 
+Extendido: hace referencia a un método que puede ser fusionado con otro o se puede complementar con 
+otro. 
+ 
+Funcionalidad: en software es la capacidad de cumplir las funciones, logrando satisfacer las necesidades 
+explícitas e implícitas cuando se utilizan en determinadas condiciones. 
+ 
+Manifiesto: es un documento firmado por pensadores del mundo del desarrollo software  con la intención 
+de descubrir mejoras en este. 
+ 
+Métodos: son los procesos para realizar un conjunto de actividades de forma regular, cuyo objetivo 
+principal es trabajar en equipo, colaborativamente, para lograr alcanzar el resultado deseado. 
+ 
+Valores: son principios, virtudes y cualidades que identifican a una persona de gran importancia social.  
+ 
+ 
+6. REFERENTES BIBLIOGRÁFICOS 
+ 
+Henao, C. (2018). #4. Kanban en 4 minutos usando Trello [video]. YouTube. 
+https://www.youtube.com/watch?v=CfROfwnQgps&ab_channel=CristianHenao
+  
+ 
+Oxean Cross Comunicación Interna. (2011). Trabajar sin estrés - Kanban [video]. YouTube. 
+https://www.youtube.com/watch?v=I-H-WXAX_oM  
+ 
+Pérez, A. (2021). Las 5 etapas en los “sprints” de un desarrollo Scrum [Web log post]. Obs business school. 
+https://www.obsbusiness.school/blog/las-5-etapas-en-los-sprints-de-un-desarrollo-scrum 
+Proyecto Integrado de Ingeniería del Sw. (2021). Actividades de un sprint Scrum. Readthedocs. 
+https://proyecto-integrado-ingenieria-del-sw.readthedocs.io/es/latest/scrum/actividadesScrum.html 
+ 
+7. CONTROL DEL DOCUMENTO 
+ 
+ Nombre Cargo Dependencia Fecha 
+Autor (es) 
+Luis Eyder Ortiz 
+Collazos Experto temático 
+Regional Cauca - Centro de 
+Teleinformática y Producción 
+Industrial 
+Marzo 2022 
+Fabián Leonardo 
+Correa Díaz 
+Diseñador 
+instruccional 
+Regional Norte de Santander 
+- Centro de la Industria, la 
+Empresa y los Servicios 
+Marzo 2022 
+Andrés Felipe 
+Velandia Espitia 
+Asesor 
+metodológico 
+Regional Distrito Capital – 
+Centro de Diseño y 
+Metrología 
+Marzo 2022 
+ 
+ 
+ 
+ 
+ 
+ 
+GFPI-F-135 V01 
+Rafael Neftalí 
+Lizcano Reyes 
+Responsable 
+Equipo desarrollo 
+curricular 
+Regional Santander - Centro 
+Industrial del Diseño y la 
+Manufactura 
+Marzo 2022 
+ Julia Isabel 
+Roberto 
+Correctora de 
+estilo 
+Regional Distrito Capital – 
+Centro de Diseño y 
+Metrología 
+Marzo 2022 
+ 
+ 
+8. CONTROL DE CAMBIOS (diligenciar únicamente si realiza ajustes a la guía) 
+ 
+ Nombre Cargo Dependencia Fecha Razón del 
+Cambio 
+Autor (es)      
+ 
