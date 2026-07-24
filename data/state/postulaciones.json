@@ -1,0 +1,82 @@
+[
+  {
+    "empresa": "Xenco S.A.",
+    "puesto": "Programador Junior",
+    "salario": ".200.000 COP",
+    "modalidad": "Presencial Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "Itconsultores SAS / Ayté S.A.S.",
+    "puesto": "Desarrolladores Senior y Junior (Node.js/React)",
+    "salario": ".500.000 COP (.0M + )",
+    "modalidad": "100% Remoto",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "COBRA INSTALACIONES Y SERVICIOS",
+    "puesto": "Medellín Desarrollador Full Stack Junior",
+    "salario": ".000.000 - .200.000 COP",
+    "modalidad": "Presencial Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "AMERICAS BPS",
+    "puesto": "Analista de Datos Junior",
+    "salario": ".000.000 COP",
+    "modalidad": "Híbrido Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "Comfenalco Antioquia",
+    "puesto": "Ingeniero de Data Junior Python e IA",
+    "salario": ".500.000 COP",
+    "modalidad": "Presencial Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "MEDIPIEL S.A.",
+    "puesto": "Desarrollador de Contenido E-learning Junior",
+    "salario": ".275.000 COP + Auxilio",
+    "modalidad": "Híbrido Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "Empresa del Sector TI",
+    "puesto": "Auxiliar de Sistemas",
+    "salario": ".800.000 - .000.000 COP",
+    "modalidad": "Presencial Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "GESTION Y COMPROMISO",
+    "puesto": "Auxiliar de Sistemas",
+    "salario": ".800.000 - .000.000 COP",
+    "modalidad": "Presencial Medellín",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "DISPARTES S.A.",
+    "puesto": "Auxiliar de Sistemas",
+    "salario": ".949.998 COP",
+    "modalidad": "Presencial Girardota",
+    "fecha": "2026-07-23",
+    "estado": "POSTULADO"
+  },
+  {
+    "empresa": "Empresa de Soporte",
+    "puesto": "Auxiliar de Soporte",
+    "salario": ".750.000 COP",
+    "modalidad": "Presencial Medellín",
+    "fecha": "2026-07-20",
+    "estado": "POSTULADO"
+  }
+]
