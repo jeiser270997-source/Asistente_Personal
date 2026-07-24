@@ -45,7 +45,9 @@
   - **Estrategia SENA:** El Agente asume la carpintería pesada (formato PDF, APA 7, estructura formal) cumpliendo exactamente lo que exige la guía de aprendizaje sin relleno superfluo.
   - **Ficha de Dominio de Tema (Cheat Sheet de Defensa):** Con cada entregable SENA, el Agente le genera a Jeiser una ficha de 1 página con los conceptos clave, decisiones tomadas y respuestas preparadas para que domine el tema en 5 minutos y pueda defender el trabajo ante la instructora con solidez.
   - **Foco Principal:** 100% de la energía de estudio interactivo y mental de Jeiser está concentrada en su **Bootcamp Personalizado de QA Automation Junior** (Playwright, TS, Postman, SQL, Docker).
-  1. 🟢 **Ficha 3565476 (En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Bienvenida recibida 21/07/2026. 📅 Conferencia Web Mié 22/07 5:00 PM Zoom. Entregables AA1-AA4 en proceso de borrador).
+  1. 🟢 **Ficha 3565476 (En Formación):** *Aplicación del Marco de Trabajo Scrum para Proyectos de Desarrollo de Software* (Instructora: `afrancov@sena.edu.co`).
+     - **AA1 (17-28 Jul):** **AA1-EV01 — Informe de Historias de Usuario** (Plazo: 28/07/2026).
+     - **Materiales Drive:** `https://drive.google.com/drive/folders/1X6KzOi8-k6hGdzFS8zTJnqwglNnYS8Jh`
   2. 🟢 **Ficha 3549155 (En Formación):** *Bases de Datos Generalidades y Sistemas de Gestión* (Zajuna).
   3. 🟡 **Ficha 2459016 (Preinscrito):** *Construcción de Bases de Datos con MySQL*.
   4. 🟡 **Ficha 2253040 (Preinscrito):** *Variables y Estructuras de Control en Python*.
