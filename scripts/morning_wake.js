@@ -364,11 +364,10 @@ function buildMessage({ weatherMd, pyp, simit, sena, jobs, traffic, todayIso, da
           '4. Alarmas: las pones tú (Calendar LifeOS desactivado)',
         ]
       : [
-          '1. SENA críticos (si hay)',
-          '2. DiDi AM fresco · meta parcial',
-          '3. 10:30–15:30: *NO conducir* (calor) → estudio',
-          '4. DiDi PM',
-          '5. Empleo semi-auto; postular solo a mano',
+          '1. 08:00 AM: Llevar a Dominick a la escuela',
+          '2. 08:30 AM: Arranca DiDi + Uber (de corrido · Angelina recoge)',
+          '3. SENA / Estudio nocturno post-jornada',
+          '4. Empleo semi-auto; postular a mano',
         ];
 
   const dateHeader = holidayName
