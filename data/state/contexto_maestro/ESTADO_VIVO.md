@@ -27,7 +27,8 @@
   - **Cobro de referencia por km:** **$2.000 COP / km**.
   - **Ganancia Neta por km:** **$1.500 COP / km** (Margen del 75%).
   - **Estrategia DiDi:** **Viajes cortos exclusivamente** + **Uber Fill-In en horas valle**. (inDrive descartado por riesgo/regateo).
-  - **Horario estricto:** Turnos AM (05:00-10:30) y PM (15:30-20:00). **Prohibido conducir entre 10:30 AM y 3:30 PM** por ola de calor.
+  - **Horario real (Lun-Vie):** 08:00 AM lleva a Dominick al colegio → **08:30 AM arranca jornada DiDi + Uber de corrido** (Angelina lo recoge).
+  - **Sábados (CESDE Presencial):** **Inician este Sábado 25-Jul-2026** (07:30 AM a 06:00 PM, Aula 406). **NO conduce los sábados**.
 - **Deuda DIAN AG2023:** ~$9.8M vencida. **REGLA HIERRO: NO firmar 814, NO pagar, NO contactar Cobranzas.** Prescripcion ~09/2029.
 - **Deuda DIAN AG2024:** ~$524K (sanción mínima mora). Petición 2026DP000161298 asignada 09/06/2026, en espera.
 - **SIMIT — Total deuda:** ~$1.867.199 (3 multas activas en sistema, **verificado en tiempo real 21/07/2026**)
