@@ -1,4 +1,4 @@
-﻿/**
+/**
  * scripts/morning_wake.js — ÚNICO proceso automático de LifeOS
  *
  * PC en sleep → Task Scheduler 5:00 → despierta → informe Telegram → vuelve a sleep.
@@ -24,7 +24,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const { getMedellinWeatherDetailed, formatWeatherMarkdown } = require('../lib/integrations/weather_client');
-const { getPicoYPlacaStatus } = require('../lib/integrations/pico_placa');
+const { getPicoYPlacaStatus, getLivePicoYPlacaStatus } = require('../lib/integrations/pico_placa');
 
 const ROOT = path.resolve(__dirname, '..');
 const FULL = process.argv.includes('--full');
@@ -109,8 +109,8 @@ async function sendTelegram(text) {
   }
 }
 
-function getPicoYPlaca() {
-  return getPicoYPlacaStatus();
+async function getPicoYPlaca() {
+  return await getLivePicoYPlacaStatus();
 }
 
 function getPlateDigit() {
@@ -517,7 +517,7 @@ async function main() {
   const weather = await getMedellinWeatherDetailed();
   const weatherMd = formatWeatherMarkdown(weather);
 
-  const pyp = getPicoYPlaca();
+  const pyp = await getPicoYPlaca();
   const simit = getSimitCache();
   const sena = getSenaHint();
   const jobs = getJobsHint();
